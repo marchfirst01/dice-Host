@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 :root {
-  background-color: white;
+  background-color: #f2f2f2;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -17,8 +17,6 @@ body {
   margin: 0 auto;
   max-width: 400px;
   min-height: 100vh;
-  background-color: black;
-  color: white;
-  padding-left: 20px;
-  padding-right: 20px;
+  background-color: white;
+  color: black;
 }
