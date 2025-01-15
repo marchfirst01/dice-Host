@@ -12,7 +12,7 @@ export default function TopNavigation() {
     <div className="flex flex-row justify-between py-4 items-center">
       <Image
         onClick={() => router.push("/")}
-        className="py-[11.5px] px-[5px] cursor-pointer"
+        className="cursor-pointer"
         src={Logo}
         alt="로고이미지"
         width={70}
