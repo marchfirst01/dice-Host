@@ -9,7 +9,7 @@ export default function TopNavigation() {
   const router = useRouter();
 
   return (
-    <div className="flex flex-row justify-between py-4 items-center">
+    <div className="flex flex-row justify-between py-4 px-5 items-center bg-black">
       <Image
         onClick={() => router.push("/")}
         className="cursor-pointer"
