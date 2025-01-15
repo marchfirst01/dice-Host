@@ -17,7 +17,7 @@ export default function Home() {
 
       <div className="fixed bottom-[34px] pb-5 pt-4 space-y-[11px]">
         <button
-          onClick={() => router.push(`/register`)}
+          onClick={() => router.push(`/login`)}
           className="bg-white p-4 w-full rounded-lg flex flex-row space-x-2 items-center justify-center"
         >
           <Image src={Dice} alt="주사위" />
@@ -27,11 +27,17 @@ export default function Home() {
         </button>
 
         <div className="flex flex-row justify-center items-center">
-          <button className="text-BTN1 font-BTN1 text-medium_gray underline px-4 py-2.5">
+          <button
+            onClick={() => router.push(`/register`)}
+            className="text-BTN1 font-BTN1 text-medium_gray underline px-4 py-2.5"
+          >
             회원으로 가입하기
           </button>
           <p className="text-BTN1 font-BTN1 text-medium_gray">|</p>
-          <button className="text-BTN1 font-BTN1 text-medium_gray underline px-4 py-2.5">
+          <button
+            onClick={() => router.push(`/main`)}
+            className="text-BTN1 font-BTN1 text-medium_gray underline px-4 py-2.5"
+          >
             비회원으로 둘러보기
           </button>
         </div>
