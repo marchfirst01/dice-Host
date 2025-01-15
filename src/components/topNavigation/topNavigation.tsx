@@ -1,17 +1,19 @@
-import Image from "next/image";
-import React from "react";
-import Logo from "@assets/home/logo.svg";
-import Heart from "@assets/topNavigation/heart.svg";
-import Chat from "@assets/topNavigation/chat.svg";
-import { useRouter } from "next/router";
+import Logo from '@assets/home/logo.svg';
+import Chat from '@assets/topNavigation/chat.svg';
+import Heart from '@assets/topNavigation/heart.svg';
+
+import React from 'react';
+
+import Image from 'next/image';
+import { useRouter } from 'next/router';
 
 export default function TopNavigation() {
   const router = useRouter();
 
   return (
-    <div className="flex flex-row justify-between py-4 px-5 items-center bg-black">
+    <div className="flex flex-row items-center justify-between bg-black px-5 py-4">
       <Image
-        onClick={() => router.push("/")}
+        onClick={() => router.push('/')}
         className="cursor-pointer"
         src={Logo}
         alt="로고이미지"
@@ -20,7 +22,7 @@ export default function TopNavigation() {
       />
       <div className="flex flex-row gap-6">
         <Image
-          onClick={() => console.log("좋아요 페이지 이동")}
+          onClick={() => console.log('좋아요 페이지 이동')}
           className="cursor-pointer"
           src={Heart}
           width={24}
@@ -28,7 +30,7 @@ export default function TopNavigation() {
           alt="좋아요 이미지"
         />
         <Image
-          onClick={() => console.log("쪽지 페이지 이동")}
+          onClick={() => console.log('쪽지 페이지 이동')}
           className="cursor-pointer"
           src={Chat}
           width={24}
