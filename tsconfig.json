@@ -27,7 +27,8 @@
       "@layout/*": ["src/layout/*"],
       "@type/*": ["src/type/*"], // types는 불가능해서 type으로 대체
       "@utils/*": ["src/utils/*"],
-      "@config/*": ["src/config/*"]
+      "@config/*": ["src/config/*"],
+      "@styles/*": ["src/styles/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
