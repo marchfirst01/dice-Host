@@ -12,7 +12,7 @@ export default function BottomNavigationComponent({
   setPageType: Dispatch<SetStateAction<'popUp' | 'recruit' | 'my'>>;
 }) {
   return (
-    <div className="fixed bottom-0 flex w-full max-w-[400px] flex-row justify-around border-t border-stroke py-2">
+    <div className="fixed bottom-0 flex w-full max-w-[400px] flex-row justify-around border-t border-stroke bg-white py-2">
       <div onClick={() => setPageType('popUp')} className="flex flex-col items-center gap-2">
         <Image className="size-6" src={Place} alt="place-cion" />
         <p>팝업공간</p>

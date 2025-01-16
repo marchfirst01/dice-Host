@@ -11,7 +11,7 @@ const FilterType = ['지역', '가격', '수용인원', '인기순'];
 export default function PopUpPage() {
   const [popUpData] = useState(dummyData);
   return (
-    <div className="relative">
+    <div>
       <Header />
       <p className="pb-2 pt-8 font-H2 text-H2 leading-H2">대여 가능한 팝업 공간</p>
       <div className="flex flex-row gap-[6px] py-4">
@@ -21,7 +21,7 @@ export default function PopUpPage() {
       </div>
       <div className="flex flex-col gap-4">
         {popUpData.map((popUp) => (
-          <PopUpItem storeData={popUp} />
+          <PopUpItem storeData={popUp} key={popUp.id} />
         ))}
       </div>
     </div>

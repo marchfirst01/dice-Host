@@ -11,9 +11,9 @@ export default function MainLayout({
   setPageType: Dispatch<SetStateAction<'popUp' | 'recruit' | 'my'>>;
 }) {
   return (
-    <div className="">
+    <div>
       <TopNavigation />
-      <div className="px-5">{children}</div>
+      <div className="px-5 pb-[85px] pt-[57.25px]">{children}</div>
       <BottomNavigationComponent setPageType={setPageType} />
     </div>
   );
