@@ -1,4 +1,4 @@
-import Logo from '@assets/home/logo.svg';
+import LogoWhite from '@assets/home/logo-white.svg';
 import Chat from '@assets/topNavigation/chat.svg';
 import Heart from '@assets/topNavigation/heart.svg';
 
@@ -15,7 +15,7 @@ export default function TopNavigation() {
       <Image
         onClick={() => router.push('/')}
         className="cursor-pointer"
-        src={Logo}
+        src={LogoWhite}
         alt="로고이미지"
         width={70}
         height={25}
