@@ -24,7 +24,7 @@ export default function UserInputComponent({
       name={member.name}
       control={control}
       render={({ field: { onChange, value } }) => (
-        <div className="relative">
+        <div className="relative w-full">
           <input
             className="h-[44px] w-full rounded-lg border p-4"
             type={member.type === 'default' || isPasswordVisible ? 'default' : 'password'}
