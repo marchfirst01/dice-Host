@@ -4,6 +4,7 @@ type MemberList = Record<
 >;
 
 interface Member {
+  name: string;
   type: string;
   placeholder: string;
 }
