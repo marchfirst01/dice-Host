@@ -26,6 +26,7 @@
       "@routes/*": ["src/routes/*"],
       "@layout/*": ["src/layout/*"],
       "@type/*": ["src/type/*"], // types는 불가능해서 type으로 대체
+      "@lib/*": ["src/lib/*"],
       "@utils/*": ["src/utils/*"],
       "@config/*": ["src/config/*"],
       "@styles/*": ["src/styles/*"]
