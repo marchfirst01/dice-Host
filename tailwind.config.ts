@@ -14,6 +14,7 @@ export default {
         H2: ['Pretendard-SemiBold', 'System'],
         SUB1: ['Pretendard-SemiBold', 'System'],
         SUB2: ['Pretendard-SemiBold', 'System'],
+        SUB3: ['Pretendard-SemiBold', 'System'],
         BODY1: ['Pretendard-Medium', 'System'],
         BODY2: ['Pretendard-Medium', 'System'],
         CAP1: ['Pretendard-SemiBold', 'System'],
@@ -25,6 +26,7 @@ export default {
         H2: '22px',
         SUB1: '20px',
         SUB2: '18px',
+        SUB3: '16px',
         BODY1: '16px',
         BODY2: '14px',
         CAP1: '13px',
@@ -36,6 +38,7 @@ export default {
         H2: '140%',
         SUB1: '140%',
         SUB2: '150%',
+        SUB3: '150%',
         BODY1: '150%',
         BODY2: '150%',
         CAP1: '150%',
@@ -57,6 +60,7 @@ export default {
         dark_gray: '#333333',
         deep_gray: '#666666',
         medium_gray: '#999999',
+        semi_light_gray: '#AAAAAA',
         light_gray: '#cccccc',
 
         // System Color
