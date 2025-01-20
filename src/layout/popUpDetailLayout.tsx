@@ -24,16 +24,20 @@ export default function PopUpDetailLayout({ children }: { children: React.ReactN
         />
       </nav>
       <div className="pb-[84px] pt-12">
-        {childrenArray.map((child, index) => (
-          <div className="flex flex-col">
-            <div className="px-5" key={index}>
+        {childrenArray.map((child, index) => {
+          return index === 0 ? (
+            <div key={index} className="w-full">
               {child}
             </div>
-            {index < childrenArray.length - 1 && index !== 0 && (
-              <div className="my-5 h-2 bg-gray-200"></div>
-            )}
-          </div>
-        ))}
+          ) : (
+            <div className="flex flex-col" key={index}>
+              <div className="px-5">{child}</div>
+              {index < childrenArray.length - 1 && index !== 0 && (
+                <div className="my-5 h-2 bg-gray-200"></div>
+              )}
+            </div>
+          );
+        })}
       </div>
       <nav className="fixed bottom-0 z-10 flex h-[84px] w-full max-w-[400px] flex-row items-center gap-3 border-t border-stroke bg-white px-5 py-4">
         <div

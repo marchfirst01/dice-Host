@@ -9,6 +9,10 @@ import React, { useState } from 'react';
 import { dummyData } from './popUpDetailDummy';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
+import 'swiper/css';
+import 'swiper/css/pagination';
+import { Pagination } from 'swiper/modules';
+import { Swiper, SwiperSlide } from 'swiper/react';
 
 const PopUpDetailPage = () => {
   const router = useRouter();
@@ -22,21 +26,20 @@ const PopUpDetailPage = () => {
   return (
     <PopUpDetailLayout>
       {/* PopUpDetailPage id: {id} */}
-      {/* 이미지 화면 수정 필요 */}
-      <section className="relative aspect-[3/2] w-full max-w-[400px]">
-        <div className="absolute -left-5 aspect-[3/2] h-[214px] w-screen max-w-[400px] overflow-auto">
-          {dummyData.imageList.map((image) => (
-            <Image
-              className="aspect-[3/2]"
-              src={image}
-              alt="image"
-              layout="fill"
-              objectFit="cover"
-            />
-          ))}
-        </div>
-      </section>
-      <section className="">
+      <Swiper
+        className="aspect-[1/1] w-full"
+        modules={[Pagination]}
+        direction="horizontal"
+        slidesPerView={1}
+        pagination={{ clickable: true, type: 'fraction' }}
+      >
+        {dummyData.imageList.map((image) => (
+          <SwiperSlide className="aspect-[3/2] w-full">
+            <Image src={image} alt="image" layout="fill" objectFit="cover" />
+          </SwiperSlide>
+        ))}
+      </Swiper>
+      <section className="mt-5">
         <div className="mb-4">
           <p className="font-H2 text-H2 leading-H2">{detailDummyData.name}</p>
           <p className="font-SUB3 text-SUB3 leading-SUB3 text-semi_light_gray">

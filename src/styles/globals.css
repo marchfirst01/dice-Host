@@ -20,3 +20,7 @@ body {
   background-color: white;
   color: black;
 }
+
+.swiper-pagination {
+  @apply absolute bottom-5 left-[80%] w-10 text-center !important;
+}
