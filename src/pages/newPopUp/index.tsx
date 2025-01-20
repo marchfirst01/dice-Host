@@ -1,3 +1,5 @@
+import Upload from '@assets/newPopUp/upload.svg';
+import ImageContainerComponent from '@components/newPopUp/imageContainer';
 import PopUpInputComponent from '@components/newPopUp/popUpInput';
 import PopUpTextareaComponent from '@components/newPopUp/popUpTextarea';
 import NewPopUpLayout from '@layout/newPopUpLayout';
@@ -6,6 +8,8 @@ import { NewPopUpInfo } from '@type/newPopUp/newPopUpTypes';
 
 import React from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
+
+import Image from 'next/image';
 
 interface FormData {
   name: string;
@@ -54,9 +58,28 @@ const NewPopUpPage = () => {
         <p className="font-SUB1 text-SUB1 leading-SUB1">필수 정보 작성</p>
         {InputDiv('name')}
         {InputDiv('subTitle')}
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-1">
           <p className="after:ml-1 after:text-red after:content-['*']">이미지 등록(최대 10장)</p>
           {/* 이미지 등록 컴포넌트 구현 필요 */}
+          <div className="flex w-full max-w-[400px] flex-row gap-[6px]">
+            {/* image upload input */}
+            <div className="mt-1 flex size-20 flex-shrink-0 cursor-pointer flex-col items-center justify-center rounded-xl border border-light_gray">
+              <Image src={Upload} alt="upload" />
+              <div className="mt-0.5 flex flex-row gap-0.5 font-CAP2 text-CAP2 leading-CAP2">
+                <p>
+                  <span className="text-purple">2</span> / 10
+                </p>
+              </div>
+            </div>
+            {/* upload image list */}
+            <div className="flex flex-1 flex-row gap-[6px] overflow-auto pt-1">
+              <ImageContainerComponent />
+              <ImageContainerComponent />
+              <ImageContainerComponent />
+              <ImageContainerComponent />
+              <ImageContainerComponent />
+            </div>
+          </div>
         </div>
         <div className="flex flex-col gap-2">
           <p className="after:ml-1 after:text-red after:content-['*']">공간 유형</p>
