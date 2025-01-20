@@ -22,5 +22,5 @@ body {
 }
 
 .swiper-pagination {
-  @apply absolute bottom-5 left-[80%] w-10 text-center !important;
+  @apply absolute bottom-5 left-[80%] w-fit rounded-full bg-[#00000080] px-[9px] py-[1.5px] text-center text-white !important;
 }
