@@ -1,4 +1,5 @@
 import PopUpInputComponent from '@components/newPopUp/popUpInput';
+import PopUpTextareaComponent from '@components/newPopUp/popUpTextarea';
 import NewPopUpLayout from '@layout/newPopUpLayout';
 import { newPopUp } from '@lib/newPopUp/newPopUp';
 import { NewPopUpInfo } from '@type/newPopUp/newPopUpTypes';
@@ -40,6 +41,13 @@ const NewPopUpPage = () => {
     </div>
   );
 
+  const TextareaDiv = (name: NewPopUpInfo) => (
+    <div className="flex flex-col gap-2 font-CAP1 text-CAP1 leading-CAP1">
+      <p className="after:ml-1 after:text-red after:content-['*']">{newPopUp[name].display}</p>
+      <PopUpTextareaComponent newPopUpInfo={newPopUp[name]} control={control} />
+    </div>
+  );
+
   return (
     <NewPopUpLayout>
       <section className="flex flex-col gap-6 font-CAP1 text-CAP1 leading-CAP1">
@@ -78,13 +86,7 @@ const NewPopUpPage = () => {
       </section>
       <section>
         <p className="mb-6 font-SUB1 text-SUB1 leading-SUB1">공간 소개글 작성</p>
-        <p className="mb-2 font-CAP1 text-CAP1 leading-CAP1 after:ml-1 after:text-red after:content-['*']">
-          자세한 소개
-        </p>
-        <textarea
-          className="h-40 w-full rounded-lg border border-stroke p-4 placeholder:font-BODY2 placeholder:text-BODY2 placeholder:leading-BODY2"
-          placeholder={newPopUp.description.placeholder}
-        />
+        {TextareaDiv('description')}
       </section>
       <section className="flex flex-col gap-6 font-CAP1 text-CAP1 leading-CAP1">
         <p className="font-SUB1 text-SUB1 leading-SUB1">위치 안내 작성</p>
@@ -104,22 +106,10 @@ const NewPopUpPage = () => {
         {InputDiv('homepage', false)}
         {InputDiv('phoneNumber')}
       </section>
-      <section className="flex flex-col gap-6 font-CAP1 text-CAP1 leading-CAP1">
+      <section className="flex flex-col gap-6">
         <p className="font-SUB1 text-SUB1 leading-SUB1">시설 이용 및 공지사항 안내 작성</p>
-        <div className="flex flex-col gap-2">
-          <p className="after:ml-1 after:text-red after:content-['*']">시설 이용 안내</p>
-          <textarea
-            className="h-40 w-full rounded-lg border border-stroke p-4 placeholder:font-BODY2 placeholder:text-BODY2 placeholder:leading-BODY2"
-            placeholder={newPopUp.usageInformation.placeholder}
-          />
-        </div>
-        <div className="flex flex-col gap-2">
-          <p className="after:ml-1 after:text-red after:content-['*']">공지사항 안내</p>
-          <textarea
-            className="h-40 w-full rounded-lg border border-stroke p-4 placeholder:font-BODY2 placeholder:text-BODY2 placeholder:leading-BODY2"
-            placeholder={newPopUp.noticeInformation.placeholder}
-          />
-        </div>
+        {TextareaDiv('usageInformation')}
+        {TextareaDiv('noticeInformation')}
       </section>
       <button onClick={handleSubmit(onSubmit)}>등록(테스트용)</button>
     </NewPopUpLayout>
