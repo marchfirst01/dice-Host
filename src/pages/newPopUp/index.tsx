@@ -49,7 +49,7 @@ const NewPopUpPage = () => {
   );
 
   return (
-    <NewPopUpLayout>
+    <NewPopUpLayout handleSubmit={handleSubmit} onSubmit={onSubmit}>
       <section className="flex flex-col gap-6 font-CAP1 text-CAP1 leading-CAP1">
         <p className="font-SUB1 text-SUB1 leading-SUB1">필수 정보 작성</p>
         {InputDiv('name')}
@@ -111,7 +111,6 @@ const NewPopUpPage = () => {
         {TextareaDiv('usageInformation')}
         {TextareaDiv('noticeInformation')}
       </section>
-      <button onClick={handleSubmit(onSubmit)}>등록(테스트용)</button>
     </NewPopUpLayout>
   );
 };
