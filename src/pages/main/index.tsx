@@ -1,4 +1,4 @@
-import MainLayout from '@layout/layout';
+import MainLayout from '@layout/mainLayout';
 
 import React, { useState } from 'react';
 

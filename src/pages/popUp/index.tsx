@@ -14,7 +14,7 @@ export default function PopUpPage() {
     <div>
       <Header />
       <p className="pb-2 pt-8 font-H2 text-H2 leading-H2">대여 가능한 팝업 공간</p>
-      <div className="flex flex-row gap-[6px] py-4">
+      <div className="flex flex-row flex-wrap gap-[6px] py-4">
         {FilterType.map((filter) => (
           <FilterComponent filter={filter} />
         ))}
