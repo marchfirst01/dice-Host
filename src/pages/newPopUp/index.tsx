@@ -4,37 +4,18 @@ import PopUpInputComponent from '@components/newPopUp/popUpInput';
 import PopUpTextareaComponent from '@components/newPopUp/popUpTextarea';
 import NewPopUpLayout from '@layout/newPopUpLayout';
 import { newPopUp } from '@lib/newPopUp/newPopUp';
-import { NewPopUpInfo } from '@type/newPopUp/newPopUpTypes';
+import { NewPopUpFormData, NewPopUpInfo } from '@type/newPopUp/newPopUpTypes';
 
 import React, { ChangeEvent, useRef, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
-import { url } from 'inspector';
 import Image from 'next/image';
 
-interface FormData {
-  name: string;
-  subTitle: string;
-  placeStart: number;
-  placeEnd: number;
-  numOfPeople: number;
-  hashTagList: string;
-  price: number;
-  discount: number;
-  description: string;
-  location: string;
-  locationDescription: string;
-  homepage: string;
-  phoneNumber: string;
-  usageInformation: string;
-  noticeInformation: string;
-}
-
 const NewPopUpPage = () => {
-  const { control, handleSubmit } = useForm<FormData>();
+  const { control, handleSubmit } = useForm<NewPopUpFormData>();
 
   // 폼 제출
-  const onSubmit: SubmitHandler<FormData> = (formData: FormData) => {
+  const onSubmit: SubmitHandler<NewPopUpFormData> = (formData: NewPopUpFormData) => {
     console.log(formData);
   };
 

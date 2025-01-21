@@ -18,7 +18,7 @@ export default function ImageContainerComponent({
     <div className="relative flex size-20 flex-shrink-0 items-center justify-center rounded-xl border border-light_gray">
       <Image
         onClick={onDelete}
-        className="absolute -right-[6px] -top-[6px] z-50 cursor-pointer"
+        className="absolute -right-[6px] -top-[6px] z-10 cursor-pointer"
         src={Delete}
         alt="delete"
       />

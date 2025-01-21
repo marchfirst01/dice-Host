@@ -2,6 +2,7 @@ import Close from '@assets/member/close.svg';
 import CommonButtonComponent from '@components/common/commonButton';
 import UserInputComponent from '@components/member/userInput';
 import { member, memberList } from '@lib/member/member';
+import { MemberFormData } from '@type/member';
 
 import { SubmitHandler, useForm } from 'react-hook-form';
 
@@ -10,9 +11,9 @@ import { useRouter } from 'next/router';
 
 const RegisterPage = () => {
   const router = useRouter();
-  const { control, handleSubmit } = useForm<FormData>();
+  const { control, handleSubmit } = useForm<MemberFormData>();
 
-  const onSubmit: SubmitHandler<FormData> = (formData: FormData) => {
+  const onSubmit: SubmitHandler<MemberFormData> = (formData: MemberFormData) => {
     console.log(formData);
   };
   return (

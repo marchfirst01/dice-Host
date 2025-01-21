@@ -2,6 +2,7 @@ import Close from '@assets/member/close.svg';
 import CommonButtonComponent from '@components/common/commonButton';
 import UserInputComponent from '@components/member/userInput';
 import { member } from '@lib/member/member';
+import { MemberFormData } from '@type/member';
 
 import React from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -9,18 +10,14 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 
-interface FormData {
-  id: string;
-  passwd: string;
-}
-
 export default function LoginPage() {
   const router = useRouter();
-  const { control, handleSubmit } = useForm<FormData>();
+  const { control, handleSubmit } = useForm<MemberFormData>();
 
-  const onSubmit: SubmitHandler<FormData> = (formData: FormData) => {
+  const onSubmit: SubmitHandler<MemberFormData> = (formData: MemberFormData) => {
     console.log(formData);
   };
+
   return (
     <div className="relative flex h-screen w-full flex-col items-center justify-center gap-8 px-5">
       <Image

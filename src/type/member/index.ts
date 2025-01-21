@@ -1,6 +1,8 @@
-type MemberList = Record<MemberName, Member>;
-
 type MemberName = 'id' | 'password' | 'password_check' | 'name' | 'email' | 'phone' | 'auth';
+
+type MemberFormData = Record<MemberName, string>;
+
+type MemberList = Record<MemberName, Member>;
 
 interface Member {
   name: MemberName;
@@ -9,4 +11,4 @@ interface Member {
   placeholder: string;
 }
 
-export type { MemberList, MemberName, Member };
+export type { MemberFormData, MemberList, MemberName, Member };

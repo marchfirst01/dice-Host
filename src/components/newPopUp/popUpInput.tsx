@@ -1,11 +1,11 @@
-import { NewPopUp } from '@type/newPopUp/newPopUpTypes';
+import { NewPopUp, NewPopUpFormData } from '@type/newPopUp/newPopUpTypes';
 
 import React from 'react';
-import { Controller } from 'react-hook-form';
+import { Control, Controller } from 'react-hook-form';
 
 interface PopUpInputComponentProps {
   newPopUpInfo: NewPopUp;
-  control: any;
+  control: Control<NewPopUpFormData>;
 }
 
 export default function PopUpInputComponent({

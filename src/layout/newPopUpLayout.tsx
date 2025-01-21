@@ -1,4 +1,5 @@
 import ArrowBack from '@assets/topNavigation/arrow-back.svg';
+import { NewPopUpFormData } from '@type/newPopUp/newPopUpTypes';
 
 import React from 'react';
 import { SubmitHandler } from 'react-hook-form';
@@ -6,30 +7,12 @@ import { SubmitHandler } from 'react-hook-form';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 
-interface FormData {
-  name: string;
-  subTitle: string;
-  placeStart: number;
-  placeEnd: number;
-  numOfPeople: number;
-  hashTagList: string;
-  price: number;
-  discount: number;
-  description: string;
-  location: string;
-  locationDescription: string;
-  homepage: string;
-  phoneNumber: string;
-  usageInformation: string;
-  noticeInformation: string;
-}
-
 interface NewPopUpLayoutProps {
   children: React.ReactNode;
   handleSubmit: (
-    onSubmit: SubmitHandler<FormData>,
+    onSubmit: SubmitHandler<NewPopUpFormData>,
   ) => (e?: React.BaseSyntheticEvent) => Promise<void>;
-  onSubmit: SubmitHandler<FormData>;
+  onSubmit: SubmitHandler<NewPopUpFormData>;
 }
 
 const NewPopUpLayout = ({ children, handleSubmit, onSubmit }: NewPopUpLayoutProps) => {
@@ -38,7 +21,7 @@ const NewPopUpLayout = ({ children, handleSubmit, onSubmit }: NewPopUpLayoutProp
 
   return (
     <div>
-      <nav className="fixed z-10 h-12 w-full max-w-[400px] bg-black">
+      <nav className="fixed z-50 h-12 w-full max-w-[400px] bg-black">
         <Image
           onClick={() => router.back()}
           className="m-3 cursor-pointer"

@@ -1,5 +1,3 @@
-type NewPopUpInfoList = Record<NewPopUpInfo, NewPopUp>;
-
 type NewPopUpInfo =
   | 'name'
   | 'subTitle'
@@ -17,10 +15,30 @@ type NewPopUpInfo =
   | 'usageInformation'
   | 'noticeInformation';
 
-interface NewPopUp {
+interface NewPopUpFormData {
   name: string;
+  subTitle: string;
+  placeStart: number;
+  placeEnd: number;
+  numOfPeople: number;
+  hashTagList: string;
+  price: number;
+  discount: number;
+  description: string;
+  location: string;
+  locationDescription: string;
+  homepage: string;
+  phoneNumber: string;
+  usageInformation: string;
+  noticeInformation: string;
+}
+
+type NewPopUpInfoList = Record<NewPopUpInfo, NewPopUp>;
+
+interface NewPopUp {
+  name: NewPopUpInfo;
   display: string;
   placeholder: string;
 }
 
-export type { NewPopUpInfoList, NewPopUpInfo, NewPopUp };
+export type { NewPopUpFormData, NewPopUpInfoList, NewPopUpInfo, NewPopUp };
