@@ -1,5 +1,6 @@
 import Upload from '@assets/newPopUp/upload.svg';
 import ImageContainerComponent from '@components/newPopUp/imageContainer';
+import PlaceTypeDropdownComponent from '@components/newPopUp/placeTypeDropdown';
 import PopUpInputComponent from '@components/newPopUp/popUpInput';
 import PopUpTextareaComponent from '@components/newPopUp/popUpTextarea';
 import PriceInputComponents from '@components/newPopUp/priceInput';
@@ -118,8 +119,7 @@ const NewPopUpPage = () => {
         </div>
         <div className="flex flex-col gap-2">
           <p className="after:ml-1 after:text-red after:content-['*']">공간 유형</p>
-          {/* dropdown 구현 필요 */}
-          <div className="h-[44px] w-full rounded-lg border p-4">갤러리</div>
+          <PlaceTypeDropdownComponent control={control} />
         </div>
         <div className="flex flex-col gap-2">
           <p className="after:ml-1 after:text-red after:content-['*']">공간 영업 시간</p>

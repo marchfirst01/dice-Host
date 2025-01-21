@@ -18,6 +18,7 @@ type NewPopUpInfo =
 interface NewPopUpFormData {
   name: string;
   subTitle: string;
+  placeType: string;
   placeStart: number;
   placeEnd: number;
   numOfPeople: number;
