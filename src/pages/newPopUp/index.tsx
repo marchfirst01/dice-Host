@@ -2,17 +2,30 @@ import Upload from '@assets/newPopUp/upload.svg';
 import ImageContainerComponent from '@components/newPopUp/imageContainer';
 import PopUpInputComponent from '@components/newPopUp/popUpInput';
 import PopUpTextareaComponent from '@components/newPopUp/popUpTextarea';
+import PriceInputComponents from '@components/newPopUp/priceInput';
 import NewPopUpLayout from '@layout/newPopUpLayout';
 import { newPopUp } from '@lib/newPopUp/newPopUp';
+import discountPrice from '@lib/utils/discountPrice';
 import { NewPopUpFormData, NewPopUpInfo } from '@type/newPopUp/newPopUpTypes';
 
-import React, { ChangeEvent, useRef, useState } from 'react';
+import React, { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import Image from 'next/image';
 
 const NewPopUpPage = () => {
-  const { control, handleSubmit } = useForm<NewPopUpFormData>();
+  const { control, handleSubmit, watch } = useForm<NewPopUpFormData>();
+
+  const watchDiscountFields = watch('discount');
+  const watchPriceFields = watch('price');
+
+  const [formattedPrice, setFormattedPrice] = useState<string>();
+  useEffect(() => {
+    if (watchDiscountFields && watchPriceFields) {
+      const returnValue = discountPrice({ discount: watchDiscountFields, price: watchPriceFields });
+      setFormattedPrice(returnValue);
+    }
+  }, [watchDiscountFields, watchPriceFields, formattedPrice]);
 
   // 폼 제출
   const onSubmit: SubmitHandler<NewPopUpFormData> = (formData: NewPopUpFormData) => {
@@ -121,12 +134,19 @@ const NewPopUpPage = () => {
       <section>
         <p className="mb-6 font-SUB1 text-SUB1 leading-SUB1">공간 대여 가격 작성</p>
         <div className="flex flex-col gap-4">
-          {InputDiv('price')}
-          {InputDiv('discount')}
-          <div className="flex flex-row justify-end gap-2 font-SUB2 text-SUB2 leading-SUB2">
-            <p className="text-red">20% 할인</p>
-            <p>100,000원</p>
+          <div className="flex flex-col gap-2 font-CAP1 text-CAP1 leading-CAP1">
+            <p className="after:ml-1 after:text-red after:content-['*']">
+              {newPopUp.price.display}
+            </p>
+            <PriceInputComponents newPopUpInfo={newPopUp.price} control={control} />
           </div>
+          {InputDiv('discount')}
+          {watchDiscountFields && formattedPrice && (
+            <div className="flex flex-row justify-end gap-2 font-SUB2 text-SUB2 leading-SUB2">
+              <p className="text-red">{watchDiscountFields}% 할인</p>
+              <p>{formattedPrice}원</p>
+            </div>
+          )}
         </div>
       </section>
       <section>
