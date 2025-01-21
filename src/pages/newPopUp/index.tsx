@@ -6,9 +6,10 @@ import NewPopUpLayout from '@layout/newPopUpLayout';
 import { newPopUp } from '@lib/newPopUp/newPopUp';
 import { NewPopUpInfo } from '@type/newPopUp/newPopUpTypes';
 
-import React from 'react';
+import React, { ChangeEvent, useRef, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
+import { url } from 'inspector';
 import Image from 'next/image';
 
 interface FormData {
@@ -32,8 +33,33 @@ interface FormData {
 const NewPopUpPage = () => {
   const { control, handleSubmit } = useForm<FormData>();
 
+  // 폼 제출
   const onSubmit: SubmitHandler<FormData> = (formData: FormData) => {
     console.log(formData);
+  };
+
+  // 이미지 첨부 버튼 클릭
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const handleFileButtonClick = () => {
+    if (!fileInputRef.current) return;
+    fileInputRef.current.click();
+  };
+
+  // 사진 파일 첨부 후 전송
+  const [imageList, setImageList] = useState<string[]>([]);
+  const fileInputSubmit = (e: ChangeEvent<HTMLInputElement>) => {
+    const targetFile = e.target.files?.[0];
+
+    if (!targetFile) return;
+
+    const url = URL.createObjectURL(targetFile);
+    setImageList((prev) => [...prev, url]);
+  };
+
+  // 이미지 삭제
+  const handleDeleteImage = (urlToDelete: string) => {
+    setImageList((prev) => prev.filter((url) => url !== urlToDelete));
+    URL.revokeObjectURL(urlToDelete); // 메모리 해제
   };
 
   const InputDiv = (name: NewPopUpInfo, required: boolean = true) => (
@@ -63,21 +89,36 @@ const NewPopUpPage = () => {
           {/* 이미지 등록 컴포넌트 구현 필요 */}
           <div className="flex w-full max-w-[400px] flex-row gap-[6px]">
             {/* image upload input */}
-            <div className="mt-1 flex size-20 flex-shrink-0 cursor-pointer flex-col items-center justify-center rounded-xl border border-light_gray">
+            <input
+              ref={fileInputRef}
+              id="fileInput"
+              className="hidden"
+              type="file"
+              accept=".jpg, .png, .svg"
+              onChange={fileInputSubmit}
+            />
+            <div
+              onClick={handleFileButtonClick}
+              className="mt-1 flex size-20 flex-shrink-0 cursor-pointer flex-col items-center justify-center rounded-xl border border-light_gray"
+            >
               <Image src={Upload} alt="upload" />
               <div className="mt-0.5 flex flex-row gap-0.5 font-CAP2 text-CAP2 leading-CAP2">
                 <p>
-                  <span className="text-purple">2</span> / 10
+                  <span className="text-purple">{imageList.length}</span> / 10
                 </p>
               </div>
             </div>
             {/* upload image list */}
             <div className="flex flex-1 flex-row gap-[6px] overflow-auto pt-1">
-              <ImageContainerComponent />
-              <ImageContainerComponent />
-              <ImageContainerComponent />
-              <ImageContainerComponent />
-              <ImageContainerComponent />
+              {imageList.length > 0 &&
+                imageList.map((image, index) => (
+                  <ImageContainerComponent
+                    key={index}
+                    index={index}
+                    url={image}
+                    onDelete={() => handleDeleteImage(image)}
+                  />
+                ))}
             </div>
           </div>
         </div>

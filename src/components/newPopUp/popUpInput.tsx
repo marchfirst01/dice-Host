@@ -16,7 +16,7 @@ export default function PopUpInputComponent({
     <Controller
       name={newPopUpInfo.name}
       control={control}
-      render={({ field: { onChange, value } }) => (
+      render={({ field: { onChange, value = '' } }) => (
         <input
           className="h-[44px] w-full rounded-lg border p-4 font-CAP1 text-CAP1 leading-CAP1"
           onChange={onChange}
