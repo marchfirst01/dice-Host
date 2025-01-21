@@ -20,6 +20,9 @@ export default function formattedDiscountPrice({
     const stringDiscount = discount.toString();
     const numericDiscount = parseInt(stringDiscount.replace(/,/g, ''), 10);
     const returnValue = numericPrice - numericDiscount;
+    if (returnValue < 0) {
+      return 0;
+    }
     return returnValue;
   }
 }

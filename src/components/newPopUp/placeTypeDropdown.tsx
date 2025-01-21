@@ -45,7 +45,7 @@ export default function PlaceTypeDropdownComponent({ control }: PlaceTypeDropdow
             )}
           </button>
           {isMenuOpen && (
-            <div className="absolute top-11 mt-1 h-36 w-full overflow-auto rounded-lg border">
+            <div className="absolute top-11 mt-1 h-36 w-full overflow-auto rounded-lg border border-light_gray bg-white p-1">
               {placeType.map((place, index) => (
                 <div
                   onClick={() => {
@@ -53,7 +53,7 @@ export default function PlaceTypeDropdownComponent({ control }: PlaceTypeDropdow
                     setIsMenuOpen(!isMenuOpen);
                   }}
                   key={index}
-                  className="flex h-[44px] w-full flex-shrink-0 items-center border border-stroke bg-white px-4 first:rounded-t-lg last:rounded-b-lg"
+                  className="flex h-[44px] w-full flex-shrink-0 items-center rounded-lg bg-white px-4 text-light_gray hover:bg-back_gray hover:text-dark_gray"
                 >
                   {place}
                 </div>
