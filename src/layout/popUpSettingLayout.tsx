@@ -1,5 +1,5 @@
 import ArrowBack from '@assets/topNavigation/arrow-back.svg';
-import { NewPopUpFormData } from '@type/popUpSetting';
+import { PopUpFormData } from '@type/popUpSetting';
 
 import React, { useEffect, useState } from 'react';
 import { SubmitHandler } from 'react-hook-form';
@@ -10,12 +10,16 @@ import { useRouter } from 'next/router';
 interface NewPopUpLayoutProps {
   children: React.ReactNode;
   handleSubmit: (
-    onSubmit: SubmitHandler<NewPopUpFormData>,
+    onSubmit: SubmitHandler<PopUpFormData>,
   ) => (e?: React.BaseSyntheticEvent) => Promise<void>;
-  onSubmit: SubmitHandler<NewPopUpFormData>;
+  onSubmit: SubmitHandler<PopUpFormData>;
 }
 
-const NewPopUpLayout = ({ children, handleSubmit, onSubmit }: NewPopUpLayoutProps) => {
+export default function PopUpSettingLayout({
+  children,
+  handleSubmit,
+  onSubmit,
+}: NewPopUpLayoutProps) {
   const router = useRouter();
   const childrenArray = React.Children.toArray(children);
 
@@ -81,6 +85,4 @@ const NewPopUpLayout = ({ children, handleSubmit, onSubmit }: NewPopUpLayoutProp
       </footer>
     </div>
   );
-};
-
-export default NewPopUpLayout;
+}

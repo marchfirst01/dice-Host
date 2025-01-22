@@ -5,8 +5,7 @@ import PlaceTypeDropdownComponent from '@components/popUpSetting/placeTypeDropdo
 import PopUpInputComponent from '@components/popUpSetting/popUpInput';
 import PopUpTextareaComponent from '@components/popUpSetting/popUpTextarea';
 import PriceInputComponents from '@components/popUpSetting/priceInput';
-import NewPopUpLayout from '@layout/newPopUpLayout';
-import { newPopUp } from '@lib/newPopUp/newPopUp';
+import NewPopUpLayout from '@layout/popUpSettingLayout';
 import formattedDiscountPrice from '@lib/utils/formattedDiscountPrice';
 import { PopUpFormData, PopUpId } from '@type/popUpSetting';
 
@@ -14,6 +13,7 @@ import React, { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import Image from 'next/image';
+import { popUpConfigList } from 'src/context/popUpSetting/popUpConfig';
 
 export default function PopUpSettingPage() {
   const { control, handleSubmit, watch } = useForm<PopUpFormData>();
@@ -67,16 +67,18 @@ export default function PopUpSettingPage() {
   const InputDiv = (name: PopUpId, required: boolean = true) => (
     <div className="flex flex-col gap-2 font-CAP1 text-CAP1 leading-CAP1">
       <p className={`${required && "after:ml-1 after:text-red after:content-['*']"}`}>
-        {newPopUp[name].display}
+        {popUpConfigList[name].display}
       </p>
-      <PopUpInputComponent popUpConfig={newPopUp[name]} control={control} />
+      <PopUpInputComponent popUpConfig={popUpConfigList[name]} control={control} />
     </div>
   );
 
   const TextareaDiv = (name: PopUpId) => (
     <div className="flex flex-col gap-2 font-CAP1 text-CAP1 leading-CAP1">
-      <p className="after:ml-1 after:text-red after:content-['*']">{newPopUp[name].display}</p>
-      <PopUpTextareaComponent popUpConfig={newPopUp[name]} control={control} />
+      <p className="after:ml-1 after:text-red after:content-['*']">
+        {popUpConfigList[name].display}
+      </p>
+      <PopUpTextareaComponent popUpConfig={popUpConfigList[name]} control={control} />
     </div>
   );
 
@@ -131,8 +133,8 @@ export default function PopUpSettingPage() {
         <div className="flex flex-col gap-2">
           <p className="after:ml-1 after:text-red after:content-['*']">공간 영업 시간</p>
           <div className="flex flex-row items-center gap-1">
-            <PopUpInputComponent popUpConfig={newPopUp.placeStart} control={control} />
-            ~<PopUpInputComponent popUpConfig={newPopUp.placeEnd} control={control} />
+            <PopUpInputComponent popUpConfig={popUpConfigList.placeStart} control={control} />
+            ~<PopUpInputComponent popUpConfig={popUpConfigList.placeEnd} control={control} />
           </div>
         </div>
         {InputDiv('numOfPeople')}
@@ -143,13 +145,13 @@ export default function PopUpSettingPage() {
         <div className="flex flex-col gap-4">
           <div className="flex flex-col gap-2 font-CAP1 text-CAP1 leading-CAP1">
             <p className="after:ml-1 after:text-red after:content-['*']">
-              {newPopUp.price.display}
+              {popUpConfigList.price.display}
             </p>
-            <PriceInputComponents popUpConfig={newPopUp.price} control={control} />
+            <PriceInputComponents popUpConfig={popUpConfigList.price} control={control} />
           </div>
           <div className="flex flex-col gap-2 font-CAP1 text-CAP1 leading-CAP1">
             <p className="after:ml-1 after:text-red after:content-['*']">
-              {newPopUp.discount.display}
+              {popUpConfigList.discount.display}
             </p>
             <DiscountInputComponent
               control={control}
@@ -177,7 +179,7 @@ export default function PopUpSettingPage() {
         <div>
           <p className="after:ml-1 after:text-red after:content-['*']">위치</p>
           <div className="mb-1 mt-2 flex flex-row">
-            <PopUpInputComponent popUpConfig={newPopUp.location} control={control} />
+            <PopUpInputComponent popUpConfig={popUpConfigList.location} control={control} />
             <button
               onClick={() => console.log('api 연결하기')}
               className="ml-2 text-nowrap rounded-lg bg-light_gray px-[27.5px] py-[11.5px] text-white"
@@ -185,7 +187,10 @@ export default function PopUpSettingPage() {
               주소 검색
             </button>
           </div>
-          <PopUpInputComponent popUpConfig={newPopUp.locationDescription} control={control} />
+          <PopUpInputComponent
+            popUpConfig={popUpConfigList.locationDescription}
+            control={control}
+          />
         </div>
         {InputDiv('homepage', false)}
         {InputDiv('phoneNumber')}

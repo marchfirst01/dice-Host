@@ -1,6 +1,6 @@
 import { PopUpConfigList } from '@type/popUpSetting';
 
-export const newPopUp: PopUpConfigList = {
+export const popUpConfigList: PopUpConfigList = {
   name: { name: 'name', display: '공간 이름', placeholder: '팝업 공간의 이름을 입력해주세요' },
   subTitle: {
     name: 'subTitle',
