@@ -1,6 +1,6 @@
-import ArrowBack from '@assets/popUpDetail/arrow-back.svg';
 import Phone from '@assets/popUpDetail/phone.svg';
 import Send from '@assets/popUpDetail/send.svg';
+import ArrowBack from '@assets/topNavigation/arrow-back.svg';
 
 import React from 'react';
 

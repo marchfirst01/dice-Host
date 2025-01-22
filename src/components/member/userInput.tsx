@@ -1,16 +1,16 @@
 import Delete from '@assets/member/delete.svg';
 import EyeOff from '@assets/member/eye-off.svg';
 import EyeOn from '@assets/member/eye-on.svg';
-import { Member } from '@type/member';
+import { Member, MemberFormData } from '@type/member';
 
 import React, { useState } from 'react';
-import { Controller } from 'react-hook-form';
+import { Control, Controller } from 'react-hook-form';
 
 import Image from 'next/image';
 
 interface UserInputComponentProps {
   member: Member;
-  control: any;
+  control: Control<MemberFormData>;
 }
 
 export default function UserInputComponent({
