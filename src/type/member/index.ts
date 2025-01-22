@@ -1,14 +1,14 @@
-type MemberName = 'id' | 'password' | 'password_check' | 'name' | 'email' | 'phone' | 'auth';
+type MemberFormData = Record<MemberId, string>;
 
-type MemberFormData = Record<MemberName, string>;
+type MemberId = 'id' | 'password' | 'password_check' | 'name' | 'email' | 'phone' | 'auth';
 
-type MemberList = Record<MemberName, Member>;
-
-interface Member {
-  name: MemberName;
+interface MemberConfig {
+  name: MemberId;
   display: string;
   type: string;
   placeholder: string;
 }
 
-export type { MemberFormData, MemberList, MemberName, Member };
+type MemberConfigList = Record<MemberId, MemberConfig>;
+
+export type { MemberFormData, MemberConfigList, MemberId, MemberConfig };

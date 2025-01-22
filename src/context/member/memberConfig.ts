@@ -1,6 +1,6 @@
-import { MemberList, MemberName } from '@type/member';
+import { MemberConfigList, MemberId } from '@type/member';
 
-export const member: MemberList = {
+export const memberConfig: MemberConfigList = {
   id: { name: 'id', display: '아이디', type: 'default', placeholder: '아이디를 입력해주세요' },
   password: {
     name: 'password',
@@ -20,4 +20,4 @@ export const member: MemberList = {
   auth: { name: 'auth', display: '', type: 'default', placeholder: '인증번호 받기' },
 };
 
-export const memberList: MemberName[] = ['id', 'password', 'password_check', 'name', 'email'];
+export const memberIdList: MemberId[] = ['id', 'password', 'password_check', 'name', 'email'];

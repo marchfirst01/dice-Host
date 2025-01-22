@@ -1,4 +1,5 @@
 import { IMAGES } from '@assets/index';
+import RegisterFormButtonComponent from '@components/common/registerFormButton';
 import { PopUpFormData } from '@type/popUpSetting';
 
 import React, { useEffect, useState } from 'react';
@@ -76,12 +77,9 @@ export default function PopUpSettingLayout({
         ))}
       </div>
       <footer className="fixed bottom-0 z-10 flex h-[84px] w-full max-w-[400px] flex-row items-center gap-3 border-t border-stroke bg-white px-5 py-4">
-        <button
-          onClick={handleSubmit(onSubmit)}
-          className="flex h-full w-full cursor-pointer flex-row items-center justify-center gap-2 rounded-lg bg-black text-white"
-        >
+        <RegisterFormButtonComponent<PopUpFormData> handleSubmit={handleSubmit} onSubmit={onSubmit}>
           <p>작성 완료</p>
-        </button>
+        </RegisterFormButtonComponent>
       </footer>
     </div>
   );

@@ -1,7 +1,6 @@
 import { IMAGES } from '@assets/index';
 import RegisterFormButtonComponent from '@components/common/registerFormButton';
 import UserInputComponent from '@components/member/userInput';
-import { member } from '@lib/member/member';
 import { MemberFormData } from '@type/member';
 
 import React from 'react';
@@ -9,6 +8,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 
 import Image from 'next/image';
 import { useRouter } from 'next/router';
+import { memberConfig } from 'src/context/member/memberConfig';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -30,8 +30,8 @@ export default function LoginPage() {
       />
       <p className="w-full font-H1 text-H1 leading-H1">로그인</p>
       <div className="flex w-full flex-col gap-3">
-        <UserInputComponent member={member.id} control={control} />
-        <UserInputComponent member={member.password} control={control} />
+        <UserInputComponent memberConfig={memberConfig.id} control={control} />
+        <UserInputComponent memberConfig={memberConfig.password} control={control} />
       </div>
       <div className="flex w-full flex-col items-center gap-3">
         <RegisterFormButtonComponent<MemberFormData>

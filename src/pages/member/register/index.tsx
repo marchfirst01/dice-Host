@@ -1,13 +1,13 @@
 import { IMAGES } from '@assets/index';
 import RegisterFormButtonComponent from '@components/common/registerFormButton';
 import UserInputComponent from '@components/member/userInput';
-import { member, memberList } from '@lib/member/member';
 import { MemberFormData } from '@type/member';
 
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import Image from 'next/image';
 import { useRouter } from 'next/router';
+import { memberConfig, memberIdList } from 'src/context/member/memberConfig';
 
 const RegisterPage = () => {
   const router = useRouter();
@@ -29,20 +29,24 @@ const RegisterPage = () => {
       />
       <p className="w-full font-H1 text-H1 leading-H1">회원가입</p>
       <div className="flex flex-col gap-6 overflow-scroll">
-        {memberList.map((id) => (
+        {memberIdList.map((id) => (
           <div className="w-full">
-            <p className="after:ml-0.5 after:text-red after:content-['*']">{member[id].display}</p>
-            <UserInputComponent member={member[id]} control={control} />
+            <p className="after:ml-0.5 after:text-red after:content-['*']">
+              {memberConfig[id].display}
+            </p>
+            <UserInputComponent memberConfig={memberConfig[id]} control={control} />
           </div>
         ))}
         <div>
-          <p className="after:ml-0.5 after:text-red after:content-['*']">{member.phone.display}</p>
+          <p className="after:ml-0.5 after:text-red after:content-['*']">
+            {memberConfig.phone.display}
+          </p>
           <div className="flex w-full flex-row gap-2">
             <div className="w-[90%]">
-              <UserInputComponent member={member.phone} control={control} />
+              <UserInputComponent memberConfig={memberConfig.phone} control={control} />
             </div>
             <div>
-              <UserInputComponent member={member.auth} control={control} />
+              <UserInputComponent memberConfig={memberConfig.auth} control={control} />
             </div>
           </div>
         </div>
