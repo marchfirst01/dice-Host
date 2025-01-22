@@ -1,5 +1,5 @@
-import BottomNavigationComponent from '@components/bottomNavigation.tsx/bottomNavigation';
-import TopNavigation from '@components/topNavigation/topNavigation';
+import MainFooterComponent from '@components/mainFooter/mainFooter';
+import MainHeaderComponent from '@components/mainHeader/mainHeader';
 
 import React, { Dispatch, SetStateAction } from 'react';
 
@@ -12,9 +12,9 @@ export default function MainLayout({
 }) {
   return (
     <div>
-      <TopNavigation />
+      <MainHeaderComponent />
       <div className="px-5 pb-[85px] pt-[57.25px]">{children}</div>
-      <BottomNavigationComponent setPageType={setPageType} />
+      <MainFooterComponent setPageType={setPageType} />
     </div>
   );
 }

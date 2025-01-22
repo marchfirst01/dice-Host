@@ -4,7 +4,7 @@ import React, { Dispatch, SetStateAction } from 'react';
 
 import Image from 'next/image';
 
-export default function BottomNavigationComponent({
+export default function MainFooterComponent({
   setPageType,
 }: {
   setPageType: Dispatch<SetStateAction<'popUp' | 'recruit' | 'my'>>;

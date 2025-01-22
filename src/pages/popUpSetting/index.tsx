@@ -93,7 +93,6 @@ export default function PopUpSettingPage() {
         </DivLayout>
         <div className="flex flex-col gap-1">
           <p className="after:ml-1 after:text-red after:content-['*']">이미지 등록(최대 10장)</p>
-          {/* 이미지 등록 컴포넌트 구현 필요 */}
           <div className="flex w-full max-w-[400px] flex-row gap-[6px]">
             {/* image upload input */}
             <input
