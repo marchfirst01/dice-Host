@@ -64,30 +64,33 @@ export default function PopUpSettingPage() {
     URL.revokeObjectURL(urlToDelete);
   };
 
-  const InputDiv = (name: PopUpId, required: boolean = true) => (
-    <div className="flex flex-col gap-2 font-CAP1 text-CAP1 leading-CAP1">
-      <p className={`${required && "after:ml-1 after:text-red after:content-['*']"}`}>
-        {popUpConfigList[name].display}
-      </p>
-      <PopUpInputComponent popUpConfig={popUpConfigList[name]} control={control} />
-    </div>
-  );
+  interface DivLayoutProps {
+    name: PopUpId;
+    required?: boolean;
+    children: React.ReactNode;
+  }
 
-  const TextareaDiv = (name: PopUpId) => (
-    <div className="flex flex-col gap-2 font-CAP1 text-CAP1 leading-CAP1">
-      <p className="after:ml-1 after:text-red after:content-['*']">
-        {popUpConfigList[name].display}
-      </p>
-      <PopUpTextareaComponent popUpConfig={popUpConfigList[name]} control={control} />
-    </div>
-  );
+  const DivLayout = ({ name, required = true, children }: DivLayoutProps) => {
+    return (
+      <div className="flex flex-col gap-2 font-CAP1 text-CAP1 leading-CAP1">
+        <p className={`${required && "after:ml-1 after:text-red after:content-['*']"}`}>
+          {popUpConfigList[name].display}
+        </p>
+        {children}
+      </div>
+    );
+  };
 
   return (
     <PopUpSettingLayout handleSubmit={handleSubmit} onSubmit={onSubmit}>
       <section className="flex flex-col gap-6 font-CAP1 text-CAP1 leading-CAP1">
         <p className="font-SUB1 text-SUB1 leading-SUB1">필수 정보 작성</p>
-        {InputDiv('name')}
-        {InputDiv('subTitle')}
+        <DivLayout name="name">
+          <PopUpInputComponent popUpConfig={popUpConfigList.name} control={control} />
+        </DivLayout>
+        <DivLayout name="subTitle">
+          <PopUpInputComponent popUpConfig={popUpConfigList.subTitle} control={control} />
+        </DivLayout>
         <div className="flex flex-col gap-1">
           <p className="after:ml-1 after:text-red after:content-['*']">이미지 등록(최대 10장)</p>
           {/* 이미지 등록 컴포넌트 구현 필요 */}
@@ -137,8 +140,12 @@ export default function PopUpSettingPage() {
             ~<PopUpInputComponent popUpConfig={popUpConfigList.placeEnd} control={control} />
           </div>
         </div>
-        {InputDiv('numOfPeople')}
-        {InputDiv('hashTagList')}
+        <DivLayout name="numOfPeople">
+          <PopUpInputComponent popUpConfig={popUpConfigList.numOfPeople} control={control} />
+        </DivLayout>
+        <DivLayout name="hashTagList">
+          <PopUpInputComponent popUpConfig={popUpConfigList.hashTagList} control={control} />
+        </DivLayout>
       </section>
       <section>
         <p className="mb-6 font-SUB1 text-SUB1 leading-SUB1">공간 대여 가격 작성</p>
@@ -172,7 +179,9 @@ export default function PopUpSettingPage() {
       </section>
       <section>
         <p className="mb-6 font-SUB1 text-SUB1 leading-SUB1">공간 소개글 작성</p>
-        {TextareaDiv('description')}
+        <DivLayout name="description">
+          <PopUpTextareaComponent popUpConfig={popUpConfigList.description} control={control} />
+        </DivLayout>
       </section>
       <section className="flex flex-col gap-6 font-CAP1 text-CAP1 leading-CAP1">
         <p className="font-SUB1 text-SUB1 leading-SUB1">위치 안내 작성</p>
@@ -192,13 +201,27 @@ export default function PopUpSettingPage() {
             control={control}
           />
         </div>
-        {InputDiv('homepage', false)}
-        {InputDiv('phoneNumber')}
+        <DivLayout name="homepage" required={false}>
+          <PopUpInputComponent popUpConfig={popUpConfigList.homepage} control={control} />
+        </DivLayout>
+        <DivLayout name="phoneNumber">
+          <PopUpInputComponent popUpConfig={popUpConfigList.phoneNumber} control={control} />
+        </DivLayout>
       </section>
       <section className="flex flex-col gap-6">
         <p className="font-SUB1 text-SUB1 leading-SUB1">시설 이용 및 공지사항 안내 작성</p>
-        {TextareaDiv('usageInformation')}
-        {TextareaDiv('noticeInformation')}
+        <DivLayout name="usageInformation">
+          <PopUpTextareaComponent
+            popUpConfig={popUpConfigList.usageInformation}
+            control={control}
+          />
+        </DivLayout>
+        <DivLayout name="noticeInformation">
+          <PopUpTextareaComponent
+            popUpConfig={popUpConfigList.noticeInformation}
+            control={control}
+          />
+        </DivLayout>
       </section>
     </PopUpSettingLayout>
   );
