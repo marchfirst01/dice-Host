@@ -5,7 +5,7 @@ import PlaceTypeDropdownComponent from '@components/popUpSetting/placeTypeDropdo
 import PopUpInputComponent from '@components/popUpSetting/popUpInput';
 import PopUpTextareaComponent from '@components/popUpSetting/popUpTextarea';
 import PriceInputComponents from '@components/popUpSetting/priceInput';
-import NewPopUpLayout from '@layout/popUpSettingLayout';
+import PopUpSettingLayout from '@layout/popUpSettingLayout';
 import formattedDiscountPrice from '@lib/utils/formattedDiscountPrice';
 import { PopUpFormData, PopUpId } from '@type/popUpSetting';
 
@@ -83,7 +83,7 @@ export default function PopUpSettingPage() {
   );
 
   return (
-    <NewPopUpLayout handleSubmit={handleSubmit} onSubmit={onSubmit}>
+    <PopUpSettingLayout handleSubmit={handleSubmit} onSubmit={onSubmit}>
       <section className="flex flex-col gap-6 font-CAP1 text-CAP1 leading-CAP1">
         <p className="font-SUB1 text-SUB1 leading-SUB1">필수 정보 작성</p>
         {InputDiv('name')}
@@ -200,6 +200,6 @@ export default function PopUpSettingPage() {
         {TextareaDiv('usageInformation')}
         {TextareaDiv('noticeInformation')}
       </section>
-    </NewPopUpLayout>
+    </PopUpSettingLayout>
   );
 }

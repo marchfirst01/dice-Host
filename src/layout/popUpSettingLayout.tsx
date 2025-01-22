@@ -7,7 +7,7 @@ import { SubmitHandler } from 'react-hook-form';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 
-interface NewPopUpLayoutProps {
+interface PopUpSettingLayoutProps {
   children: React.ReactNode;
   handleSubmit: (
     onSubmit: SubmitHandler<PopUpFormData>,
@@ -19,7 +19,7 @@ export default function PopUpSettingLayout({
   children,
   handleSubmit,
   onSubmit,
-}: NewPopUpLayoutProps) {
+}: PopUpSettingLayoutProps) {
   const router = useRouter();
   const childrenArray = React.Children.toArray(children);
 
