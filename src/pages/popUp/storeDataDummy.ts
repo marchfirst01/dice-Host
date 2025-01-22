@@ -1,4 +1,6 @@
-export const dummyData = [
+import { StoreData } from '@type/popUp';
+
+export const storeDataDummy: StoreData[] = [
   {
     id: 1,
     thumbnail: 'https://placehold.co/600x400/png',

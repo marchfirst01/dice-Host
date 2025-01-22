@@ -4,12 +4,12 @@ import PopUpItem from '@components/popUp/popUpItem';
 
 import React, { useState } from 'react';
 
-import { dummyData } from './dummy';
+import { storeDataDummy } from './storeDataDummy';
 
 const FilterType = ['지역', '가격', '수용인원', '인기순'];
 
 export default function PopUpPage() {
-  const [popUpData] = useState(dummyData);
+  const [popUpData] = useState(storeDataDummy);
   return (
     <div>
       <Header />
@@ -21,7 +21,7 @@ export default function PopUpPage() {
       </div>
       <div className="flex flex-col gap-4">
         {popUpData.map((popUp) => (
-          <PopUpItem storeData={popUp} key={popUp.id} />
+          <PopUpItem key={popUp.id} storeData={popUp} />
         ))}
       </div>
     </div>
