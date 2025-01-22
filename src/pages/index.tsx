@@ -1,5 +1,4 @@
-import DiceWhite from '@assets/home/dice-white.svg';
-import LogoBlack from '@assets/home/logo-black.svg';
+import { IMAGES } from '@assets/index';
 
 import Image from 'next/image';
 import { useRouter } from 'next/router';
@@ -10,7 +9,7 @@ export default function Home() {
   return (
     <div className="flex h-screen flex-col items-center justify-center">
       <div className="space-y-4">
-        <Image src={LogoBlack} alt="로고 이미지" />
+        <Image src={IMAGES.LogoBlack} alt="로고 이미지" />
         <p className="text-center font-SUB2 text-SUB2">팝업 운영 올인원 솔루션</p>
       </div>
 
@@ -19,7 +18,7 @@ export default function Home() {
           onClick={() => router.push(`/login`)}
           className="flex w-full flex-row items-center justify-center space-x-2 rounded-lg bg-black p-4"
         >
-          <Image src={DiceWhite} alt="주사위" />
+          <Image src={IMAGES.DiceWhite} alt="주사위" />
           <p className="font-BTN1 text-BTN1 text-white">다이스 아이디로 로그인</p>
         </button>
 

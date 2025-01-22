@@ -1,7 +1,4 @@
-import Globe from '@assets/popUpDetail/globe.svg';
-import ArrowDown from '@assets/popUpDetail/gray-arrow-down.svg';
-import ArrowUp from '@assets/popUpDetail/gray-arrow-up.svg';
-import PlaceMarker from '@assets/popUpDetail/place-marker.svg';
+import { IMAGES } from '@assets/index';
 import PopUpDetailLayout from '@layout/popUpDetailLayout';
 
 import React, { useState } from 'react';
@@ -94,8 +91,8 @@ const PopUpDetailPage = () => {
           </button>
           {isDescriptionDetailView ? (
             <Image
-              className="absolute right-0 top-0 mx-4 translate-y-1/2"
-              src={ArrowUp}
+              className="absolute right-0 top-0 mx-4 translate-y-1/2 rotate-180"
+              src={IMAGES.ArrowDownGray}
               alt="arrow-down"
               width={24}
               height={24}
@@ -103,7 +100,7 @@ const PopUpDetailPage = () => {
           ) : (
             <Image
               className="absolute right-0 top-0 mx-4 translate-y-1/2"
-              src={ArrowDown}
+              src={IMAGES.ArrowDownGray}
               alt="arrow-down"
               width={24}
               height={24}
@@ -116,7 +113,7 @@ const PopUpDetailPage = () => {
         <div>
           <div className="flex flex-row justify-between">
             <div className="flex flex-row">
-              <Image src={PlaceMarker} alt="place-marker" width={24} height={24} />
+              <Image src={IMAGES.PlaceMarker} alt="place-marker" width={24} height={24} />
               <p className="font-BODY1 text-BODY1 leading-BODY1 text-dark_gray">
                 {dummyData.location}
               </p>
@@ -139,7 +136,7 @@ const PopUpDetailPage = () => {
           onClick={() => window.open(dummyData.homepage)}
           className="flex h-[52px] w-full cursor-pointer flex-row items-center justify-center gap-1 rounded-lg border border-stroke text-medium_gray"
         >
-          <Image className="" src={Globe} alt="globe" width={24} height={24} />
+          <Image className="" src={IMAGES.Globe} alt="globe" width={24} height={24} />
           웹사이트 바로가기
         </button>
       </section>
@@ -162,8 +159,8 @@ const PopUpDetailPage = () => {
           </button>
           {isUsageDetailView ? (
             <Image
-              className="absolute right-0 top-0 mx-4 translate-y-1/2"
-              src={ArrowUp}
+              className="absolute right-0 top-0 mx-4 translate-y-1/2 rotate-180"
+              src={IMAGES.ArrowDownGray}
               alt="arrow-down"
               width={24}
               height={24}
@@ -171,7 +168,7 @@ const PopUpDetailPage = () => {
           ) : (
             <Image
               className="absolute right-0 top-0 mx-4 translate-y-1/2"
-              src={ArrowDown}
+              src={IMAGES.ArrowDownGray}
               alt="arrow-down"
               width={24}
               height={24}

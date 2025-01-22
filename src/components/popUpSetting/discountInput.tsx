@@ -1,5 +1,4 @@
-import ArrowDown from '@assets/popUpDetail/gray-arrow-down.svg';
-import ArrowUp from '@assets/popUpDetail/gray-arrow-up.svg';
+import { IMAGES } from '@assets/index';
 import { PopUpFormData } from '@type/popUpSetting';
 
 import React, { Dispatch, SetStateAction, useState } from 'react';
@@ -74,9 +73,9 @@ export default function DiscountInputComponent({
           >
             {discountType}
             {isMenuOpen ? (
-              <Image src={ArrowUp} alt="arrow-up" />
+              <Image className="rotate-180" src={IMAGES.ArrowDownGray} alt="arrow-up" />
             ) : (
-              <Image src={ArrowDown} alt="arrow-down" />
+              <Image src={IMAGES.ArrowDownGray} alt="arrow-down" />
             )}
             {isMenuOpen && (
               <div

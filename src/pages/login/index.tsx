@@ -1,4 +1,4 @@
-import Close from '@assets/member/close.svg';
+import { IMAGES } from '@assets/index';
 import CommonButtonComponent from '@components/common/commonButton';
 import UserInputComponent from '@components/member/userInput';
 import { member } from '@lib/member/member';
@@ -23,7 +23,7 @@ export default function LoginPage() {
       <Image
         onClick={() => router.back()}
         className="absolute left-0 top-0 m-3 cursor-pointer"
-        src={Close}
+        src={IMAGES.Close}
         width={12}
         height={12}
         alt="close"

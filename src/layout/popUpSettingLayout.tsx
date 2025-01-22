@@ -1,4 +1,4 @@
-import ArrowBack from '@assets/topNavigation/arrow-back.svg';
+import { IMAGES } from '@assets/index';
 import { PopUpFormData } from '@type/popUpSetting';
 
 import React, { useEffect, useState } from 'react';
@@ -48,7 +48,7 @@ export default function PopUpSettingLayout({
           <Image
             onClick={() => router.back()}
             className="absolute left-0 top-0 m-3 cursor-pointer"
-            src={ArrowBack}
+            src={IMAGES.ArrowBackWhite}
             alt="arrow-back"
             width={24}
             height={24}

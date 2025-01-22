@@ -1,4 +1,4 @@
-import Heart from '@assets/topNavigation/heart.svg';
+import { IMAGES } from '@assets/index';
 
 import React from 'react';
 
@@ -51,7 +51,7 @@ export default function PopUpItem({
           {/* 추후 숫자 포맷 함수 추가 필요 */}
           <p className="font-SUB1 text-SUB1 leading-SUB1 text-purple">{storeData.price}원</p>
         </div>
-        <Image className="absolute right-0 top-[17px] m-6" src={Heart} alt="heart" />
+        <Image className="absolute right-0 top-[17px] m-6" src={IMAGES.Heart} alt="heart" />
       </div>
     </div>
   );

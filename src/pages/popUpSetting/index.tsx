@@ -1,4 +1,4 @@
-import Upload from '@assets/newPopUp/upload.svg';
+import { IMAGES } from '@assets/index';
 import DiscountInputComponent from '@components/popUpSetting/discountInput';
 import ImageContainerComponent from '@components/popUpSetting/imageContainer';
 import PlaceTypeDropdownComponent from '@components/popUpSetting/placeTypeDropdown';
@@ -105,7 +105,7 @@ export default function PopUpSettingPage() {
               onClick={handleFileButtonClick}
               className="mt-1 flex size-20 flex-shrink-0 cursor-pointer flex-col items-center justify-center rounded-xl border border-light_gray"
             >
-              <Image src={Upload} alt="upload" />
+              <Image src={IMAGES.ImageUpload} alt="upload" />
               <div className="mt-0.5 flex flex-row gap-0.5 font-CAP2 text-CAP2 leading-CAP2">
                 <p>
                   <span className="text-purple">{imageList.length}</span> / 10

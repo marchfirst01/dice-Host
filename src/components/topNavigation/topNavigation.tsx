@@ -1,6 +1,4 @@
-import LogoWhite from '@assets/home/logo-white.svg';
-import Chat from '@assets/topNavigation/chat.svg';
-import Heart from '@assets/topNavigation/heart.svg';
+import { IMAGES } from '@assets/index';
 
 import React from 'react';
 
@@ -15,7 +13,7 @@ export default function TopNavigation() {
       <Image
         onClick={() => router.push('/')}
         className="cursor-pointer"
-        src={LogoWhite}
+        src={IMAGES.LogoWhite}
         alt="로고이미지"
         width={70}
         height={25}
@@ -24,7 +22,7 @@ export default function TopNavigation() {
         <Image
           onClick={() => console.log('좋아요 페이지 이동')}
           className="cursor-pointer"
-          src={Heart}
+          src={IMAGES.Heart}
           width={24}
           height={24}
           alt="좋아요 이미지"
@@ -32,7 +30,7 @@ export default function TopNavigation() {
         <Image
           onClick={() => console.log('쪽지 페이지 이동')}
           className="cursor-pointer"
-          src={Chat}
+          src={IMAGES.Chat}
           width={24}
           height={24}
           alt="쪽지 이미지"

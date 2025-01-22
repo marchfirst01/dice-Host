@@ -1,5 +1,4 @@
-import ArrowDown from '@assets/popUpDetail/gray-arrow-down.svg';
-import ArrowUp from '@assets/popUpDetail/gray-arrow-up.svg';
+import { IMAGES } from '@assets/index';
 import { PopUpFormData } from '@type/popUpSetting';
 
 import { useState } from 'react';
@@ -28,8 +27,8 @@ export default function PlaceTypeDropdownComponent({ control }: PlaceTypeDropdow
             {value ? value : '공간 유형을 선택해주세요'}
             {isMenuOpen ? (
               <Image
-                className="absolute right-0 top-0 mx-4 translate-y-1/2"
-                src={ArrowUp}
+                className="absolute right-0 top-0 mx-4 translate-y-1/2 rotate-180"
+                src={IMAGES.ArrowDownGray}
                 alt="arrow-down"
                 width={24}
                 height={24}
@@ -37,7 +36,7 @@ export default function PlaceTypeDropdownComponent({ control }: PlaceTypeDropdow
             ) : (
               <Image
                 className="absolute right-0 top-0 mx-4 translate-y-1/2"
-                src={ArrowDown}
+                src={IMAGES.ArrowDownGray}
                 alt="arrow-down"
                 width={24}
                 height={24}

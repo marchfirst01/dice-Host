@@ -1,4 +1,4 @@
-import Search from '@assets/popUp/search.svg';
+import { IMAGES } from '@assets/index';
 
 import React from 'react';
 
@@ -13,7 +13,7 @@ export default function PopUpSearch() {
       />
       <Image
         className="absolute left-[13px] top-1/2 -translate-y-1/2"
-        src={Search}
+        src={IMAGES.Search}
         alt="검색 이미지"
       />
     </div>

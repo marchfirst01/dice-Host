@@ -1,6 +1,4 @@
-import Phone from '@assets/popUpDetail/phone.svg';
-import Send from '@assets/popUpDetail/send.svg';
-import ArrowBack from '@assets/topNavigation/arrow-back.svg';
+import { IMAGES } from '@assets/index';
 
 import React from 'react';
 
@@ -17,7 +15,7 @@ export default function PopUpDetailLayout({ children }: { children: React.ReactN
         <Image
           onClick={() => router.back()}
           className="m-3 cursor-pointer"
-          src={ArrowBack}
+          src={IMAGES.ArrowBackWhite}
           alt="arrow-back"
           width={24}
           height={24}
@@ -44,13 +42,13 @@ export default function PopUpDetailLayout({ children }: { children: React.ReactN
           onClick={() => console.log('전화 걸기')}
           className="size-[52px] cursor-pointer rounded-lg border border-stroke p-[14px]"
         >
-          <Image className="size-6" src={Phone} alt="phone" width={24} height={24} />
+          <Image className="size-6" src={IMAGES.Phone} alt="phone" width={24} height={24} />
         </div>
         <button
           onClick={() => console.log('쪽지 보내기')}
           className="flex h-full w-full cursor-pointer flex-row items-center justify-center gap-2 rounded-lg bg-black text-white"
         >
-          <Image src={Send} alt="send" />
+          <Image src={IMAGES.Send} alt="send" />
           <p>쪽지 보내기</p>
         </button>
       </nav>

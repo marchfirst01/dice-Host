@@ -1,4 +1,4 @@
-import ArrowDown from '@assets/popUp/gray-arrow-down.svg';
+import { IMAGES } from '@assets/index';
 
 import React from 'react';
 
@@ -18,7 +18,7 @@ const FilterComponent = ({
       className="flex cursor-pointer flex-row items-center gap-1 rounded-full border bg-back_gray py-[5.5px] pl-3 pr-2 font-BTN1 text-BTN1 leading-BTN1 text-deep_gray"
     >
       {filter}
-      <Image src={ArrowDown} alt="arrow-down" />
+      <Image src={IMAGES.ArrowDownGray} alt="arrow-down" />
     </div>
   );
 };

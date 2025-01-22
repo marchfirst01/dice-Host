@@ -1,5 +1,4 @@
-import Delete from '@assets/newPopUp/image-delete.svg';
-import HeaderBack from '@assets/popUp/headerBack.svg';
+import { IMAGES } from '@assets/index';
 
 import React from 'react';
 
@@ -19,7 +18,7 @@ export default function ImageContainerComponent({
       <Image
         onClick={onDelete}
         className="absolute -right-[6px] -top-[6px] z-10 cursor-pointer"
-        src={Delete}
+        src={IMAGES.ImageDelete}
         alt="delete"
       />
       <Image className="rounded-xl" src={url} alt="header-back" layout="fill" objectFit="cover" />
