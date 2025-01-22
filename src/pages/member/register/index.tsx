@@ -1,5 +1,5 @@
 import { IMAGES } from '@assets/index';
-import CommonButtonComponent from '@components/common/commonButton';
+import RegisterFormButtonComponent from '@components/common/registerFormButton';
 import UserInputComponent from '@components/member/userInput';
 import { member, memberList } from '@lib/member/member';
 import { MemberFormData } from '@type/member';
@@ -16,6 +16,7 @@ const RegisterPage = () => {
   const onSubmit: SubmitHandler<MemberFormData> = (formData: MemberFormData) => {
     console.log(formData);
   };
+
   return (
     <div className="relative flex h-screen w-full flex-col items-center justify-center gap-6 px-5 pb-24 pt-20">
       <Image
@@ -47,7 +48,9 @@ const RegisterPage = () => {
         </div>
       </div>
       <div className="absolute bottom-0 my-5 flex w-full flex-col items-center gap-3 px-5">
-        <CommonButtonComponent onClick={handleSubmit(onSubmit)}>회원가입</CommonButtonComponent>
+        <RegisterFormButtonComponent handleSubmit={handleSubmit} onSubmit={onSubmit}>
+          회원가입
+        </RegisterFormButtonComponent>
       </div>
     </div>
   );

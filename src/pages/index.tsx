@@ -15,7 +15,7 @@ export default function Home() {
 
       <div className="fixed bottom-[34px] space-y-[11px] pb-5 pt-4">
         <button
-          onClick={() => router.push(`/login`)}
+          onClick={() => router.push(`/member/login`)}
           className="flex w-full flex-row items-center justify-center space-x-2 rounded-lg bg-black p-4"
         >
           <Image src={IMAGES.DiceWhite} alt="주사위" />
@@ -24,7 +24,7 @@ export default function Home() {
 
         <div className="flex flex-row items-center justify-center">
           <button
-            onClick={() => router.push(`/register`)}
+            onClick={() => router.push(`/member/register`)}
             className="px-4 py-2.5 font-BTN1 text-BTN1 text-medium_gray underline"
           >
             회원으로 가입하기

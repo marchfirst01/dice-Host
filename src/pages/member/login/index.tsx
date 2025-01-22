@@ -1,5 +1,5 @@
 import { IMAGES } from '@assets/index';
-import CommonButtonComponent from '@components/common/commonButton';
+import RegisterFormButtonComponent from '@components/common/registerFormButton';
 import UserInputComponent from '@components/member/userInput';
 import { member } from '@lib/member/member';
 import { MemberFormData } from '@type/member';
@@ -34,7 +34,12 @@ export default function LoginPage() {
         <UserInputComponent member={member.password} control={control} />
       </div>
       <div className="flex w-full flex-col items-center gap-3">
-        <CommonButtonComponent onClick={handleSubmit(onSubmit)}>로그인</CommonButtonComponent>
+        <RegisterFormButtonComponent<MemberFormData>
+          handleSubmit={handleSubmit}
+          onSubmit={onSubmit}
+        >
+          로그인
+        </RegisterFormButtonComponent>
         <div className="flex flex-row gap-4 font-BTN1 text-BTN1 leading-BTN1 text-medium_gray">
           <p className="cursor-pointer font-BTN1 text-BTN1 leading-BTN1">아이디 찾기</p>
           <p>|</p>
