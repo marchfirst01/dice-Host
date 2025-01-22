@@ -1,7 +1,5 @@
-import Delete from '@assets/member/delete.svg';
-import EyeOff from '@assets/member/eye-off.svg';
-import EyeOn from '@assets/member/eye-on.svg';
-import { Member, MemberFormData } from '@type/member';
+import { IMAGES } from '@assets/index';
+import { MemberConfig, MemberFormData } from '@type/member';
 
 import React, { useState } from 'react';
 import { Control, Controller } from 'react-hook-form';
@@ -9,45 +7,45 @@ import { Control, Controller } from 'react-hook-form';
 import Image from 'next/image';
 
 interface UserInputComponentProps {
-  member: Member;
+  memberConfig: MemberConfig;
   control: Control<MemberFormData>;
 }
 
 export default function UserInputComponent({
-  member,
+  memberConfig,
   control,
 }: UserInputComponentProps): React.ReactElement<UserInputComponentProps> {
   const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false);
 
   return (
     <Controller
-      name={member.name}
+      name={memberConfig.name}
       control={control}
       render={({ field: { onChange, value } }) => (
         <div className="relative w-full">
           <input
             className="h-[44px] w-full rounded-lg border p-4"
-            type={member.type === 'default' || isPasswordVisible ? 'default' : 'password'}
-            placeholder={member.placeholder}
+            type={memberConfig.type === 'default' || isPasswordVisible ? 'default' : 'password'}
+            placeholder={memberConfig.placeholder}
             onChange={onChange}
             value={value}
           />
           {value ? (
             <Image
               onClick={() => onChange('')}
-              className={`absolute top-0 m-[13px] ${member.type === 'password' ? 'right-11' : 'right-0'}`}
-              src={Delete}
+              className={`absolute top-0 m-[13px] ${memberConfig.type === 'password' ? 'right-11' : 'right-0'}`}
+              src={IMAGES.Delete}
               width={18}
               height={18}
               alt="delete"
             />
           ) : null}
-          {member.type === 'password' ? (
+          {memberConfig.type === 'password' ? (
             isPasswordVisible ? (
               <Image
                 onClick={() => setIsPasswordVisible(false)}
                 className="absolute right-0 top-0 m-[13px]"
-                src={EyeOn}
+                src={IMAGES.EyeOn}
                 width={18}
                 height={18}
                 alt="eye-on"
@@ -56,7 +54,7 @@ export default function UserInputComponent({
               <Image
                 onClick={() => setIsPasswordVisible(true)}
                 className="absolute right-0 top-0 m-[13px]"
-                src={EyeOff}
+                src={IMAGES.EyeOff}
                 width={18}
                 height={18}
                 alt="eye-off"
