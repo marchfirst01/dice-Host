@@ -1,5 +1,5 @@
 import ArrowBack from '@assets/topNavigation/arrow-back.svg';
-import { NewPopUpFormData } from '@type/newPopUp/newPopUpTypes';
+import { NewPopUpFormData } from '@type/popUpSetting';
 
 import React, { useEffect, useState } from 'react';
 import { SubmitHandler } from 'react-hook-form';

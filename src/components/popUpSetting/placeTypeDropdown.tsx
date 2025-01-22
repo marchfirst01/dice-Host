@@ -1,7 +1,7 @@
 import ArrowDown from '@assets/popUpDetail/gray-arrow-down.svg';
 import ArrowUp from '@assets/popUpDetail/gray-arrow-up.svg';
 import { placeType } from '@lib/newPopUp/placeTypes';
-import { NewPopUpFormData } from '@type/newPopUp/newPopUpTypes';
+import { PopUpFormData } from '@type/popUpSetting';
 
 import { useState } from 'react';
 import { Control, Controller } from 'react-hook-form';
@@ -9,7 +9,7 @@ import { Control, Controller } from 'react-hook-form';
 import Image from 'next/image';
 
 interface PlaceTypeDropdownComponentProps {
-  control: Control<NewPopUpFormData>;
+  control: Control<PopUpFormData>;
 }
 
 export default function PlaceTypeDropdownComponent({ control }: PlaceTypeDropdownComponentProps) {

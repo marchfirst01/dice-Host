@@ -1,27 +1,27 @@
-import { NewPopUp, NewPopUpFormData } from '@type/newPopUp/newPopUpTypes';
+import { PopUpConfig, PopUpFormData } from '@type/popUpSetting';
 
 import React from 'react';
 import { Control, Controller } from 'react-hook-form';
 
 interface PopUpInputComponentProps {
-  newPopUpInfo: NewPopUp;
-  control: Control<NewPopUpFormData>;
+  popUpConfig: PopUpConfig;
+  control: Control<PopUpFormData>;
 }
 
 export default function PopUpInputComponent({
-  newPopUpInfo,
+  popUpConfig,
   control,
 }: PopUpInputComponentProps): React.ReactElement<PopUpInputComponentProps> {
   return (
     <Controller
-      name={newPopUpInfo.name}
+      name={popUpConfig.name}
       control={control}
       render={({ field: { onChange, value = '' } }) => (
         <input
           className="h-[44px] w-full rounded-lg border p-4 font-CAP1 text-CAP1 leading-CAP1"
           onChange={onChange}
           value={value}
-          placeholder={newPopUpInfo.placeholder}
+          placeholder={popUpConfig.placeholder}
         />
       )}
     />

@@ -1,6 +1,6 @@
 import ArrowDown from '@assets/popUpDetail/gray-arrow-down.svg';
 import ArrowUp from '@assets/popUpDetail/gray-arrow-up.svg';
-import { NewPopUpFormData } from '@type/newPopUp/newPopUpTypes';
+import { PopUpFormData } from '@type/popUpSetting';
 
 import React, { Dispatch, SetStateAction, useState } from 'react';
 import { Control, Controller } from 'react-hook-form';
@@ -8,7 +8,7 @@ import { Control, Controller } from 'react-hook-form';
 import Image from 'next/image';
 
 interface DiscountInputComponentProps {
-  control: Control<NewPopUpFormData>;
+  control: Control<PopUpFormData>;
   discountType: '할인율' | '할인 금액';
   setDiscountType: Dispatch<SetStateAction<'할인율' | '할인 금액'>>;
 }

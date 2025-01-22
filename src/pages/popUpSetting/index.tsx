@@ -1,22 +1,22 @@
 import Upload from '@assets/newPopUp/upload.svg';
-import DiscountInputComponent from '@components/newPopUp/discountInput';
-import ImageContainerComponent from '@components/newPopUp/imageContainer';
-import PlaceTypeDropdownComponent from '@components/newPopUp/placeTypeDropdown';
-import PopUpInputComponent from '@components/newPopUp/popUpInput';
-import PopUpTextareaComponent from '@components/newPopUp/popUpTextarea';
-import PriceInputComponents from '@components/newPopUp/priceInput';
+import DiscountInputComponent from '@components/popUpSetting/discountInput';
+import ImageContainerComponent from '@components/popUpSetting/imageContainer';
+import PlaceTypeDropdownComponent from '@components/popUpSetting/placeTypeDropdown';
+import PopUpInputComponent from '@components/popUpSetting/popUpInput';
+import PopUpTextareaComponent from '@components/popUpSetting/popUpTextarea';
+import PriceInputComponents from '@components/popUpSetting/priceInput';
 import NewPopUpLayout from '@layout/newPopUpLayout';
 import { newPopUp } from '@lib/newPopUp/newPopUp';
 import formattedDiscountPrice from '@lib/utils/formattedDiscountPrice';
-import { NewPopUpFormData, NewPopUpInfo } from '@type/newPopUp/newPopUpTypes';
+import { PopUpFormData, PopUpId } from '@type/popUpSetting';
 
 import React, { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import Image from 'next/image';
 
-const NewPopUpPage = () => {
-  const { control, handleSubmit, watch } = useForm<NewPopUpFormData>();
+export default function PopUpSettingPage() {
+  const { control, handleSubmit, watch } = useForm<PopUpFormData>();
   const [discountType, setDiscountType] = useState<'할인율' | '할인 금액'>('할인율');
 
   const watchDiscountFields = watch('discount');
@@ -36,7 +36,7 @@ const NewPopUpPage = () => {
   }, [watchDiscountFields, watchPriceFields, formattedPrice]);
 
   // 폼 제출
-  const onSubmit: SubmitHandler<NewPopUpFormData> = (formData: NewPopUpFormData) => {
+  const onSubmit: SubmitHandler<PopUpFormData> = (formData: PopUpFormData) => {
     console.log(formData);
   };
 
@@ -64,19 +64,19 @@ const NewPopUpPage = () => {
     URL.revokeObjectURL(urlToDelete);
   };
 
-  const InputDiv = (name: NewPopUpInfo, required: boolean = true) => (
+  const InputDiv = (name: PopUpId, required: boolean = true) => (
     <div className="flex flex-col gap-2 font-CAP1 text-CAP1 leading-CAP1">
       <p className={`${required && "after:ml-1 after:text-red after:content-['*']"}`}>
         {newPopUp[name].display}
       </p>
-      <PopUpInputComponent newPopUpInfo={newPopUp[name]} control={control} />
+      <PopUpInputComponent popUpConfig={newPopUp[name]} control={control} />
     </div>
   );
 
-  const TextareaDiv = (name: NewPopUpInfo) => (
+  const TextareaDiv = (name: PopUpId) => (
     <div className="flex flex-col gap-2 font-CAP1 text-CAP1 leading-CAP1">
       <p className="after:ml-1 after:text-red after:content-['*']">{newPopUp[name].display}</p>
-      <PopUpTextareaComponent newPopUpInfo={newPopUp[name]} control={control} />
+      <PopUpTextareaComponent popUpConfig={newPopUp[name]} control={control} />
     </div>
   );
 
@@ -131,8 +131,8 @@ const NewPopUpPage = () => {
         <div className="flex flex-col gap-2">
           <p className="after:ml-1 after:text-red after:content-['*']">공간 영업 시간</p>
           <div className="flex flex-row items-center gap-1">
-            <PopUpInputComponent newPopUpInfo={newPopUp.placeStart} control={control} />
-            ~<PopUpInputComponent newPopUpInfo={newPopUp.placeEnd} control={control} />
+            <PopUpInputComponent popUpConfig={newPopUp.placeStart} control={control} />
+            ~<PopUpInputComponent popUpConfig={newPopUp.placeEnd} control={control} />
           </div>
         </div>
         {InputDiv('numOfPeople')}
@@ -145,7 +145,7 @@ const NewPopUpPage = () => {
             <p className="after:ml-1 after:text-red after:content-['*']">
               {newPopUp.price.display}
             </p>
-            <PriceInputComponents newPopUpInfo={newPopUp.price} control={control} />
+            <PriceInputComponents popUpConfig={newPopUp.price} control={control} />
           </div>
           <div className="flex flex-col gap-2 font-CAP1 text-CAP1 leading-CAP1">
             <p className="after:ml-1 after:text-red after:content-['*']">
@@ -177,7 +177,7 @@ const NewPopUpPage = () => {
         <div>
           <p className="after:ml-1 after:text-red after:content-['*']">위치</p>
           <div className="mb-1 mt-2 flex flex-row">
-            <PopUpInputComponent newPopUpInfo={newPopUp.location} control={control} />
+            <PopUpInputComponent popUpConfig={newPopUp.location} control={control} />
             <button
               onClick={() => console.log('api 연결하기')}
               className="ml-2 text-nowrap rounded-lg bg-light_gray px-[27.5px] py-[11.5px] text-white"
@@ -185,7 +185,7 @@ const NewPopUpPage = () => {
               주소 검색
             </button>
           </div>
-          <PopUpInputComponent newPopUpInfo={newPopUp.locationDescription} control={control} />
+          <PopUpInputComponent popUpConfig={newPopUp.locationDescription} control={control} />
         </div>
         {InputDiv('homepage', false)}
         {InputDiv('phoneNumber')}
@@ -197,6 +197,4 @@ const NewPopUpPage = () => {
       </section>
     </NewPopUpLayout>
   );
-};
-
-export default NewPopUpPage;
+}
