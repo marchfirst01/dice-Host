@@ -1,6 +1,5 @@
-import { IMAGES } from '@assets/index';
 import DiscountInputComponent from '@components/popUpSetting/discountInput';
-import ImageContainerComponent from '@components/popUpSetting/imageContainer';
+import ImageUploadComponent from '@components/popUpSetting/imageUpload';
 import PlaceTypeDropdownComponent from '@components/popUpSetting/placeTypeDropdown';
 import PopUpInputComponent from '@components/popUpSetting/popUpInput';
 import PopUpTextareaComponent from '@components/popUpSetting/popUpTextarea';
@@ -9,10 +8,9 @@ import PopUpSettingLayout from '@layout/popUpSettingLayout';
 import formattedDiscountPrice from '@lib/utils/formattedDiscountPrice';
 import { PopUpFormData, PopUpId } from '@type/popUpSetting';
 
-import React, { ChangeEvent, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
-import Image from 'next/image';
 import { popUpConfigList } from 'src/context/popUpSetting/popUpConfig';
 
 export default function PopUpSettingPage() {
@@ -38,30 +36,6 @@ export default function PopUpSettingPage() {
   // 폼 제출
   const onSubmit: SubmitHandler<PopUpFormData> = (formData: PopUpFormData) => {
     console.log(formData);
-  };
-
-  // 이미지 첨부 버튼 클릭
-  const fileInputRef = useRef<HTMLInputElement>(null);
-  const handleFileButtonClick = () => {
-    if (!fileInputRef.current) return;
-    fileInputRef.current.click();
-  };
-
-  // 사진 파일 첨부 후 전송
-  const [imageList, setImageList] = useState<string[]>([]);
-  const fileInputSubmit = (e: ChangeEvent<HTMLInputElement>) => {
-    const targetFile = e.target.files?.[0];
-
-    if (!targetFile) return;
-
-    const url = URL.createObjectURL(targetFile);
-    setImageList((prev) => [...prev, url]);
-  };
-
-  // 이미지 삭제
-  const handleDeleteImage = (urlToDelete: string) => {
-    setImageList((prev) => prev.filter((url) => url !== urlToDelete));
-    URL.revokeObjectURL(urlToDelete);
   };
 
   interface DivLayoutProps {
@@ -93,40 +67,7 @@ export default function PopUpSettingPage() {
         </DivLayout>
         <div className="flex flex-col gap-1">
           <p className="after:ml-1 after:text-red after:content-['*']">이미지 등록(최대 10장)</p>
-          <div className="flex w-full max-w-[400px] flex-row gap-[6px]">
-            {/* image upload input */}
-            <input
-              ref={fileInputRef}
-              id="fileInput"
-              className="hidden"
-              type="file"
-              accept=".jpg, .png, .svg"
-              onChange={fileInputSubmit}
-            />
-            <div
-              onClick={handleFileButtonClick}
-              className="mt-1 flex size-20 flex-shrink-0 cursor-pointer flex-col items-center justify-center rounded-xl border border-light_gray"
-            >
-              <Image src={IMAGES.ImageUpload} alt="upload" />
-              <div className="mt-0.5 flex flex-row gap-0.5 font-CAP2 text-CAP2 leading-CAP2">
-                <p>
-                  <span className="text-purple">{imageList.length}</span> / 10
-                </p>
-              </div>
-            </div>
-            {/* upload image list */}
-            <div className="flex flex-1 flex-row gap-[6px] overflow-auto pt-1">
-              {imageList.length > 0 &&
-                imageList.map((image, index) => (
-                  <ImageContainerComponent
-                    key={index}
-                    index={index}
-                    url={image}
-                    onDelete={() => handleDeleteImage(image)}
-                  />
-                ))}
-            </div>
-          </div>
+          <ImageUploadComponent control={control} />
         </div>
         <div className="flex flex-col gap-2">
           <p className="after:ml-1 after:text-red after:content-['*']">공간 유형</p>
