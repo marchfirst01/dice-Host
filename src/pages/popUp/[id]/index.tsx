@@ -4,8 +4,10 @@ import PopUpDetailLayout from '@layout/popUpDetailLayout';
 import React, { useState } from 'react';
 
 import { dummyData } from './popUpDetailDummy';
+import axios from 'axios';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
+import { getGeocode } from 'src/server/naverMap';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import { Pagination } from 'swiper/modules';
@@ -19,6 +21,8 @@ const PopUpDetailPage = () => {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [isDescriptionDetailView, setIsDescriptionDetailView] = useState<boolean>(false);
   const [isUsageDetailView, setIsUsageDetailView] = useState<boolean>(false);
+
+  getGeocode(dummyData.location);
 
   return (
     <PopUpDetailLayout>

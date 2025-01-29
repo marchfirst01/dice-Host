@@ -11,6 +11,14 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  async rewrites() {
+    return [
+      {
+        source: `/api/naver/:path*`,
+        destination: 'https://naveropenapi.apigw.ntruss.com/:path*',
+      },
+    ];
+  },
 };
 
 export default nextConfig;
