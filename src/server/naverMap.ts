@@ -11,8 +11,9 @@ export const getGeocode = async (location: string) => {
         'X-NCP-APIGW-API-KEY': clientSecret,
       },
     });
-    console.log(response.data);
+    return response.data;
   } catch (error) {
     console.log(error);
   }
 };
+// console.log('test');
