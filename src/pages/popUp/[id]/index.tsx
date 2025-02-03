@@ -1,13 +1,11 @@
 import { IMAGES } from '@assets/index';
 import PopUpDetailLayout from '@layout/popUpDetailLayout';
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { dummyData } from './popUpDetailDummy';
-import axios from 'axios';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import Script from 'next/script';
 import { getGeocode } from 'src/server/naverMap';
 import 'swiper/css';
 import 'swiper/css/pagination';
@@ -27,12 +25,16 @@ const PopUpDetailPage = () => {
   });
 
   const handleGeocode = async () => {
-    const response = await getGeocode(dummyData.location);
-    console.log(response);
-    setGeoLocation({
-      latitude: parseFloat(response.addresses[0].y),
-      longitude: parseFloat(response.addresses[0].x),
-    });
+    try {
+      const response = await getGeocode(dummyData.location);
+      console.log(response);
+      setGeoLocation({
+        latitude: parseFloat(response.addresses[0].y),
+        longitude: parseFloat(response.addresses[0].x),
+      });
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   useEffect(() => {
@@ -56,10 +58,6 @@ const PopUpDetailPage = () => {
 
   return (
     <PopUpDetailLayout>
-      <Script
-        src={`https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=bdrsrmmu4c`}
-        strategy="afterInteractive"
-      />
       {/* PopUpDetailPage id: {id} */}
       <Swiper
         className="aspect-[1/1] w-full"

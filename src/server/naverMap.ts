@@ -16,4 +16,3 @@ export const getGeocode = async (location: string) => {
     console.log(error);
   }
 };
-// console.log('test');

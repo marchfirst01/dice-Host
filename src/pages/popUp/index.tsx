@@ -1,15 +1,17 @@
 import FilterComponent from '@components/popUp/filter';
 import Header from '@components/popUp/header';
 import PopUpItem from '@components/popUp/popUpItem';
+import { useSpaceLatest } from '@hooks/usePopUp';
 
-import React, { useState } from 'react';
+import React from 'react';
 
-import { storeDataDummy } from './storeDataDummy';
+import { fetchSpaceLatest } from 'src/api/popUp';
 
 const FilterType = ['지역', '가격', '수용인원', '인기순'];
 
 export default function PopUpPage() {
-  const [popUpData] = useState(storeDataDummy);
+  const { data, isLoading, error } = useSpaceLatest();
+
   return (
     <div>
       <Header />
@@ -19,11 +21,17 @@ export default function PopUpPage() {
           <FilterComponent filter={filter} />
         ))}
       </div>
-      <div className="flex flex-col gap-4">
-        {popUpData.map((popUp) => (
-          <PopUpItem key={popUp.id} storeData={popUp} />
-        ))}
-      </div>
+      {isLoading && <p className="h-[500px] bg-pink-200">loading ...</p>}
+      {error && <p>{error.message}</p>}
+      {data && data.content.map((popUp) => <PopUpItem key={popUp.id} storeData={popUp} />)}
     </div>
   );
+}
+export async function getServerSideProps() {
+  try {
+    const initialData = await fetchSpaceLatest(); // 서버에서 데이터 요청
+    return { props: { initialData } };
+  } catch (error) {
+    return { props: { initialData: [] } };
+  }
 }
