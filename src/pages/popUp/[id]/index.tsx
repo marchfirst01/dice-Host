@@ -1,11 +1,14 @@
 import { IMAGES } from '@assets/index';
 import PopUpDetailLayout from '@layout/popUpDetailLayout';
 
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import { dummyData } from './popUpDetailDummy';
+import axios from 'axios';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
+import Script from 'next/script';
+import { getGeocode } from 'src/server/naverMap';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import { Pagination } from 'swiper/modules';
@@ -16,12 +19,47 @@ const PopUpDetailPage = () => {
   const { id } = router.query;
 
   const [detailDummyData] = useState(dummyData);
-  const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [isDescriptionDetailView, setIsDescriptionDetailView] = useState<boolean>(false);
   const [isUsageDetailView, setIsUsageDetailView] = useState<boolean>(false);
+  const [geoLocation, setGeoLocation] = useState({
+    latitude: 0,
+    longitude: 0,
+  });
+
+  const handleGeocode = async () => {
+    const response = await getGeocode(dummyData.location);
+    console.log(response);
+    setGeoLocation({
+      latitude: parseFloat(response.addresses[0].y),
+      longitude: parseFloat(response.addresses[0].x),
+    });
+  };
+
+  useEffect(() => {
+    handleGeocode();
+  }, []);
+
+  useEffect(() => {
+    const mapDiv = document.getElementById('map');
+    if (mapDiv) {
+      const map = new naver.maps.Map(mapDiv, {
+        center: new naver.maps.LatLng(geoLocation.latitude, geoLocation.longitude),
+        zoom: 15,
+      });
+
+      const marker = new naver.maps.Marker({
+        position: new naver.maps.LatLng(geoLocation.latitude, geoLocation.longitude),
+        map: map,
+      });
+    }
+  }, [geoLocation]);
 
   return (
     <PopUpDetailLayout>
+      <Script
+        src={`https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=bdrsrmmu4c`}
+        strategy="afterInteractive"
+      />
       {/* PopUpDetailPage id: {id} */}
       <Swiper
         className="aspect-[1/1] w-full"
@@ -131,6 +169,7 @@ const PopUpDetailPage = () => {
         </div>
         <div className="h-[160px] w-full rounded-xl border border-stroke bg-light_gray">
           {/* 지도 추가하기 */}
+          <div id="map" style={{ width: '100%', height: '160px' }} />
         </div>
         <button
           onClick={() => window.open(dummyData.homepage)}
