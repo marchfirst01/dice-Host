@@ -12,7 +12,6 @@ const FilterType = ['지역', '가격', '수용인원', '인기순'];
 export default function PopUpPage({
   spaceLatestData,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  console.log(spaceLatestData);
   return (
     <div>
       <Header />
@@ -22,8 +21,10 @@ export default function PopUpPage({
           <FilterComponent key={index} filter={filter} />
         ))}
       </div>
-      {spaceLatestData &&
-        spaceLatestData.content.map((popUp) => <PopUpItem key={popUp.id} storeData={popUp} />)}
+      <div className="flex flex-col gap-4">
+        {spaceLatestData &&
+          spaceLatestData.content.map((popUp) => <PopUpItem key={popUp.id} storeData={popUp} />)}
+      </div>
     </div>
   );
 }
