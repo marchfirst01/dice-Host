@@ -8,9 +8,12 @@ import DiceWhite from '@assets/common/logo/dice-white.svg';
 import LogoBlack from '@assets/common/logo/logo-black.svg';
 import LogoWhite from '@assets/common/logo/logo-white.svg';
 // mainFooter
-import My from '@assets/mainFooter/my.svg';
-import Place from '@assets/mainFooter/place.svg';
-import Recruit from '@assets/mainFooter/recruit.svg';
+import MyBlack from '@assets/mainFooter/my-black.svg';
+import MyGray from '@assets/mainFooter/my-gray.svg';
+import PlaceBlack from '@assets/mainFooter/place-black.svg';
+import PlaceGray from '@assets/mainFooter/place-gray.svg';
+import RecruitBlack from '@assets/mainFooter/recruit-black.svg';
+import RecruitGray from '@assets/mainFooter/recruit-gray.svg';
 // mainHeader
 import Chat from '@assets/mainHeader/chat.svg';
 import Heart from '@assets/mainHeader/heart.svg';
@@ -42,9 +45,12 @@ const IMAGES = {
   LogoBlack,
   LogoWhite,
   // mainFooter
-  My,
-  Place,
-  Recruit,
+  MyBlack,
+  MyGray,
+  PlaceBlack,
+  PlaceGray,
+  RecruitGray,
+  RecruitBlack,
   //mainHeader
   Chat,
   Heart,

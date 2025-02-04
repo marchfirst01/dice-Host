@@ -25,7 +25,7 @@ export default function MainPage({
   const [pageType, setPageType] = useState<'popUp' | 'recruit' | 'my'>('popUp');
 
   return (
-    <MainLayout setPageType={setPageType}>
+    <MainLayout pageType={pageType} setPageType={setPageType}>
       {pageType === 'popUp' && <PopUpPage spaceLatestData={spaceLatestData} />}
       {pageType === 'recruit' && <p>recruit</p>}
       {pageType === 'my' && <p>my</p>}
