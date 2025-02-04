@@ -30,7 +30,7 @@ const RegisterPage = () => {
       <p className="w-full font-H1 text-H1 leading-H1">회원가입</p>
       <div className="flex flex-col gap-6 overflow-scroll">
         {memberIdList.map((id) => (
-          <div className="w-full">
+          <div className="w-full" key={id}>
             <p className="after:ml-0.5 after:text-red after:content-['*']">
               {memberConfig[id].display}
             </p>

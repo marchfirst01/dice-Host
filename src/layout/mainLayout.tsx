@@ -5,16 +5,18 @@ import React, { Dispatch, SetStateAction } from 'react';
 
 export default function MainLayout({
   children,
+  pageType,
   setPageType,
 }: {
   children: React.ReactNode;
+  pageType: 'popUp' | 'recruit' | 'my';
   setPageType: Dispatch<SetStateAction<'popUp' | 'recruit' | 'my'>>;
 }) {
   return (
     <div>
       <MainHeaderComponent />
       <div className="px-5 pb-[85px] pt-[57.25px]">{children}</div>
-      <MainFooterComponent setPageType={setPageType} />
+      <MainFooterComponent pageType={pageType} setPageType={setPageType} />
     </div>
   );
 }

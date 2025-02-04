@@ -12,10 +12,11 @@ axiosInstance.interceptors.request.use(
   async (config) => {
     const accessToken = await getAccessToken();
 
-    // 토큰이 있을 때만 추가
-    if (accessToken) {
-      config.headers['Authorization'] = `Bearer ${accessToken}`;
+    if (!accessToken) {
+      throw new Error('토큰 없음');
     }
+
+    config.headers['Authorization'] = `Bearer ${accessToken}`;
 
     return config;
   },

@@ -6,8 +6,8 @@ import PopUpInputComponent from '@components/popUpSetting/popUpInput';
 import PopUpTextareaComponent from '@components/popUpSetting/popUpTextarea';
 import PriceInputComponents from '@components/popUpSetting/priceInput';
 import PopUpSettingLayout from '@layout/popUpSettingLayout';
-import formattedDiscountPrice from '@lib/utils/formattedDiscountPrice';
 import { PopUpFormData, PopUpId } from '@type/popUpSetting';
+import formattedDiscountPrice from '@utils/formattedDiscountPrice';
 
 import React, { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
