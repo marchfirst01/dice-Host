@@ -7,6 +7,7 @@ interface MemberConfig {
   display: string;
   type: string;
   placeholder: string;
+  rules: string;
 }
 
 type MemberConfigList = Record<MemberId, MemberConfig>;

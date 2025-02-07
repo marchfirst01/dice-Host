@@ -34,7 +34,9 @@ export default function UserInputComponent({
             value={value}
           />
           {error && (
-            <p className="ml-2 font-CAP1 text-CAP1 leading-CAP1 text-red">{error.message}</p>
+            <p className="absolute bottom-0 ml-2 mt-0.5 translate-y-full font-CAP1 text-CAP1 leading-CAP1 text-red">
+              {error.message}
+            </p>
           )}
           {value ? (
             <Image

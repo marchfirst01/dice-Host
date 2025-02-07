@@ -33,12 +33,12 @@ export default function LoginPage() {
         <UserInputComponent
           memberConfig={memberConfig.id}
           control={control}
-          rules={{ required: '아이디를 입력해주세요.' }}
+          rules={{ required: memberConfig.id.rules }}
         />
         <UserInputComponent
           memberConfig={memberConfig.password}
           control={control}
-          rules={{ required: '비밀번호를 입력해주세요.' }}
+          rules={{ required: memberConfig.password.rules }}
         />
       </div>
       <div className="flex w-full flex-col items-center gap-3">
