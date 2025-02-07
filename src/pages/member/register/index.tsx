@@ -7,14 +7,22 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { memberConfig, memberIdList } from 'src/context/member/memberConfig';
+import { ValidateEmailError, fetchRegister, fetchValidateEmail } from 'src/api/member';
+import { memberConfig } from 'src/context/member/memberConfig';
 
 const RegisterPage = () => {
   const router = useRouter();
   const { control, handleSubmit, getValues } = useForm<MemberFormData>();
 
-  const onSubmit: SubmitHandler<MemberFormData> = (formData: MemberFormData) => {
-    console.log(formData);
+  const onSubmit: SubmitHandler<MemberFormData> = async (formData: MemberFormData) => {
+    try {
+      await fetchValidateEmail(formData.id);
+      await fetchRegister(formData);
+      alert('회원가입 성공!');
+      router.push('/');
+    } catch (error) {
+      if (error instanceof ValidateEmailError) alert(error.message);
+    }
   };
 
   return (
@@ -77,7 +85,7 @@ const RegisterPage = () => {
             rules={{ required: memberConfig.name.rules }}
           />
         </div>
-        {/* email */}
+        {/* email
         <div className="w-full">
           <p className="after:ml-0.5 after:text-red after:content-['*']">
             {memberConfig.email.display}
@@ -87,8 +95,9 @@ const RegisterPage = () => {
             control={control}
             rules={{ required: memberConfig.email.rules }}
           />
-        </div>
+        </div> */}
         {/* phone */}
+        {/* TODO: 인증번호 버튼, 입력칸 만들기 */}
         <div>
           <p className="after:ml-0.5 after:text-red after:content-['*']">
             {memberConfig.phone.display}

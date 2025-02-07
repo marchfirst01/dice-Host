@@ -1,7 +1,8 @@
 import MainLayout from '@layout/mainLayout';
 import { SpaceLatestResponse } from '@type/popUp/popUpResponse';
+import { getAccessToken } from '@utils/token';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import PopUpPage from '../popUp';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
@@ -23,12 +24,19 @@ export default function MainPage({
   spaceLatestData,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const [pageType, setPageType] = useState<'popUp' | 'recruit' | 'my'>('popUp');
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
 
-  return (
+  useEffect(() => {
+    setIsLoggedIn(getAccessToken() ? true : false);
+  }, []);
+
+  return isLoggedIn ? (
     <MainLayout pageType={pageType} setPageType={setPageType}>
       {pageType === 'popUp' && <PopUpPage spaceLatestData={spaceLatestData} />}
       {pageType === 'recruit' && <p>recruit</p>}
       {pageType === 'my' && <p>my</p>}
     </MainLayout>
+  ) : (
+    <p>login required</p>
   );
 }
