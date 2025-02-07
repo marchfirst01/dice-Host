@@ -30,8 +30,16 @@ export default function LoginPage() {
       />
       <p className="w-full font-H1 text-H1 leading-H1">로그인</p>
       <div className="flex w-full flex-col gap-3">
-        <UserInputComponent memberConfig={memberConfig.id} control={control} />
-        <UserInputComponent memberConfig={memberConfig.password} control={control} />
+        <UserInputComponent
+          memberConfig={memberConfig.id}
+          control={control}
+          rules={{ required: '아이디를 입력해주세요.' }}
+        />
+        <UserInputComponent
+          memberConfig={memberConfig.password}
+          control={control}
+          rules={{ required: '비밀번호를 입력해주세요.' }}
+        />
       </div>
       <div className="flex w-full flex-col items-center gap-3">
         <RegisterFormButtonComponent<MemberFormData>
