@@ -2,20 +2,32 @@ import { IMAGES } from '@assets/index';
 import RegisterFormButtonComponent from '@components/common/registerFormButton';
 import UserInputComponent from '@components/member/userInput';
 import { MemberFormData } from '@type/member';
+import { setAccessToken, setRefreshToken } from '@utils/token';
+import { useLoggedInStore } from '@zustands/member/store';
 
 import React from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import Image from 'next/image';
 import { useRouter } from 'next/router';
+import { fetchLogin } from 'src/api/member';
 import { memberConfig } from 'src/context/member/memberConfig';
 
 export default function LoginPage() {
   const router = useRouter();
   const { control, handleSubmit } = useForm<MemberFormData>();
+  const { setIsLoggedIn, setUser } = useLoggedInStore();
 
-  const onSubmit: SubmitHandler<MemberFormData> = (formData: MemberFormData) => {
-    console.log(formData);
+  const onSubmit: SubmitHandler<MemberFormData> = async (formData: MemberFormData) => {
+    try {
+      const res = await fetchLogin(formData);
+      setAccessToken(res.token.accessToken);
+      setRefreshToken(res.token.refreshToken);
+      setIsLoggedIn(true);
+      setUser(res.user);
+    } catch (error) {
+      alert('로그인에 실패했습니다.');
+    }
   };
 
   return (

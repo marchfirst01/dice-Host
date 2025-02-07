@@ -38,6 +38,8 @@ axiosInstance.interceptors.response.use(
       deleteToken();
     }
 
+    // TODO: 토큰 만료시 재발급 처리
+
     return Promise.reject(error);
   },
 );
