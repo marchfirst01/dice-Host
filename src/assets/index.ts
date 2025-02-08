@@ -12,8 +12,8 @@ import MyBlack from '@assets/mainFooter/my-black.svg';
 import MyGray from '@assets/mainFooter/my-gray.svg';
 import PlaceBlack from '@assets/mainFooter/place-black.svg';
 import PlaceGray from '@assets/mainFooter/place-gray.svg';
-import RecruitBlack from '@assets/mainFooter/recruit-black.svg';
-import RecruitGray from '@assets/mainFooter/recruit-gray.svg';
+import ReservationBlack from '@assets/mainFooter/reservation-black.svg';
+import ReservationGray from '@assets/mainFooter/reservation-gray.svg';
 // mainHeader
 import Chat from '@assets/mainHeader/chat.svg';
 import Heart from '@assets/mainHeader/heart.svg';
@@ -49,8 +49,8 @@ const IMAGES = {
   MyGray,
   PlaceBlack,
   PlaceGray,
-  RecruitGray,
-  RecruitBlack,
+  ReservationBlack,
+  ReservationGray,
   //mainHeader
   Chat,
   Heart,

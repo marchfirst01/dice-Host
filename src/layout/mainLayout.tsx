@@ -9,8 +9,8 @@ export default function MainLayout({
   setPageType,
 }: {
   children: React.ReactNode;
-  pageType: 'popUp' | 'recruit' | 'my';
-  setPageType: Dispatch<SetStateAction<'popUp' | 'recruit' | 'my'>>;
+  pageType: 'popUp' | 'reservation' | 'my';
+  setPageType: Dispatch<SetStateAction<'popUp' | 'reservation' | 'my'>>;
 }) {
   return (
     <div>

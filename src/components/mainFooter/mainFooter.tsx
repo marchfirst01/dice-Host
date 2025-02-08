@@ -8,8 +8,8 @@ export default function MainFooterComponent({
   pageType,
   setPageType,
 }: {
-  pageType: 'popUp' | 'recruit' | 'my';
-  setPageType: Dispatch<SetStateAction<'popUp' | 'recruit' | 'my'>>;
+  pageType: 'popUp' | 'reservation' | 'my';
+  setPageType: Dispatch<SetStateAction<'popUp' | 'reservation' | 'my'>>;
 }) {
   return (
     <div className="fixed bottom-0 flex w-full max-w-[400px] flex-row justify-around border-t border-stroke bg-white py-2">
@@ -25,15 +25,15 @@ export default function MainFooterComponent({
         <p>팝업공간</p>
       </div>
       <div
-        onClick={() => setPageType('recruit')}
+        onClick={() => setPageType('reservation')}
         className="flex cursor-pointer flex-col items-center gap-2"
       >
-        {pageType === 'recruit' ? (
-          <Image className="size-6" src={IMAGES.RecruitBlack} alt="recruit-icon" />
+        {pageType === 'reservation' ? (
+          <Image className="size-6" src={IMAGES.ReservationBlack} alt="reservation-icon" />
         ) : (
-          <Image className="size-6" src={IMAGES.RecruitGray} alt="recruit-icon" />
+          <Image className="size-6" src={IMAGES.ReservationGray} alt="reservation-icon" />
         )}
-        <p>지원공고</p>
+        <p>예약관리</p>
       </div>
       <div
         onClick={() => setPageType('my')}

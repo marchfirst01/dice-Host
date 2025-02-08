@@ -23,7 +23,7 @@ export const getServerSideProps: GetServerSideProps<{
 export default function MainPage({
   spaceLatestData,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  const [pageType, setPageType] = useState<'popUp' | 'recruit' | 'my'>('popUp');
+  const [pageType, setPageType] = useState<'popUp' | 'reservation' | 'my'>('popUp');
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
 
   useEffect(() => {
@@ -33,7 +33,7 @@ export default function MainPage({
   return isLoggedIn ? (
     <MainLayout pageType={pageType} setPageType={setPageType}>
       {pageType === 'popUp' && <PopUpPage spaceLatestData={spaceLatestData} />}
-      {pageType === 'recruit' && <p>recruit</p>}
+      {pageType === 'reservation' && <p>recruit</p>}
       {pageType === 'my' && <p>my</p>}
     </MainLayout>
   ) : (
