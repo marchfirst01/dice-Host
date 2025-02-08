@@ -5,6 +5,7 @@ import { getAccessToken } from '@utils/token';
 import React, { useEffect, useState } from 'react';
 
 import PopUpPage from '../popUp';
+import ReservationPage from '../reservation';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { fetchSpaceLatest } from 'src/api/popUp';
 
@@ -23,7 +24,7 @@ export const getServerSideProps: GetServerSideProps<{
 export default function MainPage({
   spaceLatestData,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  const [pageType, setPageType] = useState<'popUp' | 'reservation' | 'my'>('popUp');
+  const [pageType, setPageType] = useState<'popUp' | 'reservation' | 'my'>('reservation');
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
 
   useEffect(() => {
@@ -33,7 +34,7 @@ export default function MainPage({
   return isLoggedIn ? (
     <MainLayout pageType={pageType} setPageType={setPageType}>
       {pageType === 'popUp' && <PopUpPage spaceLatestData={spaceLatestData} />}
-      {pageType === 'reservation' && <p>recruit</p>}
+      {pageType === 'reservation' && <ReservationPage />}
       {pageType === 'my' && <p>my</p>}
     </MainLayout>
   ) : (

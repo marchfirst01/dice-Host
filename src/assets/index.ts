@@ -29,7 +29,8 @@ import Search from '@assets/popUp/search.svg';
 import Globe from '@assets/popUpDetail/globe.svg';
 import Phone from '@assets/popUpDetail/phone.svg';
 import PlaceMarker from '@assets/popUpDetail/place-marker.svg';
-import Send from '@assets/popUpDetail/send.svg';
+import SendBlack from '@assets/popUpDetail/send-black.svg';
+import SendWhite from '@assets/popUpDetail/send-white.svg';
 // popUpSetting
 import ImageDelete from '@assets/popUpSetting/image-delete.svg';
 import ImageUpload from '@assets/popUpSetting/upload.svg';
@@ -66,7 +67,8 @@ const IMAGES = {
   Globe,
   Phone,
   PlaceMarker,
-  Send,
+  SendBlack,
+  SendWhite,
   // popUpSetting
   ImageDelete,
   ImageUpload,

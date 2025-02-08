@@ -48,7 +48,7 @@ export default function PopUpDetailLayout({ children }: { children: React.ReactN
           onClick={() => console.log('쪽지 보내기')}
           className="flex h-full w-full cursor-pointer flex-row items-center justify-center gap-2 rounded-lg bg-black text-white"
         >
-          <Image src={IMAGES.Send} alt="send" />
+          <Image src={IMAGES.SendWhite} alt="send" />
           <p>쪽지 보내기</p>
         </button>
       </nav>
