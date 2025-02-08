@@ -2,20 +2,31 @@ import { IMAGES } from '@assets/index';
 import RegisterFormButtonComponent from '@components/common/registerFormButton';
 import UserInputComponent from '@components/member/userInput';
 import { MemberFormData } from '@type/member';
+import { setUser } from '@utils/member';
+import { setAccessToken, setRefreshToken } from '@utils/token';
 
 import React from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import Image from 'next/image';
 import { useRouter } from 'next/router';
+import { fetchLogin } from 'src/api/member';
 import { memberConfig } from 'src/context/member/memberConfig';
 
 export default function LoginPage() {
   const router = useRouter();
   const { control, handleSubmit } = useForm<MemberFormData>();
 
-  const onSubmit: SubmitHandler<MemberFormData> = (formData: MemberFormData) => {
-    console.log(formData);
+  const onSubmit: SubmitHandler<MemberFormData> = async (formData: MemberFormData) => {
+    try {
+      const res = await fetchLogin(formData);
+      setAccessToken(res.token.accessToken);
+      setRefreshToken(res.token.refreshToken);
+      setUser(res.user);
+      router.push('/main');
+    } catch (error) {
+      alert('로그인에 실패했습니다.');
+    }
   };
 
   return (
@@ -30,8 +41,16 @@ export default function LoginPage() {
       />
       <p className="w-full font-H1 text-H1 leading-H1">로그인</p>
       <div className="flex w-full flex-col gap-3">
-        <UserInputComponent memberConfig={memberConfig.id} control={control} />
-        <UserInputComponent memberConfig={memberConfig.password} control={control} />
+        <UserInputComponent
+          memberConfig={memberConfig.id}
+          control={control}
+          rules={{ required: memberConfig.id.rules }}
+        />
+        <UserInputComponent
+          memberConfig={memberConfig.password}
+          control={control}
+          rules={{ required: memberConfig.password.rules }}
+        />
       </div>
       <div className="flex w-full flex-col items-center gap-3">
         <RegisterFormButtonComponent<MemberFormData>

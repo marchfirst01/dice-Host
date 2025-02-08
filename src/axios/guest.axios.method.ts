@@ -9,7 +9,7 @@ export const GuestPostAxiosInstance = async <T>(
   data?: any,
   config?: AxiosRequestConfig,
 ): Promise<AxiosResponse> => {
-  const response = await guestAxiosInstance.post(url, data, config);
+  const response = await guestAxiosInstance.post<T>(url, data, config);
   return response;
 };
 

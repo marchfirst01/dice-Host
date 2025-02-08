@@ -1,19 +1,21 @@
 import { IMAGES } from '@assets/index';
-import { MemberConfig, MemberFormData } from '@type/member';
+import { MemberConfig, MemberFormData, MemberId } from '@type/member';
 
 import React, { useState } from 'react';
-import { Control, Controller } from 'react-hook-form';
+import { Control, Controller, UseControllerProps } from 'react-hook-form';
 
 import Image from 'next/image';
 
 interface UserInputComponentProps {
   memberConfig: MemberConfig;
   control: Control<MemberFormData>;
+  rules?: UseControllerProps<MemberFormData, MemberId>['rules'];
 }
 
 export default function UserInputComponent({
   memberConfig,
   control,
+  rules,
 }: UserInputComponentProps): React.ReactElement<UserInputComponentProps> {
   const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false);
 
@@ -21,7 +23,8 @@ export default function UserInputComponent({
     <Controller
       name={memberConfig.name}
       control={control}
-      render={({ field: { onChange, value } }) => (
+      rules={rules}
+      render={({ field: { onChange, value }, fieldState: { error } }) => (
         <div className="relative w-full">
           <input
             className="h-[44px] w-full rounded-lg border p-4"
@@ -30,6 +33,11 @@ export default function UserInputComponent({
             onChange={onChange}
             value={value}
           />
+          {error && (
+            <p className="absolute bottom-0 ml-2 mt-0.5 translate-y-full font-CAP1 text-CAP1 leading-CAP1 text-red">
+              {error.message}
+            </p>
+          )}
           {value ? (
             <Image
               onClick={() => onChange('')}

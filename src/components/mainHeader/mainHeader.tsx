@@ -11,7 +11,7 @@ export default function MainHeaderComponent() {
   return (
     <div className="fixed top-0 z-10 flex w-full max-w-[400px] flex-row items-center justify-between bg-black px-5 py-4">
       <Image
-        onClick={() => router.push('/')}
+        onClick={() => router.push('/main')}
         className="cursor-pointer"
         src={IMAGES.LogoWhite}
         alt="로고이미지"
