@@ -13,7 +13,7 @@ export default function PopUpPage({
   spaceLatestData,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
-    <div>
+    <>
       <Header />
       <p className="pb-2 pt-8 font-H2 text-H2 leading-H2">대여 가능한 팝업 공간</p>
       <div className="flex flex-row flex-wrap gap-[6px] py-4">
@@ -25,6 +25,6 @@ export default function PopUpPage({
         {spaceLatestData &&
           spaceLatestData.content.map((popUp) => <PopUpItem key={popUp.id} storeData={popUp} />)}
       </div>
-    </div>
+    </>
   );
 }
