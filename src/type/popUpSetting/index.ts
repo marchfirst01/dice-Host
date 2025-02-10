@@ -1,5 +1,6 @@
 // 팝업을 생성/수정할 때 제출하는 폼데이터의 내용
 interface PopUpFormData {
+  imageList: string[];
   name: string;
   subTitle: string;
   placeType: string;
