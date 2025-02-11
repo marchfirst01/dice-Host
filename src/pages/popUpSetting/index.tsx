@@ -17,8 +17,8 @@ export default function PopUpSettingPage() {
   const { control, handleSubmit, watch } = useForm<PopUpFormData>();
   const [discountType, setDiscountType] = useState<'할인율' | '할인 금액'>('할인율');
 
-  const watchDiscountFields = watch('discount');
-  const watchPriceFields = watch('price');
+  const watchDiscountFields = watch('discountRate');
+  const watchPriceFields = watch('pricePerDay');
 
   const [formattedPrice, setFormattedPrice] = useState<string>();
   useEffect(() => {
@@ -66,11 +66,11 @@ export default function PopUpSettingPage() {
             rules={{ required: popUpConfigList.name.rules }}
           />
         </DivLayout>
-        <DivLayout name="subTitle">
+        <DivLayout name="description">
           <PopUpInputComponent
-            popUpConfig={popUpConfigList.subTitle}
+            popUpConfig={popUpConfigList.description}
             control={control}
-            rules={{ required: popUpConfigList.subTitle.rules }}
+            rules={{ required: popUpConfigList.description.rules }}
           />
         </DivLayout>
         <div className="flex flex-col gap-1">
@@ -91,30 +91,30 @@ export default function PopUpSettingPage() {
           <p className="after:ml-1 after:text-red after:content-['*']">공간 영업 시간</p>
           <div className="flex flex-row items-center gap-1">
             <PopUpInputComponent
-              popUpConfig={popUpConfigList.placeStart}
+              popUpConfig={popUpConfigList.openingTime}
               control={control}
-              rules={{ required: popUpConfigList.placeStart.rules }}
+              rules={{ required: popUpConfigList.openingTime.rules }}
             />
             ~
             <PopUpInputComponent
-              popUpConfig={popUpConfigList.placeEnd}
+              popUpConfig={popUpConfigList.closingTime}
               control={control}
-              rules={{ required: popUpConfigList.placeEnd.rules }}
+              rules={{ required: popUpConfigList.closingTime.rules }}
             />
           </div>
         </div>
-        <DivLayout name="numOfPeople">
+        <DivLayout name="capacity">
           <PopUpInputComponent
-            popUpConfig={popUpConfigList.numOfPeople}
+            popUpConfig={popUpConfigList.capacity}
             control={control}
-            rules={{ required: popUpConfigList.numOfPeople.rules }}
+            rules={{ required: popUpConfigList.capacity.rules }}
           />
         </DivLayout>
-        <DivLayout name="hashTagList">
+        <DivLayout name="tags">
           <PopUpInputComponent
-            popUpConfig={popUpConfigList.hashTagList}
+            popUpConfig={popUpConfigList.tags}
             control={control}
-            rules={{ required: popUpConfigList.hashTagList.rules }}
+            rules={{ required: popUpConfigList.tags.rules }}
           />
         </DivLayout>
       </section>
@@ -123,23 +123,23 @@ export default function PopUpSettingPage() {
         <div className="flex flex-col gap-4">
           <div className="flex flex-col gap-2 font-CAP1 text-CAP1 leading-CAP1">
             <p className="after:ml-1 after:text-red after:content-['*']">
-              {popUpConfigList.price.display}
+              {popUpConfigList.pricePerDay.display}
             </p>
             <PriceInputComponents
-              popUpConfig={popUpConfigList.price}
+              popUpConfig={popUpConfigList.pricePerDay}
               control={control}
-              rules={{ required: popUpConfigList.price.rules }}
+              rules={{ required: popUpConfigList.pricePerDay.rules }}
             />
           </div>
           <div className="flex flex-col gap-2 font-CAP1 text-CAP1 leading-CAP1">
             <p className="after:ml-1 after:text-red after:content-['*']">
-              {popUpConfigList.discount.display}
+              {popUpConfigList.discountRate.display}
             </p>
             <DiscountInputComponent
               control={control}
               discountType={discountType}
               setDiscountType={setDiscountType}
-              rules={{ required: popUpConfigList.discount.rules }}
+              rules={{ required: popUpConfigList.discountRate.rules }}
             />
           </div>
           {watchDiscountFields && formattedPrice && (
@@ -155,11 +155,11 @@ export default function PopUpSettingPage() {
       </section>
       <section>
         <p className="mb-6 font-SUB1 text-SUB1 leading-SUB1">공간 소개글 작성</p>
-        <DivLayout name="description">
+        <DivLayout name="details">
           <PopUpTextareaComponent
-            popUpConfig={popUpConfigList.description}
+            popUpConfig={popUpConfigList.details}
             control={control}
-            rules={{ required: popUpConfigList.description.rules }}
+            rules={{ required: popUpConfigList.details.rules }}
           />
         </DivLayout>
       </section>
@@ -169,7 +169,7 @@ export default function PopUpSettingPage() {
         <div>
           <p className="after:ml-1 after:text-red after:content-['*']">위치</p>
           <div className="mb-1 mt-2 flex flex-row">
-            <PopUpInputComponent popUpConfig={popUpConfigList.location} control={control} />
+            <PopUpInputComponent popUpConfig={popUpConfigList.address} control={control} />
             <button
               onClick={() => console.log('api 연결하기')}
               className="ml-2 text-nowrap rounded-lg bg-light_gray px-[27.5px] py-[11.5px] text-white"
@@ -183,31 +183,31 @@ export default function PopUpSettingPage() {
             rules={{ required: popUpConfigList.locationDescription.rules }}
           />
         </div>
-        <DivLayout name="homepage" required={false}>
-          <PopUpInputComponent popUpConfig={popUpConfigList.homepage} control={control} />
+        <DivLayout name="websiteUrl" required={false}>
+          <PopUpInputComponent popUpConfig={popUpConfigList.websiteUrl} control={control} />
         </DivLayout>
-        <DivLayout name="phoneNumber">
+        <DivLayout name="contactNumber">
           <PopUpInputComponent
-            popUpConfig={popUpConfigList.phoneNumber}
+            popUpConfig={popUpConfigList.contactNumber}
             control={control}
-            rules={{ required: popUpConfigList.phoneNumber.rules }}
+            rules={{ required: popUpConfigList.contactNumber.rules }}
           />
         </DivLayout>
       </section>
       <section className="flex flex-col gap-6">
         <p className="font-SUB1 text-SUB1 leading-SUB1">시설 이용 및 공지사항 안내 작성</p>
-        <DivLayout name="usageInformation">
+        <DivLayout name="facilityInfo">
           <PopUpTextareaComponent
-            popUpConfig={popUpConfigList.usageInformation}
+            popUpConfig={popUpConfigList.facilityInfo}
             control={control}
-            rules={{ required: popUpConfigList.usageInformation.rules }}
+            rules={{ required: popUpConfigList.facilityInfo.rules }}
           />
         </DivLayout>
-        <DivLayout name="noticeInformation">
+        <DivLayout name="notice">
           <PopUpTextareaComponent
-            popUpConfig={popUpConfigList.noticeInformation}
+            popUpConfig={popUpConfigList.notice}
             control={control}
-            rules={{ required: popUpConfigList.noticeInformation.rules }}
+            rules={{ required: popUpConfigList.notice.rules }}
           />
         </DivLayout>
       </section>

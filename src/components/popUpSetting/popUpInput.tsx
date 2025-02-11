@@ -40,9 +40,11 @@ export default function PopUpInputComponent({
             id="input"
             className="h-[44px] w-full rounded-lg border p-4 font-CAP1 text-CAP1 leading-CAP1"
             onChange={
-              popUpConfig.name === 'phoneNumber' ? handlePhoneNumberInputChange(onChange) : onChange
+              popUpConfig.name === 'contactNumber'
+                ? handlePhoneNumberInputChange(onChange)
+                : onChange
             }
-            value={value}
+            value={typeof value === 'object' ? '' : value}
             placeholder={popUpConfig.placeholder}
           />
           {error && <p className="absolute bottom-0 translate-y-full text-red">{error.message}</p>}

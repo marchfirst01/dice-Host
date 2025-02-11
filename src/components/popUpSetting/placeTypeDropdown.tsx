@@ -9,7 +9,7 @@ import { placeType } from 'src/context/popUpSetting/placeType';
 
 interface PlaceTypeDropdownComponentProps {
   control: Control<PopUpFormData>;
-  rules: UseControllerProps<PopUpFormData, 'placeType'>['rules'];
+  rules: UseControllerProps<PopUpFormData, 'category'>['rules'];
 }
 
 export default function PlaceTypeDropdownComponent({
@@ -20,7 +20,7 @@ export default function PlaceTypeDropdownComponent({
 
   return (
     <Controller
-      name="placeType"
+      name="category"
       control={control}
       rules={rules}
       render={({ field: { value, onChange }, fieldState: { error } }) => (
