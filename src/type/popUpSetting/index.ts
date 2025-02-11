@@ -7,12 +7,12 @@ interface PopUpFormData {
   description: string;
   imageUrls: File[];
   category: string;
-  openingTime: number;
-  closingTime: number;
+  openingTime: string;
+  closingTime: string;
   placeArea: number;
   capacity: number;
-  tags: string;
-  pricePerDay: number;
+  tags: string[];
+  pricePerDay: string;
   discountRate: { price: number; type: string };
   details: string;
   // address: 상세주소, location: 주소 검색

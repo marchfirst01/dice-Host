@@ -9,7 +9,7 @@ import Image from 'next/image';
 
 interface ImageUploadComponentProps {
   control: Control<PopUpFormData>;
-  rules: UseControllerProps<PopUpFormData, 'imageList'>['rules'];
+  rules: UseControllerProps<PopUpFormData, 'imageUrls'>['rules'];
 }
 
 export default function ImageUploadComponent({ control, rules }: ImageUploadComponentProps) {
@@ -58,7 +58,7 @@ export default function ImageUploadComponent({ control, rules }: ImageUploadComp
 
   return (
     <Controller
-      name="imageList"
+      name="imageUrls"
       control={control}
       rules={rules}
       render={({ field: { onChange, value = [] }, fieldState: { error } }) => (

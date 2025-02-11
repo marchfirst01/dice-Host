@@ -10,7 +10,7 @@ interface DiscountInputComponentProps {
   control: Control<PopUpFormData>;
   discountType: '할인율' | '할인 금액';
   setDiscountType: Dispatch<SetStateAction<'할인율' | '할인 금액'>>;
-  rules: UseControllerProps<PopUpFormData, 'discount'>['rules'];
+  rules: UseControllerProps<PopUpFormData, 'discountRate'>['rules'];
 }
 
 export default function DiscountInputComponent({
@@ -49,7 +49,7 @@ export default function DiscountInputComponent({
 
   return (
     <Controller
-      name="discount"
+      name="discountRate"
       control={control}
       rules={rules}
       render={({

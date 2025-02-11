@@ -6,11 +6,13 @@ import PopUpTextareaComponent from '@components/popUpSetting/popUpTextarea';
 import PriceInputComponents from '@components/popUpSetting/priceInput';
 import PopUpSettingLayout from '@layout/popUpSettingLayout';
 import { PopUpFormData, PopUpId } from '@type/popUpSetting';
+import { PopUpRegisterResponse } from '@type/popUpSetting/popUpResponse';
 import formattedDiscountPrice from '@utils/formattedDiscountPrice';
 
 import React, { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
+import { fetchSpaceRegister } from 'src/api/popUpSetting';
 import { popUpConfigList } from 'src/context/popUpSetting/popUpConfig';
 
 export default function PopUpSettingPage() {
@@ -34,8 +36,51 @@ export default function PopUpSettingPage() {
   }, [watchDiscountFields, watchPriceFields, formattedPrice]);
 
   // 폼 제출
-  const onSubmit: SubmitHandler<PopUpFormData> = (formData: PopUpFormData) => {
-    console.log(formData);
+  const onSubmit: SubmitHandler<PopUpFormData> = async (formData: PopUpFormData) => {
+    const {
+      name,
+      description,
+      // imageUrls,
+      // category,
+      openingTime,
+      closingTime,
+      capacity,
+      // tags,
+      pricePerDay,
+      discountRate,
+      details,
+      address,
+      websiteUrl,
+      contactNumber,
+      facilityInfo,
+      notice,
+    } = formData;
+    const registerData: PopUpRegisterResponse = {
+      name,
+      description,
+      openingTime,
+      closingTime,
+      capacity: Number(capacity),
+      pricePerDay: Number(pricePerDay.replace(/,/g, '')),
+      discountRate: discountRate.price,
+      details,
+      address,
+      websiteUrl,
+      contactNumber,
+      facilityInfo,
+      notice,
+      // TODO: 임시
+      // TODO: category에 정해진 값 있음? 이미지 url 아니면 등록이 안됨
+      category: 'CAFE',
+      imageUrls: ['www.example.com'],
+      city: '서울',
+      district: '강남구',
+      latitude: 37.1234,
+      longitude: 127.1234,
+      tags: ['카페'],
+    };
+    console.log(registerData);
+    // const res = await fetchSpaceRegister(registerData);
   };
 
   interface DivLayoutProps {
@@ -169,7 +214,7 @@ export default function PopUpSettingPage() {
         <div>
           <p className="after:ml-1 after:text-red after:content-['*']">위치</p>
           <div className="mb-1 mt-2 flex flex-row">
-            <PopUpInputComponent popUpConfig={popUpConfigList.address} control={control} />
+            <PopUpInputComponent popUpConfig={popUpConfigList.location} control={control} />
             <button
               onClick={() => console.log('api 연결하기')}
               className="ml-2 text-nowrap rounded-lg bg-light_gray px-[27.5px] py-[11.5px] text-white"
@@ -178,9 +223,9 @@ export default function PopUpSettingPage() {
             </button>
           </div>
           <PopUpInputComponent
-            popUpConfig={popUpConfigList.locationDescription}
+            popUpConfig={popUpConfigList.address}
             control={control}
-            rules={{ required: popUpConfigList.locationDescription.rules }}
+            rules={{ required: popUpConfigList.address.rules }}
           />
         </div>
         <DivLayout name="websiteUrl" required={false}>

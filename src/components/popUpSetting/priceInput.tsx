@@ -6,7 +6,7 @@ import { Control, Controller, UseControllerProps } from 'react-hook-form';
 interface PriceInputComponentProps {
   popUpConfig: PopUpConfig;
   control: Control<PopUpFormData>;
-  rules: UseControllerProps<PopUpFormData, 'price'>['rules'];
+  rules: UseControllerProps<PopUpFormData, 'pricePerDay'>['rules'];
 }
 
 export default function PriceInputComponents({
@@ -22,7 +22,7 @@ export default function PriceInputComponents({
 
   return (
     <Controller
-      name="price"
+      name="pricePerDay"
       control={control}
       rules={rules}
       render={({ field: { onChange, value = '' }, fieldState: { error } }) => (
