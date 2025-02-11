@@ -2,23 +2,28 @@ import { IMAGES } from '@assets/index';
 import { PopUpFormData } from '@type/popUpSetting';
 
 import { useState } from 'react';
-import { Control, Controller } from 'react-hook-form';
+import { Control, Controller, UseControllerProps } from 'react-hook-form';
 
 import Image from 'next/image';
 import { placeType } from 'src/context/popUpSetting/placeType';
 
 interface PlaceTypeDropdownComponentProps {
   control: Control<PopUpFormData>;
+  rules: UseControllerProps<PopUpFormData, 'placeType'>['rules'];
 }
 
-export default function PlaceTypeDropdownComponent({ control }: PlaceTypeDropdownComponentProps) {
+export default function PlaceTypeDropdownComponent({
+  control,
+  rules,
+}: PlaceTypeDropdownComponentProps) {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
 
   return (
     <Controller
       name="placeType"
       control={control}
-      render={({ field: { value, onChange } }) => (
+      rules={rules}
+      render={({ field: { value, onChange }, fieldState: { error } }) => (
         <div className="relative flex h-11 w-full">
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -43,6 +48,7 @@ export default function PlaceTypeDropdownComponent({ control }: PlaceTypeDropdow
               />
             )}
           </button>
+          {error && <p className="absolute bottom-0 translate-y-full text-red">{error.message}</p>}
           {isMenuOpen && (
             <div className="absolute top-11 mt-1 h-36 w-full overflow-auto rounded-lg border border-light_gray bg-white p-1">
               {placeType.map((place, index) => (

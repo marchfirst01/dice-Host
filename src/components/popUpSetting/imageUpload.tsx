@@ -2,16 +2,17 @@ import { IMAGES } from '@assets/index';
 import { PopUpFormData } from '@type/popUpSetting';
 
 import { ChangeEvent, useRef, useState } from 'react';
-import { Control, Controller } from 'react-hook-form';
+import { Control, Controller, UseControllerProps } from 'react-hook-form';
 
 import ImageContainerComponent from './imageContainer';
 import Image from 'next/image';
 
 interface ImageUploadComponentProps {
   control: Control<PopUpFormData>;
+  rules: UseControllerProps<PopUpFormData, 'imageList'>['rules'];
 }
 
-export default function ImageUploadComponent({ control }: ImageUploadComponentProps) {
+export default function ImageUploadComponent({ control, rules }: ImageUploadComponentProps) {
   const [files, setFiles] = useState<string[]>([]);
 
   // 이미지 첨부 버튼 클릭
@@ -59,8 +60,9 @@ export default function ImageUploadComponent({ control }: ImageUploadComponentPr
     <Controller
       name="imageList"
       control={control}
-      render={({ field: { onChange, value = [] } }) => (
-        <div className="flex w-full max-w-[400px] flex-row gap-[6px]">
+      rules={rules}
+      render={({ field: { onChange, value = [] }, fieldState: { error } }) => (
+        <div className="relative flex w-full max-w-[400px] flex-row gap-[6px]">
           {/* image upload input */}
           <input
             ref={fileInputRef}
@@ -93,6 +95,7 @@ export default function ImageUploadComponent({ control }: ImageUploadComponentPr
                 />
               ))}
           </div>
+          {error && <p className="absolute bottom-0 translate-y-full text-red">{error.message}</p>}
         </div>
       )}
     />

@@ -1,8 +1,8 @@
 import { IMAGES } from '@assets/index';
-import { PopUpFormData } from '@type/popUpSetting';
+import { PopUpConfig, PopUpFormData } from '@type/popUpSetting';
 
 import React, { Dispatch, SetStateAction, useState } from 'react';
-import { Control, Controller } from 'react-hook-form';
+import { Control, Controller, UseControllerProps } from 'react-hook-form';
 
 import Image from 'next/image';
 
@@ -10,12 +10,14 @@ interface DiscountInputComponentProps {
   control: Control<PopUpFormData>;
   discountType: '할인율' | '할인 금액';
   setDiscountType: Dispatch<SetStateAction<'할인율' | '할인 금액'>>;
+  rules: UseControllerProps<PopUpFormData, 'discount'>['rules'];
 }
 
 export default function DiscountInputComponent({
   control,
   discountType,
   setDiscountType,
+  rules,
 }: DiscountInputComponentProps): React.ReactElement<DiscountInputComponentProps> {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
 
@@ -49,8 +51,9 @@ export default function DiscountInputComponent({
     <Controller
       name="discount"
       control={control}
-      render={({ field: { onChange, value = '' } }) => (
-        <div className="flex w-full flex-row gap-2">
+      rules={rules}
+      render={({ field: { onChange, value = '' }, fieldState: { error } }) => (
+        <div className="relative flex w-full flex-row gap-2">
           {discountType === '할인율' ? (
             <input
               className="h-11 flex-1 rounded-lg border p-4 font-CAP1 text-CAP1 leading-CAP1"
@@ -97,6 +100,7 @@ export default function DiscountInputComponent({
               </div>
             )}
           </button>
+          {error && <p className="absolute bottom-0 translate-y-full text-red">{error.message}</p>}
         </div>
       )}
     />

@@ -5,6 +5,7 @@ interface PopUpFormData {
   subTitle: string;
   placeType: string;
   placeStart: number;
+  placeArea: number;
   placeEnd: number;
   numOfPeople: number;
   hashTagList: string;
@@ -25,6 +26,7 @@ type PopUpId =
   | 'subTitle'
   | 'placeStart'
   | 'placeEnd'
+  | 'placeArea'
   | 'numOfPeople'
   | 'hashTagList'
   | 'price'
@@ -42,6 +44,7 @@ interface PopUpConfig {
   name: PopUpId;
   display: string;
   placeholder: string;
+  rules?: string;
 }
 
 // 데이터 리스트
