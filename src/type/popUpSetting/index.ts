@@ -10,7 +10,8 @@ interface PopUpFormData {
   numOfPeople: number;
   hashTagList: string;
   price: number;
-  discount: number;
+  // discount: number;
+  discount: { price: number; type: string };
   description: string;
   location: string;
   locationDescription: string;

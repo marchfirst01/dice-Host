@@ -30,21 +30,21 @@ export default function DiscountInputComponent({
         numericValue = Math.min(Math.max(parseInt(numericValue, 10), 0), 100).toString();
       }
 
-      onChange(numericValue);
+      onChange({ price: numericValue, type: discountType });
     };
 
   const handlePriceInputChange =
     (onChange: Function) => (e: React.ChangeEvent<HTMLInputElement>) => {
       const value = e.target.value;
       let numericValue = value.replace(/[^\d]/g, '');
-
+      numericValue = numericValue.replace(/^0+/, '');
       const formattedValue = numericValue.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-      onChange(formattedValue);
+      onChange({ price: formattedValue, type: discountType });
     };
 
   const handleDiscountBtn = (selectedType: '할인율' | '할인 금액', onChange: Function) => {
     setDiscountType(selectedType);
-    if (selectedType !== discountType) onChange('');
+    if (selectedType !== discountType) onChange({ price: 0, type: selectedType });
   };
 
   return (
@@ -52,20 +52,23 @@ export default function DiscountInputComponent({
       name="discount"
       control={control}
       rules={rules}
-      render={({ field: { onChange, value = '' }, fieldState: { error } }) => (
+      render={({
+        field: { onChange, value = { price: 0, type: '할인율' } },
+        fieldState: { error },
+      }) => (
         <div className="relative flex w-full flex-row gap-2">
           {discountType === '할인율' ? (
             <input
               className="h-11 flex-1 rounded-lg border p-4 font-CAP1 text-CAP1 leading-CAP1"
               onChange={handlePercentInputChange(onChange)}
-              value={value}
+              value={value.price}
               placeholder="0~100 사이의 숫자로 입력해주세요"
             />
           ) : (
             <input
               className="h-11 flex-1 rounded-lg border p-4 font-CAP1 text-CAP1 leading-CAP1"
               onChange={handlePriceInputChange(onChange)}
-              value={value}
+              value={value.price}
               placeholder="할인 금액을 입력해주세요"
             />
           )}

@@ -50,7 +50,7 @@ export default function PlaceTypeDropdownComponent({
           </button>
           {error && <p className="absolute bottom-0 translate-y-full text-red">{error.message}</p>}
           {isMenuOpen && (
-            <div className="absolute top-11 mt-1 h-36 w-full overflow-auto rounded-lg border border-light_gray bg-white p-1">
+            <div className="absolute top-11 z-10 mt-1 h-36 w-full overflow-auto rounded-lg border border-light_gray bg-white p-1">
               {placeType.map((place, index) => (
                 <div
                   onClick={() => {

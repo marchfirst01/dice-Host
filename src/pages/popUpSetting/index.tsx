@@ -24,7 +24,7 @@ export default function PopUpSettingPage() {
   useEffect(() => {
     if (watchDiscountFields && watchPriceFields) {
       const returnValue = formattedDiscountPrice({
-        discount: watchDiscountFields,
+        discount: watchDiscountFields.price,
         price: watchPriceFields,
         discountType,
       });
@@ -145,7 +145,7 @@ export default function PopUpSettingPage() {
           {watchDiscountFields && formattedPrice && (
             <div className="flex flex-row justify-end gap-2 font-SUB2 text-SUB2 leading-SUB2">
               <p className="text-red">
-                {watchDiscountFields}
+                {watchDiscountFields.price}
                 {discountType === '할인율' ? '%' : '원'} 할인
               </p>
               <p>{formattedPrice}원</p>
