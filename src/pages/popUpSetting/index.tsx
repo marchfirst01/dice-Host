@@ -1,4 +1,5 @@
 import DiscountInputComponent from '@components/popUpSetting/discountInput';
+import GeocodeModalComponent from '@components/popUpSetting/geocodeModal';
 import ImageUploadComponent from '@components/popUpSetting/imageUpload';
 import PlaceTypeDropdownComponent from '@components/popUpSetting/placeTypeDropdown';
 import PopUpInputComponent from '@components/popUpSetting/popUpInput';
@@ -8,6 +9,7 @@ import PopUpSettingLayout from '@layout/popUpSettingLayout';
 import { PopUpFormData, PopUpId } from '@type/popUpSetting';
 import { PopUpRegisterResponse } from '@type/popUpSetting/popUpResponse';
 import formattedDiscountPrice from '@utils/formattedDiscountPrice';
+import { useGeocodeStore } from '@zustands/geocode/store';
 
 import React, { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -16,12 +18,21 @@ import { fetchSpaceRegister } from 'src/api/popUpSetting';
 import { popUpConfigList } from 'src/context/popUpSetting/popUpConfig';
 
 export default function PopUpSettingPage() {
-  const { control, handleSubmit, watch } = useForm<PopUpFormData>();
-  const [discountType, setDiscountType] = useState<'할인율' | '할인 금액'>('할인율');
+  const {
+    control,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm<PopUpFormData>();
 
+  const [geocodeModalOpen, setGeocodeModalOpen] = useState<boolean>(false);
+  const { selectedAddress } = useGeocodeStore();
+
+  const [discountType, setDiscountType] = useState<'할인율' | '할인 금액'>('할인율');
   const watchDiscountFields = watch('discountRate');
   const watchPriceFields = watch('pricePerDay');
 
+  // 가격 표시
   const [formattedPrice, setFormattedPrice] = useState<string>();
   useEffect(() => {
     if (watchDiscountFields && watchPriceFields) {
@@ -37,10 +48,11 @@ export default function PopUpSettingPage() {
 
   // 폼 제출
   const onSubmit: SubmitHandler<PopUpFormData> = async (formData: PopUpFormData) => {
+    console.log(formData);
     const {
       name,
       description,
-      // imageUrls,
+      imageUrls,
       // category,
       openingTime,
       closingTime,
@@ -71,7 +83,7 @@ export default function PopUpSettingPage() {
       notice,
       // TODO: 임시
       // TODO: category에 정해진 값 있음? 이미지 url 아니면 등록이 안됨
-      category: 'CAFE',
+      category: 'cafe',
       imageUrls: ['www.example.com'],
       city: '서울',
       district: '강남구',
@@ -211,22 +223,37 @@ export default function PopUpSettingPage() {
       <section className="flex flex-col gap-6 font-CAP1 text-CAP1 leading-CAP1">
         <p className="font-SUB1 text-SUB1 leading-SUB1">위치 안내 작성</p>
         {/* TODO: 주소 등록하지 않았을 때 에러 발생하도록 수정 필요 - 현재: 상세 주소 입력하지 않을 때 에러남 */}
-        <div>
+        <div className="relative w-full">
           <p className="after:ml-1 after:text-red after:content-['*']">위치</p>
           <div className="mb-1 mt-2 flex flex-row">
-            <PopUpInputComponent popUpConfig={popUpConfigList.location} control={control} />
+            <p
+              className={`flex h-[44px] w-full items-center rounded-lg border px-4 font-CAP1 text-CAP1 leading-CAP1 ${selectedAddress.postalCode ? 'text-black' : 'text-light_gray'}`}
+            >
+              {selectedAddress.postalCode
+                ? selectedAddress.postalCode
+                : '팝업 공간 주소를 검색해주세요'}
+            </p>
             <button
-              onClick={() => console.log('api 연결하기')}
-              className="ml-2 text-nowrap rounded-lg bg-light_gray px-[27.5px] py-[11.5px] text-white"
+              onClick={() => setGeocodeModalOpen(!geocodeModalOpen)}
+              className={`ml-2 text-nowrap rounded-lg px-[27.5px] py-[11.5px] text-white ${geocodeModalOpen ? 'bg-black' : 'bg-light_gray'}`}
             >
               주소 검색
             </button>
           </div>
-          <PopUpInputComponent
-            popUpConfig={popUpConfigList.address}
-            control={control}
-            rules={{ required: popUpConfigList.address.rules }}
-          />
+          <div className={`${geocodeModalOpen ? '' : 'hidden'}`}>
+            <GeocodeModalComponent
+              setGeocodeModalOpen={setGeocodeModalOpen}
+              control={control}
+              rules={{ required: popUpConfigList.location.rules }}
+            />
+          </div>
+          {selectedAddress.jibunAddress && (
+            <p className="my-1 flex h-[44px] w-full items-center rounded-lg border px-4 font-CAP1 text-CAP1 leading-CAP1">
+              {selectedAddress.jibunAddress}
+            </p>
+          )}
+          <PopUpInputComponent popUpConfig={popUpConfigList.address} control={control} />
+          {errors && <p className="text-red">{errors.location?.message}</p>}
         </div>
         <DivLayout name="websiteUrl" required={false}>
           <PopUpInputComponent popUpConfig={popUpConfigList.websiteUrl} control={control} />

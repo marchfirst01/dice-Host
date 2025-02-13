@@ -27,7 +27,7 @@ export default function PlaceTypeDropdownComponent({
         <div className="relative flex h-11 w-full">
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="flex h-11 w-full cursor-pointer items-center justify-start rounded-lg border border-stroke px-4 text-medium_gray"
+            className="flex h-11 w-full cursor-pointer items-center justify-start rounded-lg border border-stroke px-4 text-light_gray"
           >
             {value ? value : '공간 유형을 선택해주세요'}
             {isMenuOpen ? (

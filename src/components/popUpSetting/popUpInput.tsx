@@ -35,10 +35,10 @@ export default function PopUpInputComponent({
       control={control}
       rules={rules}
       render={({ field: { onChange, value = '' }, fieldState: { error } }) => (
-        <div className="relative">
+        <div className="relative w-full">
           <input
             id="input"
-            className="h-[44px] w-full rounded-lg border p-4 font-CAP1 text-CAP1 leading-CAP1"
+            className="h-[44px] w-full rounded-lg border p-4 font-CAP1 text-CAP1 leading-CAP1 placeholder:text-light_gray"
             onChange={
               popUpConfig.name === 'contactNumber'
                 ? handlePhoneNumberInputChange(onChange)

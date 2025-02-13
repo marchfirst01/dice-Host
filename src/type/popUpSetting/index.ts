@@ -16,7 +16,7 @@ interface PopUpFormData {
   discountRate: { price: number; type: string };
   details: string;
   // address: 상세주소, location: 주소 검색
-  location: string;
+  location: Address;
   address: string;
   websiteUrl: string;
   contactNumber: string;
@@ -54,4 +54,15 @@ interface PopUpConfig {
 // 데이터 리스트
 type PopUpConfigList = Record<PopUpId, PopUpConfig>;
 
-export type { PopUpFormData, PopUpId, PopUpConfig, PopUpConfigList };
+// 지도 response
+interface Address {
+  jibunAddress: string;
+  roadAddress: string;
+  sido: string;
+  sigugun: string;
+  postalCode: string;
+  latitude: string;
+  longitude: string;
+}
+
+export type { PopUpFormData, PopUpId, PopUpConfig, PopUpConfigList, Address };

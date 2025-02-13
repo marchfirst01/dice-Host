@@ -62,7 +62,12 @@ export const popUpConfigList: PopUpConfigList = {
       '소상공인 및 자영업자분들과 신뢰할 수 있는 거래를 위해 공간을 상세하게 설명해주세요',
     rules: '공간 설명을 작성해주세요',
   },
-  location: { name: 'location', display: '위치', placeholder: '주소를 입력해주세요' },
+  location: {
+    name: 'location',
+    display: '위치',
+    placeholder: '주소를 입력해주세요',
+    rules: '주소를 입력해주세요',
+  },
   address: {
     name: 'address',
     display: '위치',

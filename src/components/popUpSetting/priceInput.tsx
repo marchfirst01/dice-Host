@@ -28,7 +28,7 @@ export default function PriceInputComponents({
       render={({ field: { onChange, value = '' }, fieldState: { error } }) => (
         <>
           <input
-            className="h-[44px] w-full rounded-lg border p-4 font-CAP1 text-CAP1 leading-CAP1"
+            className="h-[44px] w-full rounded-lg border p-4 font-CAP1 text-CAP1 leading-CAP1 placeholder:text-light_gray"
             onChange={handleInputChange(onChange)}
             value={value}
             placeholder={popUpConfig.placeholder}
