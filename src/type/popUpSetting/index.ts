@@ -7,8 +7,8 @@ interface PopUpFormData {
   description: string;
   imageList: File[];
   category: string;
-  openingTime: string;
-  closingTime: string;
+  openingTime: { period: string; hours: string; minutes: string };
+  closingTime: { period: string; hours: string; minutes: string };
   placeArea: number;
   capacity: number;
   tags: string[];

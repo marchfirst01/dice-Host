@@ -5,6 +5,7 @@ import ImageUploadComponent from '@components/popUpSetting/imageUpload';
 import PopUpInputComponent from '@components/popUpSetting/popUpInput';
 import PopUpTextareaComponent from '@components/popUpSetting/popUpTextarea';
 import PriceInputComponents from '@components/popUpSetting/priceInput';
+import TimePickerComponents from '@components/popUpSetting/timePicker';
 import PopUpSettingLayout from '@layout/popUpSettingLayout';
 import { PopUpFormData, PopUpId } from '@type/popUpSetting';
 import { PopUpRegisterResponse } from '@type/popUpSetting/popUpResponse';
@@ -80,8 +81,10 @@ export default function PopUpSettingPage() {
       name,
       description,
       category,
-      openingTime,
-      closingTime,
+      // TODO
+      openingTime: '09:00',
+      closingTime: '10:00',
+
       capacity: Number(capacity),
       pricePerDay: Number(pricePerDay.replace(/,/g, '')),
       discountRate: discountRate.price,
@@ -154,16 +157,36 @@ export default function PopUpSettingPage() {
         <div className="flex flex-col gap-2">
           <p className="after:ml-1 after:text-red after:content-['*']">공간 영업 시간</p>
           <div className="flex flex-row items-center gap-1">
-            <PopUpInputComponent
-              popUpConfig={popUpConfigList.openingTime}
+            <TimePickerComponents
+              type="openingTime"
               control={control}
-              rules={{ required: popUpConfigList.openingTime.rules }}
-            />
-            ~
-            <PopUpInputComponent
-              popUpConfig={popUpConfigList.closingTime}
+              rules={{
+                required: popUpConfigList.openingTime.rules,
+                validate: {
+                  allFieldsSelected: (value) => {
+                    if (!value?.period || !value?.hours || !value?.minutes) {
+                      return popUpConfigList.openingTime.rules;
+                    }
+                    return true;
+                  },
+                },
+              }}
+            />{' '}
+            ~{' '}
+            <TimePickerComponents
+              type="closingTime"
               control={control}
-              rules={{ required: popUpConfigList.closingTime.rules }}
+              rules={{
+                required: popUpConfigList.closingTime.rules,
+                validate: {
+                  allFieldsSelected: (value) => {
+                    if (!value?.period || !value?.hours || !value?.minutes) {
+                      return popUpConfigList.closingTime.rules;
+                    }
+                    return true;
+                  },
+                },
+              }}
             />
           </div>
         </div>
@@ -229,7 +252,6 @@ export default function PopUpSettingPage() {
       </section>
       <section className="flex flex-col gap-6 font-CAP1 text-CAP1 leading-CAP1">
         <p className="font-SUB1 text-SUB1 leading-SUB1">위치 안내 작성</p>
-        {/* TODO: 주소 등록하지 않았을 때 에러 발생하도록 수정 필요 - 현재: 상세 주소 입력하지 않을 때 에러남 */}
         <div className="relative w-full">
           <p className="after:ml-1 after:text-red after:content-['*']">위치</p>
           <div className="mb-1 mt-2 flex flex-row">

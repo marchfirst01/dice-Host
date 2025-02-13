@@ -2,14 +2,8 @@ import { IMAGES } from '@assets/index';
 import { Address, PopUpFormData } from '@type/popUpSetting';
 import { useGeocodeStore } from '@zustands/geocode/store';
 
-import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import {
-  Control,
-  Controller,
-  UseControllerProps,
-  UseFormSetValue,
-  useFormState,
-} from 'react-hook-form';
+import React, { Dispatch, SetStateAction, useState } from 'react';
+import { Control, Controller, UseControllerProps } from 'react-hook-form';
 
 import Image from 'next/image';
 
@@ -45,8 +39,8 @@ export default function GeocodeModalComponent({
             sido,
             sigugun,
             postalCode,
-            latitude,
-            longitude,
+            latitude: Number(latitude),
+            longitude: Number(longitude),
           },
         ]);
       } else {
