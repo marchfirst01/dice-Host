@@ -7,15 +7,15 @@ import { Control, Controller, UseControllerProps } from 'react-hook-form';
 import Image from 'next/image';
 import { category } from 'src/context/popUpSetting/category';
 
-interface PlaceTypeDropdownComponentProps {
+interface CategoryDropdownComponentProps {
   control: Control<PopUpFormData>;
   rules: UseControllerProps<PopUpFormData, 'category'>['rules'];
 }
 
-export default function PlaceTypeDropdownComponent({
+export default function CategoryDropdownComponent({
   control,
   rules,
-}: PlaceTypeDropdownComponentProps) {
+}: CategoryDropdownComponentProps) {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
 
   return (

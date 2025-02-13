@@ -1,7 +1,7 @@
+import CategoryDropdownComponent from '@components/popUpSetting/categoryDropdown';
 import DiscountInputComponent from '@components/popUpSetting/discountInput';
 import GeocodeModalComponent from '@components/popUpSetting/geocodeModal';
 import ImageUploadComponent from '@components/popUpSetting/imageUpload';
-import PlaceTypeDropdownComponent from '@components/popUpSetting/placeTypeDropdown';
 import PopUpInputComponent from '@components/popUpSetting/popUpInput';
 import PopUpTextareaComponent from '@components/popUpSetting/popUpTextarea';
 import PriceInputComponents from '@components/popUpSetting/priceInput';
@@ -146,7 +146,7 @@ export default function PopUpSettingPage() {
         </div>
         <div className="flex flex-col gap-2">
           <p className="after:ml-1 after:text-red after:content-['*']">공간 유형</p>
-          <PlaceTypeDropdownComponent
+          <CategoryDropdownComponent
             control={control}
             rules={{ required: '공간 유형을 선택해주세요' }}
           />
