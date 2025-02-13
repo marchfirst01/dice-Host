@@ -29,6 +29,12 @@ export default function PopUpInputComponent({
       onChange(value);
     };
 
+  const handleCapacityInputChange =
+    (onchange: Function) => (e: React.ChangeEvent<HTMLInputElement>) => {
+      const value = e.target.value.replace(/[^0-9]/g, ''); // 숫자만 남기기
+      onchange(value);
+    };
+
   return (
     <Controller
       name={popUpConfig.name}
@@ -39,10 +45,15 @@ export default function PopUpInputComponent({
           <input
             id="input"
             className="h-[44px] w-full rounded-lg border p-4 font-CAP1 text-CAP1 leading-CAP1 placeholder:text-light_gray"
+            // onChange={
+            //   popUpConfig.name === 'contactNumber'
+            //     ? handlePhoneNumberInputChange(onChange)
+            //     : onChange
+            // }
             onChange={
-              popUpConfig.name === 'contactNumber'
-                ? handlePhoneNumberInputChange(onChange)
-                : onChange
+              (popUpConfig.name === 'contactNumber' && handlePhoneNumberInputChange(onChange)) ||
+              (popUpConfig.name === 'capacity' && handleCapacityInputChange(onChange)) ||
+              onChange
             }
             value={typeof value === 'object' ? '' : value}
             placeholder={popUpConfig.placeholder}
