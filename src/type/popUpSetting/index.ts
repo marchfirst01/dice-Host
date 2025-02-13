@@ -5,7 +5,7 @@
 interface PopUpFormData {
   name: string;
   description: string;
-  imageUrls: File[];
+  imageList: File[];
   category: string;
   openingTime: string;
   closingTime: string;
@@ -61,8 +61,8 @@ interface Address {
   sido: string;
   sigugun: string;
   postalCode: string;
-  latitude: string;
-  longitude: string;
+  latitude: number;
+  longitude: number;
 }
 
 export type { PopUpFormData, PopUpId, PopUpConfig, PopUpConfigList, Address };

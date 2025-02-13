@@ -14,7 +14,7 @@ import { useGeocodeStore } from '@zustands/geocode/store';
 import React, { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
-import { fetchSpaceRegister } from 'src/api/popUpSetting';
+import { fetchImageUpload, fetchSpaceRegister } from 'src/api/popUpSetting';
 import { popUpConfigList } from 'src/context/popUpSetting/popUpConfig';
 
 export default function PopUpSettingPage() {
@@ -48,11 +48,10 @@ export default function PopUpSettingPage() {
 
   // 폼 제출
   const onSubmit: SubmitHandler<PopUpFormData> = async (formData: PopUpFormData) => {
-    console.log(formData);
     const {
       name,
       description,
-      imageUrls,
+      imageList,
       category,
       openingTime,
       closingTime,
@@ -61,12 +60,22 @@ export default function PopUpSettingPage() {
       pricePerDay,
       discountRate,
       details,
+      location,
       address,
       websiteUrl,
       contactNumber,
       facilityInfo,
       notice,
     } = formData;
+
+    // imageList -> imageUrls
+    try {
+      const imageRes = await fetchImageUpload(imageList);
+      console.log(imageRes);
+    } catch (error) {
+      console.log(error);
+    }
+
     const registerData: PopUpRegisterResponse = {
       name,
       description,
@@ -77,6 +86,10 @@ export default function PopUpSettingPage() {
       pricePerDay: Number(pricePerDay.replace(/,/g, '')),
       discountRate: discountRate.price,
       details,
+      latitude: location.latitude,
+      longitude: location.longitude,
+      city: location.sido,
+      district: location.sigugun,
       address,
       websiteUrl,
       contactNumber,
@@ -84,13 +97,8 @@ export default function PopUpSettingPage() {
       notice,
       // TODO: 임시
       imageUrls: ['www.example.com'],
-      city: '서울',
-      district: '강남구',
-      latitude: 37.1234,
-      longitude: 127.1234,
       tags: ['카페'],
     };
-    console.log(registerData);
     // const res = await fetchSpaceRegister(registerData);
   };
 
