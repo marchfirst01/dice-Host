@@ -45,11 +45,6 @@ export default function PopUpInputComponent({
           <input
             id="input"
             className="h-[44px] w-full rounded-lg border p-4 font-CAP1 text-CAP1 leading-CAP1 placeholder:text-light_gray"
-            // onChange={
-            //   popUpConfig.name === 'contactNumber'
-            //     ? handlePhoneNumberInputChange(onChange)
-            //     : onChange
-            // }
             onChange={
               (popUpConfig.name === 'contactNumber' && handlePhoneNumberInputChange(onChange)) ||
               (popUpConfig.name === 'capacity' && handleCapacityInputChange(onChange)) ||

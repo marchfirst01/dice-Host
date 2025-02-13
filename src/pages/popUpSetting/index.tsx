@@ -53,7 +53,7 @@ export default function PopUpSettingPage() {
       name,
       description,
       imageUrls,
-      // category,
+      category,
       openingTime,
       closingTime,
       capacity,
@@ -70,6 +70,7 @@ export default function PopUpSettingPage() {
     const registerData: PopUpRegisterResponse = {
       name,
       description,
+      category,
       openingTime,
       closingTime,
       capacity: Number(capacity),
@@ -82,8 +83,6 @@ export default function PopUpSettingPage() {
       facilityInfo,
       notice,
       // TODO: 임시
-      // TODO: category에 정해진 값 있음? 이미지 url 아니면 등록이 안됨
-      category: 'cafe',
       imageUrls: ['www.example.com'],
       city: '서울',
       district: '강남구',
