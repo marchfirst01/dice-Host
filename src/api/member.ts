@@ -1,3 +1,4 @@
+import { PostAxiosInstance } from '@axios/axios.method';
 import { GuestPostAxiosInstance } from '@axios/guest.axios.method';
 import { MemberFormData } from '@type/member';
 import { LoginResponse } from '@type/member/memberResponse';
@@ -33,4 +34,9 @@ export const fetchRegister = async (formData: MemberFormData) => {
   const res = await GuestPostAxiosInstance('/auth/signup', { email: id, name, password, phone });
   if (res.status !== 200) throw new Error('회원가입 실패');
   return;
+};
+
+export const fetchLogout = async () => {
+  const res = await PostAxiosInstance('/auth/logout');
+  return res.status;
 };
