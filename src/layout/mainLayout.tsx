@@ -40,7 +40,11 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
           />
         )}
       </div>
-      <div className="px-5 pb-[85px] pt-[60px]">{children}</div>
+      {mainPageType === 'my' ? (
+        <div className="pb-[85px] pt-[60px]">{children}</div>
+      ) : (
+        <div className="px-5 pb-[85px] pt-[60px]">{children}</div>
+      )}
       <MainFooterComponent />
     </>
   );

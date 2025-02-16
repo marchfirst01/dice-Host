@@ -5,6 +5,7 @@ import { useHeaderStore } from '@zustands/header/headerStore';
 
 import React, { useEffect, useState } from 'react';
 
+import MyPage from '../my';
 import PopUpPage from '../popUp';
 import ReservationPage from '../reservation';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
@@ -37,7 +38,7 @@ export default function MainPage({
     <MainLayout>
       {mainPageType === 'popUp' && <PopUpPage spaceLatestData={spaceLatestData} />}
       {mainPageType === 'reservation' && <ReservationPage />}
-      {mainPageType === 'my' && <p>my</p>}
+      {mainPageType === 'my' && <MyPage />}
     </MainLayout>
   ) : (
     <p>login required</p>
