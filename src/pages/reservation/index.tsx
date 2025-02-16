@@ -8,6 +8,8 @@ import { reservationDummy } from './reservationDummy';
 export default function ReservationPage() {
   const [reservationItem] = useState(reservationDummy);
   const [reservationStatus, setReservationStatus] = useState<ReservationStatus>('pending');
+  const pendingCount = reservationDummy.filter((item) => item.status === 'pending').length;
+
   return (
     <>
       {/* TODO: 클릭 된 아이템 표시 필요 */}
@@ -17,6 +19,7 @@ export default function ReservationPage() {
           className="w-[111.67px] py-3 font-BTN1 text-BTN1 leading-BTN1"
         >
           대기중
+          <span className="ml-1 rounded-full bg-red px-2 py-[2px] text-white">{pendingCount}</span>
         </button>
         <button
           onClick={() => setReservationStatus('confirmed')}

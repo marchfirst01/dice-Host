@@ -16,7 +16,9 @@ import ReservationBlack from '@assets/mainFooter/reservation-black.svg';
 import ReservationGray from '@assets/mainFooter/reservation-gray.svg';
 // mainHeader
 import Chat from '@assets/mainHeader/chat.svg';
+import EditGray from '@assets/mainHeader/edit-gray.svg';
 import Heart from '@assets/mainHeader/heart.svg';
+import SendGray from '@assets/mainHeader/send-gray.svg';
 // member
 import Close from '@assets/member/close.svg';
 import Delete from '@assets/member/delete.svg';
@@ -55,6 +57,8 @@ const IMAGES = {
   //mainHeader
   Chat,
   Heart,
+  EditGray,
+  SendGray,
   // member
   Close,
   Delete,

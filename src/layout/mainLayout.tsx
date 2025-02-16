@@ -20,14 +20,25 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
           {mainPageType === 'reservation' && '예약 관리'}
           {mainPageType === 'my' && '호스트 정보'}
         </p>
-        <Image
-          onClick={() => console.log('쪽지 페이지 이동')}
-          className="cursor-pointer"
-          src={IMAGES.Chat}
-          width={24}
-          height={24}
-          alt="쪽지 이미지"
-        />
+        {mainPageType === 'my' ? (
+          <Image
+            onClick={() => console.log('호스트 정보 수정')}
+            className="cursor-pointer"
+            src={IMAGES.EditGray}
+            width={24}
+            height={24}
+            alt="쪽지 이미지"
+          />
+        ) : (
+          <Image
+            onClick={() => console.log('쪽지 페이지 이동')}
+            className="cursor-pointer"
+            src={IMAGES.SendGray}
+            width={24}
+            height={24}
+            alt="쪽지 이미지"
+          />
+        )}
       </div>
       <div className="px-5 pb-[85px] pt-[60px]">{children}</div>
       <MainFooterComponent />
