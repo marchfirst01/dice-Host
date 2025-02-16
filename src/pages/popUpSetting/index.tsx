@@ -1,30 +1,48 @@
+import CategoryDropdownComponent from '@components/popUpSetting/categoryDropdown';
 import DiscountInputComponent from '@components/popUpSetting/discountInput';
+import GeocodeModalComponent from '@components/popUpSetting/geocodeModal';
 import ImageUploadComponent from '@components/popUpSetting/imageUpload';
-import PlaceTypeDropdownComponent from '@components/popUpSetting/placeTypeDropdown';
 import PopUpInputComponent from '@components/popUpSetting/popUpInput';
 import PopUpTextareaComponent from '@components/popUpSetting/popUpTextarea';
 import PriceInputComponents from '@components/popUpSetting/priceInput';
+import TagInputComponent from '@components/popUpSetting/tagInput';
+import TimePickerComponents from '@components/popUpSetting/timePicker';
 import PopUpSettingLayout from '@layout/popUpSettingLayout';
 import { PopUpFormData, PopUpId } from '@type/popUpSetting';
+import { PopUpRegisterResponse } from '@type/popUpSetting/popUpResponse';
 import formattedDiscountPrice from '@utils/formattedDiscountPrice';
+import formattedTime from '@utils/formattedTime';
+import { useGeocodeStore } from '@zustands/geocode/store';
 
 import React, { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
+import { useRouter } from 'next/router';
+import { fetchImageUpload, fetchSpaceRegister } from 'src/api/popUpSetting';
 import { popUpConfigList } from 'src/context/popUpSetting/popUpConfig';
 
 export default function PopUpSettingPage() {
-  const { control, handleSubmit, watch } = useForm<PopUpFormData>();
+  const {
+    control,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm<PopUpFormData>();
+  const router = useRouter();
+
+  const [geocodeModalOpen, setGeocodeModalOpen] = useState<boolean>(false);
+  const { selectedAddress } = useGeocodeStore();
+
   const [discountType, setDiscountType] = useState<'할인율' | '할인 금액'>('할인율');
+  const watchDiscountFields = watch('discountRate');
+  const watchPriceFields = watch('pricePerDay');
 
-  const watchDiscountFields = watch('discount');
-  const watchPriceFields = watch('price');
-
+  // 가격 표시
   const [formattedPrice, setFormattedPrice] = useState<string>();
   useEffect(() => {
     if (watchDiscountFields && watchPriceFields) {
       const returnValue = formattedDiscountPrice({
-        discount: watchDiscountFields,
+        discount: watchDiscountFields.price,
         price: watchPriceFields,
         discountType,
       });
@@ -33,9 +51,69 @@ export default function PopUpSettingPage() {
     }
   }, [watchDiscountFields, watchPriceFields, formattedPrice]);
 
+  // imageList -> imageUrls
+  const uploadImage = async (imageList: File[]) => {
+    try {
+      const { imageUrls } = await fetchImageUpload(imageList);
+      return imageUrls;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   // 폼 제출
-  const onSubmit: SubmitHandler<PopUpFormData> = (formData: PopUpFormData) => {
-    console.log(formData);
+  const onSubmit: SubmitHandler<PopUpFormData> = async (formData: PopUpFormData) => {
+    const {
+      name,
+      description,
+      imageList,
+      category,
+      openingTime,
+      closingTime,
+      capacity,
+      tags,
+      pricePerDay,
+      discountRate,
+      details,
+      location,
+      address,
+      websiteUrl,
+      contactNumber,
+      facilityInfo,
+      notice,
+    } = formData;
+
+    // imageList -> imageUrls
+    const imageUrlsRes = await uploadImage(imageList);
+
+    const registerData: PopUpRegisterResponse = {
+      name,
+      description,
+      imageUrls: imageUrlsRes,
+      category,
+      openingTime: formattedTime(openingTime),
+      closingTime: formattedTime(closingTime),
+      capacity: Number(capacity),
+      tags,
+      pricePerDay: Number(pricePerDay.replace(/,/g, '')),
+      discountRate: Number(discountRate.price),
+      details,
+      latitude: location.latitude,
+      longitude: location.longitude,
+      city: location.sido,
+      district: location.sigugun,
+      address,
+      websiteUrl,
+      contactNumber,
+      facilityInfo,
+      notice,
+    };
+    try {
+      await fetchSpaceRegister(registerData);
+      router.push('/main');
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   interface DivLayoutProps {
@@ -60,56 +138,118 @@ export default function PopUpSettingPage() {
       <section className="flex flex-col gap-6 font-CAP1 text-CAP1 leading-CAP1">
         <p className="font-SUB1 text-SUB1 leading-SUB1">필수 정보 작성</p>
         <DivLayout name="name">
-          <PopUpInputComponent popUpConfig={popUpConfigList.name} control={control} />
+          <PopUpInputComponent
+            popUpConfig={popUpConfigList.name}
+            control={control}
+            rules={{ required: popUpConfigList.name.rules }}
+          />
         </DivLayout>
-        <DivLayout name="subTitle">
-          <PopUpInputComponent popUpConfig={popUpConfigList.subTitle} control={control} />
+        <DivLayout name="description">
+          <PopUpInputComponent
+            popUpConfig={popUpConfigList.description}
+            control={control}
+            rules={{ required: popUpConfigList.description.rules }}
+          />
         </DivLayout>
         <div className="flex flex-col gap-1">
           <p className="after:ml-1 after:text-red after:content-['*']">이미지 등록(최대 10장)</p>
-          <ImageUploadComponent control={control} />
+          <ImageUploadComponent
+            control={control}
+            rules={{ required: '이미지를 하나 이상 등록해주세요' }}
+          />
         </div>
         <div className="flex flex-col gap-2">
           <p className="after:ml-1 after:text-red after:content-['*']">공간 유형</p>
-          <PlaceTypeDropdownComponent control={control} />
+          <CategoryDropdownComponent
+            control={control}
+            rules={{ required: '공간 유형을 선택해주세요' }}
+          />
         </div>
         <div className="flex flex-col gap-2">
           <p className="after:ml-1 after:text-red after:content-['*']">공간 영업 시간</p>
           <div className="flex flex-row items-center gap-1">
-            <PopUpInputComponent popUpConfig={popUpConfigList.placeStart} control={control} />
-            ~<PopUpInputComponent popUpConfig={popUpConfigList.placeEnd} control={control} />
+            <TimePickerComponents
+              type="openingTime"
+              control={control}
+              rules={{
+                required: popUpConfigList.openingTime.rules,
+                validate: {
+                  allFieldsSelected: (value) => {
+                    if (!value?.period || !value?.hours || !value?.minutes) {
+                      return popUpConfigList.openingTime.rules;
+                    }
+                    return true;
+                  },
+                },
+              }}
+            />{' '}
+            ~{' '}
+            <TimePickerComponents
+              type="closingTime"
+              control={control}
+              rules={{
+                required: popUpConfigList.closingTime.rules,
+                validate: {
+                  allFieldsSelected: (value) => {
+                    if (!value?.period || !value?.hours || !value?.minutes) {
+                      return popUpConfigList.closingTime.rules;
+                    }
+                    return true;
+                  },
+                },
+              }}
+            />
           </div>
         </div>
-        <DivLayout name="numOfPeople">
-          <PopUpInputComponent popUpConfig={popUpConfigList.numOfPeople} control={control} />
+        <DivLayout name="capacity">
+          <PopUpInputComponent
+            popUpConfig={popUpConfigList.capacity}
+            control={control}
+            rules={{ required: popUpConfigList.capacity.rules }}
+          />
         </DivLayout>
-        <DivLayout name="hashTagList">
-          <PopUpInputComponent popUpConfig={popUpConfigList.hashTagList} control={control} />
-        </DivLayout>
+        <div className="flex flex-col gap-2 font-CAP1 text-CAP1 leading-CAP1">
+          <p className="after:ml-1 after:text-red after:content-['*']">
+            {popUpConfigList.tags.display}
+          </p>
+          <TagInputComponent control={control} />
+        </div>
+        {/* <DivLayout name="tags">
+          <PopUpInputComponent
+            popUpConfig={popUpConfigList.tags}
+            control={control}
+            rules={{ required: popUpConfigList.tags.rules }}
+          />
+        </DivLayout> */}
       </section>
       <section>
         <p className="mb-6 font-SUB1 text-SUB1 leading-SUB1">공간 대여 가격 작성</p>
         <div className="flex flex-col gap-4">
           <div className="flex flex-col gap-2 font-CAP1 text-CAP1 leading-CAP1">
             <p className="after:ml-1 after:text-red after:content-['*']">
-              {popUpConfigList.price.display}
+              {popUpConfigList.pricePerDay.display}
             </p>
-            <PriceInputComponents popUpConfig={popUpConfigList.price} control={control} />
+            <PriceInputComponents
+              popUpConfig={popUpConfigList.pricePerDay}
+              control={control}
+              rules={{ required: popUpConfigList.pricePerDay.rules }}
+            />
           </div>
           <div className="flex flex-col gap-2 font-CAP1 text-CAP1 leading-CAP1">
             <p className="after:ml-1 after:text-red after:content-['*']">
-              {popUpConfigList.discount.display}
+              {popUpConfigList.discountRate.display}
             </p>
             <DiscountInputComponent
               control={control}
               discountType={discountType}
               setDiscountType={setDiscountType}
+              rules={{ required: popUpConfigList.discountRate.rules }}
             />
           </div>
           {watchDiscountFields && formattedPrice && (
             <div className="flex flex-row justify-end gap-2 font-SUB2 text-SUB2 leading-SUB2">
               <p className="text-red">
-                {watchDiscountFields}
+                {watchDiscountFields.price}
                 {discountType === '할인율' ? '%' : '원'} 할인
               </p>
               <p>{formattedPrice}원</p>
@@ -119,47 +259,73 @@ export default function PopUpSettingPage() {
       </section>
       <section>
         <p className="mb-6 font-SUB1 text-SUB1 leading-SUB1">공간 소개글 작성</p>
-        <DivLayout name="description">
-          <PopUpTextareaComponent popUpConfig={popUpConfigList.description} control={control} />
+        <DivLayout name="details">
+          <PopUpTextareaComponent
+            popUpConfig={popUpConfigList.details}
+            control={control}
+            rules={{ required: popUpConfigList.details.rules }}
+          />
         </DivLayout>
       </section>
       <section className="flex flex-col gap-6 font-CAP1 text-CAP1 leading-CAP1">
         <p className="font-SUB1 text-SUB1 leading-SUB1">위치 안내 작성</p>
-        <div>
+        <div className="relative w-full">
           <p className="after:ml-1 after:text-red after:content-['*']">위치</p>
           <div className="mb-1 mt-2 flex flex-row">
-            <PopUpInputComponent popUpConfig={popUpConfigList.location} control={control} />
+            <p
+              className={`flex h-[44px] w-full items-center rounded-lg border px-4 font-CAP1 text-CAP1 leading-CAP1 ${selectedAddress.postalCode ? 'text-black' : 'text-light_gray'}`}
+            >
+              {selectedAddress.postalCode
+                ? selectedAddress.postalCode
+                : '팝업 공간 주소를 검색해주세요'}
+            </p>
             <button
-              onClick={() => console.log('api 연결하기')}
-              className="ml-2 text-nowrap rounded-lg bg-light_gray px-[27.5px] py-[11.5px] text-white"
+              onClick={() => setGeocodeModalOpen(!geocodeModalOpen)}
+              className={`ml-2 text-nowrap rounded-lg px-[27.5px] py-[11.5px] text-white ${geocodeModalOpen ? 'bg-black' : 'bg-light_gray'}`}
             >
               주소 검색
             </button>
           </div>
-          <PopUpInputComponent
-            popUpConfig={popUpConfigList.locationDescription}
-            control={control}
-          />
+          <div className={`${geocodeModalOpen ? '' : 'hidden'}`}>
+            <GeocodeModalComponent
+              setGeocodeModalOpen={setGeocodeModalOpen}
+              control={control}
+              rules={{ required: popUpConfigList.location.rules }}
+            />
+          </div>
+          {selectedAddress.jibunAddress && (
+            <p className="my-1 flex h-[44px] w-full items-center rounded-lg border px-4 font-CAP1 text-CAP1 leading-CAP1">
+              {selectedAddress.jibunAddress}
+            </p>
+          )}
+          <PopUpInputComponent popUpConfig={popUpConfigList.address} control={control} />
+          {errors && <p className="text-red">{errors.location?.message}</p>}
         </div>
-        <DivLayout name="homepage" required={false}>
-          <PopUpInputComponent popUpConfig={popUpConfigList.homepage} control={control} />
+        <DivLayout name="websiteUrl" required={false}>
+          <PopUpInputComponent popUpConfig={popUpConfigList.websiteUrl} control={control} />
         </DivLayout>
-        <DivLayout name="phoneNumber">
-          <PopUpInputComponent popUpConfig={popUpConfigList.phoneNumber} control={control} />
+        <DivLayout name="contactNumber">
+          <PopUpInputComponent
+            popUpConfig={popUpConfigList.contactNumber}
+            control={control}
+            rules={{ required: popUpConfigList.contactNumber.rules }}
+          />
         </DivLayout>
       </section>
       <section className="flex flex-col gap-6">
         <p className="font-SUB1 text-SUB1 leading-SUB1">시설 이용 및 공지사항 안내 작성</p>
-        <DivLayout name="usageInformation">
+        <DivLayout name="facilityInfo">
           <PopUpTextareaComponent
-            popUpConfig={popUpConfigList.usageInformation}
+            popUpConfig={popUpConfigList.facilityInfo}
             control={control}
+            rules={{ required: popUpConfigList.facilityInfo.rules }}
           />
         </DivLayout>
-        <DivLayout name="noticeInformation">
+        <DivLayout name="notice">
           <PopUpTextareaComponent
-            popUpConfig={popUpConfigList.noticeInformation}
+            popUpConfig={popUpConfigList.notice}
             control={control}
+            rules={{ required: popUpConfigList.notice.rules }}
           />
         </DivLayout>
       </section>

@@ -1,16 +1,18 @@
-import { PopUpConfig, PopUpFormData } from '@type/popUpSetting';
+import { PopUpConfig, PopUpFormData, PopUpId } from '@type/popUpSetting';
 
 import React from 'react';
-import { Control, Controller } from 'react-hook-form';
+import { Control, Controller, UseControllerProps } from 'react-hook-form';
 
 interface PopUpInputComponentProps {
   popUpConfig: PopUpConfig;
   control: Control<PopUpFormData>;
+  rules?: UseControllerProps<PopUpFormData, PopUpId>['rules'];
 }
 
 export default function PopUpInputComponent({
   popUpConfig,
   control,
+  rules,
 }: PopUpInputComponentProps): React.ReactElement<PopUpInputComponentProps> {
   const handlePhoneNumberInputChange =
     (onChange: Function) => (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -27,20 +29,32 @@ export default function PopUpInputComponent({
       onChange(value);
     };
 
+  const handleCapacityInputChange =
+    (onchange: Function) => (e: React.ChangeEvent<HTMLInputElement>) => {
+      const value = e.target.value.replace(/[^0-9]/g, ''); // 숫자만 남기기
+      onchange(value);
+    };
+
   return (
     <Controller
       name={popUpConfig.name}
       control={control}
-      render={({ field: { onChange, value = '' } }) => (
-        <input
-          id="input"
-          className="h-[44px] w-full rounded-lg border p-4 font-CAP1 text-CAP1 leading-CAP1"
-          onChange={
-            popUpConfig.name === 'phoneNumber' ? handlePhoneNumberInputChange(onChange) : onChange
-          }
-          value={value}
-          placeholder={popUpConfig.placeholder}
-        />
+      rules={rules}
+      render={({ field: { onChange, value = '' }, fieldState: { error } }) => (
+        <div className="relative w-full">
+          <input
+            id="input"
+            className="h-[44px] w-full rounded-lg border p-4 font-CAP1 text-CAP1 leading-CAP1 placeholder:text-light_gray"
+            onChange={
+              (popUpConfig.name === 'contactNumber' && handlePhoneNumberInputChange(onChange)) ||
+              (popUpConfig.name === 'capacity' && handleCapacityInputChange(onChange)) ||
+              onChange
+            }
+            value={typeof value === 'object' ? '' : value}
+            placeholder={popUpConfig.placeholder}
+          />
+          {error && <p className="absolute bottom-0 translate-y-full text-red">{error.message}</p>}
+        </div>
       )}
     />
   );

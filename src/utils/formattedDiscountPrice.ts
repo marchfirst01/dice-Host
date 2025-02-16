@@ -1,6 +1,6 @@
 interface FormattedDiscountPriceProps {
   discount: number;
-  price: number;
+  price: string;
   discountType: '할인율' | '할인 금액';
 }
 
@@ -10,8 +10,8 @@ export default function formattedDiscountPrice({
   discountType,
 }: FormattedDiscountPriceProps) {
   if (discountType === '할인율') {
-    const stringValue = price.toString();
-    const numericValue = parseInt(stringValue.replace(/,/g, ''), 10);
+    // const stringValue = price.toString();
+    const numericValue = parseInt(price.replace(/,/g, ''), 10);
     const returnValue = Math.round(numericValue * (1 - discount / 100));
     return returnValue;
   } else {
