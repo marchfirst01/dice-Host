@@ -5,6 +5,7 @@ import ImageUploadComponent from '@components/popUpSetting/imageUpload';
 import PopUpInputComponent from '@components/popUpSetting/popUpInput';
 import PopUpTextareaComponent from '@components/popUpSetting/popUpTextarea';
 import PriceInputComponents from '@components/popUpSetting/priceInput';
+import TagInputComponent from '@components/popUpSetting/tagInput';
 import TimePickerComponents from '@components/popUpSetting/timePicker';
 import PopUpSettingLayout from '@layout/popUpSettingLayout';
 import { PopUpFormData, PopUpId } from '@type/popUpSetting';
@@ -70,7 +71,7 @@ export default function PopUpSettingPage() {
       openingTime,
       closingTime,
       capacity,
-      // tags,
+      tags,
       pricePerDay,
       discountRate,
       details,
@@ -90,10 +91,10 @@ export default function PopUpSettingPage() {
       description,
       imageUrls: imageUrlsRes,
       category,
-      // TODO
       openingTime: formattedTime(openingTime),
       closingTime: formattedTime(closingTime),
       capacity: Number(capacity),
+      tags,
       pricePerDay: Number(pricePerDay.replace(/,/g, '')),
       discountRate: Number(discountRate.price),
       details,
@@ -106,8 +107,6 @@ export default function PopUpSettingPage() {
       contactNumber,
       facilityInfo,
       notice,
-      // TODO: 임시
-      tags: ['카페'],
     };
     try {
       await fetchSpaceRegister(registerData);
@@ -209,13 +208,19 @@ export default function PopUpSettingPage() {
             rules={{ required: popUpConfigList.capacity.rules }}
           />
         </DivLayout>
-        <DivLayout name="tags">
+        <div className="flex flex-col gap-2 font-CAP1 text-CAP1 leading-CAP1">
+          <p className="after:ml-1 after:text-red after:content-['*']">
+            {popUpConfigList.tags.display}
+          </p>
+          <TagInputComponent control={control} />
+        </div>
+        {/* <DivLayout name="tags">
           <PopUpInputComponent
             popUpConfig={popUpConfigList.tags}
             control={control}
             rules={{ required: popUpConfigList.tags.rules }}
           />
-        </DivLayout>
+        </DivLayout> */}
       </section>
       <section>
         <p className="mb-6 font-SUB1 text-SUB1 leading-SUB1">공간 대여 가격 작성</p>
