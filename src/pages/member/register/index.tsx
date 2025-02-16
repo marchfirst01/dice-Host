@@ -16,7 +16,8 @@ const RegisterPage = () => {
 
   const onSubmit: SubmitHandler<MemberFormData> = async (formData: MemberFormData) => {
     try {
-      await fetchValidateEmail(formData.id);
+      await fetchValidateEmail(formData.email);
+      // TODO: 휴대폰 번호 중복확인
       await fetchRegister(formData);
       alert('회원가입 성공!');
       router.push('/');
@@ -37,15 +38,27 @@ const RegisterPage = () => {
       />
       <p className="w-full font-H1 text-H1 leading-H1">회원가입</p>
       <div className="flex flex-col gap-6 overflow-scroll">
-        {/* id */}
+        {/* name */}
         <div className="w-full">
           <p className="after:ml-0.5 after:text-red after:content-['*']">
-            {memberConfig.id.display}
+            {memberConfig.name.display}
           </p>
           <UserInputComponent
-            memberConfig={memberConfig.id}
+            memberConfig={memberConfig.name}
             control={control}
-            rules={{ required: memberConfig.id.rules }}
+            rules={{ required: memberConfig.name.rules }}
+          />
+        </div>
+        {/* email */}
+        <div className="w-full">
+          <p className="after:ml-0.5 after:text-red after:content-['*']">
+            {memberConfig.email.display}
+          </p>
+          {/* TODO: 이메일 선택 드롭다운 */}
+          <UserInputComponent
+            memberConfig={memberConfig.email}
+            control={control}
+            rules={{ required: memberConfig.email.rules }}
           />
         </div>
         {/* password */}
@@ -74,28 +87,6 @@ const RegisterPage = () => {
             }}
           />
         </div>
-        {/* name */}
-        <div className="w-full">
-          <p className="after:ml-0.5 after:text-red after:content-['*']">
-            {memberConfig.name.display}
-          </p>
-          <UserInputComponent
-            memberConfig={memberConfig.name}
-            control={control}
-            rules={{ required: memberConfig.name.rules }}
-          />
-        </div>
-        {/* email
-        <div className="w-full">
-          <p className="after:ml-0.5 after:text-red after:content-['*']">
-            {memberConfig.email.display}
-          </p>
-          <UserInputComponent
-            memberConfig={memberConfig.email}
-            control={control}
-            rules={{ required: memberConfig.email.rules }}
-          />
-        </div> */}
         {/* phone */}
         {/* TODO: 인증번호 버튼, 입력칸 만들기 */}
         <div>
@@ -114,6 +105,22 @@ const RegisterPage = () => {
               <UserInputComponent memberConfig={memberConfig.auth} control={control} />
             </div>
           </div>
+        </div>
+        {/* bank */}
+        {/* TODO: 은행 선택 창 필요 */}
+        <div className="w-full">
+          <p className="after:ml-0.5 after:text-red after:content-['*']">
+            {memberConfig.bank.display}
+          </p>
+          <UserInputComponent
+            memberConfig={memberConfig.bank}
+            control={control}
+            rules={{
+              required: memberConfig.bank.rules,
+              validate: (value) =>
+                value === getValues('password') || '비밀번호가 일치하지 않습니다.',
+            }}
+          />
         </div>
       </div>
       <div className="absolute bottom-0 my-5 flex w-full flex-col items-center gap-3 px-5">

@@ -4,8 +4,8 @@ import { MemberFormData } from '@type/member';
 import { LoginResponse } from '@type/member/memberResponse';
 
 export const fetchLogin = async (formData: MemberFormData): Promise<LoginResponse> => {
-  const { id, password } = formData;
-  const res = await GuestPostAxiosInstance('/auth/login', { email: id, password });
+  const { email, password } = formData;
+  const res = await GuestPostAxiosInstance('/auth/login', { email, password });
   if (res.status !== 200) throw new Error('Failed to fetch login');
   return res.data;
 };
@@ -30,8 +30,8 @@ export const fetchValidateEmail = async (email: string) => {
 };
 
 export const fetchRegister = async (formData: MemberFormData) => {
-  const { id, name, password, phone } = formData;
-  const res = await GuestPostAxiosInstance('/auth/signup', { email: id, name, password, phone });
+  const { email, name, password, phone } = formData;
+  const res = await GuestPostAxiosInstance('/auth/signup', { email, name, password, phone });
   if (res.status !== 200) throw new Error('회원가입 실패');
   return;
 };

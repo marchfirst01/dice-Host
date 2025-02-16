@@ -1,6 +1,6 @@
 type MemberFormData = Record<MemberId, string>;
 
-type MemberId = 'id' | 'password' | 'password_check' | 'name' | 'email' | 'phone' | 'auth';
+type MemberId = 'email' | 'password' | 'password_check' | 'name' | 'phone' | 'auth' | 'bank';
 
 interface MemberConfig {
   name: MemberId;

@@ -1,12 +1,12 @@
 import { MemberConfigList, MemberId } from '@type/member';
 
 export const memberConfig: MemberConfigList = {
-  id: {
-    name: 'id',
-    display: '아이디',
+  email: {
+    name: 'email',
+    display: '이메일',
     type: 'default',
-    placeholder: '아이디를 입력해주세요',
-    rules: '아이디를 입력해주세요',
+    placeholder: '예: dice16',
+    rules: '이메일을 입력해주세요',
   },
   password: {
     name: 'password',
@@ -29,13 +29,6 @@ export const memberConfig: MemberConfigList = {
     placeholder: '이름을 입력해주세요',
     rules: '이름을 입력해주세요',
   },
-  email: {
-    name: 'email',
-    display: '이메일',
-    type: 'default',
-    placeholder: '예: popupdice',
-    rules: '이메일을 입력해주세요',
-  },
   phone: {
     name: 'phone',
     display: '휴대폰',
@@ -50,6 +43,13 @@ export const memberConfig: MemberConfigList = {
     placeholder: '인증번호 받기',
     rules: '인증번호를 입력해주세요',
   },
+  bank: {
+    name: 'bank',
+    display: '계좌번호',
+    type: 'default',
+    placeholder: '계좌번호를 입력해주세요',
+    rules: '공간 예약 시 입금 받을 계좌번호를 입력해주세요',
+  },
 };
 
-export const memberIdList: MemberId[] = ['id', 'password', 'password_check', 'name', 'email'];
+export const memberIdList: MemberId[] = ['email', 'password', 'password_check', 'name', 'bank'];
