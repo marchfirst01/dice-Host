@@ -9,6 +9,7 @@ const minutes = ['00', '10', '20', '30', '40', '50'];
 
 const timeOptions = { period, hours, minutes };
 
+//TODO: 화면밖 클릭 시 모달창 꺼지기
 function TimeList({
   type,
   onChange,

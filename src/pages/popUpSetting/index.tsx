@@ -10,11 +10,13 @@ import PopUpSettingLayout from '@layout/popUpSettingLayout';
 import { PopUpFormData, PopUpId } from '@type/popUpSetting';
 import { PopUpRegisterResponse } from '@type/popUpSetting/popUpResponse';
 import formattedDiscountPrice from '@utils/formattedDiscountPrice';
+import formattedTime from '@utils/formattedTime';
 import { useGeocodeStore } from '@zustands/geocode/store';
 
 import React, { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
+import { useRouter } from 'next/router';
 import { fetchImageUpload, fetchSpaceRegister } from 'src/api/popUpSetting';
 import { popUpConfigList } from 'src/context/popUpSetting/popUpConfig';
 
@@ -25,6 +27,7 @@ export default function PopUpSettingPage() {
     watch,
     formState: { errors },
   } = useForm<PopUpFormData>();
+  const router = useRouter();
 
   const [geocodeModalOpen, setGeocodeModalOpen] = useState<boolean>(false);
   const { selectedAddress } = useGeocodeStore();
@@ -46,6 +49,16 @@ export default function PopUpSettingPage() {
       setFormattedPrice(formattedReturnValue);
     }
   }, [watchDiscountFields, watchPriceFields, formattedPrice]);
+
+  // imageList -> imageUrls
+  const uploadImage = async (imageList: File[]) => {
+    try {
+      const { imageUrls } = await fetchImageUpload(imageList);
+      return imageUrls;
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   // 폼 제출
   const onSubmit: SubmitHandler<PopUpFormData> = async (formData: PopUpFormData) => {
@@ -70,24 +83,19 @@ export default function PopUpSettingPage() {
     } = formData;
 
     // imageList -> imageUrls
-    try {
-      const imageRes = await fetchImageUpload(imageList);
-      console.log(imageRes);
-    } catch (error) {
-      console.log(error);
-    }
+    const imageUrlsRes = await uploadImage(imageList);
 
     const registerData: PopUpRegisterResponse = {
       name,
       description,
+      imageUrls: imageUrlsRes,
       category,
       // TODO
-      openingTime: '09:00',
-      closingTime: '10:00',
-
+      openingTime: formattedTime(openingTime),
+      closingTime: formattedTime(closingTime),
       capacity: Number(capacity),
       pricePerDay: Number(pricePerDay.replace(/,/g, '')),
-      discountRate: discountRate.price,
+      discountRate: Number(discountRate.price),
       details,
       latitude: location.latitude,
       longitude: location.longitude,
@@ -99,10 +107,14 @@ export default function PopUpSettingPage() {
       facilityInfo,
       notice,
       // TODO: 임시
-      imageUrls: ['www.example.com'],
       tags: ['카페'],
     };
-    // const res = await fetchSpaceRegister(registerData);
+    try {
+      await fetchSpaceRegister(registerData);
+      router.push('/main');
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   interface DivLayoutProps {
