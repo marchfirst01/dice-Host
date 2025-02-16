@@ -12,11 +12,13 @@ import MyBlack from '@assets/mainFooter/my-black.svg';
 import MyGray from '@assets/mainFooter/my-gray.svg';
 import PlaceBlack from '@assets/mainFooter/place-black.svg';
 import PlaceGray from '@assets/mainFooter/place-gray.svg';
-import RecruitBlack from '@assets/mainFooter/recruit-black.svg';
-import RecruitGray from '@assets/mainFooter/recruit-gray.svg';
+import ReservationBlack from '@assets/mainFooter/reservation-black.svg';
+import ReservationGray from '@assets/mainFooter/reservation-gray.svg';
 // mainHeader
 import Chat from '@assets/mainHeader/chat.svg';
+import EditGray from '@assets/mainHeader/edit-gray.svg';
 import Heart from '@assets/mainHeader/heart.svg';
+import SendGray from '@assets/mainHeader/send-gray.svg';
 // member
 import Close from '@assets/member/close.svg';
 import Delete from '@assets/member/delete.svg';
@@ -29,7 +31,8 @@ import Search from '@assets/popUp/search.svg';
 import Globe from '@assets/popUpDetail/globe.svg';
 import Phone from '@assets/popUpDetail/phone.svg';
 import PlaceMarker from '@assets/popUpDetail/place-marker.svg';
-import Send from '@assets/popUpDetail/send.svg';
+import SendBlack from '@assets/popUpDetail/send-black.svg';
+import SendWhite from '@assets/popUpDetail/send-white.svg';
 // popUpSetting
 import ImageDelete from '@assets/popUpSetting/image-delete.svg';
 import ImageUpload from '@assets/popUpSetting/upload.svg';
@@ -49,11 +52,13 @@ const IMAGES = {
   MyGray,
   PlaceBlack,
   PlaceGray,
-  RecruitGray,
-  RecruitBlack,
+  ReservationBlack,
+  ReservationGray,
   //mainHeader
   Chat,
   Heart,
+  EditGray,
+  SendGray,
   // member
   Close,
   Delete,
@@ -66,7 +71,8 @@ const IMAGES = {
   Globe,
   Phone,
   PlaceMarker,
-  Send,
+  SendBlack,
+  SendWhite,
   // popUpSetting
   ImageDelete,
   ImageUpload,
