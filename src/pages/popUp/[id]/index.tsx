@@ -7,6 +7,7 @@ import React, { useEffect, useState } from 'react';
 import { GetServerSideProps, GetServerSidePropsContext, InferGetServerSidePropsType } from 'next';
 import Image from 'next/image';
 import { fetchSpaceId } from 'src/api/popUp';
+import { category } from 'src/context/popUpSetting/category';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import { Pagination } from 'swiper/modules';
@@ -32,6 +33,7 @@ export default function PopUpDetailPage({
   const [isUsageDetailView, setIsUsageDetailView] = useState<boolean>(false);
 
   useEffect(() => {
+    console.log(initialData);
     console.log(initialData.latitude, initialData.longitude);
     const mapDiv = document.getElementById('map');
     if (mapDiv) {
@@ -88,25 +90,26 @@ export default function PopUpDetailPage({
             <hr className="my-6" />
             <div className="mb-5 flex flex-col gap-2 font-CAP1 text-CAP1 leading-CAP1 text-deep_gray">
               <div className="flex flex-row gap-5">
-                <p className="">공간유형</p>
-                <p className="">{initialData.category}</p>
+                <p>공간유형</p>
+                <p>{category.find((item) => item.id === initialData.category)?.name}</p>
               </div>
               <div className="flex flex-row gap-5">
-                <p className="">영업 시간</p>
-                <p className="">{initialData.openingTime}</p>
+                <p>영업 시간</p>
+                <p>
+                  {initialData.openingTime.slice(0, -3)} ~ {initialData.closingTime.slice(0, -3)}
+                </p>
               </div>
               <div className="flex flex-row gap-5">
-                <p className="">수용인원</p>
-                <p className="">최대 {initialData.capacity}인</p>
+                <p>수용인원</p>
+                <p>최대 {initialData.capacity}인</p>
               </div>
             </div>
             <div className="flex w-full flex-row flex-wrap gap-1">
-              {initialData.category}
-              {/* {detailDummyinitialData.hashTagList.map((hashTag) => (
+              {initialData.tags.map((tag) => (
                 <p className="rounded-full border border-stroke px-[10px] py-1 font-CAP1 text-CAP1 leading-CAP1 text-light_gray">
-                  #<span className="ml-[2px] text-deep_gray">{hashTag}</span>
+                  #<span className="ml-[2px] text-deep_gray">{tag}</span>
                 </p>
-              ))} */}
+              ))}
             </div>
           </section>
           <section className="flex flex-col gap-4">
@@ -114,7 +117,7 @@ export default function PopUpDetailPage({
             <p
               className={`${isDescriptionDetailView ? '' : 'line-clamp-3'} w-full font-BODY1 text-BODY1 leading-BODY1 text-deep_gray`}
             >
-              {initialData.description}
+              {initialData.details}
             </p>
             <div className="relative flex w-full">
               <button
@@ -171,7 +174,7 @@ export default function PopUpDetailPage({
               onClick={() => window.open(initialData.websiteUrl)}
               className="flex h-[52px] w-full cursor-pointer flex-row items-center justify-center gap-1 rounded-lg border border-stroke text-medium_gray"
             >
-              <Image className="" src={IMAGES.Globe} alt="globe" width={24} height={24} />
+              <Image src={IMAGES.Globe} alt="globe" width={24} height={24} />
               웹사이트 바로가기
             </button>
           </section>
