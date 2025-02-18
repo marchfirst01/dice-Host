@@ -26,7 +26,7 @@ export default function EmailInputComponent({
       name={memberConfig.name}
       control={control}
       rules={rules}
-      render={({ field: { onChange, value = '' }, fieldState: { error, invalid } }) => {
+      render={({ field: { onChange, onBlur, value = '' }, fieldState: { error, isTouched } }) => {
         const [emailInput, setEmailInput] = useState('');
 
         useEffect(() => {
@@ -46,6 +46,7 @@ export default function EmailInputComponent({
                   type="default"
                   placeholder={memberConfig.placeholder}
                   onChange={(e) => setEmailInput(e.target.value)}
+                  onBlur={onBlur}
                   value={emailInput}
                 />
                 {value ? (
@@ -91,7 +92,7 @@ export default function EmailInputComponent({
                 )}
               </div>
             </div>
-            {error && (
+            {error && isTouched && (
               <p
                 className={`mt-2 font-CAP1 text-CAP1 leading-CAP1 ${memberConfig.name === 'password' && error.type === 'validate' && 'text-yellow'} ${memberConfig.name === 'bank' && 'text-yellow'} text-red`}
               >

@@ -19,21 +19,6 @@ export default function UserInputComponent({
 }: UserInputComponentProps): React.ReactElement<UserInputComponentProps> {
   const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false);
 
-  const handlePhoneNumberInputChange =
-    (onChange: Function) => (e: React.ChangeEvent<HTMLInputElement>) => {
-      let value = e.target.value.replace(/[^0-9]/g, ''); // 숫자만 남기기
-
-      // 000-0000-0000 형식으로 변환
-      if (value.length <= 3) {
-        value = value;
-      } else if (value.length <= 7) {
-        value = value.slice(0, 3) + '-' + value.slice(3);
-      } else {
-        value = value.slice(0, 3) + '-' + value.slice(3, 7) + '-' + value.slice(7, 11);
-      }
-      onChange(value);
-    };
-
   return (
     <Controller
       name={memberConfig.name}
@@ -46,9 +31,7 @@ export default function UserInputComponent({
               className="h-[44px] w-full rounded-lg border p-4"
               type={memberConfig.type === 'default' || isPasswordVisible ? 'default' : 'password'}
               placeholder={memberConfig.placeholder}
-              onChange={
-                memberConfig.name === 'phone' ? handlePhoneNumberInputChange(onChange) : onChange
-              }
+              onChange={onChange}
               value={value}
             />
             {error && (
