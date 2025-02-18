@@ -7,6 +7,7 @@ export const memberConfig: MemberConfigList = {
     type: 'default',
     placeholder: '예: dice16',
     rules: '이메일을 입력해주세요',
+    isValid: '사용 가능한 이메일입니다.',
   },
   password: {
     name: 'password',
@@ -14,6 +15,7 @@ export const memberConfig: MemberConfigList = {
     type: 'password',
     placeholder: '비밀번호를 입력해주세요',
     rules: '비밀번호를 입력해주세요',
+    isValid: '사용 가능한 비밀번호 입니다.',
   },
   password_check: {
     name: 'password_check',
@@ -21,6 +23,7 @@ export const memberConfig: MemberConfigList = {
     type: 'password',
     placeholder: '비밀번호를 한 번 더 입력해주세요',
     rules: '비밀번호를 한 번 더 입력해주세요',
+    isValid: '동일한 비밀번호 입니다.',
   },
   name: {
     name: 'name',
@@ -28,6 +31,7 @@ export const memberConfig: MemberConfigList = {
     type: 'default',
     placeholder: '이름을 입력해주세요',
     rules: '이름을 입력해주세요',
+    isValid: '',
   },
   phone: {
     name: 'phone',
@@ -35,6 +39,7 @@ export const memberConfig: MemberConfigList = {
     type: 'default',
     placeholder: '숫자만 입력해주세요',
     rules: '전화번호를 입력해주세요',
+    isValid: '사용 가능한 휴대폰 번호 입니다.',
   },
   auth: {
     name: 'auth',
@@ -42,6 +47,7 @@ export const memberConfig: MemberConfigList = {
     type: 'default',
     placeholder: '인증번호 받기',
     rules: '인증번호를 입력해주세요',
+    isValid: '',
   },
   bank: {
     name: 'bank',
@@ -49,6 +55,7 @@ export const memberConfig: MemberConfigList = {
     type: 'default',
     placeholder: '계좌번호를 입력해주세요',
     rules: '공간 예약 시 입금 받을 계좌번호를 입력해주세요',
+    isValid: '',
   },
 };
 

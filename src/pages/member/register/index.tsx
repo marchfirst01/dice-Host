@@ -12,7 +12,7 @@ import { memberConfig } from 'src/context/member/memberConfig';
 
 const RegisterPage = () => {
   const router = useRouter();
-  const { control, handleSubmit, getValues } = useForm<MemberFormData>();
+  const { control, handleSubmit, getValues } = useForm<MemberFormData>({ mode: 'onChange' });
 
   const onSubmit: SubmitHandler<MemberFormData> = async (formData: MemberFormData) => {
     try {
@@ -25,6 +25,8 @@ const RegisterPage = () => {
       if (error instanceof ValidateEmailError) alert(error.message);
     }
   };
+
+  const password_regex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[\W_]).{8,}$/;
 
   return (
     <div className="relative flex h-screen w-full flex-col items-center justify-center gap-6 px-5 pb-24 pt-20">
@@ -69,7 +71,12 @@ const RegisterPage = () => {
           <UserInputComponent
             memberConfig={memberConfig.password}
             control={control}
-            rules={{ required: memberConfig.password.rules }}
+            rules={{
+              required: memberConfig.password.rules,
+              validate: (value) =>
+                password_regex.test(value) ||
+                '비밀번호는 8자 이상 / 영문, 숫자, 특수문자를 포함해야 합니다.',
+            }}
           />
         </div>
         {/* password_check */}
@@ -117,8 +124,6 @@ const RegisterPage = () => {
             control={control}
             rules={{
               required: memberConfig.bank.rules,
-              validate: (value) =>
-                value === getValues('password') || '비밀번호가 일치하지 않습니다.',
             }}
           />
         </div>

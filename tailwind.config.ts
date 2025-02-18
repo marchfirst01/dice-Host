@@ -65,7 +65,7 @@ export default {
 
         // System Color
         purple: '#5B4FF4',
-        green: '#4FF48E',
+        green: '#50C878',
         yellow: '#FFD90C',
         red: '#FF357F',
 

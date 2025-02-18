@@ -42,9 +42,9 @@ export default function LoginPage() {
       <p className="w-full font-H1 text-H1 leading-H1">로그인</p>
       <div className="flex w-full flex-col gap-3">
         <UserInputComponent
-          memberConfig={memberConfig.id}
+          memberConfig={memberConfig.email}
           control={control}
-          rules={{ required: memberConfig.id.rules }}
+          rules={{ required: memberConfig.email.rules }}
         />
         <UserInputComponent
           memberConfig={memberConfig.password}

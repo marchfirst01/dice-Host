@@ -8,6 +8,7 @@ interface MemberConfig {
   type: string;
   placeholder: string;
   rules: string;
+  isValid: string;
 }
 
 type MemberConfigList = Record<MemberId, MemberConfig>;
