@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 import { Control, Controller, UseControllerProps } from 'react-hook-form';
 
 import Image from 'next/image';
-import { ValidatePhoneError, fetchValidatePhone } from 'src/api/member';
+import { ValidateMemberError, fetchValidatePhone } from 'src/api/member';
 
 interface PhoneInputComponentProps {
   memberConfig: MemberConfig;
@@ -48,7 +48,7 @@ export default function PhoneInputComponent({
             setPhoneMessage(memberConfig.isValid);
             setValidatePhone(true);
           } catch (error) {
-            if (error instanceof ValidatePhoneError) setPhoneMessage(error.message);
+            if (error instanceof ValidateMemberError) setPhoneMessage(error.message);
           }
         };
 

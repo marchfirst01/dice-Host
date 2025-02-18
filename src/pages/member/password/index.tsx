@@ -9,17 +9,24 @@ import React from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import Image from 'next/image';
+import { ValidateMemberError, fetchRequestPasswordReset } from 'src/api/member';
 import { memberConfig } from 'src/context/member/memberConfig';
 
 function RequestPassword() {
   const { control, handleSubmit } = useForm<MemberFormData>({ mode: 'onChange' });
   const { setName, setEmail, setStep } = useFindPassword();
 
-  const onSubmit: SubmitHandler<MemberFormData> = (memberData: MemberFormData) => {
-    console.log(memberData);
-    setName(memberData.name);
-    setEmail(memberData.email);
-    setStep(1);
+  const onSubmit: SubmitHandler<MemberFormData> = async (memberData: MemberFormData) => {
+    try {
+      const res = await fetchRequestPasswordReset(memberData);
+      if (res === 200) {
+        setName(memberData.name);
+        setEmail(memberData.email);
+        setStep(1);
+      }
+    } catch (error) {
+      if (error instanceof ValidateMemberError) alert(error.message);
+    }
   };
 
   return (
@@ -109,7 +116,7 @@ function ResetPassword() {
         />
       </div>
       <RegisterFormButtonComponent handleSubmit={handleSubmit} onSubmit={onSubmit}>
-        이메일로 인증하기
+        확인
       </RegisterFormButtonComponent>
     </div>
   );
@@ -122,7 +129,7 @@ export default function PasswordPage() {
     <div className="flex h-screen flex-col">
       <header className="relative mb-6 flex h-12 items-center">
         <Image className="absolute m-3" src={IMAGES.ArrowBackBlack} alt="back" />
-        <p className="w-full text-center">비밀번호 찾기</p>
+        <p className="w-full text-center">{step === 2 ? '비밀번호 재설정' : '비밀번호 찾기'}</p>
       </header>
       <div className="h-full px-5">
         {step === 0 && <RequestPassword />}

@@ -11,7 +11,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { ValidateEmailError, fetchRegister, fetchValidateEmail } from 'src/api/member';
+import { ValidateMemberError, fetchRegister, fetchValidateEmail } from 'src/api/member';
 import { memberConfig } from 'src/context/member/memberConfig';
 
 const RegisterPage = () => {
@@ -31,7 +31,7 @@ const RegisterPage = () => {
       alert('회원가입 성공!');
       router.push('/');
     } catch (error) {
-      if (error instanceof ValidateEmailError) setEmailError(error.message);
+      if (error instanceof ValidateMemberError) setEmailError(error.message);
     }
   };
 
