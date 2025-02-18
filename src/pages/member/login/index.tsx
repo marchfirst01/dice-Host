@@ -59,11 +59,12 @@ export default function LoginPage() {
         >
           로그인
         </RegisterFormButtonComponent>
-        <div className="flex flex-row gap-4 font-BTN1 text-BTN1 leading-BTN1 text-medium_gray">
-          <p className="cursor-pointer font-BTN1 text-BTN1 leading-BTN1">아이디 찾기</p>
-          <p>|</p>
-          <p className="cursor-pointer font-BTN1 text-BTN1 leading-BTN1">비밀번호 찾기</p>
-        </div>
+        <p
+          onClick={() => router.push('/member/password')}
+          className="cursor-pointer font-BTN1 text-BTN1 leading-BTN1 text-medium_gray"
+        >
+          비밀번호 찾기
+        </p>
       </div>
     </div>
   );

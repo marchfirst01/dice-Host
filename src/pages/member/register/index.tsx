@@ -11,13 +11,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import {
-  ValidateEmailError,
-  ValidatePhoneError,
-  fetchRegister,
-  fetchValidateEmail,
-  fetchValidatePhone,
-} from 'src/api/member';
+import { ValidateEmailError, fetchRegister, fetchValidateEmail } from 'src/api/member';
 import { memberConfig } from 'src/context/member/memberConfig';
 
 const RegisterPage = () => {
@@ -26,7 +20,6 @@ const RegisterPage = () => {
     control,
     handleSubmit,
     getValues,
-    watch,
     formState: { isValid },
   } = useForm<MemberFormData>({ mode: 'onChange' });
   const [emailError, setEmailError] = useState<string>('');
@@ -140,13 +133,6 @@ const RegisterPage = () => {
           <p className="after:ml-0.5 after:text-red after:content-['*']">
             {memberConfig.bank.display}
           </p>
-          {/* <UserInputComponent
-            memberConfig={memberConfig.bank}
-            control={control}
-            rules={{
-              required: memberConfig.bank.rules,
-            }}
-          /> */}
           <BankInputComponent
             memberConfig={memberConfig.bank}
             control={control}
