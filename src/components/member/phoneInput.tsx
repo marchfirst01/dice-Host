@@ -57,7 +57,7 @@ export default function PhoneInputComponent({
             <div className="flex w-full flex-row gap-2">
               <div className="relative">
                 <input
-                  className="h-[44px] w-full rounded-lg border p-4"
+                  className={`h-[44px] w-full rounded-lg border p-4 ${error || (phoneMessage && phoneMessage !== memberConfig.isValid) ? 'outline-red' : 'outline-black'}`}
                   placeholder={memberConfig.placeholder}
                   disabled={validatePhone}
                   onChange={

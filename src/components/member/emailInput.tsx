@@ -28,6 +28,7 @@ export default function EmailInputComponent({
       rules={rules}
       render={({ field: { onChange, onBlur, value = '' }, fieldState: { error, isTouched } }) => {
         const [emailInput, setEmailInput] = useState('');
+        const [focus, setFocus] = useState<boolean>(false);
 
         useEffect(() => {
           if (selectedEmailDomain && emailInput) {
@@ -39,14 +40,20 @@ export default function EmailInputComponent({
 
         return (
           <div className="relative w-full">
-            <div className="flex h-[44px] flex-row items-center justify-between rounded-lg border p-4">
+            <div
+              className={`flex h-[44px] flex-row items-center justify-between rounded-lg border p-4 ${focus && (error ? 'border-2 border-red' : 'border-2 border-black')}`}
+            >
               <div className="relative">
                 <input
+                  onClick={() => setFocus(true)}
                   className="w-full pr-5 outline-none focus:border-none"
                   type="default"
                   placeholder={memberConfig.placeholder}
                   onChange={(e) => setEmailInput(e.target.value)}
-                  onBlur={onBlur}
+                  onBlur={() => {
+                    onBlur();
+                    setFocus(false);
+                  }}
                   value={emailInput}
                 />
                 {value ? (
@@ -78,8 +85,9 @@ export default function EmailInputComponent({
                 />
                 {isEmailClick && (
                   <div className="absolute -bottom-3 z-10 flex w-full translate-y-full flex-col rounded-xl border border-light_gray bg-white">
-                    {emailList.map((email) => (
+                    {emailList.map((email, index) => (
                       <p
+                        key={index}
                         onClick={() => {
                           setSelectedEmailDomain(email);
                         }}

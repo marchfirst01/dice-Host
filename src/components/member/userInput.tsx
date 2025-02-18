@@ -28,7 +28,7 @@ export default function UserInputComponent({
         return (
           <div className="relative w-full">
             <input
-              className="h-[44px] w-full rounded-lg border p-4"
+              className={`h-[44px] w-full rounded-lg border p-4 ${error ? 'outline-red' : 'outline-black'} ${((memberConfig.name === 'password' && error?.type === 'validate') || (memberConfig.name === 'bank' && error)) && 'focus:outline-yellow'} `}
               type={memberConfig.type === 'default' || isPasswordVisible ? 'default' : 'password'}
               placeholder={memberConfig.placeholder}
               onChange={onChange}
