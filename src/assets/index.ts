@@ -2,6 +2,7 @@
 import ArrowBackBlack from '@assets/common/arrow/arrow-back-black.svg';
 import ArrowBackWhite from '@assets/common/arrow/arrow-back-white.svg';
 import ArrowDownGray from '@assets/common/arrow/arrow-down-gray.svg';
+import DiceLoading from '@assets/common/dice_loading.gif';
 // common/logo
 import DiceBlack from '@assets/common/logo/dice-black.svg';
 import DiceWhite from '@assets/common/logo/dice-white.svg';
@@ -38,6 +39,7 @@ import ImageDelete from '@assets/popUpSetting/image-delete.svg';
 import ImageUpload from '@assets/popUpSetting/upload.svg';
 
 const IMAGES = {
+  DiceLoading,
   // common/arrow
   ArrowBackBlack,
   ArrowBackWhite,

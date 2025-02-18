@@ -1,6 +1,7 @@
 import { IMAGES } from '@assets/index';
 import MySpaceListComponent from '@components/my/mySpaceList';
 import MyLayout from '@layout/myLayout';
+import { HostSpaceData } from '@type/my';
 import { deleteToken } from '@utils/token';
 import { useHeaderStore } from '@zustands/header/headerStore';
 
@@ -11,7 +12,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { fetchLogout } from 'src/api/member';
 
-export default function MyPage() {
+export default function MyPage({ hostSpaceData }: { hostSpaceData: HostSpaceData[] }) {
   const router = useRouter();
 
   const { setMainPageType } = useHeaderStore();
