@@ -7,7 +7,6 @@ import { useHeaderStore } from '@zustands/header/headerStore';
 
 import React from 'react';
 
-import { mySpaceDummy } from './mySpaceDummy';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { fetchLogout } from 'src/api/member';
@@ -35,7 +34,7 @@ export default function MyPage({ hostSpaceData }: { hostSpaceData: HostSpaceData
         <div>
           <div className="mt-4 flex flex-row items-center justify-between">
             <p className="font-SUB3 text-SUB3 leading-SUB3">
-              등록한 공간 <span className="text-purple">4개</span>
+              등록한 공간 <span className="text-purple">{hostSpaceData.length}개</span>
             </p>
             <p
               onClick={() => setMainPageType('popUp')}
@@ -44,7 +43,7 @@ export default function MyPage({ hostSpaceData }: { hostSpaceData: HostSpaceData
               리스트 바로가기
             </p>
           </div>
-          <MySpaceListComponent mySpaceList={mySpaceDummy} />
+          <MySpaceListComponent mySpaceList={hostSpaceData} />
         </div>
       </div>
       <div className="flex flex-col gap-6 font-SUB3 text-SUB3 leading-SUB3 text-deep_gray">

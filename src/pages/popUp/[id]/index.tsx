@@ -28,18 +28,6 @@ export const getServerSideProps: GetServerSideProps<{ initialData: SpaceIdRespon
 export default function PopUpDetailPage({
   initialData,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  console.log('initialData: ', initialData);
-
-  // 임시 더미 데이터
-  const imageList = [
-    'https://placehold.co/600x400/png',
-    'https://placehold.co/600x400/png',
-    'https://placehold.co/600x400/png',
-    'https://placehold.co/600x400/png',
-    'https://placehold.co/600x400/png',
-    'https://placehold.co/600x400/png',
-  ];
-
   const [isDescriptionDetailView, setIsDescriptionDetailView] = useState<boolean>(false);
   const [isUsageDetailView, setIsUsageDetailView] = useState<boolean>(false);
 
@@ -70,16 +58,16 @@ export default function PopUpDetailPage({
             slidesPerView={1}
             pagination={{ clickable: true, type: 'fraction' }}
           >
-            {imageList.map((image) => (
-              <SwiperSlide className="aspect-[3/2] w-full">
-                <Image src={image} alt="image" layout="fill" objectFit="cover" />
-              </SwiperSlide>
-            ))}
-            {/* {initialData.imageUrls.map((image) => (
-              <SwiperSlide className="aspect-[3/2] w-full">
-                <Image src={image} alt="image" layout="fill" objectFit="cover" />
-              </SwiperSlide>
-            ))} */}
+            {initialData.imageUrls.map((image) => {
+              // TODO: 'www.example.com' 삭제필요
+              const imageUrl =
+                image === 'www.example.com' ? 'https://placehold.co/600x400/png' : image;
+              return (
+                <SwiperSlide className="aspect-[3/2] w-full">
+                  <Image src={imageUrl} alt="image" layout="fill" objectFit="cover" />
+                </SwiperSlide>
+              );
+            })}
           </Swiper>
           <section className="mt-5">
             <div className="mb-4">
