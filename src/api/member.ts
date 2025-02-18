@@ -25,7 +25,7 @@ export const fetchValidateEmail = async (email: string) => {
     const res = await GuestPostAxiosInstance('/auth/validate/email', { email });
     if (res.status === 200) return;
   } catch (error) {
-    throw new ValidateEmailError('중복된 이메일 입니다', 'DUPLICATE_EMAIL');
+    throw new ValidateEmailError('이미 가입된 이메일 입니다', 'DUPLICATE_EMAIL');
   }
 };
 

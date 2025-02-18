@@ -60,3 +60,14 @@ export const memberConfig: MemberConfigList = {
 };
 
 export const memberIdList: MemberId[] = ['email', 'password', 'password_check', 'name', 'bank'];
+
+export const emailList = [
+  'yahoo.co.kr',
+  'hotmail.com',
+  'daum.net',
+  'kakao.com',
+  'hanmail.com',
+  'gmail.com',
+  'naver.com',
+  '직접 입력',
+];

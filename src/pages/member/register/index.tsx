@@ -1,8 +1,10 @@
 import { IMAGES } from '@assets/index';
 import RegisterFormButtonComponent from '@components/common/registerFormButton';
+import EmailInputComponent from '@components/member/emailInput';
 import UserInputComponent from '@components/member/userInput';
 import { MemberFormData } from '@type/member';
 
+import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import Image from 'next/image';
@@ -13,6 +15,7 @@ import { memberConfig } from 'src/context/member/memberConfig';
 const RegisterPage = () => {
   const router = useRouter();
   const { control, handleSubmit, getValues } = useForm<MemberFormData>({ mode: 'onChange' });
+  const [emailError, setEmailError] = useState<string>('');
 
   const onSubmit: SubmitHandler<MemberFormData> = async (formData: MemberFormData) => {
     try {
@@ -22,7 +25,7 @@ const RegisterPage = () => {
       alert('회원가입 성공!');
       router.push('/');
     } catch (error) {
-      if (error instanceof ValidateEmailError) alert(error.message);
+      if (error instanceof ValidateEmailError) setEmailError(error.message);
     }
   };
 
@@ -57,11 +60,17 @@ const RegisterPage = () => {
             {memberConfig.email.display}
           </p>
           {/* TODO: 이메일 선택 드롭다운 */}
-          <UserInputComponent
+          <EmailInputComponent
             memberConfig={memberConfig.email}
             control={control}
-            rules={{ required: memberConfig.email.rules }}
+            rules={{
+              required: memberConfig.email.rules,
+              validate: (value) => value.includes('@') || '도메인을 선택해주세요.',
+            }}
           />
+          {emailError && (
+            <p className="mt-2 font-CAP1 text-CAP1 leading-CAP1 text-red">{emailError}</p>
+          )}
         </div>
         {/* password */}
         <div className="w-full">

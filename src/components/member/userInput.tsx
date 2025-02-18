@@ -53,20 +53,20 @@ export default function UserInputComponent({
             />
             {error && (
               <p
-                className={`ml-2 mt-2 font-CAP1 text-CAP1 leading-CAP1 ${memberConfig.name === 'password' && error.type === 'validate' && 'text-yellow'} ${memberConfig.name === 'bank' && 'text-yellow'} text-red`}
+                className={`mt-2 font-CAP1 text-CAP1 leading-CAP1 ${memberConfig.name === 'password' && error.type === 'validate' && 'text-yellow'} ${memberConfig.name === 'bank' && 'text-yellow'} text-red`}
               >
                 {error.message}
               </p>
             )}
             {!invalid && value && memberConfig.isValid && (
-              <p className={`ml-2 mt-2 font-CAP1 text-CAP1 leading-CAP1 text-green`}>
+              <p className={`mt-2 font-CAP1 text-CAP1 leading-CAP1 text-green`}>
                 {memberConfig.isValid}
               </p>
             )}
             {value ? (
               <Image
                 onClick={() => onChange('')}
-                className={`absolute top-0 m-[13px] ${memberConfig.type === 'password' ? 'right-11' : 'right-0'}`}
+                className={`absolute top-0 m-[13px] cursor-pointer ${memberConfig.type === 'password' ? 'right-11' : 'right-0'}`}
                 src={IMAGES.Delete}
                 width={18}
                 height={18}
@@ -77,7 +77,7 @@ export default function UserInputComponent({
               isPasswordVisible ? (
                 <Image
                   onClick={() => setIsPasswordVisible(false)}
-                  className="absolute right-0 top-0 m-[13px]"
+                  className="absolute right-0 top-0 m-[13px] cursor-pointer"
                   src={IMAGES.EyeOn}
                   width={18}
                   height={18}
@@ -86,7 +86,7 @@ export default function UserInputComponent({
               ) : (
                 <Image
                   onClick={() => setIsPasswordVisible(true)}
-                  className="absolute right-0 top-0 m-[13px]"
+                  className="absolute right-0 top-0 m-[13px] cursor-pointer"
                   src={IMAGES.EyeOff}
                   width={18}
                   height={18}
