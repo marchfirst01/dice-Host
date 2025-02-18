@@ -1,5 +1,6 @@
 import { IMAGES } from '@assets/index';
 import RegisterFormButtonComponent from '@components/common/registerFormButton';
+import BankInputComponent from '@components/member/bankInput';
 import EmailInputComponent from '@components/member/emailInput';
 import PhoneInputComponent from '@components/member/phoneInput';
 import UserInputComponent from '@components/member/userInput';
@@ -139,7 +140,14 @@ const RegisterPage = () => {
           <p className="after:ml-0.5 after:text-red after:content-['*']">
             {memberConfig.bank.display}
           </p>
-          <UserInputComponent
+          {/* <UserInputComponent
+            memberConfig={memberConfig.bank}
+            control={control}
+            rules={{
+              required: memberConfig.bank.rules,
+            }}
+          /> */}
+          <BankInputComponent
             memberConfig={memberConfig.bank}
             control={control}
             rules={{
