@@ -13,49 +13,79 @@ export default function DragModalComponent({ isOpen, onClose, children }: DragMo
   const [isDragging, setIsDragging] = useState(false);
   const [startY, setStartY] = useState(0);
 
+  // 모달 열릴 때 높이를 40%로 초기화
   useEffect(() => {
     if (isOpen) {
-      setModalHeight(40); // 모달 열릴 때 높이 초기화
+      setModalHeight(40);
     }
   }, [isOpen]);
 
-  useEffect(() => {
-    if (!isOpen) {
-      setModalHeight(40); // 모달 닫힐 때 높이를 낮게 유지
-    }
-  }, [isOpen]);
+  // 높이 조절 함수
+  const updateHeight = (deltaY: number) => {
+    if (!modalRef.current || !contentRef.current) return;
 
-  const handleMouseDown = (e: React.MouseEvent) => {
+    const contentHeight = (contentRef.current.scrollHeight / window.innerHeight) * 100;
+    const maxAllowedHeight = Math.min(80, contentHeight); // 최대 80%까지 확장 가능
+    const newHeight = Math.min(
+      maxAllowedHeight,
+      Math.max(40, modalHeight - (deltaY / window.innerHeight) * 100),
+    );
+
+    setModalHeight(newHeight);
+  };
+
+  // 마우스 이벤트 핸들러
+  const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
     setIsDragging(true);
     setStartY(e.clientY);
   };
 
   const handleMouseMove = (e: MouseEvent) => {
-    if (!isDragging || !modalRef.current) return;
-    const deltaY = e.clientY - startY; // 아래로 드래그하면 deltaY가 양수, 위로 드래그하면 음수
-    const newHeight = Math.min(80, Math.max(40, modalHeight - (deltaY / window.innerHeight) * 100));
-    setModalHeight(newHeight);
+    if (!isDragging) return;
+    updateHeight(e.clientY - startY);
+    setStartY(e.clientY);
   };
 
-  const handleMouseUp = () => {
-    setIsDragging(false);
+  const handleMouseUp = () => setIsDragging(false);
+
+  // 터치 이벤트 핸들러 (모바일 지원)
+  const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
+    if (e.touches.length !== 1) return;
+    setIsDragging(true);
+    setStartY(e.touches[0].clientY);
   };
 
+  const handleTouchMove = (e: TouchEvent) => {
+    if (!isDragging) return;
+    updateHeight(e.touches[0].clientY - startY);
+    setStartY(e.touches[0].clientY);
+  };
+
+  const handleTouchEnd = () => setIsDragging(false);
+
+  // 이벤트 리스너 등록
   useEffect(() => {
     if (isDragging) {
       window.addEventListener('mousemove', handleMouseMove);
       window.addEventListener('mouseup', handleMouseUp);
+      window.addEventListener('touchmove', handleTouchMove);
+      window.addEventListener('touchend', handleTouchEnd);
     } else {
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('mouseup', handleMouseUp);
+      window.removeEventListener('touchmove', handleTouchMove);
+      window.removeEventListener('touchend', handleTouchEnd);
     }
 
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('mouseup', handleMouseUp);
+      window.removeEventListener('touchmove', handleTouchMove);
+      window.removeEventListener('touchend', handleTouchEnd);
     };
   }, [isDragging]);
 
+  // 모달 외부 클릭 시 닫기
   const handleOutsideClick = (e: React.MouseEvent) => {
     if (modalRef.current && !modalRef.current.contains(e.target as Node)) {
       onClose();
@@ -74,11 +104,9 @@ export default function DragModalComponent({ isOpen, onClose, children }: DragMo
         className="w-full max-w-[400px] cursor-grab rounded-t-lg bg-white shadow-lg transition-all duration-300 ease-in-out"
         style={{ height: `${modalHeight}vh` }}
         onMouseDown={handleMouseDown}
+        onTouchStart={handleTouchStart} // 모바일 터치 이벤트 추가
       >
-        <div
-          ref={contentRef}
-          className={`h-full text-black ${modalHeight >= 80 ? 'overflow-auto' : ''}`}
-        >
+        <div ref={contentRef} className="overflow-auto text-black">
           {children}
         </div>
       </div>
