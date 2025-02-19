@@ -84,7 +84,12 @@ export default function MyPage({
           로그아웃
         </p>
       </div>
-      <p>탈퇴하기</p>
+      <p
+        onClick={() => router.push({ pathname: '/my/withDraw', query: { name: hostInfo.name } })}
+        className="cursor-pointer font-SUB3 text-SUB3 leading-SUB3 text-deep_gray"
+      >
+        탈퇴하기
+      </p>
     </MyLayout>
   );
 }

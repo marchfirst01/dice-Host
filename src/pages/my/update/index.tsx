@@ -118,9 +118,7 @@ export default function MyUpdatePage() {
                       </button>
                     </div>
                     <div className="flex w-1/2 justify-center">
-                      <button type="button" className="border-b-2 border-black">
-                        증권사
-                      </button>
+                      <button type="button">증권사</button>
                     </div>
                   </div>
                   <hr />
