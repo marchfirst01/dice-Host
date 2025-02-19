@@ -1,5 +1,5 @@
-import { IMAGES } from '@assets/index';
-import BankModal from '@components/common/bankModal';
+import { BANK, IMAGES } from '@assets/index';
+import DragModalComponent from '@components/common/dragModal';
 import { useHostInfo } from '@hooks/useHost';
 import { HostInfo } from '@type/my';
 
@@ -13,10 +13,13 @@ import { fetchHostUpdate } from 'src/api/host';
 export default function MyUpdatePage() {
   const router = useRouter();
   const { data: defaultHostInfo } = useHostInfo();
-  const { register, handleSubmit, setValue, getValues } = useForm<HostInfo>();
-  const [bankName, setBankName] = useState(
-    defaultHostInfo.bankName ? defaultHostInfo.bankName : '',
-  );
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    getValues,
+    formState: { errors },
+  } = useForm<HostInfo>();
 
   useEffect(() => {
     setValue('name', defaultHostInfo.name);
@@ -43,11 +46,6 @@ export default function MyUpdatePage() {
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
-
-  const handleBankSelection = () => {
-    setBankName('신한은행');
-    setValue('bankName', '신한은행'); // 예제: 버튼 클릭 시 '신한은행'으로 값 설정
-  };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -98,26 +96,59 @@ export default function MyUpdatePage() {
           </div>
         </div>
         <div>
-          <p>계좌번호</p>
+          <p className="after:ml-0.5 after:text-red after:content-['*']">계좌번호</p>
           <div className="relative flex flex-row">
             <input
-              {...register('accountNumber')}
+              {...register('accountNumber', { required: '계좌번호를 입력해주세요' })}
               className="mt-2 h-11 w-full rounded-lg border border-light_gray px-4"
               placeholder="계좌번호를 입력해주세요"
             />
             <div className="absolute right-0 mt-2 flex flex-row items-center text-light_gray">
               <p>|</p>
               <button type="button" onClick={openModal} className="h-11 w-[118px]">
-                {bankName ? bankName : '은행 선택'}
+                {getValues('bankName') ? getValues('bankName') : '은행 선택'}
               </button>
-              <BankModal isOpen={isModalOpen} onClose={closeModal}>
+              <DragModalComponent isOpen={isModalOpen} onClose={closeModal}>
                 <div className="px-5 py-6">
                   <p className="font-H2 text-H2 leading-H2 text-black">금융 기관 선택</p>
+                  <div className="flex h-12 flex-row justify-center font-SUB3 text-SUB3 leading-SUB3">
+                    <div className="flex w-1/2 justify-center">
+                      <button type="button" className="border-b-2 border-black">
+                        은행
+                      </button>
+                    </div>
+                    <div className="flex w-1/2 justify-center">
+                      <button type="button" className="border-b-2 border-black">
+                        증권사
+                      </button>
+                    </div>
+                  </div>
+                  <hr />
+                  <div className="mt-6 grid grid-cols-3 gap-2 overflow-auto">
+                    {BANK.map((bank) => (
+                      <div
+                        onClick={() => {
+                          console.log(bank.bankName);
+                          setValue('bankName', bank.bankName);
+                          closeModal();
+                        }}
+                        className="flex flex-col items-center justify-center rounded-lg border py-4"
+                      >
+                        <Image src={bank.bankImage} alt={bank.bankName} />
+                        {bank.bankName}
+                      </div>
+                    ))}
+                  </div>
                 </div>
-              </BankModal>
-              <input {...register('bankName')} type="hidden" />
+              </DragModalComponent>
+              <input {...register('bankName', { required: '은행을 선택해주세요' })} type="hidden" />
             </div>
           </div>
+          {errors.accountNumber ? (
+            <p className="mt-2 text-red">{errors.accountNumber.message}</p>
+          ) : errors.bankName && !getValues('bankName') ? (
+            <p className="mt-2 text-red">{errors.bankName.message}</p>
+          ) : null}
         </div>
         <button
           type="button"
