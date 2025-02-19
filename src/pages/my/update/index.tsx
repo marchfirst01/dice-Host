@@ -1,4 +1,5 @@
 import { IMAGES } from '@assets/index';
+import BankModal from '@components/common/bankModal';
 import { useHostInfo } from '@hooks/useHost';
 import { HostInfo } from '@type/my';
 
@@ -38,6 +39,11 @@ export default function MyUpdatePage() {
     await fetchHostUpdate(hostInfo);
   };
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
+
   const handleBankSelection = () => {
     setBankName('신한은행');
     setValue('bankName', '신한은행'); // 예제: 버튼 클릭 시 '신한은행'으로 값 설정
@@ -56,7 +62,7 @@ export default function MyUpdatePage() {
           완료
         </button>
       </header>
-      <div className="flex flex-col gap-6 px-5 py-8 font-CAP1 text-CAP1 leading-CAP1 text-dark_gray">
+      <div className="relative flex flex-col gap-6 px-5 py-8 font-CAP1 text-CAP1 leading-CAP1 text-dark_gray">
         <div>
           <p>호스트 이름</p>
           <input
@@ -101,9 +107,14 @@ export default function MyUpdatePage() {
             />
             <div className="absolute right-0 mt-2 flex flex-row items-center text-light_gray">
               <p>|</p>
-              <button type="button" onClick={handleBankSelection} className="h-11 w-[118px]">
+              <button type="button" onClick={openModal} className="h-11 w-[118px]">
                 {bankName ? bankName : '은행 선택'}
               </button>
+              <BankModal isOpen={isModalOpen} onClose={closeModal}>
+                <div className="px-5 py-6">
+                  <p className="font-H2 text-H2 leading-H2 text-black">금융 기관 선택</p>
+                </div>
+              </BankModal>
               <input {...register('bankName')} type="hidden" />
             </div>
           </div>
