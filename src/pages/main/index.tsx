@@ -1,5 +1,5 @@
 import { IMAGES } from '@assets/index';
-import { useHostSpace } from '@hooks/useHost';
+import { useHostInfo, useHostSpace } from '@hooks/useHost';
 import MainLayout from '@layout/mainLayout';
 import { getAccessToken } from '@utils/token';
 import { useHeaderStore } from '@zustands/header/headerStore';
@@ -17,9 +17,7 @@ export default function MainPage() {
   const { mainPageType } = useHeaderStore();
 
   const { data: hostSpaceData, isFetching } = useHostSpace();
-  useEffect(() => {
-    console.log('isFetching 상태:', isFetching);
-  }, [isFetching]);
+  const { data: hostInfo } = useHostInfo();
 
   useEffect(() => {
     setIsLoggedIn(getAccessToken() ? true : false);
@@ -34,7 +32,7 @@ export default function MainPage() {
       ) : (
         (mainPageType === 'popUp' && <PopUpPage hostSpaceData={hostSpaceData} />) ||
         (mainPageType === 'reservation' && <ReservationPage />) ||
-        (mainPageType === 'my' && <MyPage hostSpaceData={hostSpaceData} />)
+        (mainPageType === 'my' && <MyPage hostSpaceData={hostSpaceData} hostInfo={hostInfo} />)
       )}
     </MainLayout>
   ) : (

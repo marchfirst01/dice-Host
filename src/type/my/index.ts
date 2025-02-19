@@ -11,3 +11,11 @@ export interface HostSpaceData {
   likeCount: number;
   liked: boolean;
 }
+
+export interface HostInfo {
+  name: string;
+  email: string;
+  phone: string;
+  bankName: any;
+  accountNumber: any;
+}

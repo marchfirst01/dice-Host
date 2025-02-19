@@ -28,7 +28,7 @@ export default function MySpaceListComponent({
   return (
     <div className="flex flex-row gap-1 overflow-x-scroll">
       {mySpaceList.map((space) => (
-        <MySpaceItemComponent imageUrl={space.imageUrl} id={space.id} />
+        <MySpaceItemComponent key={space.id} imageUrl={space.imageUrl} id={space.id} />
       ))}
     </div>
   );

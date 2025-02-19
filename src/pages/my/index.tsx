@@ -1,7 +1,7 @@
 import { IMAGES } from '@assets/index';
 import MySpaceListComponent from '@components/my/mySpaceList';
 import MyLayout from '@layout/myLayout';
-import { HostSpaceData } from '@type/my';
+import { HostInfo, HostSpaceData } from '@type/my';
 import { deleteToken } from '@utils/token';
 import { useHeaderStore } from '@zustands/header/headerStore';
 
@@ -11,7 +11,13 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { fetchLogout } from 'src/api/member';
 
-export default function MyPage({ hostSpaceData }: { hostSpaceData: HostSpaceData[] }) {
+export default function MyPage({
+  hostSpaceData,
+  hostInfo,
+}: {
+  hostSpaceData: HostSpaceData[];
+  hostInfo: HostInfo;
+}) {
   const router = useRouter();
 
   const { setMainPageType } = useHeaderStore();
@@ -24,12 +30,14 @@ export default function MyPage({ hostSpaceData }: { hostSpaceData: HostSpaceData
     }
   };
 
+  console.log(hostInfo);
+
   return (
     <MyLayout>
       <div>
         <div className="flex flex-row items-center gap-3">
           <Image src={IMAGES.DiceBlack} alt="profile" width={54} height={54} />
-          <p className="font-SUB1 text-SUB1 leading-SUB1">호스트 이름</p>
+          <p className="font-SUB1 text-SUB1 leading-SUB1">{hostInfo.name}</p>
         </div>
         <div>
           <div className="mt-4 flex flex-row items-center justify-between">
