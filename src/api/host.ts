@@ -12,5 +12,10 @@ export const fetchHostInfo = async () => {
 };
 
 export const fetchHostUpdate = async (hostUpdate: HostInfo) => {
-  const res = await PostAxiosInstance('/host/update', hostUpdate);
+  try {
+    const res = await PostAxiosInstance('/host/update', hostUpdate);
+    console.log(res);
+  } catch (error) {
+    console.log(error);
+  }
 };

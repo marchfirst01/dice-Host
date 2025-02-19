@@ -2,22 +2,40 @@ import { IMAGES } from '@assets/index';
 import { useHostInfo } from '@hooks/useHost';
 import { HostInfo } from '@type/my';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import Image from 'next/image';
 import { useRouter } from 'next/router';
+import { fetchHostUpdate } from 'src/api/host';
 
 export default function MyUpdatePage() {
   const router = useRouter();
-  const { register, handleSubmit, setValue } = useForm<HostInfo>();
   const { data: defaultHostInfo } = useHostInfo();
+  const { register, handleSubmit, setValue, getValues } = useForm<HostInfo>();
   const [bankName, setBankName] = useState(
     defaultHostInfo.bankName ? defaultHostInfo.bankName : '',
   );
 
-  const onSubmit = (hostInfo: HostInfo) => {
+  useEffect(() => {
+    setValue('name', defaultHostInfo.name);
+    setValue('email', defaultHostInfo.email);
+    setValue('phone', defaultHostInfo.phone);
+    setValue('accountNumber', defaultHostInfo.accountNumber ? defaultHostInfo.accountNumber : null);
+    setValue('bankName', defaultHostInfo.bankName ? defaultHostInfo.bankName : null);
+  }, [defaultHostInfo]);
+
+  const [phoneChange, setPhoneChange] = useState(true);
+
+  const handlePhoneValidate = () => {
+    setPhoneChange(!phoneChange);
+    const phone = getValues('phone');
+    //TODO: phone 중복 검사
+  };
+
+  const onSubmit = async (hostInfo: HostInfo) => {
     console.log(hostInfo);
+    await fetchHostUpdate(hostInfo);
   };
 
   const handleBankSelection = () => {
@@ -31,7 +49,9 @@ export default function MyUpdatePage() {
         <div onClick={() => router.back()} className="cursor-pointer px-3 py-3">
           <Image src={IMAGES.ArrowBackWhite} alt="back" />
         </div>
-        <p className="flex-grow py-3 text-center text-white">호스트 정보 수정</p>
+        <p className="flex-grow py-3 text-center font-SUB3 text-SUB3 leading-SUB3 text-white">
+          호스트 정보 수정
+        </p>
         <button type="submit" className="px-5 text-white">
           완료
         </button>
@@ -41,7 +61,6 @@ export default function MyUpdatePage() {
           <p>호스트 이름</p>
           <input
             {...register('name')}
-            defaultValue={defaultHostInfo.name}
             className="mt-2 h-11 w-full rounded-lg border border-light_gray px-4"
           />
         </div>
@@ -49,16 +68,10 @@ export default function MyUpdatePage() {
           <p>이메일</p>
           <div className="mt-2 flex flex-row items-center justify-center gap-2">
             <input
+              disabled={true}
               {...register('email')}
-              defaultValue={defaultHostInfo.email}
               className="h-11 w-full rounded-lg border border-light_gray px-4"
             />
-            <button
-              type="button"
-              className="h-11 text-nowrap rounded-lg border border-light_gray px-[41.5px] text-center text-light_gray"
-            >
-              중복 확인
-            </button>
           </div>
         </div>
         <div>
@@ -66,14 +79,15 @@ export default function MyUpdatePage() {
           <div className="mt-2 flex flex-row items-center justify-center gap-2">
             <input
               {...register('phone')}
-              defaultValue={defaultHostInfo.phone}
+              disabled={phoneChange}
               className="h-11 w-full rounded-lg border border-light_gray px-4"
             />
             <button
               type="button"
-              className="h-11 text-nowrap rounded-lg border border-light_gray px-[41.5px] text-center text-light_gray"
+              onClick={handlePhoneValidate}
+              className="h-11 w-[135px] text-nowrap rounded-lg border border-light_gray text-center text-light_gray"
             >
-              중복 확인
+              {phoneChange ? '번호 변경' : '중복 확인'}
             </button>
           </div>
         </div>
@@ -82,7 +96,6 @@ export default function MyUpdatePage() {
           <div className="relative flex flex-row">
             <input
               {...register('accountNumber')}
-              defaultValue={defaultHostInfo.accountNumber ? defaultHostInfo.accountNumber : ''}
               className="mt-2 h-11 w-full rounded-lg border border-light_gray px-4"
               placeholder="계좌번호를 입력해주세요"
             />
@@ -97,6 +110,7 @@ export default function MyUpdatePage() {
         </div>
         <button
           type="button"
+          onClick={() => router.push('/my/pwReset')}
           className="mt-4 h-[52px] w-full rounded-lg border border-stroke text-medium_gray"
         >
           비밀번호 재설정
