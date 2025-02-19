@@ -5,9 +5,11 @@ import { useHeaderStore } from '@zustands/header/headerStore';
 import React from 'react';
 
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 
 export default function MainLayout({ children }: { children: React.ReactNode }) {
   const { mainPageType } = useHeaderStore();
+  const router = useRouter();
   return (
     <>
       <div
@@ -22,12 +24,12 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
         </p>
         {mainPageType === 'my' ? (
           <Image
-            onClick={() => console.log('호스트 정보 수정')}
+            onClick={() => router.push('/my/update')}
             className="cursor-pointer"
             src={IMAGES.EditGray}
             width={24}
             height={24}
-            alt="쪽지 이미지"
+            alt="정보수정"
           />
         ) : (
           <Image

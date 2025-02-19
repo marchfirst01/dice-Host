@@ -16,6 +16,6 @@ export interface HostInfo {
   name: string;
   email: string;
   phone: string;
-  bankName: any;
-  accountNumber: any;
+  bankName: null | string;
+  accountNumber: null | string;
 }

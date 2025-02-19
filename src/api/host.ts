@@ -1,4 +1,5 @@
-import { GetAxiosInstance } from '@axios/axios.method';
+import { GetAxiosInstance, PostAxiosInstance } from '@axios/axios.method';
+import { HostInfo } from '@type/my';
 
 export const fetchHostSpace = async () => {
   const res = await GetAxiosInstance('/host/space');
@@ -8,4 +9,8 @@ export const fetchHostSpace = async () => {
 export const fetchHostInfo = async () => {
   const res = await GetAxiosInstance('/host/info');
   return res.data;
+};
+
+export const fetchHostUpdate = async (hostUpdate: HostInfo) => {
+  const res = await PostAxiosInstance('/host/update', hostUpdate);
 };

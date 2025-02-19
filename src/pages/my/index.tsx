@@ -30,8 +30,6 @@ export default function MyPage({
     }
   };
 
-  console.log(hostInfo);
-
   return (
     <MyLayout>
       <div>
