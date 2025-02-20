@@ -42,10 +42,10 @@ export default function MyUpdatePage() {
     await fetchHostUpdate(hostInfo);
   };
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isDragModalOpen, setIsDragModalOpen] = useState(false);
 
-  const openModal = () => setIsModalOpen(true);
-  const closeModal = () => setIsModalOpen(false);
+  const openDragModal = () => setIsDragModalOpen(true);
+  const closeDragModal = () => setIsDragModalOpen(false);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -105,10 +105,10 @@ export default function MyUpdatePage() {
             />
             <div className="absolute right-0 mt-2 flex flex-row items-center text-light_gray">
               <p>|</p>
-              <button type="button" onClick={openModal} className="h-11 w-[118px]">
+              <button type="button" onClick={openDragModal} className="h-11 w-[118px]">
                 {getValues('bankName') ? getValues('bankName') : '은행 선택'}
               </button>
-              <DragModalComponent isOpen={isModalOpen} onClose={closeModal}>
+              <DragModalComponent isOpen={isDragModalOpen} onClose={closeDragModal}>
                 <div className="px-5 py-6">
                   <p className="font-H2 text-H2 leading-H2 text-black">금융 기관 선택</p>
                   <div className="flex h-12 flex-row justify-center font-SUB3 text-SUB3 leading-SUB3">
@@ -128,7 +128,7 @@ export default function MyUpdatePage() {
                         onClick={() => {
                           console.log(bank.bankName);
                           setValue('bankName', bank.bankName);
-                          closeModal();
+                          closeDragModal();
                         }}
                         className="flex flex-col items-center justify-center rounded-lg border py-4"
                       >
