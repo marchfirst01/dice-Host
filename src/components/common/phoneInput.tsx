@@ -83,7 +83,7 @@ export default function PhoneInputComponent({
               </div>
               <button
                 onClick={() => {
-                  if (!validatePhone) handlePhoneValidate();
+                  if (!validatePhone && value) handlePhoneValidate();
                   else {
                     setValidatePhone(false);
                     setPhoneMessage('');

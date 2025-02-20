@@ -42,9 +42,7 @@ export default function InputComponent<
             value={value}
           />
           {error && (
-            <p className="absolute bottom-0 ml-2 mt-0.5 translate-y-full font-CAP1 text-CAP1 leading-CAP1 text-red">
-              {error.message}
-            </p>
+            <p className="mt-1 font-CAP1 text-CAP1 leading-CAP1 text-red">{error.message}</p>
           )}
           {value ? (
             <Image

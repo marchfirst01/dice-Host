@@ -2,6 +2,7 @@ import { IMAGES } from '@assets/index';
 import InputComponent from '@components/common/Input';
 import BankInputComponent from '@components/common/bankInput';
 import EmailInputComponent from '@components/common/emailInput';
+import ModalComponent from '@components/common/modal';
 import PhoneInputComponent from '@components/common/phoneInput';
 import RegisterFormButtonComponent from '@components/common/registerFormButton';
 import { MemberFormData } from '@type/member';
@@ -23,13 +24,13 @@ const RegisterPage = () => {
     formState: { isValid },
   } = useForm<MemberFormData>({ mode: 'onChange' });
   const [emailError, setEmailError] = useState<string>('');
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const onSubmit: SubmitHandler<MemberFormData> = async (formData: MemberFormData) => {
     try {
       await fetchValidateEmail(formData.email);
       await fetchRegister(formData);
-      alert('회원가입 성공!');
-      router.push('/');
+      setIsModalOpen(true);
     } catch (error) {
       if (error instanceof ValidateMemberError) setEmailError(error.message);
     }
@@ -40,6 +41,12 @@ const RegisterPage = () => {
 
   return (
     <div className="relative flex h-screen w-full flex-col items-center justify-center gap-6 px-5 pb-24 pt-20">
+      <ModalComponent isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+        <p>회원가입 성공</p>
+        <button onClick={() => router.push('/')} className="mt-4 text-purple">
+          확인
+        </button>
+      </ModalComponent>
       <Image
         onClick={() => router.back()}
         className="absolute left-0 top-0 m-3 cursor-pointer"
@@ -78,7 +85,9 @@ const RegisterPage = () => {
             (emailError ? (
               <p className="mt-2 font-CAP1 text-CAP1 leading-CAP1 text-red">{emailError}</p>
             ) : (
-              <p>{memberConfig.email.isValid}</p>
+              <p className="font-CAP1 text-CAP1 leading-CAP1 text-green">
+                {memberConfig.email.isValid}
+              </p>
             ))}
         </div>
         {/* password */}
@@ -127,20 +136,7 @@ const RegisterPage = () => {
             }}
           />
         </div>
-        {/* bank */}
-        {/* TODO: 은행 선택 창 필요 */}
-        <div className="w-full">
-          <p className="after:ml-0.5 after:text-red after:content-['*']">
-            {memberConfig.bank.display}
-          </p>
-          <BankInputComponent
-            memberConfig={memberConfig.bank}
-            control={control}
-            rules={{
-              required: memberConfig.bank.rules,
-            }}
-          />
-        </div>
+        {/* bank - 임시 삭제, 마이페이지에서 등록 */}
       </div>
       <div className="absolute bottom-0 my-5 flex w-full flex-col items-center gap-3 px-5">
         <RegisterFormButtonComponent handleSubmit={handleSubmit} onSubmit={onSubmit}>
