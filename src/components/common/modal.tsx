@@ -25,7 +25,7 @@ export default function ModalComponent({ isOpen, onClose, children }: ModalCompo
     >
       <div
         ref={modalRef}
-        className="flex min-h-[100px] w-full max-w-[360px] flex-col items-center justify-center rounded-xl bg-white p-5 shadow-lg"
+        className="flex min-h-[100px] w-full max-w-[360px] flex-col items-center justify-center rounded-xl bg-white p-5 font-SUB3 text-SUB3 leading-SUB3 shadow-lg"
       >
         {children}
       </div>

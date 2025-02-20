@@ -22,6 +22,7 @@ export const useHostInfo = () => {
       phone: '',
       bankName: null,
       accountNumber: null,
+      password: '',
     },
     staleTime: 0,
   });

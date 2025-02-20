@@ -1,5 +1,6 @@
 import { BANK, IMAGES } from '@assets/index';
 import DragModalComponent from '@components/common/dragModal';
+import ModalComponent from '@components/common/modal';
 import { useHostInfo } from '@hooks/useHost';
 import { HostInfo } from '@type/my';
 
@@ -30,6 +31,8 @@ export default function MyUpdatePage() {
   }, [defaultHostInfo]);
 
   const [phoneChange, setPhoneChange] = useState(true);
+  const [isDragModalOpen, setIsDragModalOpen] = useState(false);
+  const [isCheckModalOpen, setIsCheckModalOpen] = useState(false);
 
   const handlePhoneValidate = () => {
     setPhoneChange(!phoneChange);
@@ -38,17 +41,25 @@ export default function MyUpdatePage() {
   };
 
   const onSubmit = async (hostInfo: HostInfo) => {
-    console.log(hostInfo);
-    await fetchHostUpdate(hostInfo);
+    if (await fetchHostUpdate(hostInfo)) {
+      setIsCheckModalOpen(true);
+    }
   };
-
-  const [isDragModalOpen, setIsDragModalOpen] = useState(false);
-
-  const openDragModal = () => setIsDragModalOpen(true);
-  const closeDragModal = () => setIsDragModalOpen(false);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
+      <ModalComponent isOpen={isCheckModalOpen} onClose={() => setIsCheckModalOpen(false)}>
+        <p className="text-dark_gray">정보 변경이 완료됐습니다.</p>
+        <button
+          onClick={() => {
+            setIsCheckModalOpen(false);
+            router.push('/main');
+          }}
+          className="mt-3 w-full text-purple"
+        >
+          확인
+        </button>
+      </ModalComponent>
       <header className="flex flex-row bg-black">
         <div onClick={() => router.back()} className="cursor-pointer px-3 py-3">
           <Image src={IMAGES.ArrowBackWhite} alt="back" />
@@ -105,10 +116,17 @@ export default function MyUpdatePage() {
             />
             <div className="absolute right-0 mt-2 flex flex-row items-center text-light_gray">
               <p>|</p>
-              <button type="button" onClick={openDragModal} className="h-11 w-[118px]">
+              <button
+                type="button"
+                onClick={() => setIsDragModalOpen(true)}
+                className="h-11 w-[118px]"
+              >
                 {getValues('bankName') ? getValues('bankName') : '은행 선택'}
               </button>
-              <DragModalComponent isOpen={isDragModalOpen} onClose={closeDragModal}>
+              <DragModalComponent
+                isOpen={isDragModalOpen}
+                onClose={() => setIsDragModalOpen(false)}
+              >
                 <div className="px-5 py-6">
                   <p className="font-H2 text-H2 leading-H2 text-black">금융 기관 선택</p>
                   <div className="flex h-12 flex-row justify-center font-SUB3 text-SUB3 leading-SUB3">
@@ -128,7 +146,7 @@ export default function MyUpdatePage() {
                         onClick={() => {
                           console.log(bank.bankName);
                           setValue('bankName', bank.bankName);
-                          closeDragModal();
+                          () => setIsDragModalOpen(false);
                         }}
                         className="flex flex-col items-center justify-center rounded-lg border py-4"
                       >
@@ -147,6 +165,15 @@ export default function MyUpdatePage() {
           ) : errors.bankName && !getValues('bankName') ? (
             <p className="mt-2 text-red">{errors.bankName.message}</p>
           ) : null}
+        </div>
+        <div>
+          <p className="after:ml-0.5 after:text-red after:content-['*']">비밀번호</p>
+          <input
+            {...register('password', { required: '비밀번호를 입력해주세요' })}
+            className="mt-2 h-11 w-full rounded-lg border border-light_gray px-4"
+            placeholder="비밀번호를 입력해주세요"
+          />
+          {errors.password && <p className="mt-2 text-red">{errors.password.message}</p>}
         </div>
         <button
           type="button"
