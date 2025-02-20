@@ -51,66 +51,10 @@ export default function PopUpSettingPage() {
     }
   }, [watchDiscountFields, watchPriceFields, formattedPrice]);
 
-  // imageList -> imageUrls
-  const uploadImage = async (imageList: File[]) => {
-    try {
-      const { imageUrls } = await fetchImageUpload(imageList);
-      return imageUrls;
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   // 폼 제출
   const onSubmit: SubmitHandler<PopUpFormData> = async (formData: PopUpFormData) => {
-    const {
-      name,
-      description,
-      imageList,
-      category,
-      openingTime,
-      closingTime,
-      capacity,
-      tags,
-      pricePerDay,
-      discountRate,
-      details,
-      location,
-      address,
-      websiteUrl,
-      contactNumber,
-      facilityInfo,
-      notice,
-    } = formData;
-
-    // imageList -> imageUrls
-    const imageUrlsRes = await uploadImage(imageList);
-
-    const registerData: PopUpRegisterResponse = {
-      name,
-      description,
-      imageUrls: imageUrlsRes,
-      category,
-      openingTime: formattedTime(openingTime),
-      closingTime: formattedTime(closingTime),
-      capacity: Number(capacity),
-      tags,
-      pricePerDay: Number(pricePerDay.replace(/,/g, '')),
-      discountRate: Number(discountRate.price),
-      details,
-      latitude: location.latitude,
-      longitude: location.longitude,
-      city: location.sido,
-      district: location.sigugun,
-      address,
-      websiteUrl,
-      contactNumber,
-      facilityInfo,
-      notice,
-    };
     try {
-      console.log(registerData);
-      await fetchSpaceRegister(registerData);
+      await fetchSpaceRegister(formData);
       router.push('/main');
     } catch (error) {
       console.log(error);

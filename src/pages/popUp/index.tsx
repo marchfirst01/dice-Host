@@ -11,7 +11,7 @@ import { useRouter } from 'next/router';
 export default function PopUpPage({ hostSpaceData }: { hostSpaceData: HostSpaceData[] }) {
   const router = useRouter();
   return (
-    <div className="h-full w-full transform">
+    <div className="h-full w-full">
       <Header />
       <div className="flex flex-row flex-wrap gap-[6px] py-4"></div>
       <div className="flex flex-col gap-4">
@@ -27,7 +27,7 @@ export default function PopUpPage({ hostSpaceData }: { hostSpaceData: HostSpaceD
       </div>
       <div
         onClick={() => router.push('/popUpSetting')}
-        className="fixed bottom-0 right-0 cursor-pointer"
+        className="fixed bottom-20 left-1/2 translate-x-[115px] cursor-pointer"
       >
         <Image src={IMAGES.FloatingAddButton} alt="floatingAddBtn" />
       </div>

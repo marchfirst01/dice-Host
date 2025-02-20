@@ -1,5 +1,6 @@
 import { IMAGES } from '@assets/index';
 import { StoreData } from '@type/popUp';
+import { formatNumber } from '@utils/formatNumber';
 
 import React from 'react';
 
@@ -21,7 +22,6 @@ export default function PopUpItem({
       <div className="relative h-[180px]">
         <Image
           className="aspect-[3/2] rounded-t-lg"
-          // TODO: 'www.example.com' 삭제필요
           src={
             storeData.imageUrl === 'www.example.com'
               ? 'https://placehold.co/600x400/png'
@@ -45,9 +45,10 @@ export default function PopUpItem({
         <div className="flex flex-row items-center gap-[6px]">
           <p className="font-SUB2 text-SUB2 leading-SUB2 text-purple">{storeData.discountRate}%</p>
           {/* 추후 숫자 포맷 함수 추가 필요 */}
-          <p className="font-SUB1 text-SUB1 leading-SUB1">{storeData.pricePerDay}원</p>
+          <p className="font-SUB1 text-SUB1 leading-SUB1">
+            {formatNumber(storeData.pricePerDay)}원
+          </p>
         </div>
-        <Image className="absolute right-0 top-[17px] m-6" src={IMAGES.Heart} alt="heart" />
       </div>
     </div>
   );

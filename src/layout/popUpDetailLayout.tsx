@@ -48,7 +48,7 @@ export default function PopUpDetailLayout({ children }: { children: React.ReactN
           onClick={() => console.log('쪽지 보내기')}
           className="flex h-full w-full flex-row items-center justify-center gap-2 rounded-lg bg-black font-BTN1 text-BTN1 leading-BTN1 text-white"
         >
-          <p>작성 완료</p>
+          <p>수정하기</p>
         </button>
       </nav>
     </div>
