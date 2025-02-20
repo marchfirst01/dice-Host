@@ -7,7 +7,7 @@ import { Control, Controller, Path, UseControllerProps } from 'react-hook-form';
 
 import Image from 'next/image';
 
-interface UserInputComponentProps<
+interface InputComponentProps<
   T extends MemberConfig | PwResetConfig,
   U extends MemberFormData | PwResetForm,
   V extends Path<U>,
@@ -17,7 +17,7 @@ interface UserInputComponentProps<
   rules?: UseControllerProps<U, V>['rules'];
 }
 
-export default function UserInputComponent<
+export default function InputComponent<
   T extends MemberConfig | PwResetConfig,
   U extends MemberFormData | PwResetForm,
   V extends Path<U>,
@@ -25,7 +25,7 @@ export default function UserInputComponent<
   config,
   control,
   rules,
-}: UserInputComponentProps<T, U, V>): React.ReactElement<UserInputComponentProps<T, U, V>> {
+}: InputComponentProps<T, U, V>): React.ReactElement<InputComponentProps<T, U, V>> {
   const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false);
   console.log(config);
   return (

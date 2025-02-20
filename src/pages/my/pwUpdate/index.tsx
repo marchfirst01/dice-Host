@@ -1,6 +1,6 @@
 import { IMAGES } from '@assets/index';
+import InputComponent from '@components/common/Input';
 import RegisterFormButtonComponent from '@components/common/registerFormButton';
-import UserInputComponent from '@components/member/userInput';
 import { PwResetForm } from '@type/host';
 
 import React from 'react';
@@ -46,7 +46,7 @@ export default function PwUpdatePage() {
       <div className="flex flex-col gap-6 px-5 py-6 font-CAP1 text-CAP1 leading-CAP1">
         <div>
           <p>현재 비밀번호</p>
-          <UserInputComponent
+          <InputComponent
             config={passwordUpdateConfig.password}
             control={control}
             rules={{ required: passwordUpdateConfig.password.rules }}
@@ -54,7 +54,7 @@ export default function PwUpdatePage() {
         </div>
         <div>
           <p>새 비밀번호</p>
-          <UserInputComponent
+          <InputComponent
             config={passwordUpdateConfig.new_password}
             control={control}
             rules={{
@@ -67,7 +67,7 @@ export default function PwUpdatePage() {
         </div>
         <div>
           <p>새 비밀번호 확인</p>
-          <UserInputComponent
+          <InputComponent
             config={passwordUpdateConfig.new_password_check}
             control={control}
             rules={{

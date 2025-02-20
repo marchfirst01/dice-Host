@@ -1,6 +1,6 @@
 import { IMAGES } from '@assets/index';
+import UserInputComponent from '@components/common/Input';
 import RegisterFormButtonComponent from '@components/common/registerFormButton';
-import UserInputComponent from '@components/member/userInput';
 import { MemberFormData } from '@type/member';
 import { setAccessToken, setRefreshToken } from '@utils/token';
 
