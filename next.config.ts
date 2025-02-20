@@ -9,6 +9,12 @@ const nextConfig: NextConfig = {
         hostname: 'placehold.co',
         pathname: '/**', // 허용할 이미지 경로
       },
+      {
+        protocol: 'https',
+        hostname: 'cmc-dice-bucket.s3.ap-northeast-2.amazonaws.com',
+        pathname: '/**',
+      },
+      { protocol: 'https', hostname: 'example.com', pathname: '/**' },
     ],
   },
   async rewrites() {

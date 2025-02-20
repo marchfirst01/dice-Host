@@ -1,17 +1,23 @@
 import { IMAGES } from '@assets/index';
 import MySpaceListComponent from '@components/my/mySpaceList';
 import MyLayout from '@layout/myLayout';
+import { HostInfo, HostSpaceData } from '@type/my';
 import { deleteToken } from '@utils/token';
 import { useHeaderStore } from '@zustands/header/headerStore';
 
 import React from 'react';
 
-import { mySpaceDummy } from './mySpaceDummy';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { fetchLogout } from 'src/api/member';
 
-export default function MyPage() {
+export default function MyPage({
+  hostSpaceData,
+  hostInfo,
+}: {
+  hostSpaceData: HostSpaceData[];
+  hostInfo: HostInfo;
+}) {
   const router = useRouter();
 
   const { setMainPageType } = useHeaderStore();
@@ -29,12 +35,12 @@ export default function MyPage() {
       <div>
         <div className="flex flex-row items-center gap-3">
           <Image src={IMAGES.DiceBlack} alt="profile" width={54} height={54} />
-          <p className="font-SUB1 text-SUB1 leading-SUB1">호스트 이름</p>
+          <p className="font-SUB1 text-SUB1 leading-SUB1">{hostInfo.name}</p>
         </div>
         <div>
           <div className="mt-4 flex flex-row items-center justify-between">
             <p className="font-SUB3 text-SUB3 leading-SUB3">
-              등록한 공간 <span className="text-purple">4개</span>
+              등록한 공간 <span className="text-purple">{hostSpaceData.length}개</span>
             </p>
             <p
               onClick={() => setMainPageType('popUp')}
@@ -43,7 +49,7 @@ export default function MyPage() {
               리스트 바로가기
             </p>
           </div>
-          <MySpaceListComponent mySpaceList={mySpaceDummy} />
+          <MySpaceListComponent mySpaceList={hostSpaceData} />
         </div>
       </div>
       <div className="flex flex-col gap-6 font-SUB3 text-SUB3 leading-SUB3 text-deep_gray">
@@ -78,7 +84,12 @@ export default function MyPage() {
           로그아웃
         </p>
       </div>
-      <p>탈퇴하기</p>
+      <p
+        onClick={() => router.push({ pathname: '/my/withDraw', query: { name: hostInfo.name } })}
+        className="cursor-pointer font-SUB3 text-SUB3 leading-SUB3 text-deep_gray"
+      >
+        탈퇴하기
+      </p>
     </MyLayout>
   );
 }

@@ -1,4 +1,5 @@
 import { IMAGES } from '@assets/index';
+import UserInputComponent from '@components/common/Input';
 import RegisterFormButtonComponent from '@components/common/registerFormButton';
 import BankInputComponent from '@components/member/bankInput';
 import EmailInputComponent from '@components/member/emailInput';

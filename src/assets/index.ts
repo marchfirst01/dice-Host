@@ -1,8 +1,19 @@
+// bank
+import BankHana from '@assets/bank/bank_hana.svg';
+import BankIbk from '@assets/bank/bank_ibk.svg';
+import BankKakao from '@assets/bank/bank_kakao.svg';
+import BankKookmin from '@assets/bank/bank_kookmin.svg';
+import BankNh from '@assets/bank/bank_nh.svg';
+import BankSaemaeul from '@assets/bank/bank_saemaeul.svg';
+import BankSinhan from '@assets/bank/bank_sinhan.svg';
+import BankToss from '@assets/bank/bank_toss.svg';
+import BankWoori from '@assets/bank/bank_woori.svg';
 // common/arrow
 import ArrowBackBlack from '@assets/common/arrow/arrow-back-black.svg';
 import ArrowBackWhite from '@assets/common/arrow/arrow-back-white.svg';
 import ArrowBlackDown from '@assets/common/arrow/arrow-down-black.svg';
 import ArrowDownGray from '@assets/common/arrow/arrow-down-gray.svg';
+import DiceLoading from '@assets/common/dice_loading.gif';
 // common/logo
 import DiceBlack from '@assets/common/logo/dice-black.svg';
 import DiceWhite from '@assets/common/logo/dice-white.svg';
@@ -38,8 +49,30 @@ import SendWhite from '@assets/popUpDetail/send-white.svg';
 import ImageDelete from '@assets/popUpSetting/image-delete.svg';
 import ImageUpload from '@assets/popUpSetting/upload.svg';
 
+const BANK = [
+  { bankImage: BankHana, bankName: '하나' },
+  { bankImage: BankIbk, bankName: 'IBK기업' },
+  { bankImage: BankKakao, bankName: '카카오뱅크' },
+  { bankImage: BankKookmin, bankName: 'KB국민' },
+  { bankImage: BankNh, bankName: 'NH농협' },
+  { bankImage: BankSaemaeul, bankName: '새마을' },
+  { bankImage: BankSinhan, bankName: '신한' },
+  { bankImage: BankToss, bankName: '토스뱅크' },
+  { bankImage: BankWoori, bankName: '우리' },
+  // 임시 테스트용
+  { bankImage: BankHana, bankName: '하나' },
+  { bankImage: BankIbk, bankName: 'IBK기업' },
+  { bankImage: BankKakao, bankName: '카카오뱅크' },
+  { bankImage: BankKookmin, bankName: 'KB국민' },
+  { bankImage: BankNh, bankName: 'NH농협' },
+  { bankImage: BankSaemaeul, bankName: '새마을' },
+  { bankImage: BankSinhan, bankName: '신한' },
+  { bankImage: BankToss, bankName: '토스뱅크' },
+  { bankImage: BankWoori, bankName: '우리' },
+];
 const IMAGES = {
   // common/arrow
+  DiceLoading,
   ArrowBackBlack,
   ArrowBackWhite,
   ArrowDownGray,
@@ -80,4 +113,4 @@ const IMAGES = {
   ImageUpload,
 };
 
-export { IMAGES };
+export { IMAGES, BANK };

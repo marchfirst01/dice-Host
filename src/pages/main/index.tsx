@@ -1,5 +1,6 @@
+import { IMAGES } from '@assets/index';
+import { useHostInfo, useHostSpace } from '@hooks/useHost';
 import MainLayout from '@layout/mainLayout';
-import { SpaceLatestResponse } from '@type/popUp/popUpResponse';
 import { getAccessToken } from '@utils/token';
 import { useHeaderStore } from '@zustands/header/headerStore';
 
@@ -8,27 +9,15 @@ import React, { useEffect, useState } from 'react';
 import MyPage from '../my';
 import PopUpPage from '../popUp';
 import ReservationPage from '../reservation';
-import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
-import { fetchSpaceLatest } from 'src/api/popUp';
+import Image from 'next/image';
 
-export const getServerSideProps: GetServerSideProps<{
-  spaceLatestData: SpaceLatestResponse;
-}> = async () => {
-  try {
-    const spaceLatestData = await fetchSpaceLatest(); // 서버에서 데이터 요청
-    return { props: { spaceLatestData } };
-  } catch (error) {
-    console.log('popUp error:', error);
-    return { props: { spaceLatestData: {} as SpaceLatestResponse } };
-  }
-};
-
-export default function MainPage({
-  spaceLatestData,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) {
+export default function MainPage() {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
 
   const { mainPageType } = useHeaderStore();
+
+  const { data: hostSpaceData, isFetching } = useHostSpace();
+  const { data: hostInfo } = useHostInfo();
 
   useEffect(() => {
     setIsLoggedIn(getAccessToken() ? true : false);
@@ -36,9 +25,15 @@ export default function MainPage({
 
   return isLoggedIn ? (
     <MainLayout>
-      {mainPageType === 'popUp' && <PopUpPage spaceLatestData={spaceLatestData} />}
-      {mainPageType === 'reservation' && <ReservationPage />}
-      {mainPageType === 'my' && <MyPage />}
+      {isFetching ? (
+        <div className="flex h-screen flex-row">
+          <Image src={IMAGES.DiceLoading} alt="loading" />
+        </div>
+      ) : (
+        (mainPageType === 'popUp' && <PopUpPage hostSpaceData={hostSpaceData} />) ||
+        (mainPageType === 'reservation' && <ReservationPage />) ||
+        (mainPageType === 'my' && <MyPage hostSpaceData={hostSpaceData} hostInfo={hostInfo} />)
+      )}
     </MainLayout>
   ) : (
     <p>login required</p>

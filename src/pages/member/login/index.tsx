@@ -1,8 +1,7 @@
 import { IMAGES } from '@assets/index';
+import UserInputComponent from '@components/common/Input';
 import RegisterFormButtonComponent from '@components/common/registerFormButton';
-import UserInputComponent from '@components/member/userInput';
 import { MemberFormData } from '@type/member';
-import { setUser } from '@utils/member';
 import { setAccessToken, setRefreshToken } from '@utils/token';
 
 import React from 'react';
@@ -22,7 +21,6 @@ export default function LoginPage() {
       const res = await fetchLogin(formData);
       setAccessToken(res.token.accessToken);
       setRefreshToken(res.token.refreshToken);
-      setUser(res.user);
       router.push('/main');
     } catch (error) {
       alert('로그인에 실패했습니다.');
@@ -47,7 +45,7 @@ export default function LoginPage() {
           rules={{ required: memberConfig.email.rules }}
         />
         <UserInputComponent
-          memberConfig={memberConfig.password}
+          config={memberConfig.password}
           control={control}
           rules={{ required: memberConfig.password.rules }}
         />

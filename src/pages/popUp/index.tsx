@@ -1,17 +1,13 @@
 import FilterComponent from '@components/popUp/filter';
 import Header from '@components/popUp/header';
 import PopUpItem from '@components/popUp/popUpItem';
+import { HostSpaceData } from '@type/my';
 
 import React from 'react';
 
-import { getServerSideProps } from '../main';
-import { InferGetServerSidePropsType } from 'next';
-
 const FilterType = ['지역', '가격', '수용인원', '인기순'];
 
-export default function PopUpPage({
-  spaceLatestData,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) {
+export default function PopUpPage({ hostSpaceData }: { hostSpaceData: HostSpaceData[] }) {
   return (
     <>
       <Header />
@@ -22,8 +18,8 @@ export default function PopUpPage({
         ))}
       </div>
       <div className="flex flex-col gap-4">
-        {spaceLatestData &&
-          spaceLatestData.content.map((popUp) => <PopUpItem key={popUp.id} storeData={popUp} />)}
+        {hostSpaceData &&
+          hostSpaceData.map((space) => <PopUpItem key={space.id} storeData={space} />)}
       </div>
     </>
   );
