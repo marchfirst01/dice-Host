@@ -150,7 +150,7 @@ export default function MyUpdatePage() {
         </div>
         <button
           type="button"
-          onClick={() => router.push('/my/pwReset')}
+          onClick={() => router.push('/my/pwUpdate')}
           className="mt-4 h-[52px] w-full rounded-lg border border-stroke text-medium_gray"
         >
           비밀번호 재설정

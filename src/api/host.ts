@@ -19,3 +19,15 @@ export const fetchHostUpdate = async (hostUpdate: HostInfo) => {
     console.log(error);
   }
 };
+
+export const fetchPasswordUpdate = async (passwordUpdate: {
+  password: string;
+  newPassword: string;
+}) => {
+  try {
+    const res = await PostAxiosInstance('auth/password-update', passwordUpdate);
+    if (res.status === 200) return res.status;
+  } catch (error) {
+    throw new Error('failed to fetch update password');
+  }
+};

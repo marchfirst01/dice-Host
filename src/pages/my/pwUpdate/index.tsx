@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 
 import Image from 'next/image';
 import { useRouter } from 'next/router';
+import { fetchPasswordUpdate } from 'src/api/host';
 
 interface PwReset {
   password: string;
@@ -12,7 +13,7 @@ interface PwReset {
   new_password_check: string;
 }
 
-export default function PwResetPage() {
+export default function PwUpdatePage() {
   const router = useRouter();
   const {
     register,
@@ -21,8 +22,19 @@ export default function PwResetPage() {
     formState: { errors, isValid },
   } = useForm<PwReset>();
 
-  const onSubmit = (resetPw: any) => {
-    console.log(resetPw);
+  const onSubmit = async (resetPw: any) => {
+    try {
+      const res = await fetchPasswordUpdate({
+        password: resetPw.password,
+        newPassword: resetPw.new_password,
+      });
+      if (res === 200) {
+        alert('비밀번호 변경 완료!');
+        router.push('/main');
+      }
+    } catch (error) {
+      alert('비밀번호가 일치하지 않습니다.');
+    }
   };
 
   return (
