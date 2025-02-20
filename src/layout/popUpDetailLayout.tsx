@@ -38,18 +38,17 @@ export default function PopUpDetailLayout({ children }: { children: React.ReactN
         })}
       </div>
       <nav className="fixed bottom-0 z-10 flex h-[84px] w-full max-w-[400px] flex-row items-center gap-3 border-t border-stroke bg-white px-5 py-4">
-        <div
+        <button
           onClick={() => console.log('전화 걸기')}
-          className="size-[52px] cursor-pointer rounded-lg border border-stroke p-[14px]"
+          className="h-full text-nowrap rounded-lg border border-stroke px-[35.5px] font-BTN1 text-BTN1 leading-BTN1"
         >
-          <Image className="size-6" src={IMAGES.Phone} alt="phone" width={24} height={24} />
-        </div>
+          삭제
+        </button>
         <button
           onClick={() => console.log('쪽지 보내기')}
-          className="flex h-full w-full cursor-pointer flex-row items-center justify-center gap-2 rounded-lg bg-black text-white"
+          className="flex h-full w-full flex-row items-center justify-center gap-2 rounded-lg bg-black font-BTN1 text-BTN1 leading-BTN1 text-white"
         >
-          <Image src={IMAGES.SendWhite} alt="send" />
-          <p>쪽지 보내기</p>
+          <p>작성 완료</p>
         </button>
       </nav>
     </div>
