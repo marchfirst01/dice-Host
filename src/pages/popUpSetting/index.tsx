@@ -109,6 +109,7 @@ export default function PopUpSettingPage() {
       notice,
     };
     try {
+      console.log(registerData);
       await fetchSpaceRegister(registerData);
       router.push('/main');
     } catch (error) {
@@ -214,13 +215,6 @@ export default function PopUpSettingPage() {
           </p>
           <TagInputComponent control={control} />
         </div>
-        {/* <DivLayout name="tags">
-          <PopUpInputComponent
-            popUpConfig={popUpConfigList.tags}
-            control={control}
-            rules={{ required: popUpConfigList.tags.rules }}
-          />
-        </DivLayout> */}
       </section>
       <section>
         <p className="mb-6 font-SUB1 text-SUB1 leading-SUB1">공간 대여 가격 작성</p>

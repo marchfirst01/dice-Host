@@ -1,35 +1,43 @@
 import { IMAGES } from '@assets/index';
-import { MemberConfig, MemberFormData, MemberId } from '@type/member';
+import { PwResetConfig, PwResetForm } from '@type/host';
+import { MemberConfig, MemberFormData } from '@type/member';
 
 import React, { useState } from 'react';
-import { Control, Controller, UseControllerProps } from 'react-hook-form';
+import { Control, Controller, Path, UseControllerProps } from 'react-hook-form';
 
 import Image from 'next/image';
 
-interface UserInputComponentProps {
-  memberConfig: MemberConfig;
-  control: Control<MemberFormData>;
-  rules?: UseControllerProps<MemberFormData, MemberId>['rules'];
+interface InputComponentProps<
+  T extends MemberConfig | PwResetConfig,
+  U extends MemberFormData | PwResetForm,
+  V extends Path<U>,
+> {
+  config: T;
+  control: Control<U>;
+  rules?: UseControllerProps<U, V>['rules'];
 }
 
-export default function UserInputComponent({
-  memberConfig,
+export default function InputComponent<
+  T extends MemberConfig | PwResetConfig,
+  U extends MemberFormData | PwResetForm,
+  V extends Path<U>,
+>({
+  config,
   control,
   rules,
-}: UserInputComponentProps): React.ReactElement<UserInputComponentProps> {
+}: InputComponentProps<T, U, V>): React.ReactElement<InputComponentProps<T, U, V>> {
   const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false);
-
   return (
     <Controller
-      name={memberConfig.name}
+      name={config.name as V}
       control={control}
       rules={rules}
       render={({ field: { onChange, value }, fieldState: { error } }) => (
         <div className="relative w-full">
           <input
             className="h-[44px] w-full rounded-lg border p-4"
-            type={memberConfig.type === 'default' || isPasswordVisible ? 'default' : 'password'}
-            placeholder={memberConfig.placeholder}
+            type={config.type === 'default' || isPasswordVisible ? 'default' : 'password'}
+            placeholder={config.placeholder}
             onChange={onChange}
             value={value}
           />
@@ -41,14 +49,14 @@ export default function UserInputComponent({
           {value ? (
             <Image
               onClick={() => onChange('')}
-              className={`absolute top-0 m-[13px] ${memberConfig.type === 'password' ? 'right-11' : 'right-0'}`}
+              className={`absolute top-0 m-[13px] ${config.type === 'password' ? 'right-11' : 'right-0'}`}
               src={IMAGES.Delete}
               width={18}
               height={18}
               alt="delete"
             />
           ) : null}
-          {memberConfig.type === 'password' ? (
+          {config.type === 'password' ? (
             isPasswordVisible ? (
               <Image
                 onClick={() => setIsPasswordVisible(false)}

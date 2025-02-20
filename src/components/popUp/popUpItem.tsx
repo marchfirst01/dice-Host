@@ -21,9 +21,12 @@ export default function PopUpItem({
       <div className="relative h-[180px]">
         <Image
           className="aspect-[3/2] rounded-t-lg"
-          // src={storeData.imageUrl}
-          // 임시 url
-          src="https://placehold.co/600x400/png"
+          // TODO: 'www.example.com' 삭제필요
+          src={
+            storeData.imageUrl === 'www.example.com'
+              ? 'https://placehold.co/600x400/png'
+              : storeData.imageUrl
+          }
           alt={storeData.name}
           layout="fill"
           objectFit="cover"
