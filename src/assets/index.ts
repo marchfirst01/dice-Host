@@ -11,6 +11,7 @@ import BankWoori from '@assets/bank/bank_woori.svg';
 // common/arrow
 import ArrowBackBlack from '@assets/common/arrow/arrow-back-black.svg';
 import ArrowBackWhite from '@assets/common/arrow/arrow-back-white.svg';
+import ArrowBlackDown from '@assets/common/arrow/arrow-down-black.svg';
 import ArrowDownGray from '@assets/common/arrow/arrow-down-gray.svg';
 import DiceLoading from '@assets/common/dice_loading.gif';
 // common/logo
@@ -75,6 +76,7 @@ const IMAGES = {
   ArrowBackBlack,
   ArrowBackWhite,
   ArrowDownGray,
+  ArrowBlackDown,
   // common/logo
   DiceBlack,
   DiceWhite,

@@ -9,7 +9,11 @@ export const GuestPostAxiosInstance = async <T>(
   data?: any,
   config?: AxiosRequestConfig,
 ): Promise<AxiosResponse> => {
-  const response = await guestAxiosInstance.post<T>(url, data, config);
+  const headers = {
+    'Content-Type': 'application/json',
+  };
+
+  const response = await guestAxiosInstance.post<T>(url, data, { ...config, headers });
   return response;
 };
 

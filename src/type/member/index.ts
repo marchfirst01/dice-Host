@@ -2,11 +2,12 @@ import { CommonConfig } from '@type/common';
 
 type MemberFormData = Record<MemberId, string>;
 
-type MemberId = 'id' | 'password' | 'password_check' | 'name' | 'email' | 'phone' | 'auth';
+type MemberId = 'email' | 'password' | 'password_check' | 'name' | 'phone' | 'auth' | 'bank';
 
 interface MemberConfig extends CommonConfig {
   name: MemberId;
   display: string;
+  isValid: string;
 }
 
 type MemberConfigList = Record<MemberId, MemberConfig>;

@@ -1,10 +1,11 @@
 import { IMAGES } from '@assets/index';
-import UserInputComponent from '@components/common/Input';
+import InputComponent from '@components/common/Input';
+import ModalComponent from '@components/common/modal';
 import RegisterFormButtonComponent from '@components/common/registerFormButton';
 import { MemberFormData } from '@type/member';
 import { setAccessToken, setRefreshToken } from '@utils/token';
 
-import React from 'react';
+import React, { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import Image from 'next/image';
@@ -15,6 +16,7 @@ import { memberConfig } from 'src/context/member/memberConfig';
 export default function LoginPage() {
   const router = useRouter();
   const { control, handleSubmit } = useForm<MemberFormData>();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const onSubmit: SubmitHandler<MemberFormData> = async (formData: MemberFormData) => {
     try {
@@ -23,12 +25,18 @@ export default function LoginPage() {
       setRefreshToken(res.token.refreshToken);
       router.push('/main');
     } catch (error) {
-      alert('로그인에 실패했습니다.');
+      setIsModalOpen(true);
     }
   };
 
   return (
     <div className="relative flex h-screen w-full flex-col items-center justify-center gap-8 px-5">
+      <ModalComponent isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+        <p>로그인에 실패했습니다</p>
+        <button onClick={() => setIsModalOpen(false)} className="mt-4 text-purple">
+          확인
+        </button>
+      </ModalComponent>
       <Image
         onClick={() => router.back()}
         className="absolute left-0 top-0 m-3 cursor-pointer"
@@ -39,12 +47,12 @@ export default function LoginPage() {
       />
       <p className="w-full font-H1 text-H1 leading-H1">로그인</p>
       <div className="flex w-full flex-col gap-3">
-        <UserInputComponent
-          config={memberConfig.id}
+        <InputComponent
+          config={memberConfig.email}
           control={control}
-          rules={{ required: memberConfig.id.rules }}
+          rules={{ required: memberConfig.email.rules }}
         />
-        <UserInputComponent
+        <InputComponent
           config={memberConfig.password}
           control={control}
           rules={{ required: memberConfig.password.rules }}
@@ -57,11 +65,12 @@ export default function LoginPage() {
         >
           로그인
         </RegisterFormButtonComponent>
-        <div className="flex flex-row gap-4 font-BTN1 text-BTN1 leading-BTN1 text-medium_gray">
-          <p className="cursor-pointer font-BTN1 text-BTN1 leading-BTN1">아이디 찾기</p>
-          <p>|</p>
-          <p className="cursor-pointer font-BTN1 text-BTN1 leading-BTN1">비밀번호 찾기</p>
-        </div>
+        <p
+          onClick={() => router.push('/member/password')}
+          className="cursor-pointer font-BTN1 text-BTN1 leading-BTN1 text-medium_gray"
+        >
+          비밀번호 찾기
+        </p>
       </div>
     </div>
   );

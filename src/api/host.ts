@@ -35,6 +35,6 @@ export const fetchPasswordUpdate = async (passwordUpdate: {
 
 export const fetchWithDraw = async (reason: string) => {
   console.log(reason);
-  // const res = await PostAxiosInstance('auth/withdraw');
-  // return res.status;
+  const res = await PostAxiosInstance('auth/withdraw');
+  return res.status;
 };
