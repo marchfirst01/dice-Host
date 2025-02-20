@@ -1,5 +1,5 @@
 import { IMAGES } from '@assets/index';
-import UserInputComponent from '@components/common/Input';
+import InputComponent from '@components/common/Input';
 import RegisterFormButtonComponent from '@components/common/registerFormButton';
 import { MemberFormData } from '@type/member';
 import { setAccessToken, setRefreshToken } from '@utils/token';
@@ -39,12 +39,12 @@ export default function LoginPage() {
       />
       <p className="w-full font-H1 text-H1 leading-H1">로그인</p>
       <div className="flex w-full flex-col gap-3">
-        <UserInputComponent
-          memberConfig={memberConfig.email}
+        <InputComponent
+          config={memberConfig.email}
           control={control}
           rules={{ required: memberConfig.email.rules }}
         />
-        <UserInputComponent
+        <InputComponent
           config={memberConfig.password}
           control={control}
           rules={{ required: memberConfig.password.rules }}

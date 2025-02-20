@@ -7,6 +7,7 @@ type MemberId = 'email' | 'password' | 'password_check' | 'name' | 'phone' | 'au
 interface MemberConfig extends CommonConfig {
   name: MemberId;
   display: string;
+  isValid: string;
 }
 
 type MemberConfigList = Record<MemberId, MemberConfig>;

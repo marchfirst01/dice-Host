@@ -1,10 +1,9 @@
 import { IMAGES } from '@assets/index';
-import UserInputComponent from '@components/common/Input';
+import InputComponent from '@components/common/Input';
+import BankInputComponent from '@components/common/bankInput';
+import EmailInputComponent from '@components/common/emailInput';
+import PhoneInputComponent from '@components/common/phoneInput';
 import RegisterFormButtonComponent from '@components/common/registerFormButton';
-import BankInputComponent from '@components/member/bankInput';
-import EmailInputComponent from '@components/member/emailInput';
-import PhoneInputComponent from '@components/member/phoneInput';
-import UserInputComponent from '@components/member/userInput';
 import { MemberFormData } from '@type/member';
 
 import { useState } from 'react';
@@ -56,8 +55,8 @@ const RegisterPage = () => {
           <p className="after:ml-0.5 after:text-red after:content-['*']">
             {memberConfig.name.display}
           </p>
-          <UserInputComponent
-            memberConfig={memberConfig.name}
+          <InputComponent
+            config={memberConfig.name}
             control={control}
             rules={{ required: memberConfig.name.rules }}
           />
@@ -87,8 +86,8 @@ const RegisterPage = () => {
           <p className="after:ml-0.5 after:text-red after:content-['*']">
             {memberConfig.password.display}
           </p>
-          <UserInputComponent
-            memberConfig={memberConfig.password}
+          <InputComponent
+            config={memberConfig.password}
             control={control}
             rules={{
               required: memberConfig.password.rules,
@@ -103,8 +102,8 @@ const RegisterPage = () => {
           <p className="after:ml-0.5 after:text-red after:content-['*']">
             {memberConfig.password_check.display}
           </p>
-          <UserInputComponent
-            memberConfig={memberConfig.password_check}
+          <InputComponent
+            config={memberConfig.password_check}
             control={control}
             rules={{
               required: memberConfig.password_check.rules,
