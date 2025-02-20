@@ -32,3 +32,9 @@ export const fetchPasswordUpdate = async (passwordUpdate: {
     throw new Error('failed to fetch update password');
   }
 };
+
+export const fetchWithDraw = async (reason: string) => {
+  console.log(reason);
+  // const res = await PostAxiosInstance('auth/withdraw');
+  // return res.status;
+};
