@@ -1,13 +1,12 @@
+import { CommonConfig } from '@type/common';
+
 type MemberFormData = Record<MemberId, string>;
 
 type MemberId = 'id' | 'password' | 'password_check' | 'name' | 'email' | 'phone' | 'auth';
 
-interface MemberConfig {
+interface MemberConfig extends CommonConfig {
   name: MemberId;
   display: string;
-  type: string;
-  placeholder: string;
-  rules: string;
 }
 
 type MemberConfigList = Record<MemberId, MemberConfig>;
