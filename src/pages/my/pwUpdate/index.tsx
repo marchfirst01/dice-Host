@@ -1,9 +1,10 @@
 import { IMAGES } from '@assets/index';
 import InputComponent from '@components/common/Input';
+import ModalComponent from '@components/common/modal';
 import RegisterFormButtonComponent from '@components/common/registerFormButton';
 import { PwResetForm } from '@type/host';
 
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import Image from 'next/image';
@@ -14,19 +15,28 @@ import { passwordUpdateConfig } from 'src/context/host/passwordUpdateConfig';
 export default function PwUpdatePage() {
   const router = useRouter();
   const { control, handleSubmit, watch } = useForm<PwResetForm>({ mode: 'onChange' });
+  const [isCheckModalOpen, setIsCheckModalOpen] = useState(false);
+  const [modalText, setModalText] = useState('');
 
-  const onSubmit = async (resetPw: PwResetForm) => {
+  const onSubmit = async (updatePw: PwResetForm) => {
+    if (updatePw.password === updatePw.new_password) {
+      console.log(updatePw);
+      setModalText('현재 비밀번호와 다른 비밀번호를 설정해주세요.');
+      setIsCheckModalOpen(true);
+      return;
+    }
     try {
       const res = await fetchPasswordUpdate({
-        password: resetPw.password,
-        newPassword: resetPw.new_password,
+        password: updatePw.password,
+        newPassword: updatePw.new_password,
       });
       if (res === 200) {
-        alert('비밀번호 변경 완료!');
-        router.push('/main');
+        setModalText('비밀번호 변경이 완료되었습니다.');
+        setIsCheckModalOpen(true);
       }
     } catch (error) {
-      alert('비밀번호가 일치하지 않습니다.');
+      setModalText('비밀번호가 일치하지 않습니다.');
+      setIsCheckModalOpen(true);
     }
   };
 
@@ -43,6 +53,21 @@ export default function PwUpdatePage() {
         </p>
         <div className="w-12" />
       </header>
+      <ModalComponent isOpen={isCheckModalOpen} onClose={() => setIsCheckModalOpen(true)}>
+        <p>{modalText}</p>
+        <button
+          onClick={() => {
+            if (modalText === '비밀번호 변경이 완료되었습니다.') {
+              setIsCheckModalOpen(false);
+              router.push('/main');
+            }
+            setIsCheckModalOpen(false);
+          }}
+          className="mt-3 text-purple"
+        >
+          확인
+        </button>
+      </ModalComponent>
       <div className="flex flex-col gap-6 px-5 py-6 font-CAP1 text-CAP1 leading-CAP1">
         <div>
           <p>현재 비밀번호</p>

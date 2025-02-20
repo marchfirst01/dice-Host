@@ -27,7 +27,6 @@ export default function InputComponent<
   rules,
 }: InputComponentProps<T, U, V>): React.ReactElement<InputComponentProps<T, U, V>> {
   const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false);
-  console.log(config);
   return (
     <Controller
       name={config.name as V}
