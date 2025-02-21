@@ -35,6 +35,17 @@ export default function PopUpInputComponent({
       onchange(value);
     };
 
+  const handleDiscountInputChange =
+    (onChange: (value: string) => void) => (e: React.ChangeEvent<HTMLInputElement>) => {
+      let value = e.target.value.replace(/[^\d]/g, ''); // 숫자만 필터링
+
+      if (value !== '') {
+        value = Math.min(Math.max(Number(value), 0), 100).toString(); // 0~100 범위 제한
+      }
+
+      onChange(value); // 문자열 값만 저장
+    };
+
   return (
     <Controller
       name={popUpConfig.name}
@@ -48,6 +59,7 @@ export default function PopUpInputComponent({
             onChange={
               (popUpConfig.name === 'contactNumber' && handlePhoneNumberInputChange(onChange)) ||
               (popUpConfig.name === 'capacity' && handleCapacityInputChange(onChange)) ||
+              (popUpConfig.name === 'discountRate' && handleDiscountInputChange(onChange)) ||
               onChange
             }
             value={typeof value === 'object' ? '' : value}

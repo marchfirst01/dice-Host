@@ -1,5 +1,4 @@
 import CategoryDropdownComponent from '@components/popUpSetting/categoryDropdown';
-import DiscountInputComponent from '@components/popUpSetting/discountInput';
 import GeocodeModalComponent from '@components/popUpSetting/geocodeModal';
 import ImageUploadComponent from '@components/popUpSetting/imageUpload';
 import PopUpInputComponent from '@components/popUpSetting/popUpInput';
@@ -9,9 +8,7 @@ import TagInputComponent from '@components/popUpSetting/tagInput';
 import TimePickerComponents from '@components/popUpSetting/timePicker';
 import PopUpSettingLayout from '@layout/popUpSettingLayout';
 import { PopUpFormData, PopUpId } from '@type/popUpSetting';
-import { PopUpRegisterResponse } from '@type/popUpSetting/popUpResponse';
 import formattedDiscountPrice from '@utils/formattedDiscountPrice';
-import formattedTime from '@utils/formattedTime';
 import { useGeocodeStore } from '@zustands/geocode/store';
 
 import React, { useEffect, useState } from 'react';
@@ -33,6 +30,7 @@ export default function PopUpSettingPage() {
   const [geocodeModalOpen, setGeocodeModalOpen] = useState<boolean>(false);
   const { selectedAddress } = useGeocodeStore();
 
+  // setDiscountType 임시 삭제 나중에 추가 ..
   const [discountType, setDiscountType] = useState<'할인율' | '할인 금액'>('할인율');
   const watchDiscountFields = watch('discountRate');
   const watchPriceFields = watch('pricePerDay');
@@ -42,7 +40,7 @@ export default function PopUpSettingPage() {
   useEffect(() => {
     if (watchDiscountFields && watchPriceFields) {
       const returnValue = formattedDiscountPrice({
-        discount: watchDiscountFields.price,
+        discount: watchDiscountFields,
         price: watchPriceFields,
         discountType,
       });
@@ -69,7 +67,7 @@ export default function PopUpSettingPage() {
 
   const DivLayout = ({ name, required = true, children }: DivLayoutProps) => {
     return (
-      <div className="flex flex-col gap-2 font-CAP1 text-CAP1 leading-CAP1">
+      <div className="flex w-full flex-col gap-2 font-CAP1 text-CAP1 leading-CAP1">
         <p className={`${required && "after:ml-1 after:text-red after:content-['*']"}`}>
           {popUpConfigList[name].display}
         </p>
@@ -160,6 +158,7 @@ export default function PopUpSettingPage() {
           <TagInputComponent control={control} />
         </div>
       </section>
+      {/* pricePerDay & discountRate */}
       <section>
         <p className="mb-6 font-SUB1 text-SUB1 leading-SUB1">공간 대여 가격 작성</p>
         <div className="flex flex-col gap-4">
@@ -173,23 +172,24 @@ export default function PopUpSettingPage() {
               rules={{ required: popUpConfigList.pricePerDay.rules }}
             />
           </div>
-          <div className="flex flex-col gap-2 font-CAP1 text-CAP1 leading-CAP1">
-            <p className="after:ml-1 after:text-red after:content-['*']">
-              {popUpConfigList.discountRate.display}
-            </p>
-            <DiscountInputComponent
-              control={control}
-              discountType={discountType}
-              setDiscountType={setDiscountType}
-              rules={{ required: popUpConfigList.discountRate.rules }}
-            />
+          <div className="flex w-full flex-row items-end gap-2 font-CAP1 text-CAP1 leading-CAP1">
+            <div className="flex w-full flex-col gap-2 font-CAP1 text-CAP1 leading-CAP1">
+              <p className={`"after:ml-1 after:content-['*']"} after:text-red`}>
+                {popUpConfigList.discountRate.display}
+              </p>
+              <PopUpInputComponent
+                popUpConfig={popUpConfigList.discountRate}
+                control={control}
+                rules={{ required: popUpConfigList.discountRate.rules }}
+              />
+            </div>
+            <div className="h-11 w-[107px] rounded-lg border border-stroke py-3 text-center text-light_gray">
+              할인율 (%)
+            </div>
           </div>
           {watchDiscountFields && formattedPrice && (
             <div className="flex flex-row justify-end gap-2 font-SUB2 text-SUB2 leading-SUB2">
-              <p className="text-red">
-                {watchDiscountFields.price}
-                {discountType === '할인율' ? '%' : '원'} 할인
-              </p>
+              <p className="text-red">{watchDiscountFields}% 할인</p>
               <p>{formattedPrice}원</p>
             </div>
           )}

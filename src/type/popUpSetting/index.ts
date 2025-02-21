@@ -19,7 +19,7 @@ interface PopUpFormData {
   capacity: number;
   tags: string[];
   pricePerDay: string;
-  discountRate: { price: number; type: string };
+  discountRate: number;
   details: string;
   // address: 상세주소, location: 주소 검색
   location: Address;
