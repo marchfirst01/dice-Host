@@ -3,7 +3,6 @@ import GeocodeModalComponent from '@components/popUpSetting/geocodeModal';
 import ImageUploadComponent from '@components/popUpSetting/imageUpload';
 import PopUpInputComponent from '@components/popUpSetting/popUpInput';
 import PopUpTextareaComponent from '@components/popUpSetting/popUpTextarea';
-import PriceInputComponents from '@components/popUpSetting/priceInput';
 import TagInputComponent from '@components/popUpSetting/tagInput';
 import TimePickerComponents from '@components/popUpSetting/timePicker';
 import PopUpSettingLayout from '@layout/popUpSettingLayout';
@@ -116,14 +115,14 @@ export default function PopUpSettingPage() {
               control={control}
               rules={{
                 required: popUpConfigList.openingTime.rules,
-                validate: {
-                  allFieldsSelected: (value) => {
-                    if (!value?.period || !value?.hours || !value?.minutes) {
-                      return popUpConfigList.openingTime.rules;
-                    }
-                    return true;
-                  },
-                },
+                // validate: {
+                //   allFieldsSelected: (value) => {
+                //     if (!value?.period || !value?.hours || !value?.minutes) {
+                //       return popUpConfigList.openingTime.rules;
+                //     }
+                //     return true;
+                //   },
+                // },
               }}
             />{' '}
             ~{' '}
@@ -133,12 +132,12 @@ export default function PopUpSettingPage() {
               rules={{
                 required: popUpConfigList.closingTime.rules,
                 validate: {
-                  allFieldsSelected: (value) => {
-                    if (!value?.period || !value?.hours || !value?.minutes) {
-                      return popUpConfigList.closingTime.rules;
-                    }
-                    return true;
-                  },
+                  // allFieldsSelected: (value) => {
+                  //   if (!value?.period || !value?.hours || !value?.minutes) {
+                  //     return popUpConfigList.closingTime.rules;
+                  //   }
+                  //   return true;
+                  // },
                 },
               }}
             />
@@ -162,16 +161,13 @@ export default function PopUpSettingPage() {
       <section>
         <p className="mb-6 font-SUB1 text-SUB1 leading-SUB1">공간 대여 가격 작성</p>
         <div className="flex flex-col gap-4">
-          <div className="flex flex-col gap-2 font-CAP1 text-CAP1 leading-CAP1">
-            <p className="after:ml-1 after:text-red after:content-['*']">
-              {popUpConfigList.pricePerDay.display}
-            </p>
-            <PriceInputComponents
+          <DivLayout name="pricePerDay">
+            <PopUpInputComponent
               popUpConfig={popUpConfigList.pricePerDay}
               control={control}
               rules={{ required: popUpConfigList.pricePerDay.rules }}
             />
-          </div>
+          </DivLayout>
           <div className="flex w-full flex-row items-end gap-2 font-CAP1 text-CAP1 leading-CAP1">
             <div className="flex w-full flex-col gap-2 font-CAP1 text-CAP1 leading-CAP1">
               <p className={`"after:ml-1 after:content-['*']"} after:text-red`}>

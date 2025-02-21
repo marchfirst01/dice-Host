@@ -2,19 +2,14 @@
 // TODO: api 내용에 city(도시명), district(동네명), address(상세주소), latitude, longitude 들어가야함
 // TODO: popUpFormData = 사용자한테 입력받은 값
 // TODO: fetchPopUpData = popUpFormData를 가공하여 api에 전달할 값 (타입 추가 제작 필요)
-interface Time {
-  period: string;
-  hours: string;
-  minutes: string;
-}
 
 interface PopUpFormData {
   name: string;
   description: string;
   imageList: File[];
   category: string;
-  openingTime: Time;
-  closingTime: Time;
+  openingTime: string;
+  closingTime: string;
   placeArea: number;
   capacity: number;
   tags: string[];
@@ -71,4 +66,4 @@ interface Address {
   longitude: number;
 }
 
-export type { Time, PopUpFormData, PopUpId, PopUpConfig, PopUpConfigList, Address };
+export type { PopUpFormData, PopUpId, PopUpConfig, PopUpConfigList, Address };
