@@ -8,12 +8,17 @@ import ImageContainerComponent from './imageContainer';
 import Image from 'next/image';
 
 interface ImageUploadComponentProps {
+  editImageUrls?: string[];
   control: Control<PopUpFormData>;
   rules: UseControllerProps<PopUpFormData, 'imageList'>['rules'];
 }
 
-export default function ImageUploadComponent({ control, rules }: ImageUploadComponentProps) {
-  const [files, setFiles] = useState<string[]>([]);
+export default function ImageUploadComponent({
+  editImageUrls,
+  control,
+  rules,
+}: ImageUploadComponentProps) {
+  const [files, setFiles] = useState<string[]>(editImageUrls ? editImageUrls : []);
 
   // 이미지 첨부 버튼 클릭
   const fileInputRef = useRef<HTMLInputElement>(null);

@@ -14,10 +14,14 @@ interface Address {
 // popUpSetting 페이지에서 react-hook-form에 연결되는 데이터
 interface PopUpFormData extends CommonPopUpData {
   imageList: (File | string)[];
-  placeArea: number;
+  // placeArea: number;
   pricePerDay: string;
-  location: Address;
+  location: string;
+  city: string;
+  district: string;
   address: string;
+  latitude: number;
+  longitude: number;
 }
 
 // 팝업 formData의 id들
@@ -26,7 +30,7 @@ type PopUpId =
   | 'description'
   | 'openingTime'
   | 'closingTime'
-  | 'placeArea'
+  // | 'placeArea'
   | 'capacity'
   | 'tags'
   | 'pricePerDay'

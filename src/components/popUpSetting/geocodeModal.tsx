@@ -3,17 +3,19 @@ import { Address, PopUpFormData } from '@type/popUpSetting';
 import { useGeocodeStore } from '@zustands/geocode/store';
 
 import React, { Dispatch, SetStateAction, useState } from 'react';
-import { Control, Controller, UseControllerProps } from 'react-hook-form';
+import { Control, Controller, UseControllerProps, UseFormSetValue } from 'react-hook-form';
 
 import Image from 'next/image';
 
 export default function GeocodeModalComponent({
   setGeocodeModalOpen,
   control,
+  setValue,
   rules,
 }: {
   setGeocodeModalOpen: Dispatch<SetStateAction<boolean>>;
   control: Control<PopUpFormData>;
+  setValue: UseFormSetValue<PopUpFormData>;
   rules: UseControllerProps<PopUpFormData, 'location'>['rules'];
 }) {
   const [searchAddress, setSearchAddress] = useState('');
@@ -49,10 +51,14 @@ export default function GeocodeModalComponent({
     });
   };
 
-  const handleClickAddress = (address: Address, onChange: Function) => {
+  const handleClickAddress = (address: Address) => {
     setSelectedAddress(address);
     setGeocodeModalOpen(false);
-    onChange(address);
+    setValue('location', address.jibunAddress);
+    setValue('city', address.sido);
+    setValue('district', address.sigugun);
+    setValue('latitude', address.latitude);
+    setValue('longitude', address.longitude);
   };
 
   return (
@@ -60,61 +66,58 @@ export default function GeocodeModalComponent({
       name="location"
       control={control}
       rules={rules}
-      render={({ field: { onChange, value } }) => (
-        <div className="border border-stroke px-5">
-          <div className="relative">
-            <input
-              className="w-full border-b border-black px-2 py-4"
-              placeholder="예) 판교역로 166, 분당 주공"
-              onChange={(e) => setSearchAddress(e.target.value)}
-            />
-            <Image
-              onClick={() => handleSearch()}
-              className="absolute right-0 top-1/2 -translate-y-1/2 cursor-pointer"
-              src={IMAGES.Search}
-              alt="search"
-            />
-          </div>
-          {resultAddress && resultAddress.length > 0 ? (
-            resultAddress.map((address) => (
-              <div
-                onClick={() => handleClickAddress(address, onChange)}
-                className="my-4 cursor-pointer p-2"
-              >
-                <p className="text-red">{address.postalCode}</p>
-                <p>
-                  <span className="border border-blue-200 text-blue-200">도로명</span>{' '}
-                  {address.roadAddress}
-                </p>
-                <p>
-                  <span className="border border-blue-200 text-blue-200">지번</span>{' '}
-                  {address.jibunAddress}
-                </p>
-                {value && (
-                  <p>
-                    value: {value.postalCode}, {value.jibunAddress}
-                  </p>
-                )}
-              </div>
-            ))
-          ) : (
-            <div className="p-6">
-              <p className="font-H2 text-H2 leading-H2">tip</p>
-              <p className="mt-1">
-                아래와 같은 조합으로 검색을 하시면 더 정확한 결과과 검색됩니다.
-              </p>
-              <p className="mt-2">도로명 + 건물번호</p>
-              <p className="text-blue-400">예) 판교역로 166, 제주 첨단로 242</p>
-              <p className="mt-2">지역명(동/리) + 번지</p>
-              <p className="text-blue-400">예) 백현동 532, 제주 영평동 2181</p>
-              <p className="mt-2">지역명(동/리) + 건물명(아파트명)</p>
-              <p className="text-blue-400">예) 분당 주공, 연수동 주공 3차</p>
-              <p className="mt-2">사서함명 + 번호</p>
-              <p className="text-blue-400">예) 분당우체국 사서함 1-100</p>
+      render={() => {
+        return (
+          <div className="border border-stroke px-5">
+            <div className="relative">
+              <input
+                className="w-full border-b border-black px-2 py-4"
+                placeholder="예) 판교역로 166, 분당 주공"
+                onChange={(e) => setSearchAddress(e.target.value)}
+              />
+              <Image
+                onClick={() => handleSearch()}
+                className="absolute right-0 top-1/2 -translate-y-1/2 cursor-pointer"
+                src={IMAGES.Search}
+                alt="search"
+              />
             </div>
-          )}
-        </div>
-      )}
+            {resultAddress && resultAddress.length > 0 ? (
+              resultAddress.map((address) => (
+                <div
+                  onClick={() => handleClickAddress(address)}
+                  className="my-4 cursor-pointer p-2"
+                >
+                  <p className="text-red">{address.postalCode}</p>
+                  <p>
+                    <span className="border border-blue-200 text-blue-200">도로명</span>{' '}
+                    {address.roadAddress}
+                  </p>
+                  <p>
+                    <span className="border border-blue-200 text-blue-200">지번</span>{' '}
+                    {address.jibunAddress}
+                  </p>
+                </div>
+              ))
+            ) : (
+              <div className="p-6">
+                <p className="font-H2 text-H2 leading-H2">tip</p>
+                <p className="mt-1">
+                  아래와 같은 조합으로 검색을 하시면 더 정확한 결과과 검색됩니다.
+                </p>
+                <p className="mt-2">도로명 + 건물번호</p>
+                <p className="text-blue-400">예) 판교역로 166, 제주 첨단로 242</p>
+                <p className="mt-2">지역명(동/리) + 번지</p>
+                <p className="text-blue-400">예) 백현동 532, 제주 영평동 2181</p>
+                <p className="mt-2">지역명(동/리) + 건물명(아파트명)</p>
+                <p className="text-blue-400">예) 분당 주공, 연수동 주공 3차</p>
+                <p className="mt-2">사서함명 + 번호</p>
+                <p className="text-blue-400">예) 분당우체국 사서함 1-100</p>
+              </div>
+            )}
+          </div>
+        );
+      }}
     />
   );
 }
