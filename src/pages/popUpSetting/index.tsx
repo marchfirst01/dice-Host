@@ -30,7 +30,7 @@ export default function PopUpSettingPage() {
   const { selectedAddress } = useGeocodeStore();
 
   // setDiscountType 임시 삭제 나중에 추가 ..
-  const [discountType, setDiscountType] = useState<'할인율' | '할인 금액'>('할인율');
+  const [discountType] = useState<'할인율' | '할인 금액'>('할인율');
   const watchDiscountFields = watch('discountRate');
   const watchPriceFields = watch('pricePerDay');
 
@@ -58,48 +58,41 @@ export default function PopUpSettingPage() {
     }
   };
 
-  interface DivLayoutProps {
-    name: PopUpId;
-    required?: boolean;
-    children: React.ReactNode;
-  }
-
-  const DivLayout = ({ name, required = true, children }: DivLayoutProps) => {
-    return (
-      <div className="flex w-full flex-col gap-2 font-CAP1 text-CAP1 leading-CAP1">
-        <p className={`${required && "after:ml-1 after:text-red after:content-['*']"}`}>
-          {popUpConfigList[name].display}
-        </p>
-        {children}
-      </div>
-    );
-  };
-
   return (
     <PopUpSettingLayout handleSubmit={handleSubmit} onSubmit={onSubmit}>
       <section className="flex flex-col gap-6 font-CAP1 text-CAP1 leading-CAP1">
         <p className="font-SUB1 text-SUB1 leading-SUB1">필수 정보 작성</p>
-        <DivLayout name="name">
+        {/* name - 공간 이름 */}
+        <div className="flex w-full flex-col gap-2 font-CAP1 text-CAP1 leading-CAP1">
+          <p className="after:ml-1 after:text-red after:content-['*']">
+            {popUpConfigList.name.display}
+          </p>
           <PopUpInputComponent
             popUpConfig={popUpConfigList.name}
             control={control}
             rules={{ required: popUpConfigList.name.rules }}
           />
-        </DivLayout>
-        <DivLayout name="description">
+        </div>
+        {/* description - 한 줄 소개 */}
+        <div className="flex w-full flex-col gap-2 font-CAP1 text-CAP1 leading-CAP1">
+          <p className="after:ml-1 after:text-red after:content-['*']">
+            {popUpConfigList.description.display}
+          </p>
           <PopUpInputComponent
             popUpConfig={popUpConfigList.description}
             control={control}
             rules={{ required: popUpConfigList.description.rules }}
           />
-        </DivLayout>
+        </div>
         <div className="flex flex-col gap-1">
+          {/* image - 이미지 */}
           <p className="after:ml-1 after:text-red after:content-['*']">이미지 등록(최대 10장)</p>
           <ImageUploadComponent
             control={control}
             rules={{ required: '이미지를 하나 이상 등록해주세요' }}
           />
         </div>
+        {/* category - 공간 타입 */}
         <div className="flex flex-col gap-2">
           <p className="after:ml-1 after:text-red after:content-['*']">공간 유형</p>
           <CategoryDropdownComponent
@@ -107,6 +100,7 @@ export default function PopUpSettingPage() {
             rules={{ required: '공간 유형을 선택해주세요' }}
           />
         </div>
+        {/* openingTime, closingTime - 공간 영업 시간 */}
         <div className="flex flex-col gap-2">
           <p className="after:ml-1 after:text-red after:content-['*']">공간 영업 시간</p>
           <div className="flex flex-row items-center gap-1">
@@ -115,14 +109,6 @@ export default function PopUpSettingPage() {
               control={control}
               rules={{
                 required: popUpConfigList.openingTime.rules,
-                // validate: {
-                //   allFieldsSelected: (value) => {
-                //     if (!value?.period || !value?.hours || !value?.minutes) {
-                //       return popUpConfigList.openingTime.rules;
-                //     }
-                //     return true;
-                //   },
-                // },
               }}
             />{' '}
             ~{' '}
@@ -131,25 +117,22 @@ export default function PopUpSettingPage() {
               control={control}
               rules={{
                 required: popUpConfigList.closingTime.rules,
-                validate: {
-                  // allFieldsSelected: (value) => {
-                  //   if (!value?.period || !value?.hours || !value?.minutes) {
-                  //     return popUpConfigList.closingTime.rules;
-                  //   }
-                  //   return true;
-                  // },
-                },
               }}
             />
           </div>
         </div>
-        <DivLayout name="capacity">
+        {/* capacity - 수용인원 */}
+        <div className="flex w-full flex-col gap-2 font-CAP1 text-CAP1 leading-CAP1">
+          <p className="after:ml-1 after:text-red after:content-['*']">
+            {popUpConfigList.capacity.display}
+          </p>
           <PopUpInputComponent
             popUpConfig={popUpConfigList.capacity}
             control={control}
             rules={{ required: popUpConfigList.capacity.rules }}
           />
-        </DivLayout>
+        </div>
+        {/* tags - 해시태그 */}
         <div className="flex flex-col gap-2 font-CAP1 text-CAP1 leading-CAP1">
           <p className="after:ml-1 after:text-red after:content-['*']">
             {popUpConfigList.tags.display}
@@ -161,16 +144,19 @@ export default function PopUpSettingPage() {
       <section>
         <p className="mb-6 font-SUB1 text-SUB1 leading-SUB1">공간 대여 가격 작성</p>
         <div className="flex flex-col gap-4">
-          <DivLayout name="pricePerDay">
+          <div className="flex w-full flex-col gap-2 font-CAP1 text-CAP1 leading-CAP1">
+            <p className="after:ml-1 after:text-red after:content-['*']">
+              {popUpConfigList.pricePerDay.display}
+            </p>
             <PopUpInputComponent
               popUpConfig={popUpConfigList.pricePerDay}
               control={control}
               rules={{ required: popUpConfigList.pricePerDay.rules }}
             />
-          </DivLayout>
+          </div>
           <div className="flex w-full flex-row items-end gap-2 font-CAP1 text-CAP1 leading-CAP1">
             <div className="flex w-full flex-col gap-2 font-CAP1 text-CAP1 leading-CAP1">
-              <p className={`"after:ml-1 after:content-['*']"} after:text-red`}>
+              <p className="after:ml-1 after:text-red after:content-['*']">
                 {popUpConfigList.discountRate.display}
               </p>
               <PopUpInputComponent
@@ -193,13 +179,17 @@ export default function PopUpSettingPage() {
       </section>
       <section>
         <p className="mb-6 font-SUB1 text-SUB1 leading-SUB1">공간 소개글 작성</p>
-        <DivLayout name="details">
+        {/* details - 자세한 소개 */}
+        <div className="flex w-full flex-col gap-2 font-CAP1 text-CAP1 leading-CAP1">
+          <p className="after:ml-1 after:text-red after:content-['*']">
+            {popUpConfigList.details.display}
+          </p>
           <PopUpTextareaComponent
             popUpConfig={popUpConfigList.details}
             control={control}
             rules={{ required: popUpConfigList.details.rules }}
           />
-        </DivLayout>
+        </div>
       </section>
       <section className="flex flex-col gap-6 font-CAP1 text-CAP1 leading-CAP1">
         <p className="font-SUB1 text-SUB1 leading-SUB1">위치 안내 작성</p>
@@ -235,33 +225,47 @@ export default function PopUpSettingPage() {
           <PopUpInputComponent popUpConfig={popUpConfigList.address} control={control} />
           {errors && <p className="text-red">{errors.location?.message}</p>}
         </div>
-        <DivLayout name="websiteUrl" required={false}>
+        {/* websiteUrl */}
+        <div className="flex w-full flex-col gap-2 font-CAP1 text-CAP1 leading-CAP1">
+          <p>{popUpConfigList.websiteUrl.display}</p>
           <PopUpInputComponent popUpConfig={popUpConfigList.websiteUrl} control={control} />
-        </DivLayout>
-        <DivLayout name="contactNumber">
+        </div>
+        {/* contactNumber - 문의 전화번호 */}
+        <div className="flex w-full flex-col gap-2 font-CAP1 text-CAP1 leading-CAP1">
+          <p className="after:ml-1 after:text-red after:content-['*']">
+            {popUpConfigList.contactNumber.display}
+          </p>
           <PopUpInputComponent
             popUpConfig={popUpConfigList.contactNumber}
             control={control}
             rules={{ required: popUpConfigList.contactNumber.rules }}
           />
-        </DivLayout>
+        </div>
       </section>
       <section className="flex flex-col gap-6">
         <p className="font-SUB1 text-SUB1 leading-SUB1">시설 이용 및 공지사항 안내 작성</p>
-        <DivLayout name="facilityInfo">
+        {/* facilityInfo - 시설 이용 및 공지사항 안내 */}
+        <div className="flex w-full flex-col gap-2 font-CAP1 text-CAP1 leading-CAP1">
+          <p className="after:ml-1 after:text-red after:content-['*']">
+            {popUpConfigList.facilityInfo.display}
+          </p>
           <PopUpTextareaComponent
             popUpConfig={popUpConfigList.facilityInfo}
             control={control}
             rules={{ required: popUpConfigList.facilityInfo.rules }}
           />
-        </DivLayout>
-        <DivLayout name="notice">
+        </div>
+        {/* notice - 시설 이용 안내 */}
+        <div className="flex w-full flex-col gap-2 font-CAP1 text-CAP1 leading-CAP1">
+          <p className="after:ml-1 after:text-red after:content-['*']">
+            {popUpConfigList.notice.display}
+          </p>
           <PopUpTextareaComponent
             popUpConfig={popUpConfigList.notice}
             control={control}
             rules={{ required: popUpConfigList.notice.rules }}
           />
-        </DivLayout>
+        </div>
       </section>
     </PopUpSettingLayout>
   );

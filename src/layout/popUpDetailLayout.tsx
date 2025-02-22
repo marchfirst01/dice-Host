@@ -8,6 +8,7 @@ import { useRouter } from 'next/router';
 export default function PopUpDetailLayout({ children }: { children: React.ReactNode }) {
   const childrenArray = React.Children.toArray(children);
   const router = useRouter();
+  const { id } = router.query;
 
   return (
     <div>
@@ -39,13 +40,13 @@ export default function PopUpDetailLayout({ children }: { children: React.ReactN
       </div>
       <nav className="fixed bottom-0 z-10 flex h-[84px] w-full max-w-[400px] flex-row items-center gap-3 border-t border-stroke bg-white px-5 py-4">
         <button
-          onClick={() => console.log('전화 걸기')}
+          onClick={() => console.log('삭제')}
           className="h-full text-nowrap rounded-lg border border-stroke px-[35.5px] font-BTN1 text-BTN1 leading-BTN1"
         >
           삭제
         </button>
         <button
-          onClick={() => console.log('쪽지 보내기')}
+          onClick={() => router.push({ pathname: '/popUpSetting', query: { mode: 'edit', id } })}
           className="flex h-full w-full flex-row items-center justify-center gap-2 rounded-lg bg-black font-BTN1 text-BTN1 leading-BTN1 text-white"
         >
           <p>수정하기</p>

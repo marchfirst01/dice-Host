@@ -1,9 +1,6 @@
-// 팝업을 생성/수정할 때 제출하는 폼데이터의 내용
-// TODO: api 내용에 city(도시명), district(동네명), address(상세주소), latitude, longitude 들어가야함
-// TODO: popUpFormData = 사용자한테 입력받은 값
-// TODO: fetchPopUpData = popUpFormData를 가공하여 api에 전달할 값 (타입 추가 제작 필요)
 import { CommonPopUpData } from '@type/common';
 
+// 지도 response
 interface Address {
   jibunAddress: string;
   roadAddress: string;
@@ -14,6 +11,7 @@ interface Address {
   longitude: number;
 }
 
+// popUpSetting 페이지에서 react-hook-form에 연결되는 데이터
 interface PopUpFormData extends CommonPopUpData {
   imageList: (File | string)[];
   placeArea: number;
@@ -52,6 +50,23 @@ interface PopUpConfig {
 // 데이터 리스트
 type PopUpConfigList = Record<PopUpId, PopUpConfig>;
 
-// 지도 response
+// popUpFormData를 가공해서 api에 필요한 데이터로 변경
+interface PopUpRegisterResponse extends CommonPopUpData {
+  pricePerDay: number;
+  imageUrls: string[];
+  latitude: number;
+  longitude: number;
+  city: string;
+  district: string;
+  location: string;
+  address: string;
+}
 
-export type { PopUpFormData, PopUpId, PopUpConfig, PopUpConfigList, Address };
+export type {
+  Address,
+  PopUpFormData,
+  PopUpId,
+  PopUpConfig,
+  PopUpConfigList,
+  PopUpRegisterResponse,
+};
