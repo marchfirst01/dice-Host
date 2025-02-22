@@ -10,7 +10,6 @@ export default function formattedDiscountPrice({
   discountType,
 }: FormattedDiscountPriceProps) {
   if (discountType === '할인율') {
-    console.log(typeof price);
     const stringValue = price.toString();
     const numericValue = parseInt(stringValue.replace(/,/g, ''), 10);
     const returnValue = Math.round(numericValue * (1 - discount / 100));

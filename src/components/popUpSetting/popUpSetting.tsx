@@ -15,9 +15,10 @@ import PopUpTextareaComponent from './popUpTextarea';
 import TagInputComponent from './tagInput';
 import TimePickerComponents from './timePicker';
 import { useRouter } from 'next/router';
+import { fetchSpaceRegister } from 'src/api/popUpSetting';
 import { popUpConfigList } from 'src/context/popUpSetting/popUpConfig';
 
-export default function PopUpSettingComponent(editData: PopUpFormData) {
+export default function PopUpSettingComponent({ editData }: { editData: PopUpFormData }) {
   const router = useRouter();
   console.log(editData);
 
@@ -28,14 +29,7 @@ export default function PopUpSettingComponent(editData: PopUpFormData) {
     watch,
     formState: { errors },
   } = useForm<PopUpFormData>({
-    // defaultValues: editData,
-    defaultValues: {
-      ...editData,
-      category: 'CAFE',
-      openingTime: '오후 1:20',
-      closingTime: '오후 4:50',
-      // discountRate: '10',
-    },
+    defaultValues: editData,
   });
 
   const [geocodeModalOpen, setGeocodeModalOpen] = useState<boolean>(false);
@@ -49,7 +43,6 @@ export default function PopUpSettingComponent(editData: PopUpFormData) {
   // 가격 표시
   const [formattedPrice, setFormattedPrice] = useState<string>();
   useEffect(() => {
-    console.log(watchDiscountFields, typeof watchDiscountFields);
     if (watchDiscountFields && watchPriceFields) {
       const returnValue = formattedDiscountPrice({
         discount: watchDiscountFields,

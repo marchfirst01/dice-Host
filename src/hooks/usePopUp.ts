@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
+import { formatTimeTo12Hour } from '@utils/formatTime';
 
 import { fetchSpaceId } from 'src/api/popUp';
 
@@ -11,8 +12,8 @@ export const usePopUpId = (id: string) => {
       description: data.description,
       imageList: data.imageUrls,
       category: data.category,
-      // openingTime:
-      // closingTime:
+      openingTime: formatTimeTo12Hour(data.openingTime),
+      closingTime: formatTimeTo12Hour(data.closingTime),
       capacity: data.capacity,
       tags: data.tags,
       pricePerDay: data.pricePerDay,

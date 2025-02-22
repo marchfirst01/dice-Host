@@ -1,6 +1,6 @@
 import { PostAxiosInstance } from '@axios/axios.method';
 import { PopUpFormData, PopUpRegisterResponse } from '@type/popUpSetting';
-import formattedTime from '@utils/formattedTime';
+import { formatTimeTo24Hour } from '@utils/formatTime';
 
 export const fetchImageUpload = async (imageList: File[]) => {
   try {
@@ -47,8 +47,8 @@ export const fetchSpaceRegister = async (formData: PopUpFormData) => {
     description: formData.description,
     imageUrls: imageUrlsRes,
     category: formData.category,
-    openingTime: formattedTime(formData.openingTime),
-    closingTime: formattedTime(formData.closingTime),
+    openingTime: formatTimeTo24Hour(formData.openingTime),
+    closingTime: formatTimeTo24Hour(formData.closingTime),
     capacity: Number(formData.capacity),
     tags: formData.tags,
     pricePerDay: Number(formData.pricePerDay.replace(/,/g, '')),
@@ -56,11 +56,11 @@ export const fetchSpaceRegister = async (formData: PopUpFormData) => {
     details: formData.details,
     // (1)서울시 (2)강남구 (3)강남대로 123 (4)2층 => latitude, longitude
     // (1)city (2)district (3)location (4)address
-    latitude: formData.location.latitude,
-    longitude: formData.location.longitude,
-    city: formData.location.sido,
-    district: formData.location.sigugun,
-    location: formData.location.jibunAddress,
+    latitude: formData.latitude,
+    longitude: formData.longitude,
+    city: formData.city,
+    district: formData.district,
+    location: formData.location,
     address: formData.address,
     websiteUrl: formData.websiteUrl,
     contactNumber: formData.contactNumber,
