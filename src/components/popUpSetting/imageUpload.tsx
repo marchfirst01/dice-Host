@@ -24,8 +24,8 @@ export default function ImageUploadComponent({ control, rules }: ImageUploadComp
 
   const fileInputSubmit = (
     e: ChangeEvent<HTMLInputElement>,
-    onChange: (value: File[]) => void,
-    value: File[],
+    onChange: (value: (File | string)[]) => void,
+    value: (File | string)[],
   ) => {
     if (!e.target.files || e.target.files.length === 0) return;
     const targetFile = e.target.files[0];
@@ -43,8 +43,8 @@ export default function ImageUploadComponent({ control, rules }: ImageUploadComp
   const handleDeleteImage = (
     index: number,
     urlToDelete: string,
-    onChange: (value: File[]) => void,
-    value: File[],
+    onChange: (value: (File | string)[]) => void,
+    value: (File | string)[],
   ) => {
     const updatedFiles = value.filter((_, i) => i !== index); // 필터링해서 제거
     onChange(updatedFiles);

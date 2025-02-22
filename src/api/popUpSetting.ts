@@ -19,9 +19,21 @@ export const fetchImageUpload = async (imageList: File[]) => {
   }
 };
 
-export const uploadImage = async (imageList: File[]) => {
+export const uploadImage = async (imageList: (File | string)[]) => {
   try {
-    const { imageUrls } = await fetchImageUpload(imageList);
+    // imageList에서 타입이 File인 것만 따로 모아서 배열로 만들기
+    const fileList = imageList.filter((item): item is File => item instanceof File);
+    if (fileList.length === 0) {
+      // imageList에서 File 타입이 없다? 전부 string -> 그대로 반환
+      return imageList;
+    }
+    const { imageUrls } = await fetchImageUpload(fileList);
+    const stringList = imageList.filter((item): item is string => typeof item === 'string');
+    if (stringList === null) {
+      // string 타입이 없다? 전부 File 타입, 변환 완료 -> imageUrls 반환
+      return imageUrls;
+    }
+    imageUrls.push(...stringList);
     return imageUrls;
   } catch (error) {
     console.log(error);
@@ -41,7 +53,7 @@ export const fetchSpaceRegister = async (formData: PopUpFormData) => {
     capacity: Number(formData.capacity),
     tags: formData.tags,
     pricePerDay: Number(formData.pricePerDay.replace(/,/g, '')),
-    discountRate: Number(formData.discountRate.price),
+    discountRate: Number(formData.discountRate),
     details: formData.details,
     latitude: formData.location.latitude,
     longitude: formData.location.longitude,

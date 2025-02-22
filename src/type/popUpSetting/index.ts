@@ -2,27 +2,24 @@
 // TODO: api 내용에 city(도시명), district(동네명), address(상세주소), latitude, longitude 들어가야함
 // TODO: popUpFormData = 사용자한테 입력받은 값
 // TODO: fetchPopUpData = popUpFormData를 가공하여 api에 전달할 값 (타입 추가 제작 필요)
+import { CommonPopUpData } from '@type/common';
 
-interface PopUpFormData {
-  name: string;
-  description: string;
-  imageList: File[];
-  category: string;
-  openingTime: string;
-  closingTime: string;
+interface Address {
+  jibunAddress: string;
+  roadAddress: string;
+  sido: string;
+  sigugun: string;
+  postalCode: string;
+  latitude: number;
+  longitude: number;
+}
+
+interface PopUpFormData extends CommonPopUpData {
+  imageList: (File | string)[];
   placeArea: number;
-  capacity: number;
-  tags: string[];
   pricePerDay: string;
-  discountRate: number;
-  details: string;
-  // address: 상세주소, location: 주소 검색
   location: Address;
   address: string;
-  websiteUrl: string;
-  contactNumber: string;
-  facilityInfo: string;
-  notice: string;
 }
 
 // 팝업 formData의 id들
@@ -56,14 +53,5 @@ interface PopUpConfig {
 type PopUpConfigList = Record<PopUpId, PopUpConfig>;
 
 // 지도 response
-interface Address {
-  jibunAddress: string;
-  roadAddress: string;
-  sido: string;
-  sigugun: string;
-  postalCode: string;
-  latitude: number;
-  longitude: number;
-}
 
 export type { PopUpFormData, PopUpId, PopUpConfig, PopUpConfigList, Address };

@@ -3,3 +3,19 @@ export interface CommonConfig {
   placeholder: string;
   rules: string;
 }
+
+export interface CommonPopUpData {
+  name: string;
+  description: string;
+  category: string;
+  openingTime: string;
+  closingTime: string;
+  capacity: number;
+  tags: string[];
+  discountRate: number;
+  details: string;
+  websiteUrl: string;
+  contactNumber: string;
+  facilityInfo: string;
+  notice: string;
+}
