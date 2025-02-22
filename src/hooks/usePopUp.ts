@@ -45,7 +45,7 @@ export const usePopUpId = (id: string) => {
       capacity: data.capacity,
       tags: data.tags,
       pricePerDay: String(data.pricePerDay),
-      discountRate: data.discountRate,
+      discountRate: String(data.discountRate),
       details: data.details,
       // 좌표 변환 필요
       latitude: data.latitude,

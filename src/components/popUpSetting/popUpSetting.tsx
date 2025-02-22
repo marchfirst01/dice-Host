@@ -1,5 +1,5 @@
 import PopUpSettingLayout from '@layout/popUpSettingLayout';
-import { Address, PopUpFormData } from '@type/popUpSetting';
+import { PopUpFormData } from '@type/popUpSetting';
 import formattedDiscountPrice from '@utils/formattedDiscountPrice';
 import { useGeocodeStore } from '@zustands/geocode/store';
 
@@ -29,7 +29,7 @@ export default function PopUpSettingComponent({ editData }: { editData: PopUpFor
     watch,
     formState: { errors },
   } = useForm<PopUpFormData>({
-    defaultValues: editData,
+    defaultValues: { ...editData },
   });
 
   const { setSelectedAddress } = useGeocodeStore();
@@ -37,8 +37,6 @@ export default function PopUpSettingComponent({ editData }: { editData: PopUpFor
   const getAddressFromCoords = async () => {
     const response = await getReverseGeocode(editData.latitude, editData.longitude);
 
-    console.log(response.results);
-    console.log(response.results[0].region.area1);
     const city = response.results[0].region.area1.name;
     const district = response.results[0].region.area2.name;
     const location = response.results[1].land.name;
@@ -55,7 +53,6 @@ export default function PopUpSettingComponent({ editData }: { editData: PopUpFor
     console.log(editData.latitude, editData.longitude);
     getAddressFromCoords();
   }, [editData]);
-  // }, [editData.latitude, editData.longitude]);
 
   const [geocodeModalOpen, setGeocodeModalOpen] = useState<boolean>(false);
   const { selectedAddress } = useGeocodeStore();
@@ -68,6 +65,7 @@ export default function PopUpSettingComponent({ editData }: { editData: PopUpFor
   // 가격 표시
   const [formattedPrice, setFormattedPrice] = useState<string>();
   useEffect(() => {
+    console.log(typeof watchDiscountFields, watchPriceFields);
     if (watchDiscountFields && watchPriceFields) {
       const returnValue = formattedDiscountPrice({
         discount: watchDiscountFields,

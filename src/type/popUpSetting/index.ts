@@ -16,6 +16,7 @@ interface PopUpFormData extends CommonPopUpData {
   imageList: (File | string)[];
   // placeArea: number;
   pricePerDay: string;
+  discountRate: string;
   location: string;
   city: string;
   district: string;
@@ -57,6 +58,7 @@ type PopUpConfigList = Record<PopUpId, PopUpConfig>;
 // popUpFormData를 가공해서 api에 필요한 데이터로 변경
 interface PopUpRegisterResponse extends CommonPopUpData {
   pricePerDay: number;
+  discountRate: Number;
   imageUrls: string[];
   latitude: number;
   longitude: number;

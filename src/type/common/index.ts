@@ -12,7 +12,6 @@ export interface CommonPopUpData {
   closingTime: string;
   capacity: number;
   tags: string[];
-  discountRate: number;
   details: string;
   websiteUrl: string;
   contactNumber: string;
