@@ -4,7 +4,7 @@ import { create } from 'zustand';
 
 export const useGeocodeStore = create<{
   selectedAddress: Address;
-  setSelectedAddress: (address: Address) => void;
+  setSelectedAddress: (address: Partial<Address>) => void;
 }>((set) => ({
   selectedAddress: {
     jibunAddress: '',
@@ -12,8 +12,14 @@ export const useGeocodeStore = create<{
     sido: '',
     sigugun: '',
     postalCode: '',
-    latitude: '',
-    longitude: '',
+    latitude: 0,
+    longitude: 0,
   },
-  setSelectedAddress: (address: Address) => set({ selectedAddress: address }),
+  setSelectedAddress: (address: Partial<Address>) =>
+    set((state) => ({
+      selectedAddress: {
+        ...state.selectedAddress, // 이전 상태 복사
+        ...address, // 전달된 필드 업데이트
+      },
+    })),
 }));

@@ -6,6 +6,7 @@ import React, { Dispatch, SetStateAction, useState } from 'react';
 import { Control, Controller, UseControllerProps, UseFormSetValue } from 'react-hook-form';
 
 import Image from 'next/image';
+import { getGeocode } from 'src/server/naverMap';
 
 export default function GeocodeModalComponent({
   setGeocodeModalOpen,
@@ -23,38 +24,40 @@ export default function GeocodeModalComponent({
 
   const { setSelectedAddress } = useGeocodeStore();
 
-  const handleSearch = () => {
-    naver.maps.Service.geocode({ query: searchAddress }, (status, response) => {
-      if (status === naver.maps.Service.Status.OK && response.v2.meta.totalCount > 0) {
-        const jibunAddress = response.v2.addresses[0].jibunAddress;
-        const roadAddress = response.v2.addresses[0].roadAddress;
-        const sido = response.v2.addresses[0].addressElements[0].longName;
-        const sigugun = response.v2.addresses[0].addressElements[1].longName;
-        const postalCode = response.v2.addresses[0].addressElements[8].longName;
-        const latitude = response.v2.addresses[0].x;
-        const longitude = response.v2.addresses[0].y;
-        // TODO: 검색 결과 여러 개 표시 - 현재는 한 개의 데이터만 표시됨 ex) 사가정로 검색 -> 사가정로 1, 사가정로 2 ... 등 여러 결과가 표시돼야함
-        setResultAddress([
-          {
-            jibunAddress,
-            roadAddress,
-            sido,
-            sigugun,
-            postalCode,
-            latitude: Number(latitude),
-            longitude: Number(longitude),
-          },
-        ]);
-      } else {
-        console.error('주소를 찾을 수 없습니다.');
-      }
-    });
+  const handleSearch = async () => {
+    const response = await getGeocode(searchAddress);
+    console.log(response);
+
+    // TODO: 검색 결과 여러 개 표시 - 현재는 한 개의 데이터만 표시됨 ex) 사가정로 검색 -> 사가정로 1, 사가정로 2 ... 등 여러 결과가 표시돼야함
+    if (response.status === 'OK' && response.meta.totalCount > 0) {
+      const result = response.addresses[0];
+      const jibunAddress = result.jibunAddress;
+      const roadAddress = result.roadAddress;
+      const sido = result.addressElements[0].longName;
+      const sigugun = result.addressElements[1].longName;
+      const postalCode = result.addressElements[8].longName;
+      const latitude = result.x;
+      const longitude = result.y;
+      setResultAddress([
+        {
+          jibunAddress,
+          roadAddress,
+          sido,
+          sigugun,
+          postalCode,
+          latitude: Number(latitude),
+          longitude: Number(longitude),
+        },
+      ]);
+    } else {
+      console.error('주소를 찾을 수 없습니다.');
+    }
   };
 
   const handleClickAddress = (address: Address) => {
     setSelectedAddress(address);
     setGeocodeModalOpen(false);
-    setValue('location', address.jibunAddress);
+    setValue('location', address.roadAddress);
     setValue('city', address.sido);
     setValue('district', address.sigugun);
     setValue('latitude', address.latitude);
@@ -83,8 +86,9 @@ export default function GeocodeModalComponent({
               />
             </div>
             {resultAddress && resultAddress.length > 0 ? (
-              resultAddress.map((address) => (
+              resultAddress.map((address, index) => (
                 <div
+                  key={index}
                   onClick={() => handleClickAddress(address)}
                   className="my-4 cursor-pointer p-2"
                 >

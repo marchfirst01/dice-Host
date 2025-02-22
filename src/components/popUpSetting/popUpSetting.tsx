@@ -1,6 +1,5 @@
-import RegisterFormButtonComponent from '@components/common/registerFormButton';
 import PopUpSettingLayout from '@layout/popUpSettingLayout';
-import { PopUpFormData } from '@type/popUpSetting';
+import { Address, PopUpFormData } from '@type/popUpSetting';
 import formattedDiscountPrice from '@utils/formattedDiscountPrice';
 import { useGeocodeStore } from '@zustands/geocode/store';
 
@@ -17,6 +16,7 @@ import TimePickerComponents from './timePicker';
 import { useRouter } from 'next/router';
 import { fetchSpaceRegister } from 'src/api/popUpSetting';
 import { popUpConfigList } from 'src/context/popUpSetting/popUpConfig';
+import { getReverseGeocode } from 'src/server/naverMap';
 
 export default function PopUpSettingComponent({ editData }: { editData: PopUpFormData }) {
   const router = useRouter();
@@ -31,6 +31,31 @@ export default function PopUpSettingComponent({ editData }: { editData: PopUpFor
   } = useForm<PopUpFormData>({
     defaultValues: editData,
   });
+
+  const { setSelectedAddress } = useGeocodeStore();
+
+  const getAddressFromCoords = async () => {
+    const response = await getReverseGeocode(editData.latitude, editData.longitude);
+
+    console.log(response.results);
+    console.log(response.results[0].region.area1);
+    const city = response.results[0].region.area1.name;
+    const district = response.results[0].region.area2.name;
+    const location = response.results[1].land.name;
+    setValue('city', city);
+    setValue('district', district);
+    setValue('location', location);
+    setSelectedAddress({
+      roadAddress: `${city} ${district} ${location}`,
+      postalCode: response.results[1].land.addition1.value,
+    });
+  };
+
+  useEffect(() => {
+    console.log(editData.latitude, editData.longitude);
+    getAddressFromCoords();
+  }, [editData]);
+  // }, [editData.latitude, editData.longitude]);
 
   const [geocodeModalOpen, setGeocodeModalOpen] = useState<boolean>(false);
   const { selectedAddress } = useGeocodeStore();
@@ -226,9 +251,9 @@ export default function PopUpSettingComponent({ editData }: { editData: PopUpFor
               rules={{ required: popUpConfigList.location.rules }}
             />
           </div>
-          {selectedAddress.jibunAddress && (
+          {selectedAddress.roadAddress && (
             <p className="my-1 flex h-[44px] w-full items-center rounded-lg border px-4 font-CAP1 text-CAP1 leading-CAP1">
-              {selectedAddress.jibunAddress}
+              {selectedAddress.roadAddress}
             </p>
           )}
           <PopUpInputComponent popUpConfig={popUpConfigList.address} control={control} />
