@@ -78,3 +78,36 @@ export const fetchSpaceRegister = async (formData: PopUpFormData) => {
     console.log(error);
   }
 };
+
+export const fetchSpaceIdUpdate = async (id: string, editData: PopUpFormData) => {
+  const imageUrlsRes = await uploadImage(editData.imageList);
+
+  const registerData: PopUpRegisterResponse = {
+    name: editData.name,
+    description: editData.description,
+    imageUrls: imageUrlsRes,
+    category: editData.category,
+    openingTime: formatTimeTo24Hour(editData.openingTime),
+    closingTime: formatTimeTo24Hour(editData.closingTime),
+    capacity: Number(editData.capacity),
+    tags: editData.tags,
+    pricePerDay: Number(editData.pricePerDay.replace(/,/g, '')),
+    discountRate: Number(editData.discountRate),
+    details: editData.details,
+    // (1)서울시 (2)강남구 (3)강남대로 123 (4)2층 => latitude, longitude
+    // (1)city (2)district (3)location (4)address
+    latitude: editData.latitude,
+    longitude: editData.longitude,
+    city: editData.city,
+    district: editData.district,
+    location: editData.location,
+    address: editData.address,
+    websiteUrl: editData.websiteUrl,
+    contactNumber: editData.contactNumber,
+    facilityInfo: editData.facilityInfo,
+    notice: editData.notice,
+  };
+  console.log(registerData);
+  const res = await PostAxiosInstance(`/space/update/${id}`, registerData);
+  console.log(res);
+};

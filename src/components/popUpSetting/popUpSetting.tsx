@@ -14,11 +14,19 @@ import PopUpTextareaComponent from './popUpTextarea';
 import TagInputComponent from './tagInput';
 import TimePickerComponents from './timePicker';
 import { useRouter } from 'next/router';
-import { fetchSpaceRegister } from 'src/api/popUpSetting';
+import { fetchSpaceIdUpdate, fetchSpaceRegister } from 'src/api/popUpSetting';
 import { popUpConfigList } from 'src/context/popUpSetting/popUpConfig';
 import { getReverseGeocode } from 'src/server/naverMap';
 
-export default function PopUpSettingComponent({ editData }: { editData: PopUpFormData }) {
+export default function PopUpSettingComponent({
+  id,
+  isEditMode,
+  editData,
+}: {
+  id?: string;
+  isEditMode: boolean;
+  editData: PopUpFormData;
+}) {
   const router = useRouter();
   console.log(editData);
 
@@ -50,8 +58,9 @@ export default function PopUpSettingComponent({ editData }: { editData: PopUpFor
   };
 
   useEffect(() => {
-    console.log(editData.latitude, editData.longitude);
-    getAddressFromCoords();
+    if (isEditMode) {
+      getAddressFromCoords();
+    }
   }, [editData]);
 
   const [geocodeModalOpen, setGeocodeModalOpen] = useState<boolean>(false);
@@ -65,7 +74,6 @@ export default function PopUpSettingComponent({ editData }: { editData: PopUpFor
   // 가격 표시
   const [formattedPrice, setFormattedPrice] = useState<string>();
   useEffect(() => {
-    console.log(typeof watchDiscountFields, watchPriceFields);
     if (watchDiscountFields && watchPriceFields) {
       const returnValue = formattedDiscountPrice({
         discount: watchDiscountFields,
@@ -80,12 +88,24 @@ export default function PopUpSettingComponent({ editData }: { editData: PopUpFor
   // 폼 제출
   const onSubmit: SubmitHandler<PopUpFormData> = async (formData: PopUpFormData) => {
     console.log('submit form', formData);
-    // try {
-    //   await fetchSpaceRegister(formData);
-    //   router.push('/main');
-    // } catch (error) {
-    //   console.log(error);
-    // }
+
+    if (isEditMode && id) {
+      try {
+        console.log('edit mode');
+        await fetchSpaceIdUpdate(id, formData);
+        router.push(`popUp/${id}`);
+      } catch (error) {
+        console.log(error);
+        alert(error);
+      }
+    } else {
+      try {
+        await fetchSpaceRegister(formData);
+        router.push('/main');
+      } catch (error) {
+        console.log(error);
+      }
+    }
   };
 
   return (

@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { SpaceIdResponse } from '@type/popUp/popUpResponse';
 import { PopUpFormData } from '@type/popUpSetting';
+import { formatNumber } from '@utils/formatNumber';
 import { formatTimeTo12Hour } from '@utils/formatTime';
 
 import { fetchSpaceId } from 'src/api/popUp';
@@ -44,7 +45,7 @@ export const usePopUpId = (id: string) => {
       closingTime: formatTimeTo12Hour(data.closingTime),
       capacity: data.capacity,
       tags: data.tags,
-      pricePerDay: String(data.pricePerDay),
+      pricePerDay: formatNumber(Number(data.pricePerDay)),
       discountRate: String(data.discountRate),
       details: data.details,
       // 좌표 변환 필요
