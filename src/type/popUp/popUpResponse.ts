@@ -11,5 +11,6 @@ export interface SpaceIdResponse extends CommonPopUpData {
   city: string;
   district: string;
   address: string;
+  detailAddress: string;
   likeCount: number;
 }

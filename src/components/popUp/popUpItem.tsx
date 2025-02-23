@@ -39,7 +39,7 @@ export default function PopUpItem({
         </div>
         <div className="font-SUB2 text-SUB2 leading-SUB2">{storeData.name}</div>
         <div className="font-CAP1 text-CAP1 leading-CAP1 text-medium_gray">
-          m² · {storeData.capacity}명 수용가능
+          {storeData.size}m² · {storeData.capacity}명 수용가능
         </div>
         <p className="mt-4 font-CAP1 text-CAP1 leading-CAP1 text-light_gray">1일 대여</p>
         <div className="flex flex-row items-center gap-[6px]">

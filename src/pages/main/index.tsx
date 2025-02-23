@@ -19,6 +19,7 @@ export default function MainPage() {
   const { data: hostSpaceData, isFetching } = useHostSpace();
   const { data: hostInfo } = useHostInfo();
 
+  console.log(hostSpaceData);
   useEffect(() => {
     setIsLoggedIn(getAccessToken() ? true : false);
   }, []);

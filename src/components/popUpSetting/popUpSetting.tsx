@@ -28,7 +28,6 @@ export default function PopUpSettingComponent({
   editData: PopUpFormData;
 }) {
   const router = useRouter();
-  // console.log(editData);
 
   const {
     control,
@@ -43,18 +42,22 @@ export default function PopUpSettingComponent({
   const { setSelectedAddress } = useGeocodeStore();
 
   const getAddressFromCoords = async () => {
-    const response = await getReverseGeocode(editData.latitude, editData.longitude);
+    try {
+      const response = await getReverseGeocode(editData.latitude, editData.longitude);
 
-    const city = response.results[0].region.area1.name;
-    const district = response.results[0].region.area2.name;
-    const address = response.results[1].land.name;
-    setValue('city', city);
-    setValue('district', district);
-    setValue('address', address);
-    setSelectedAddress({
-      roadAddress: `${city} ${district} ${address}`,
-      postalCode: response.results[1].land.addition1.value,
-    });
+      const city = response.results[0].region.area1.name;
+      const district = response.results[0].region.area2.name;
+      const address = response.results[1].land.name;
+      setValue('city', city);
+      setValue('district', district);
+      setValue('address', address);
+      setSelectedAddress({
+        roadAddress: `${city} ${district} ${address}`,
+        postalCode: response.results[1].land.addition1.value,
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {
@@ -91,7 +94,6 @@ export default function PopUpSettingComponent({
 
     if (isEditMode && id) {
       try {
-        console.log('edit mode');
         await fetchSpaceIdUpdate(id, formData);
         router.push(`popUp/${id}`);
       } catch (error) {
@@ -285,8 +287,8 @@ export default function PopUpSettingComponent({
               {selectedAddress.roadAddress}
             </p>
           )}
-          <PopUpInputComponent popUpConfig={popUpConfigList.address} control={control} />
-          {errors && <p className="text-red">{errors.address?.message}</p>}
+          <PopUpInputComponent popUpConfig={popUpConfigList.detailAddress} control={control} />
+          {errors.detailAddress && <p className="text-red">{errors.detailAddress.message}</p>}
         </div>
         {/* websiteUrl */}
         <div className="flex w-full flex-col gap-2 font-CAP1 text-CAP1 leading-CAP1">

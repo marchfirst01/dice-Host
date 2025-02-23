@@ -163,7 +163,7 @@ export default function PopUpDetailPage({
                 </p>
               </div>
               <p className="ml-[26px] font-BODY1 text-BODY1 leading-BODY1 text-medium_gray">
-                · {initialData.address}
+                · {initialData.detailAddress}
               </p>
             </div>
             <div className="h-[160px] w-full rounded-xl border border-stroke bg-light_gray">
@@ -183,12 +183,6 @@ export default function PopUpDetailPage({
               className={`flex flex-col gap-1 whitespace-pre-line font-BODY1 text-BODY1 leading-BODY1 text-deep_gray`}
             >
               {initialData.facilityInfo}
-              {/* {(isUsageDetailView
-                ? dummyinitialData.usageInformation
-                : dummyinitialData.usageInformation.slice(0, 3)
-              ).map((information, index) => (
-                <p key={index}>· {information}</p>
-              ))} */}
             </div>
             <div className="relative flex w-full">
               <button
