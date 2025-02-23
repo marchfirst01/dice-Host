@@ -14,5 +14,26 @@ export const getGeocode = async (location: string) => {
     return response.data;
   } catch (error) {
     console.log(error);
+    throw error;
+  }
+};
+
+export const getReverseGeocode = async (latitude: number, longitude: number) => {
+  try {
+    const response = await axios.get(`/api/naver/map-reversegeocode/v2/gc?`, {
+      params: {
+        coords: `${longitude},${latitude}`,
+        orders: 'legalcode,roadaddr',
+        output: 'json',
+      },
+      headers: {
+        'X-NCP-APIGW-API-KEY-ID': clientId,
+        'X-NCP-APIGW-API-KEY': clientSecret,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.log('Reverse geocode error:', error);
+    throw error;
   }
 };

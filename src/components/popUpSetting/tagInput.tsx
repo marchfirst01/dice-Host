@@ -38,7 +38,6 @@ export default function TagInputComponent({ control }: { control: any }) {
           });
 
           return () => {
-            console.log('🗑️ Tagify 인스턴스 제거됨');
             tagifyRef.current?.destroy();
           };
         }, []);

@@ -37,6 +37,7 @@ import Delete from '@assets/member/delete.svg';
 import EyeOff from '@assets/member/eye-off.svg';
 import EyeOn from '@assets/member/eye-on.svg';
 // popUp
+import FloatingAddButton from '@assets/popUp/floatingAddButton.svg';
 import HeaderBack from '@assets/popUp/headerBack.svg';
 import Search from '@assets/popUp/search.svg';
 // popUpDetail
@@ -100,6 +101,7 @@ const IMAGES = {
   EyeOff,
   EyeOn,
   // popUp
+  FloatingAddButton,
   HeaderBack,
   Search,
   // popUpDetail

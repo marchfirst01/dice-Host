@@ -8,12 +8,17 @@ import ImageContainerComponent from './imageContainer';
 import Image from 'next/image';
 
 interface ImageUploadComponentProps {
+  editImageUrls?: string[];
   control: Control<PopUpFormData>;
   rules: UseControllerProps<PopUpFormData, 'imageList'>['rules'];
 }
 
-export default function ImageUploadComponent({ control, rules }: ImageUploadComponentProps) {
-  const [files, setFiles] = useState<string[]>([]);
+export default function ImageUploadComponent({
+  editImageUrls,
+  control,
+  rules,
+}: ImageUploadComponentProps) {
+  const [files, setFiles] = useState<string[]>(editImageUrls ? editImageUrls : []);
 
   // 이미지 첨부 버튼 클릭
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -24,8 +29,8 @@ export default function ImageUploadComponent({ control, rules }: ImageUploadComp
 
   const fileInputSubmit = (
     e: ChangeEvent<HTMLInputElement>,
-    onChange: (value: File[]) => void,
-    value: File[],
+    onChange: (value: (File | string)[]) => void,
+    value: (File | string)[],
   ) => {
     if (!e.target.files || e.target.files.length === 0) return;
     const targetFile = e.target.files[0];
@@ -43,8 +48,8 @@ export default function ImageUploadComponent({ control, rules }: ImageUploadComp
   const handleDeleteImage = (
     index: number,
     urlToDelete: string,
-    onChange: (value: File[]) => void,
-    value: File[],
+    onChange: (value: (File | string)[]) => void,
+    value: (File | string)[],
   ) => {
     const updatedFiles = value.filter((_, i) => i !== index); // 필터링해서 제거
     onChange(updatedFiles);

@@ -1,26 +1,36 @@
-import FilterComponent from '@components/popUp/filter';
+import { IMAGES } from '@assets/index';
 import Header from '@components/popUp/header';
 import PopUpItem from '@components/popUp/popUpItem';
 import { HostSpaceData } from '@type/my';
 
 import React from 'react';
 
-const FilterType = ['지역', '가격', '수용인원', '인기순'];
+import Image from 'next/image';
+import { useRouter } from 'next/router';
 
 export default function PopUpPage({ hostSpaceData }: { hostSpaceData: HostSpaceData[] }) {
+  const router = useRouter();
   return (
-    <>
+    <div className="h-full w-full">
       <Header />
-      <p className="pb-2 pt-8 font-H2 text-H2 leading-H2">대여 가능한 팝업 공간</p>
-      <div className="flex flex-row flex-wrap gap-[6px] py-4">
-        {FilterType.map((filter, index) => (
-          <FilterComponent key={index} filter={filter} />
-        ))}
-      </div>
+      <div className="flex flex-row flex-wrap gap-[6px] py-4"></div>
       <div className="flex flex-col gap-4">
-        {hostSpaceData &&
-          hostSpaceData.map((space) => <PopUpItem key={space.id} storeData={space} />)}
+        {hostSpaceData.length > 0 ? (
+          hostSpaceData.map((space) => <PopUpItem key={space.id} storeData={space} />)
+        ) : (
+          <p className="font-SUB1 text-SUB1 leading-SUB1">
+            아직 등록한 공간이 없어요!
+            <br />
+            자신만의 공간을 추가해봐요
+          </p>
+        )}
       </div>
-    </>
+      <div
+        onClick={() => router.push('/popUpSetting')}
+        className="fixed bottom-20 left-1/2 translate-x-[115px] cursor-pointer"
+      >
+        <Image src={IMAGES.FloatingAddButton} alt="floatingAddBtn" />
+      </div>
+    </div>
   );
 }

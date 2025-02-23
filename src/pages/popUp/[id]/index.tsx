@@ -34,7 +34,6 @@ export default function PopUpDetailPage({
 
   useEffect(() => {
     console.log(initialData);
-    console.log(initialData.latitude, initialData.longitude);
     const mapDiv = document.getElementById('map');
     if (mapDiv) {
       const map = new naver.maps.Map(mapDiv, {
@@ -155,6 +154,7 @@ export default function PopUpDetailPage({
                     {initialData.address}
                   </p>
                 </div>
+                {/* TODO: location(지번주소) 필요 */}
                 <p
                   onClick={() => console.log('주소 복사:', initialData.address)}
                   className="cursor-pointer font-CAP2 text-CAP2 leading-CAP2 text-medium_gray underline"
@@ -163,11 +163,10 @@ export default function PopUpDetailPage({
                 </p>
               </div>
               <p className="ml-[26px] font-BODY1 text-BODY1 leading-BODY1 text-medium_gray">
-                · {initialData.details}
+                · {initialData.detailAddress}
               </p>
             </div>
             <div className="h-[160px] w-full rounded-xl border border-stroke bg-light_gray">
-              {/* 지도 추가하기 */}
               <div id="map" style={{ width: '100%', height: '160px' }} />
             </div>
             <button
@@ -181,15 +180,9 @@ export default function PopUpDetailPage({
           <section className="flex flex-col gap-4">
             <p className="font-SUB2 text-SUB2 leading-SUB2">시설 이용 안내</p>
             <div
-              className={`flex flex-col gap-1 font-BODY1 text-BODY1 leading-BODY1 text-deep_gray`}
+              className={`flex flex-col gap-1 whitespace-pre-line font-BODY1 text-BODY1 leading-BODY1 text-deep_gray`}
             >
-              {initialData.details}
-              {/* {(isUsageDetailView
-                ? dummyinitialData.usageInformation
-                : dummyinitialData.usageInformation.slice(0, 3)
-              ).map((information, index) => (
-                <p key={index}>· {information}</p>
-              ))} */}
+              {initialData.facilityInfo}
             </div>
             <div className="relative flex w-full">
               <button
@@ -219,11 +212,8 @@ export default function PopUpDetailPage({
           </section>
           <section className="mb-4">
             <p className="mb-4 font-SUB2 text-SUB2 leading-SUB2">공지사항 안내</p>
-            <div className="flex flex-col gap-1 rounded-lg border border-stroke bg-back_gray p-4 font-BODY1 text-BODY1 leading-BODY1 text-deep_gray">
-              {/* {dummyinitialData.noticeInformation.map((information) => (
-                <p>* {information}</p>
-              ))} */}
-              * {initialData.notice}
+            <div className="flex flex-col gap-1 whitespace-pre-line rounded-lg border border-stroke bg-back_gray p-4 font-BODY1 text-BODY1 leading-BODY1 text-deep_gray">
+              {initialData.notice}
             </div>
           </section>
         </PopUpDetailLayout>

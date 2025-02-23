@@ -2,18 +2,30 @@ import { IMAGES } from '@assets/index';
 
 import React from 'react';
 
-import PopUpSearch from './popUpSearch';
 import Image from 'next/image';
 
 export default function Header() {
   return (
     <div className="relative h-[214px] w-full">
+      <div className="absolute -left-5 top-0 z-10 h-full w-screen max-w-[400px] bg-black opacity-40" />
       <div className="absolute -left-5 aspect-[3/2] h-[214px] w-screen max-w-[400px]">
         <Image src={IMAGES.HeaderBack} layout="fill" objectFit="cover" alt="배경 이미지" />
       </div>
       <div className="absolute top-[63px] w-full border-stroke px-5">
-        <p className="font-H1 text-H1 text-white">팝업 공간과 지원공고를{<br />}쉽고 빠르게.</p>
-        <PopUpSearch />
+        <div className="absolute z-20 w-full pr-10">
+          <p className="mb-1 font-H1 text-H1 text-white">내가 등록한{<br />}공간 검색하기.</p>
+          <div className="relative">
+            <input
+              className="h-[51px] w-full rounded-lg border px-[41px] text-medium_gray"
+              placeholder="등록한 공간의 이름을 검색해보세요"
+            />
+            <Image
+              className="absolute left-[13px] top-1/2 -translate-y-1/2"
+              src={IMAGES.Search}
+              alt="검색 이미지"
+            />
+          </div>
+        </div>
       </div>
     </div>
   );

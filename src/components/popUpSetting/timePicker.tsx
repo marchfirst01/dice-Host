@@ -9,25 +9,24 @@ const minutes = ['00', '10', '20', '30', '40', '50'];
 
 const timeOptions = { period, hours, minutes };
 
-//TODO: 화면밖 클릭 시 모달창 꺼지기
 function TimeList({
   type,
-  onChange,
-  value,
+  onSelect,
+  selectedValues,
 }: {
   type: 'period' | 'hours' | 'minutes';
-  onChange: Function;
-  value: { period: string; hours: string; minutes: string };
+  onSelect: (type: 'period' | 'hours' | 'minutes', value: string) => void;
+  selectedValues: { period: string; hours: string; minutes: string };
 }) {
   return (
     <div className="flex w-12 flex-col gap-1 overflow-scroll pb-[240px] text-center">
       {timeOptions[type].map((item) => (
         <div
-          onClick={() => {
-            onChange({ ...value, [type]: item });
-          }}
           key={item}
-          className={`cursor-pointer rounded-lg p-2 hover:bg-back_gray ${value && item === value[type] && 'bg-light_gray'}`}
+          onClick={() => onSelect(type, item)}
+          className={`cursor-pointer rounded-lg p-2 hover:bg-back_gray ${
+            selectedValues[type] === item ? 'bg-light_gray' : ''
+          }`}
         >
           {item}
         </div>
@@ -46,24 +45,47 @@ export default function TimePickerComponents({
   rules: UseControllerProps<PopUpFormData, 'openingTime' | 'closingTime'>['rules'];
 }) {
   const [openTimeModal, setOpenTimeModal] = useState<boolean>(false);
+  const [selectedValues, setSelectedValues] = useState<{
+    period: string;
+    hours: string;
+    minutes: string;
+  }>({
+    period: '',
+    hours: '',
+    minutes: '',
+  });
 
   return (
     <Controller
       name={type}
       control={control}
       rules={rules}
-      render={({ field: { onChange, value }, fieldState: { error } }) => {
-        const formattedTime =
-          value?.period && value?.hours && value?.minutes
-            ? `${value?.period} ${value?.hours}:${value?.minutes}`
-            : '';
+      render={({ field: { onChange, value = '' }, fieldState: { error } }) => {
+        React.useEffect(() => {
+          if (value) {
+            const [p, h, m] = value.split(/[: ]/);
+            setSelectedValues({ period: p, hours: h, minutes: m });
+          }
+        }, [value]);
+
+        const handleSelect = (key: 'period' | 'hours' | 'minutes', newValue: string) => {
+          const updatedValues = { ...selectedValues, [key]: newValue };
+          setSelectedValues(updatedValues);
+
+          // 모든 값이 선택되었을 때만 onChange 호출
+          if (updatedValues.period && updatedValues.hours && updatedValues.minutes) {
+            const formattedValue = `${updatedValues.period} ${updatedValues.hours}:${updatedValues.minutes}`;
+            onChange(formattedValue);
+          }
+        };
+
         return (
           <div
             onClick={() => setOpenTimeModal(!openTimeModal)}
             className="relative flex h-[44px] w-full items-center rounded-lg border p-4 font-CAP1 text-CAP1 leading-CAP1"
           >
-            <p className={`${formattedTime ? 'text-black' : 'text-light_gray'}`}>
-              {formattedTime || (type === 'openingTime' ? '시작 시간' : '마감 시간')}
+            <p className={`${value ? 'text-black' : 'text-light_gray'}`}>
+              {value || (type === 'openingTime' ? '시작 시간' : '마감 시간')}
             </p>
 
             {error && (
@@ -71,12 +93,12 @@ export default function TimePickerComponents({
             )}
             {openTimeModal && (
               <div
-                onClick={(e) => e.stopPropagation()}
+                onClick={(e) => e.stopPropagation()} // 클릭 이벤트 전파 방지
                 className="absolute left-0 top-11 z-10 mt-1 flex h-[275px] w-full flex-row justify-around overflow-auto rounded-lg border border-light_gray bg-white p-1"
               >
-                <TimeList type="period" onChange={onChange} value={value} />
-                <TimeList type="hours" onChange={onChange} value={value} />
-                <TimeList type="minutes" onChange={onChange} value={value} />
+                <TimeList type="period" onSelect={handleSelect} selectedValues={selectedValues} />
+                <TimeList type="hours" onSelect={handleSelect} selectedValues={selectedValues} />
+                <TimeList type="minutes" onSelect={handleSelect} selectedValues={selectedValues} />
               </div>
             )}
           </div>

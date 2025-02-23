@@ -8,5 +8,6 @@ interface StoreData {
   discountPrice: number;
   capacity: number;
   likeCount: number;
+  size: number;
 }
 export type { StoreData };
