@@ -17,7 +17,7 @@ export default function GeocodeModalComponent({
   setGeocodeModalOpen: Dispatch<SetStateAction<boolean>>;
   control: Control<PopUpFormData>;
   setValue: UseFormSetValue<PopUpFormData>;
-  rules: UseControllerProps<PopUpFormData, 'location'>['rules'];
+  rules: UseControllerProps<PopUpFormData, 'address'>['rules'];
 }) {
   const [searchAddress, setSearchAddress] = useState('');
   const [resultAddress, setResultAddress] = useState<Address[] | null>([]);
@@ -57,7 +57,7 @@ export default function GeocodeModalComponent({
   const handleClickAddress = (address: Address) => {
     setSelectedAddress(address);
     setGeocodeModalOpen(false);
-    setValue('location', address.roadAddress);
+    setValue('address', address.roadAddress);
     setValue('city', address.sido);
     setValue('district', address.sigugun);
     setValue('latitude', address.latitude);
@@ -66,7 +66,7 @@ export default function GeocodeModalComponent({
 
   return (
     <Controller
-      name="location"
+      name="address"
       control={control}
       rules={rules}
       render={() => {

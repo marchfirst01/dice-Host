@@ -22,6 +22,7 @@ export default function PopUpSettingPage() {
     category: '',
     openingTime: '',
     closingTime: '',
+    size: 0,
     capacity: 0,
     tags: [],
     pricePerDay: '0',
@@ -31,12 +32,13 @@ export default function PopUpSettingPage() {
     longitude: 0,
     city: '',
     district: '',
-    location: '',
     address: '',
+    detailAddress: '',
     websiteUrl: '',
     contactNumber: '',
     facilityInfo: '',
     notice: '',
+    isActivated: false,
   };
   return id ? (
     <>

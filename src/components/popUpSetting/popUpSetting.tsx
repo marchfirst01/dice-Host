@@ -28,7 +28,7 @@ export default function PopUpSettingComponent({
   editData: PopUpFormData;
 }) {
   const router = useRouter();
-  console.log(editData);
+  // console.log(editData);
 
   const {
     control,
@@ -47,12 +47,12 @@ export default function PopUpSettingComponent({
 
     const city = response.results[0].region.area1.name;
     const district = response.results[0].region.area2.name;
-    const location = response.results[1].land.name;
+    const address = response.results[1].land.name;
     setValue('city', city);
     setValue('district', district);
-    setValue('location', location);
+    setValue('address', address);
     setSelectedAddress({
-      roadAddress: `${city} ${district} ${location}`,
+      roadAddress: `${city} ${district} ${address}`,
       postalCode: response.results[1].land.addition1.value,
     });
   };
@@ -172,6 +172,17 @@ export default function PopUpSettingComponent({
             />
           </div>
         </div>
+        {/* size - 공간 크기 */}
+        <div className="flex w-full flex-col gap-2 font-CAP1 text-CAP1 leading-CAP1">
+          <p className="after:ml-1 after:text-red after:content-['*']">
+            {popUpConfigList.size.display}
+          </p>
+          <PopUpInputComponent
+            popUpConfig={popUpConfigList.size}
+            control={control}
+            rules={{ required: popUpConfigList.size.rules }}
+          />
+        </div>
         {/* capacity - 수용인원 */}
         <div className="flex w-full flex-col gap-2 font-CAP1 text-CAP1 leading-CAP1">
           <p className="after:ml-1 after:text-red after:content-['*']">
@@ -266,7 +277,7 @@ export default function PopUpSettingComponent({
               setGeocodeModalOpen={setGeocodeModalOpen}
               control={control}
               setValue={setValue}
-              rules={{ required: popUpConfigList.location.rules }}
+              rules={{ required: popUpConfigList.address.rules }}
             />
           </div>
           {selectedAddress.roadAddress && (
@@ -275,7 +286,7 @@ export default function PopUpSettingComponent({
             </p>
           )}
           <PopUpInputComponent popUpConfig={popUpConfigList.address} control={control} />
-          {errors && <p className="text-red">{errors.location?.message}</p>}
+          {errors && <p className="text-red">{errors.address?.message}</p>}
         </div>
         {/* websiteUrl */}
         <div className="flex w-full flex-col gap-2 font-CAP1 text-CAP1 leading-CAP1">

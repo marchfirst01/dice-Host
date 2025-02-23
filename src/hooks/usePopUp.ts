@@ -14,6 +14,7 @@ const initialData: SpaceIdResponse = {
   category: '',
   openingTime: '',
   closingTime: '',
+  size: 0,
   capacity: 0,
   tags: [],
   pricePerDay: '0',
@@ -29,6 +30,7 @@ const initialData: SpaceIdResponse = {
   facilityInfo: '',
   notice: '',
   likeCount: 0, // 필요한 경우 초기값 설정
+  isActivated: false,
 };
 
 export const usePopUpId = (id: string) => {
@@ -43,6 +45,7 @@ export const usePopUpId = (id: string) => {
       category: data.category,
       openingTime: formatTimeTo12Hour(data.openingTime),
       closingTime: formatTimeTo12Hour(data.closingTime),
+      size: data.size,
       capacity: data.capacity,
       tags: data.tags,
       pricePerDay: formatNumber(Number(data.pricePerDay)),
@@ -53,12 +56,13 @@ export const usePopUpId = (id: string) => {
       longitude: data.longitude,
       city: '',
       district: '',
-      location: '',
-      address: data.address,
+      address: '',
+      detailAddress: data.address,
       websiteUrl: data.websiteUrl,
       contactNumber: data.contactNumber,
       facilityInfo: data.facilityInfo,
       notice: data.notice,
+      isActivated: data.isActivated,
     }),
   });
 };

@@ -49,6 +49,7 @@ export const fetchSpaceRegister = async (formData: PopUpFormData) => {
     category: formData.category,
     openingTime: formatTimeTo24Hour(formData.openingTime),
     closingTime: formatTimeTo24Hour(formData.closingTime),
+    size: Number(formData.size),
     capacity: Number(formData.capacity),
     tags: formData.tags,
     pricePerDay: Number(formData.pricePerDay.replace(/,/g, '')),
@@ -60,12 +61,13 @@ export const fetchSpaceRegister = async (formData: PopUpFormData) => {
     longitude: formData.longitude,
     city: formData.city,
     district: formData.district,
-    location: formData.location,
     address: formData.address,
+    detailAddress: formData.detailAddress,
     websiteUrl: formData.websiteUrl,
     contactNumber: formData.contactNumber,
     facilityInfo: formData.facilityInfo,
     notice: formData.notice,
+    isActivated: formData.isActivated,
   };
 
   console.log(registerData);
@@ -81,7 +83,7 @@ export const fetchSpaceRegister = async (formData: PopUpFormData) => {
 
 export const fetchSpaceIdUpdate = async (id: string, editData: PopUpFormData) => {
   const imageUrlsRes = await uploadImage(editData.imageList);
-
+  const tempActivated = true;
   const registerData: PopUpRegisterResponse = {
     name: editData.name,
     description: editData.description,
@@ -89,6 +91,7 @@ export const fetchSpaceIdUpdate = async (id: string, editData: PopUpFormData) =>
     category: editData.category,
     openingTime: formatTimeTo24Hour(editData.openingTime),
     closingTime: formatTimeTo24Hour(editData.closingTime),
+    size: Number(editData.size),
     capacity: Number(editData.capacity),
     tags: editData.tags,
     pricePerDay: Number(editData.pricePerDay.replace(/,/g, '')),
@@ -100,14 +103,16 @@ export const fetchSpaceIdUpdate = async (id: string, editData: PopUpFormData) =>
     longitude: editData.longitude,
     city: editData.city,
     district: editData.district,
-    location: editData.location,
     address: editData.address,
+    detailAddress: editData.detailAddress,
     websiteUrl: editData.websiteUrl,
     contactNumber: editData.contactNumber,
     facilityInfo: editData.facilityInfo,
     notice: editData.notice,
+    // isActivated: editData.isActivated,
+    isActivated: tempActivated,
   };
-  console.log(registerData);
+  console.log('registerData', registerData);
   const res = await PostAxiosInstance(`/space/update/${id}`, registerData);
   console.log(res);
 };

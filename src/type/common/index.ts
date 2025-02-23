@@ -17,4 +17,5 @@ export interface CommonPopUpData {
   contactNumber: string;
   facilityInfo: string;
   notice: string;
+  isActivated: boolean;
 }

@@ -3,6 +3,7 @@ import { CommonPopUpData } from '@type/common';
 export interface SpaceIdResponse extends CommonPopUpData {
   id: number;
   imageUrls: string[];
+  size: number;
   pricePerDay: string;
   discountRate: number;
   latitude: number;

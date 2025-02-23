@@ -14,13 +14,13 @@ interface Address {
 // popUpSetting 페이지에서 react-hook-form에 연결되는 데이터
 interface PopUpFormData extends CommonPopUpData {
   imageList: (File | string)[];
-  // placeArea: number;
+  size: number;
   pricePerDay: string;
   discountRate: string;
-  location: string;
   city: string;
   district: string;
   address: string;
+  detailAddress: string;
   latitude: number;
   longitude: number;
 }
@@ -31,14 +31,14 @@ type PopUpId =
   | 'description'
   | 'openingTime'
   | 'closingTime'
-  // | 'placeArea'
+  | 'size'
   | 'capacity'
   | 'tags'
   | 'pricePerDay'
   | 'discountRate'
   | 'details'
-  | 'location'
   | 'address'
+  | 'detailAddress'
   | 'websiteUrl'
   | 'contactNumber'
   | 'facilityInfo'
@@ -59,13 +59,14 @@ type PopUpConfigList = Record<PopUpId, PopUpConfig>;
 interface PopUpRegisterResponse extends CommonPopUpData {
   pricePerDay: number;
   discountRate: Number;
+  size: number;
   imageUrls: string[];
   latitude: number;
   longitude: number;
   city: string;
   district: string;
-  location: string;
   address: string;
+  detailAddress: string;
 }
 
 export type {
