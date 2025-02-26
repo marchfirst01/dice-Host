@@ -3,7 +3,7 @@ import { PopUpFormData } from '@type/popUpSetting';
 import formattedDiscountPrice from '@utils/formattedDiscountPrice';
 import { useGeocodeStore } from '@zustands/geocode/store';
 
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import CategoryDropdownComponent from './categoryDropdown';
@@ -41,10 +41,9 @@ export default function PopUpSettingComponent({
 
   const { setSelectedAddress } = useGeocodeStore();
 
-  const getAddressFromCoords = async () => {
+  const getAddressFromCoords = useCallback(async () => {
     try {
       const response = await getReverseGeocode(editData.latitude, editData.longitude);
-
       const city = response.results[0].region.area1.name;
       const district = response.results[0].region.area2.name;
       const address = response.results[1].land.name;
@@ -58,13 +57,13 @@ export default function PopUpSettingComponent({
     } catch (error) {
       console.log(error);
     }
-  };
+  }, [editData, setSelectedAddress, setValue]);
 
   useEffect(() => {
     if (isEditMode) {
       getAddressFromCoords();
     }
-  }, [editData]);
+  }, [getAddressFromCoords, isEditMode]);
 
   const [geocodeModalOpen, setGeocodeModalOpen] = useState<boolean>(false);
   const { selectedAddress } = useGeocodeStore();
@@ -86,7 +85,7 @@ export default function PopUpSettingComponent({
       const formattedReturnValue = returnValue.toLocaleString();
       setFormattedPrice(formattedReturnValue);
     }
-  }, [watchDiscountFields, watchPriceFields, formattedPrice]);
+  }, [discountType, watchDiscountFields, watchPriceFields, formattedPrice]);
 
   // 폼 제출
   const onSubmit: SubmitHandler<PopUpFormData> = async (formData: PopUpFormData) => {
