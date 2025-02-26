@@ -83,7 +83,7 @@ export default function DragModalComponent({ isOpen, onClose, children }: DragMo
       window.removeEventListener('touchmove', handleTouchMove);
       window.removeEventListener('touchend', handleTouchEnd);
     };
-  }, [isDragging, handleMouseMove, handleMouseUp]);
+  }, [isDragging, handleMouseMove, handleMouseUp, handleTouchMove]);
 
   // 모달 외부 클릭 시 닫기
   const handleOutsideClick = (e: React.MouseEvent) => {

@@ -1,7 +1,7 @@
 import { IMAGES } from '@assets/index';
 import { MemberConfig, MemberFormData, MemberId } from '@type/member';
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Control, Controller, UseControllerProps } from 'react-hook-form';
 
 import Image from 'next/image';
