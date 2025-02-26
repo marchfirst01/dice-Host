@@ -25,7 +25,7 @@ jobs:
         with:
           source-directory: 'output'
           destination-github-username: marchfirst01
-          destination-repository-name: dice-host
+          destination-repository-name: dice-host-deploy
           user-email: ${{ secrets.SEN_ACCOUNT_EMAIL }}
           commit-message: ${{ github.event.head_commit.message }}
           target-branch: main
