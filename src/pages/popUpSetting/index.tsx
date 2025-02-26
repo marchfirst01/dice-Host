@@ -13,8 +13,6 @@ export default function PopUpSettingPage() {
   const { mode, id } = router.query as { mode: string; id: string };
   const isEditMode = mode === 'edit';
 
-  const { data, isFetching } = usePopUpId(id!);
-
   const initialData: PopUpFormData = {
     name: '',
     description: '',
@@ -40,6 +38,9 @@ export default function PopUpSettingPage() {
     notice: '',
     isActivated: false,
   };
+
+  const { data, isFetching } = id ? usePopUpId(id) : { data: initialData, isFetching: false };
+
   return id ? (
     <>
       {isFetching ? (

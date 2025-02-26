@@ -14,7 +14,7 @@ export const fetchHostInfo = async () => {
 export const fetchHostUpdate = async (hostUpdate: HostInfo) => {
   try {
     const res = await PostAxiosInstance('/host/update', hostUpdate);
-    return true;
+    if (res.status === 200) return true;
   } catch (error) {
     console.log(error);
     throw new Error('failed to fetch update host info');
@@ -29,6 +29,7 @@ export const fetchPasswordUpdate = async (passwordUpdate: {
     const res = await PostAxiosInstance('auth/password-update', passwordUpdate);
     if (res.status === 200) return res.status;
   } catch (error) {
+    console.log(error);
     throw new Error('failed to fetch update password');
   }
 };
