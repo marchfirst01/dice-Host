@@ -14,22 +14,8 @@ jobs:
       - name: Install mustache (to update the date)
         run: apk add ruby && gem install mustache
 
-      - name: Debug before running build.sh
-        run: |
-          echo "Current directory:"
-          pwd
-          echo "Directory contents before build.sh:"
-          ls -la
-
       - name: creates output
         run: sh ./build.sh
-
-      - name: Debug after running build.sh
-        run: |
-          echo "Directory contents after build.sh:"
-          ls -la
-          echo "Output directory contents:"
-          ls -la output
 
       - name: Pushes to another repository
         id: push_directory
