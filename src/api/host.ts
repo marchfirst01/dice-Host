@@ -1,13 +1,13 @@
 import { GetAxiosInstance, PostAxiosInstance } from '@axios/axios.method';
-import { HostInfo } from '@type/my';
+import { HostInfo, HostSpaceData } from '@type/my';
 
-export const fetchHostSpace = async () => {
-  const res = await GetAxiosInstance('/host/space');
+export const fetchHostSpace = async (): Promise<HostSpaceData[]> => {
+  const res = await GetAxiosInstance<HostSpaceData[]>('/host/space');
   return res.data;
 };
 
 export const fetchHostInfo = async () => {
-  const res = await GetAxiosInstance('/host/info');
+  const res = await GetAxiosInstance<HostInfo>('/host/info');
   return res.data;
 };
 
