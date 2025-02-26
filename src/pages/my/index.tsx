@@ -41,7 +41,11 @@ export default function MyPage({
           <div>
             <div className="mt-4 flex flex-row items-center justify-between">
               <p className="font-SUB3 text-SUB3 leading-SUB3">
-                등록한 공간 <span className="text-purple">{hostSpaceData.length}개</span>
+                {hostSpaceData && (
+                  <p>
+                    등록한 공간 <span className="text-purple">{hostSpaceData.length}개</span>
+                  </p>
+                )}
               </p>
               <p
                 onClick={() => setMainPageType('popUp')}

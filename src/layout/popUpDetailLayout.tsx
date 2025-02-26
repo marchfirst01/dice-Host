@@ -31,7 +31,7 @@ export default function PopUpDetailLayout({ children }: { children: React.ReactN
           ) : (
             <div className="flex flex-col" key={index}>
               <div className="px-5">{child}</div>
-              {index < childrenArray.length - 1 && index !== 0 && (
+              {childrenArray && index < childrenArray.length - 1 && index !== 0 && (
                 <div className="my-5 h-2 bg-gray-200"></div>
               )}
             </div>

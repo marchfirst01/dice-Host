@@ -141,8 +141,9 @@ export default function MyUpdatePage() {
                   </div>
                   <hr />
                   <div className="mt-6 grid grid-cols-3 gap-2 overflow-auto">
-                    {BANK.map((bank) => (
+                    {BANK.map((bank, index) => (
                       <div
+                        key={index}
                         onClick={() => {
                           console.log(bank.bankName);
                           setValue('bankName', bank.bankName);
