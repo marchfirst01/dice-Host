@@ -17,13 +17,13 @@ export default function BankInputComponent({
   control,
   rules,
 }: BankInputComponentProps): React.ReactElement<BankInputComponentProps> {
+  const [focus, setFocus] = useState<boolean>(false);
   return (
     <Controller
       name={memberConfig.name}
       control={control}
       rules={rules}
       render={({ field: { onChange, value }, fieldState: { error, invalid } }) => {
-        const [focus, setFocus] = useState<boolean>(false);
         return (
           <div className="relative w-full">
             <div
