@@ -28,7 +28,7 @@ axiosInstance.interceptors.request.use(
 
     return config;
   },
-  (error: any) => {
+  (error: Error) => {
     return Promise.reject(error);
   },
 );
@@ -43,6 +43,7 @@ const refreshTokenRequest = async () => {
     await setRefreshToken(data.refreshToken);
     return data;
   } catch (error) {
+    console.log(error);
     deleteToken();
     alert('로그인을 다시 해주세요');
     Router.push('/');

@@ -1,4 +1,3 @@
-import { IMAGES } from '@assets/index';
 import { StoreData } from '@type/popUp';
 import { formatNumber } from '@utils/formatNumber';
 

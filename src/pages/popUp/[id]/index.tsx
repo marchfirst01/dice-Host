@@ -41,12 +41,12 @@ export default function PopUpDetailPage({
         zoom: 15,
       });
 
-      const marker = new naver.maps.Marker({
+      new naver.maps.Marker({
         position: new naver.maps.LatLng(initialData.latitude, initialData.longitude),
         map: map,
       });
     }
-  }, []);
+  }, [initialData]);
 
   return (
     <>
@@ -59,12 +59,12 @@ export default function PopUpDetailPage({
             slidesPerView={1}
             pagination={{ clickable: true, type: 'fraction' }}
           >
-            {initialData.imageUrls.map((image) => {
+            {initialData.imageUrls.map((image, index) => {
               // TODO: 'www.example.com' 삭제필요
               const imageUrl =
                 image === 'www.example.com' ? 'https://placehold.co/600x400/png' : image;
               return (
-                <SwiperSlide className="aspect-[3/2] w-full">
+                <SwiperSlide key={index} className="aspect-[3/2] w-full">
                   <Image src={imageUrl} alt="image" layout="fill" objectFit="cover" />
                 </SwiperSlide>
               );
@@ -104,8 +104,11 @@ export default function PopUpDetailPage({
               </div>
             </div>
             <div className="flex w-full flex-row flex-wrap gap-1">
-              {initialData.tags.map((tag) => (
-                <p className="rounded-full border border-stroke px-[10px] py-1 font-CAP1 text-CAP1 leading-CAP1 text-light_gray">
+              {initialData.tags.map((tag, index) => (
+                <p
+                  key={index}
+                  className="rounded-full border border-stroke px-[10px] py-1 font-CAP1 text-CAP1 leading-CAP1 text-light_gray"
+                >
                   #<span className="ml-[2px] text-deep_gray">{tag}</span>
                 </p>
               ))}

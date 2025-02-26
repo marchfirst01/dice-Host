@@ -15,28 +15,29 @@ export default function PopUpInputComponent({
   rules,
 }: PopUpInputComponentProps): React.ReactElement<PopUpInputComponentProps> {
   const handlePhoneNumberInputChange =
-    (onChange: Function) => (e: React.ChangeEvent<HTMLInputElement>) => {
-      let value = e.target.value.replace(/[^0-9]/g, ''); // 숫자만 남기기
+    (onChange: (value: string) => void) => (e: React.ChangeEvent<HTMLInputElement>) => {
+      const value = e.target.value.replace(/[^0-9]/g, ''); // 숫자만 남기기
+      let phoneValue;
 
       // 000-0000-0000 형식으로 변환
       if (value.length <= 3) {
-        value = value;
+        phoneValue = value;
       } else if (value.length <= 7) {
-        value = value.slice(0, 3) + '-' + value.slice(3);
+        phoneValue = value.slice(0, 3) + '-' + value.slice(3);
       } else {
-        value = value.slice(0, 3) + '-' + value.slice(3, 7) + '-' + value.slice(7, 11);
+        phoneValue = value.slice(0, 3) + '-' + value.slice(3, 7) + '-' + value.slice(7, 11);
       }
-      onChange(value);
+      onChange(phoneValue);
     };
 
   const handleCapacityInputChange =
-    (onchange: Function) => (e: React.ChangeEvent<HTMLInputElement>) => {
+    (onChange: (value: string) => void) => (e: React.ChangeEvent<HTMLInputElement>) => {
       const value = e.target.value.replace(/[^0-9]/g, ''); // 숫자만 남기기
-      onchange(value);
+      onChange(value);
     };
 
   const handlePricePerDayInputChange =
-    (onChange: Function) => (e: React.ChangeEvent<HTMLInputElement>) => {
+    (onChange: (value: string) => void) => (e: React.ChangeEvent<HTMLInputElement>) => {
       const value = e.target.value;
       const formattedValue = value.replace(/[^\d]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ',');
       onChange(formattedValue);

@@ -32,7 +32,7 @@ export default function ReservationItemComponent({
               {reservationItem.area}m² · {reservationItem.capacity}명 수용가능
             </p>
           </div>
-          <div className="relative aspect-square h-[120px] w-[120px]">
+          <div className="relative aspect-square size-[120px]">
             <Image
               className="rounded-lg"
               src={reservationItem.imageUrl}

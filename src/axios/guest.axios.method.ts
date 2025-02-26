@@ -6,7 +6,7 @@ import { AxiosRequestConfig, AxiosResponse } from 'axios';
 
 export const GuestPostAxiosInstance = async <T>(
   url: string,
-  data?: any,
+  data?: T,
   config?: AxiosRequestConfig,
 ): Promise<AxiosResponse> => {
   const headers = {

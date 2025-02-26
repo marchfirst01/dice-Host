@@ -2,18 +2,24 @@ import { PostAxiosInstance } from '@axios/axios.method';
 import { PopUpFormData, PopUpRegisterResponse } from '@type/popUpSetting';
 import { formatTimeTo24Hour } from '@utils/formatTime';
 
-export const fetchImageUpload = async (imageList: File[]) => {
+interface ImageUploadResponse {
+  imageUrls: string[]; // 또는 어떤 구조인지에 따라 수정
+}
+
+export const fetchImageUpload = async (imageList: File[]): Promise<ImageUploadResponse> => {
   try {
     const formData = new FormData();
     imageList.forEach((image) => {
       formData.append('images', image);
     });
-    const res = await PostAxiosInstance(`/s3/uploads`, formData, {
+    const res = await PostAxiosInstance<FormData, ImageUploadResponse>(`/s3/uploads`, formData, {
       headers: { 'Content-Type': 'multipart/form-data' },
     });
     if (res.status !== 200) throw new Error('Failed to fetch image list');
+    console.log('image upload', res);
     return res.data;
   } catch (error) {
+    console.log(error);
     throw new Error('Failed to fetch image list');
   }
 };
@@ -24,7 +30,7 @@ export const uploadImage = async (imageList: (File | string)[]) => {
     const fileList = imageList.filter((item): item is File => item instanceof File);
     if (fileList.length === 0) {
       // imageList에서 File 타입이 없다? 전부 string -> 그대로 반환
-      return imageList;
+      return imageList as string[];
     }
     const { imageUrls } = await fetchImageUpload(fileList);
     const stringList = imageList.filter((item): item is string => typeof item === 'string');
@@ -36,6 +42,7 @@ export const uploadImage = async (imageList: (File | string)[]) => {
     return imageUrls;
   } catch (error) {
     console.log(error);
+    return [];
   }
 };
 

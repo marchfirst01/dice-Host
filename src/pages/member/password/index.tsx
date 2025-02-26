@@ -61,7 +61,7 @@ function RequestCheck() {
   return (
     <div className="relative flex h-full flex-col items-center justify-center">
       {/* TODO: 임시 아이콘 */}
-      <div className="mb-10 flex h-10 w-10 items-center justify-center rounded-full bg-black">
+      <div className="mb-10 flex size-10 items-center justify-center rounded-full bg-black">
         <Image className="bg-black" src={IMAGES.SendWhite} alt="send" width={24} height={24} />
       </div>
       <p className="text-center font-BODY1 text-BODY1 leading-BODY1 text-deep_gray">

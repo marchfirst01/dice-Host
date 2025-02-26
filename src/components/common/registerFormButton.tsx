@@ -13,7 +13,7 @@ export default function RegisterFormButtonComponent<T extends FieldValues>({
   return (
     <button
       onClick={handleSubmit(onSubmit)}
-      className="text-btn1 h-[52px] w-full rounded-lg bg-black p-4 font-BTN1 leading-BTN1 text-white"
+      className="h-[52px] w-full rounded-lg bg-black p-4 font-BTN1 text-BTN1 leading-BTN1 text-white"
     >
       {children}
     </button>

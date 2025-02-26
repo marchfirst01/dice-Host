@@ -72,7 +72,9 @@ export default function PopUpSettingLayout({
         {childrenArray.map((child, index) => (
           <div className="flex flex-col" key={index}>
             <div className="px-5">{child}</div>
-            {index < childrenArray.length - 1 && <div className="my-5 h-2 bg-gray-200"></div>}
+            {childrenArray && index < childrenArray.length - 1 && (
+              <div className="my-5 h-2 bg-gray-200"></div>
+            )}
           </div>
         ))}
       </div>

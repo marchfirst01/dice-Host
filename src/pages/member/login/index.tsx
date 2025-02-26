@@ -25,6 +25,7 @@ export default function LoginPage() {
       setRefreshToken(res.token.refreshToken);
       router.push('/main');
     } catch (error) {
+      console.log(error);
       setIsModalOpen(true);
     }
   };

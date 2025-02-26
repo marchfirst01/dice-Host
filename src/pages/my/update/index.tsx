@@ -28,7 +28,7 @@ export default function MyUpdatePage() {
     setValue('phone', defaultHostInfo.phone);
     setValue('accountNumber', defaultHostInfo.accountNumber ? defaultHostInfo.accountNumber : null);
     setValue('bankName', defaultHostInfo.bankName ? defaultHostInfo.bankName : null);
-  }, [defaultHostInfo]);
+  }, [setValue, defaultHostInfo]);
 
   const [phoneChange, setPhoneChange] = useState(true);
   const [isDragModalOpen, setIsDragModalOpen] = useState(false);
@@ -36,8 +36,8 @@ export default function MyUpdatePage() {
 
   const handlePhoneValidate = () => {
     setPhoneChange(!phoneChange);
-    const phone = getValues('phone');
     //TODO: phone 중복 검사
+    // const phone = getValues('phone');
   };
 
   const onSubmit = async (hostInfo: HostInfo) => {
@@ -61,10 +61,10 @@ export default function MyUpdatePage() {
         </button>
       </ModalComponent>
       <header className="flex flex-row bg-black">
-        <div onClick={() => router.back()} className="cursor-pointer px-3 py-3">
+        <div onClick={() => router.back()} className="cursor-pointer p-3">
           <Image src={IMAGES.ArrowBackWhite} alt="back" />
         </div>
-        <p className="flex-grow py-3 text-center font-SUB3 text-SUB3 leading-SUB3 text-white">
+        <p className="grow py-3 text-center font-SUB3 text-SUB3 leading-SUB3 text-white">
           호스트 정보 수정
         </p>
         <button type="submit" className="px-5 text-white">
@@ -141,8 +141,9 @@ export default function MyUpdatePage() {
                   </div>
                   <hr />
                   <div className="mt-6 grid grid-cols-3 gap-2 overflow-auto">
-                    {BANK.map((bank) => (
+                    {BANK.map((bank, index) => (
                       <div
+                        key={index}
                         onClick={() => {
                           console.log(bank.bankName);
                           setValue('bankName', bank.bankName);

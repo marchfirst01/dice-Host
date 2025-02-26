@@ -22,18 +22,19 @@ export default function PhoneInputComponent({
   const [phoneMessage, setPhoneMessage] = useState<string>('');
 
   const handlePhoneNumberInputChange =
-    (onChange: Function) => (e: React.ChangeEvent<HTMLInputElement>) => {
-      let value = e.target.value.replace(/[^0-9]/g, ''); // 숫자만 남기기
+    (onChange: (value: string) => void) => (e: React.ChangeEvent<HTMLInputElement>) => {
+      const value = e.target.value.replace(/[^0-9]/g, ''); // 숫자만 남기기
+      let phoneValue;
 
       // 000-0000-0000 형식으로 변환
       if (value.length <= 3) {
-        value = value;
+        phoneValue = value;
       } else if (value.length <= 7) {
-        value = value.slice(0, 3) + '-' + value.slice(3);
+        phoneValue = value.slice(0, 3) + '-' + value.slice(3);
       } else {
-        value = value.slice(0, 3) + '-' + value.slice(3, 7) + '-' + value.slice(7, 11);
+        phoneValue = value.slice(0, 3) + '-' + value.slice(3, 7) + '-' + value.slice(7, 11);
       }
-      onChange(value);
+      onChange(phoneValue); // 수정된 value를 onChange로 전달
     };
 
   return (
@@ -41,7 +42,7 @@ export default function PhoneInputComponent({
       name={memberConfig.name}
       control={control}
       rules={rules}
-      render={({ field: { onChange, value }, fieldState: { error, invalid } }) => {
+      render={({ field: { onChange, value }, fieldState: { error } }) => {
         const handlePhoneValidate = async () => {
           try {
             await fetchValidatePhone(value);
@@ -65,12 +66,12 @@ export default function PhoneInputComponent({
                       ? handlePhoneNumberInputChange(onChange)
                       : onChange
                   }
-                  value={value}
+                  value={value} // value는 prop으로 그대로 사용
                 />
                 {value && !validatePhone ? (
                   <Image
                     onClick={() => {
-                      onChange('');
+                      onChange(''); // 전화번호를 비움
                       setPhoneMessage('');
                     }}
                     className={`absolute top-0 m-[13px] cursor-pointer ${memberConfig.type === 'password' ? 'right-11' : 'right-0'}`}

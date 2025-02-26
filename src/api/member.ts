@@ -25,6 +25,7 @@ export const fetchValidateEmail = async (email: string) => {
     const res = await GuestPostAxiosInstance('/auth/validate/email', { email });
     if (res.status === 200) return;
   } catch (error) {
+    console.log(error);
     throw new ValidateMemberError('이미 가입된 이메일 입니다', 'DUPLICATE_EMAIL');
   }
 };
@@ -35,6 +36,7 @@ export const fetchValidatePhone = async (phone: string) => {
     const res = await GuestPostAxiosInstance('/auth/validate/phone', phone.replace(/-/g, ''));
     if (res.status === 200) return;
   } catch (error) {
+    console.log(error);
     throw new ValidateMemberError('중복된 휴대폰 번호입니다', 'DUPLICATE_PHONE');
   }
 };
@@ -63,6 +65,7 @@ export const fetchRequestPasswordReset = async ({
     console.log(res);
     return res.status;
   } catch (error) {
+    console.log(error);
     throw new ValidateMemberError('해당 유저 정보를 찾을 수 없습니다.', 'NOT_FOUND');
   }
 };
