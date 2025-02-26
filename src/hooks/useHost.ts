@@ -27,5 +27,3 @@ export const useHostInfo = () => {
     staleTime: 0,
   });
 };
-
-export const HostUpdate = () => {};

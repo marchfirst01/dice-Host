@@ -14,10 +14,10 @@ export default function ImageContainerComponent({
   onDelete: () => void;
 }) {
   return (
-    <div className="relative flex size-20 flex-shrink-0 items-center justify-center rounded-xl border border-light_gray">
+    <div className="relative flex size-20 shrink-0 items-center justify-center rounded-xl border border-light_gray">
       <Image
         onClick={onDelete}
-        className="absolute -right-[6px] -top-[6px] z-10 cursor-pointer"
+        className="absolute right-[-6px] top-[-6px] z-10 cursor-pointer"
         src={IMAGES.ImageDelete}
         alt="delete"
       />
