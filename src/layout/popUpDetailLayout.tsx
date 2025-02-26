@@ -46,7 +46,7 @@ export default function PopUpDetailLayout({ children }: { children: React.ReactN
           삭제
         </button>
         <button
-          onClick={() => router.push({ pathname: '/popUpSetting', query: { mode: 'edit', id } })}
+          onClick={() => router.push({ pathname: `/popUpSetting/${id}`, query: { mode: 'edit' } })}
           className="flex size-full flex-row items-center justify-center gap-2 rounded-lg bg-black font-BTN1 text-BTN1 leading-BTN1 text-white"
         >
           <p>수정하기</p>

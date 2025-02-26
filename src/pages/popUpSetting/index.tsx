@@ -1,16 +1,13 @@
-import { IMAGES } from '@assets/index';
 import PopUpSettingComponent from '@components/popUpSetting/popUpSetting';
-import { usePopUpId } from '@hooks/usePopUp';
 import { PopUpFormData } from '@type/popUpSetting';
 
 import React from 'react';
 
-import Image from 'next/image';
 import { useRouter } from 'next/router';
 
 export default function PopUpSettingPage() {
   const router = useRouter();
-  const { mode, id } = router.query as { mode: string; id: string };
+  const { mode } = router.query as { mode: string };
   const isEditMode = mode === 'edit';
 
   const initialData: PopUpFormData = {
@@ -39,19 +36,5 @@ export default function PopUpSettingPage() {
     isActivated: false,
   };
 
-  const { data, isFetching } = id ? usePopUpId(id) : { data: initialData, isFetching: false };
-
-  return id ? (
-    <>
-      {isFetching ? (
-        <div className="h-full">
-          <Image src={IMAGES.DiceLoading} alt="loading" />
-        </div>
-      ) : (
-        <PopUpSettingComponent id={id} isEditMode={isEditMode} editData={data} />
-      )}
-    </>
-  ) : (
-    <PopUpSettingComponent isEditMode={isEditMode} editData={initialData} />
-  );
+  return <PopUpSettingComponent isEditMode={isEditMode} editData={initialData} />;
 }
