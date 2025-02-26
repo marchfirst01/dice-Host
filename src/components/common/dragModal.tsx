@@ -83,7 +83,7 @@ export default function DragModalComponent({ isOpen, onClose, children }: DragMo
       window.removeEventListener('touchmove', handleTouchMove);
       window.removeEventListener('touchend', handleTouchEnd);
     };
-  }, [isDragging]);
+  }, [isDragging, handleMouseMove, handleMouseUp]);
 
   // 모달 외부 클릭 시 닫기
   const handleOutsideClick = (e: React.MouseEvent) => {
@@ -96,7 +96,7 @@ export default function DragModalComponent({ isOpen, onClose, children }: DragMo
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-end justify-center bg-black bg-opacity-50"
+      className="fixed inset-0 z-50 flex items-end justify-center bg-black/50"
       onMouseDown={handleOutsideClick}
     >
       <div
