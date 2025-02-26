@@ -41,12 +41,12 @@ export default function PopUpDetailPage({
         zoom: 15,
       });
 
-      const marker = new naver.maps.Marker({
+      new naver.maps.Marker({
         position: new naver.maps.LatLng(initialData.latitude, initialData.longitude),
         map: map,
       });
     }
-  }, []);
+  }, [initialData]);
 
   return (
     <>

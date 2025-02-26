@@ -35,6 +35,7 @@ export default function PwUpdatePage() {
         setIsCheckModalOpen(true);
       }
     } catch (error) {
+      console.log(error);
       setModalText('비밀번호가 일치하지 않습니다.');
       setIsCheckModalOpen(true);
     }
@@ -48,9 +49,7 @@ export default function PwUpdatePage() {
         <div onClick={() => router.back()} className="cursor-pointer p-3">
           <Image src={IMAGES.ArrowBackBlack} alt="back" />
         </div>
-        <p className="flex-grow py-3 text-center font-SUB3 text-SUB3 leading-SUB3">
-          비밀번호 재설정
-        </p>
+        <p className="grow py-3 text-center font-SUB3 text-SUB3 leading-SUB3">비밀번호 재설정</p>
         <div className="w-12" />
       </header>
       <ModalComponent isOpen={isCheckModalOpen} onClose={() => setIsCheckModalOpen(true)}>
