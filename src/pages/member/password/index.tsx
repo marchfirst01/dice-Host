@@ -1,7 +1,6 @@
 import { IMAGES } from '@assets/index';
+import InputComponent from '@components/common/Input';
 import RegisterFormButtonComponent from '@components/common/registerFormButton';
-import EmailInputComponent from '@components/member/emailInput';
-import UserInputComponent from '@components/member/userInput';
 import { MemberFormData } from '@type/member';
 import { useFindPassword } from '@zustands/findPassword/store';
 
@@ -33,16 +32,16 @@ function RequestPassword() {
     <div className="flex flex-col gap-6">
       <div>
         <p className="mb-2 font-CAP1 text-CAP1 leading-CAP1">이름</p>
-        <UserInputComponent
-          memberConfig={memberConfig.name}
+        <InputComponent
+          config={memberConfig.name}
           control={control}
           rules={{ required: memberConfig.name.rules }}
         />
       </div>
       <div>
         <p className="font-CAP1 text-CAP1 leading-CAP1">이메일 아이디</p>
-        <EmailInputComponent
-          memberConfig={memberConfig.email}
+        <InputComponent
+          config={memberConfig.email}
           control={control}
           rules={{
             required: memberConfig.email.rules,
@@ -93,8 +92,8 @@ function ResetPassword() {
     <div className="flex flex-col gap-6">
       <div>
         <p className="mb-2">새 비밀번호</p>
-        <UserInputComponent
-          memberConfig={memberConfig.password}
+        <InputComponent
+          config={memberConfig.password}
           control={control}
           rules={{
             required: memberConfig.password.rules,
@@ -106,8 +105,8 @@ function ResetPassword() {
       </div>
       <div>
         <p className="mb-2">새 비밀번호 확인</p>
-        <UserInputComponent
-          memberConfig={memberConfig.password_check}
+        <InputComponent
+          config={memberConfig.password_check}
           control={control}
           rules={{
             required: memberConfig.password_check.rules,

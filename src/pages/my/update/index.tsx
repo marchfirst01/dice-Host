@@ -146,7 +146,7 @@ export default function MyUpdatePage() {
                         onClick={() => {
                           console.log(bank.bankName);
                           setValue('bankName', bank.bankName);
-                          () => setIsDragModalOpen(false);
+                          setIsDragModalOpen(false);
                         }}
                         className="flex flex-col items-center justify-center rounded-lg border py-4"
                       >

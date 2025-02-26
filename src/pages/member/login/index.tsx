@@ -15,7 +15,7 @@ import { memberConfig } from 'src/context/member/memberConfig';
 
 export default function LoginPage() {
   const router = useRouter();
-  const { control, handleSubmit } = useForm<MemberFormData>();
+  const { control, handleSubmit } = useForm<MemberFormData>({ mode: 'onChange' });
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const onSubmit: SubmitHandler<MemberFormData> = async (formData: MemberFormData) => {
