@@ -3,7 +3,7 @@ import { ReservationStatus } from '@type/reservation';
 
 import React, { useState } from 'react';
 
-import { reservationDummy } from './reservationDummy';
+import { reservationDummy } from 'src/context/reservation/reservationDummy';
 
 export default function ReservationPage() {
   const [reservationItem] = useState(reservationDummy);
