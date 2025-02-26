@@ -47,6 +47,8 @@ export default function PopUpDetailPage({
     }
   }, [initialData]);
 
+  if (!initialData) return <p>데이터 로드에 실패했습니다.</p>;
+
   return (
     initialData && (
       <PopUpDetailLayout>
