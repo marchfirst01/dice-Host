@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 interface DragModalProps {
   isOpen: boolean;
@@ -21,18 +21,21 @@ export default function DragModalComponent({ isOpen, onClose, children }: DragMo
   }, [isOpen]);
 
   // 높이 조절 함수
-  const updateHeight = (deltaY: number) => {
-    if (!modalRef.current || !contentRef.current) return;
+  const updateHeight = useCallback(
+    (deltaY: number) => {
+      if (!modalRef.current || !contentRef.current) return;
 
-    const contentHeight = (contentRef.current.scrollHeight / window.innerHeight) * 100;
-    const maxAllowedHeight = Math.min(80, contentHeight); // 최대 80%까지 확장 가능
-    const newHeight = Math.min(
-      maxAllowedHeight,
-      Math.max(40, modalHeight - (deltaY / window.innerHeight) * 100),
-    );
+      const contentHeight = (contentRef.current.scrollHeight / window.innerHeight) * 100;
+      const maxAllowedHeight = Math.min(80, contentHeight); // 최대 80%까지 확장 가능
+      const newHeight = Math.min(
+        maxAllowedHeight,
+        Math.max(40, modalHeight - (deltaY / window.innerHeight) * 100),
+      );
 
-    setModalHeight(newHeight);
-  };
+      setModalHeight(newHeight);
+    },
+    [modalHeight],
+  ); // modalHeight를 의존성에 추가
 
   // 마우스 이벤트 핸들러
   const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -40,13 +43,18 @@ export default function DragModalComponent({ isOpen, onClose, children }: DragMo
     setStartY(e.clientY);
   };
 
-  const handleMouseMove = (e: MouseEvent) => {
-    if (!isDragging) return;
-    updateHeight(e.clientY - startY);
-    setStartY(e.clientY);
-  };
+  const handleMouseMove = useCallback(
+    (e: MouseEvent) => {
+      if (!isDragging) return;
+      updateHeight(e.clientY - startY);
+      setStartY(e.clientY);
+    },
+    [isDragging, startY, updateHeight],
+  ); // updateHeight를 의존성에 추가
 
-  const handleMouseUp = () => setIsDragging(false);
+  const handleMouseUp = useCallback(() => {
+    setIsDragging(false);
+  }, []);
 
   // 터치 이벤트 핸들러 (모바일 지원)
   const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
@@ -55,13 +63,18 @@ export default function DragModalComponent({ isOpen, onClose, children }: DragMo
     setStartY(e.touches[0].clientY);
   };
 
-  const handleTouchMove = (e: TouchEvent) => {
-    if (!isDragging) return;
-    updateHeight(e.touches[0].clientY - startY);
-    setStartY(e.touches[0].clientY);
-  };
+  const handleTouchMove = useCallback(
+    (e: TouchEvent) => {
+      if (!isDragging) return;
+      updateHeight(e.touches[0].clientY - startY);
+      setStartY(e.touches[0].clientY);
+    },
+    [isDragging, startY, updateHeight],
+  ); // updateHeight를 의존성에 추가
 
-  const handleTouchEnd = () => setIsDragging(false);
+  const handleTouchEnd = useCallback(() => {
+    setIsDragging(false);
+  }, []);
 
   // 이벤트 리스너 등록
   useEffect(() => {
@@ -83,7 +96,7 @@ export default function DragModalComponent({ isOpen, onClose, children }: DragMo
       window.removeEventListener('touchmove', handleTouchMove);
       window.removeEventListener('touchend', handleTouchEnd);
     };
-  }, [isDragging, handleMouseMove, handleMouseUp, handleTouchMove]);
+  }, [isDragging, handleMouseMove, handleMouseUp, handleTouchMove, handleTouchEnd]);
 
   // 모달 외부 클릭 시 닫기
   const handleOutsideClick = (e: React.MouseEvent) => {
