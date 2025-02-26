@@ -64,7 +64,7 @@ export default function MyUpdatePage() {
         <div onClick={() => router.back()} className="cursor-pointer px-3 py-3">
           <Image src={IMAGES.ArrowBackWhite} alt="back" />
         </div>
-        <p className="flex-grow py-3 text-center font-SUB3 text-SUB3 leading-SUB3 text-white">
+        <p className="grow py-3 text-center font-SUB3 text-SUB3 leading-SUB3 text-white">
           호스트 정보 수정
         </p>
         <button type="submit" className="px-5 text-white">

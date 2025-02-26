@@ -11,7 +11,7 @@ import { useRouter } from 'next/router';
 export default function PopUpPage({ hostSpaceData }: { hostSpaceData: HostSpaceData[] }) {
   const router = useRouter();
   return (
-    <div className="h-full w-full">
+    <div className="size-full">
       <Header />
       <div className="flex flex-row flex-wrap gap-[6px] py-4"></div>
       <div className="flex flex-col gap-4">

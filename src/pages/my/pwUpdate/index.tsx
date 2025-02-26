@@ -45,7 +45,7 @@ export default function PwUpdatePage() {
   return (
     <div>
       <header className="flex flex-row bg-white">
-        <div onClick={() => router.back()} className="cursor-pointer px-3 py-3">
+        <div onClick={() => router.back()} className="cursor-pointer p-3">
           <Image src={IMAGES.ArrowBackBlack} alt="back" />
         </div>
         <p className="flex-grow py-3 text-center font-SUB3 text-SUB3 leading-SUB3">
