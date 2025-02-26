@@ -1,6 +1,6 @@
 import { PopUpFormData } from '@type/popUpSetting';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Control, Controller, UseControllerProps } from 'react-hook-form';
 
 const period = ['오전', '오후'];
@@ -54,6 +54,14 @@ export default function TimePickerComponents({
     hours: '',
     minutes: '',
   });
+  const [formattedValue, setFormattedValue] = useState('');
+
+  useEffect(() => {
+    if (formattedValue) {
+      const [p, h, m] = formattedValue.split(/[: ]/);
+      setSelectedValues({ period: p, hours: h, minutes: m });
+    }
+  }, [formattedValue]);
 
   return (
     <Controller
@@ -61,13 +69,6 @@ export default function TimePickerComponents({
       control={control}
       rules={rules}
       render={({ field: { onChange, value = '' }, fieldState: { error } }) => {
-        React.useEffect(() => {
-          if (value) {
-            const [p, h, m] = value.split(/[: ]/);
-            setSelectedValues({ period: p, hours: h, minutes: m });
-          }
-        }, [value]);
-
         const handleSelect = (key: 'period' | 'hours' | 'minutes', newValue: string) => {
           const updatedValues = { ...selectedValues, [key]: newValue };
           setSelectedValues(updatedValues);
@@ -76,6 +77,7 @@ export default function TimePickerComponents({
           if (updatedValues.period && updatedValues.hours && updatedValues.minutes) {
             const formattedValue = `${updatedValues.period} ${updatedValues.hours}:${updatedValues.minutes}`;
             onChange(formattedValue);
+            setFormattedValue(formattedValue);
           }
         };
 

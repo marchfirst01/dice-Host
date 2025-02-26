@@ -7,7 +7,7 @@ function MySpaceItemComponent({ imageUrl, id }: { imageUrl: string; id: number }
   const router = useRouter();
   const image = imageUrl === 'www.example.com' ? 'https://placehold.co/600x400/png' : imageUrl;
   return (
-    <div className="flex h-20 w-20 flex-shrink-0 cursor-pointer items-center justify-center rounded-xl bg-back_gray">
+    <div className="flex size-20 shrink-0 cursor-pointer items-center justify-center rounded-xl bg-back_gray">
       <Image
         onClick={() => router.push(`popUp/${id}`)}
         className="object-contain"

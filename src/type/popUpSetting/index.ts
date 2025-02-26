@@ -58,7 +58,7 @@ type PopUpConfigList = Record<PopUpId, PopUpConfig>;
 // popUpFormData를 가공해서 api에 필요한 데이터로 변경
 interface PopUpRegisterResponse extends CommonPopUpData {
   pricePerDay: number;
-  discountRate: Number;
+  discountRate: number;
   size: number;
   imageUrls: string[];
   latitude: number;

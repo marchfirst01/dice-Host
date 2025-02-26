@@ -1,20 +1,20 @@
 import { GetAxiosInstance, PostAxiosInstance } from '@axios/axios.method';
-import { HostInfo } from '@type/my';
+import { HostInfo, HostSpaceData } from '@type/my';
 
-export const fetchHostSpace = async () => {
-  const res = await GetAxiosInstance('/host/space');
+export const fetchHostSpace = async (): Promise<HostSpaceData[]> => {
+  const res = await GetAxiosInstance<HostSpaceData[]>('/host/space');
   return res.data;
 };
 
 export const fetchHostInfo = async () => {
-  const res = await GetAxiosInstance('/host/info');
+  const res = await GetAxiosInstance<HostInfo>('/host/info');
   return res.data;
 };
 
 export const fetchHostUpdate = async (hostUpdate: HostInfo) => {
   try {
     const res = await PostAxiosInstance('/host/update', hostUpdate);
-    return true;
+    if (res.status === 200) return true;
   } catch (error) {
     console.log(error);
     throw new Error('failed to fetch update host info');
@@ -29,6 +29,7 @@ export const fetchPasswordUpdate = async (passwordUpdate: {
     const res = await PostAxiosInstance('auth/password-update', passwordUpdate);
     if (res.status === 200) return res.status;
   } catch (error) {
+    console.log(error);
     throw new Error('failed to fetch update password');
   }
 };

@@ -58,7 +58,7 @@ export default function CategoryDropdownComponent({
                     setIsMenuOpen(!isMenuOpen);
                   }}
                   key={index}
-                  className="flex h-[44px] w-full flex-shrink-0 items-center rounded-lg bg-white px-4 text-light_gray hover:bg-back_gray hover:text-dark_gray"
+                  className="flex h-[44px] w-full shrink-0 items-center rounded-lg bg-white px-4 text-light_gray hover:bg-back_gray hover:text-dark_gray"
                 >
                   {place.name}
                 </div>

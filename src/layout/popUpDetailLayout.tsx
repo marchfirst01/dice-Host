@@ -31,7 +31,7 @@ export default function PopUpDetailLayout({ children }: { children: React.ReactN
           ) : (
             <div className="flex flex-col" key={index}>
               <div className="px-5">{child}</div>
-              {index < childrenArray.length - 1 && index !== 0 && (
+              {childrenArray && index < childrenArray.length - 1 && index !== 0 && (
                 <div className="my-5 h-2 bg-gray-200"></div>
               )}
             </div>
@@ -46,8 +46,8 @@ export default function PopUpDetailLayout({ children }: { children: React.ReactN
           삭제
         </button>
         <button
-          onClick={() => router.push({ pathname: '/popUpSetting', query: { mode: 'edit', id } })}
-          className="flex h-full w-full flex-row items-center justify-center gap-2 rounded-lg bg-black font-BTN1 text-BTN1 leading-BTN1 text-white"
+          onClick={() => router.push({ pathname: `/popUpSetting/${id}`, query: { mode: 'edit' } })}
+          className="flex size-full flex-row items-center justify-center gap-2 rounded-lg bg-black font-BTN1 text-BTN1 leading-BTN1 text-white"
         >
           <p>수정하기</p>
         </button>
