@@ -13,6 +13,7 @@ interface EmailInputComponentProps {
   rules?: UseControllerProps<MemberFormData, MemberId>['rules'];
 }
 
+// TODO: EmailInputComponent 갈아엎기...^^
 export default function EmailInputComponent({
   memberConfig,
   control,
@@ -20,6 +21,8 @@ export default function EmailInputComponent({
 }: EmailInputComponentProps) {
   const [isEmailClick, setIsEmailClick] = useState<boolean>(false);
   const [selectedEmailDomain, setSelectedEmailDomain] = useState('');
+  const [emailInput, setEmailInput] = useState(''); // 최상위에서 상태 관리
+  const [focus, setFocus] = useState<boolean>(false);
 
   return (
     <Controller
@@ -27,16 +30,13 @@ export default function EmailInputComponent({
       control={control}
       rules={rules}
       render={({ field: { onChange, onBlur, value = '' }, fieldState: { error, isTouched } }) => {
-        const [emailInput, setEmailInput] = useState('');
-        const [focus, setFocus] = useState<boolean>(false);
-
-        useEffect(() => {
+        const handleChangeEmail = (onChange: (value: string) => void) => {
           if (selectedEmailDomain && emailInput) {
             onChange(`${emailInput}@${selectedEmailDomain}`); // 이메일 형식으로 변경하여 전달
           } else {
             onChange(emailInput); // 도메인 없으면 앞부분만 onChange
           }
-        }, [emailInput, selectedEmailDomain]);
+        };
 
         return (
           <div className="relative w-full">
@@ -47,9 +47,12 @@ export default function EmailInputComponent({
                 <input
                   onClick={() => setFocus(true)}
                   className="w-full pr-5 outline-none focus:border-none"
-                  type="default"
+                  type="text"
                   placeholder={memberConfig.placeholder}
-                  onChange={(e) => setEmailInput(e.target.value)}
+                  onChange={(e) => {
+                    setEmailInput(e.target.value);
+                    handleChangeEmail(onChange);
+                  }}
                   onBlur={() => {
                     onBlur();
                     setFocus(false);
@@ -90,6 +93,8 @@ export default function EmailInputComponent({
                         key={index}
                         onClick={() => {
                           setSelectedEmailDomain(email);
+                          setIsEmailClick(false); // 선택 후 드롭다운 닫기
+                          handleChangeEmail(onChange);
                         }}
                         className="px-2 py-[11.5px] font-BTN1 text-BTN1 leading-BTN1 text-medium_gray hover:bg-back_gray"
                       >
