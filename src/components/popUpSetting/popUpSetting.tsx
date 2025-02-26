@@ -200,7 +200,7 @@ export default function PopUpSettingComponent({
           <p className="after:ml-1 after:text-red after:content-['*']">
             {popUpConfigList.tags.display}
           </p>
-          <TagInputComponent control={control} />
+          <TagInputComponent control={control} setValue={setValue} />
         </div>
       </section>
       {/* pricePerDay & discountRate */}
