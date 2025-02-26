@@ -25,7 +25,7 @@ jobs:
         with:
           source-directory: 'output'
           destination-github-username: marchfirst01
-          destination-repository-name: dice-host-deploy
+          destination-repository-name: dice-Host
           user-email: ${{ secrets.SEN_ACCOUNT_EMAIL }}
 
       - name: Test get variable exported by push-to-another-repository
