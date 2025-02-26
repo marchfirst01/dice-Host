@@ -1,6 +1,5 @@
 import { IMAGES } from '@assets/index';
 import InputComponent from '@components/common/Input';
-import BankInputComponent from '@components/common/bankInput';
 import EmailInputComponent from '@components/common/emailInput';
 import ModalComponent from '@components/common/modal';
 import PhoneInputComponent from '@components/common/phoneInput';
