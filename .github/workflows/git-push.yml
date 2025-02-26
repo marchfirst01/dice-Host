@@ -27,9 +27,6 @@ jobs:
           destination-github-username: marchfirst01
           destination-repository-name: dice-host-deploy
           user-email: ${{ secrets.SEN_ACCOUNT_EMAIL }}
-          # commit-message: ${{ github.event.head_commit.message }}
-          commit-message: 'git push into another repo to deploy to vercel'
-          target-branch: main
 
       - name: Test get variable exported by push-to-another-repository
         run: echo $DESTINATION_CLONED_DIRECTORY
