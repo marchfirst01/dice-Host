@@ -1,14 +1,14 @@
-interface FormattedDiscountPriceProps {
-  discount: string;
-  price: string;
-  discountType: '할인율' | '할인 금액';
+interface FormatDiscountPriceProps {
+  discount: string | number;
+  price: string | number;
+  discountType?: '할인율' | '할인 금액';
 }
 
-export default function formattedDiscountPrice({
+export default function formatDiscountPrice({
   discount,
   price,
-  discountType,
-}: FormattedDiscountPriceProps) {
+  discountType = '할인율',
+}: FormatDiscountPriceProps) {
   if (discountType === '할인율') {
     const stringValue = price.toString();
     const numericValue = parseInt(stringValue.replace(/,/g, ''), 10);

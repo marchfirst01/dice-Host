@@ -1,6 +1,6 @@
 import PopUpSettingLayout from '@layout/popUpSettingLayout';
 import { PopUpFormData } from '@type/popUpSetting';
-import formattedDiscountPrice from '@utils/formattedDiscountPrice';
+import formatDiscountPrice from '@utils/formatDiscountPrice';
 import { useGeocodeStore } from '@zustands/geocode/store';
 
 import React, { useCallback, useEffect, useState } from 'react';
@@ -93,7 +93,7 @@ export default function PopUpSettingComponent({
   const [formattedPrice, setFormattedPrice] = useState<string>();
   useEffect(() => {
     if (watchDiscountFields && watchPriceFields) {
-      const returnValue = formattedDiscountPrice({
+      const returnValue = formatDiscountPrice({
         discount: watchDiscountFields,
         price: watchPriceFields,
         discountType,

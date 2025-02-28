@@ -1,4 +1,5 @@
 import { StoreData } from '@type/popUp';
+import formatDiscountPrice from '@utils/formatDiscountPrice';
 import { formatNumber } from '@utils/formatNumber';
 
 import React from 'react';
@@ -45,7 +46,13 @@ export default function PopUpItem({
           <p className="font-SUB2 text-SUB2 leading-SUB2 text-purple">{storeData.discountRate}%</p>
           {/* 추후 숫자 포맷 함수 추가 필요 */}
           <p className="font-SUB1 text-SUB1 leading-SUB1">
-            {formatNumber(storeData.pricePerDay)}원
+            {formatNumber(
+              formatDiscountPrice({
+                price: storeData.pricePerDay,
+                discount: storeData.discountRate,
+              }),
+            )}
+            원
           </p>
         </div>
       </div>
