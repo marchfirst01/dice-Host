@@ -4,27 +4,57 @@ import RegisterFormButtonComponent from '@components/common/registerFormButton';
 import { MemberFormData } from '@type/member';
 import { useFindPassword } from '@zustands/findPassword/store';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import Image from 'next/image';
-import { ValidateMemberError, fetchRequestPasswordReset } from 'src/api/member';
+import { useRouter } from 'next/router';
+import {
+  ValidateMemberError,
+  fetchAuthVerify,
+  fetchAuthVerifyCode,
+  fetchPasswordReset,
+} from 'src/api/member';
 import { memberConfig } from 'src/context/member/memberConfig';
 
-function RequestPassword() {
-  const { control, handleSubmit } = useForm<MemberFormData>({ mode: 'onChange' });
-  const { setName, setEmail, setStep } = useFindPassword();
+function VerifyAuth() {
+  const { control, handleSubmit, getValues } = useForm<MemberFormData>({ mode: 'onChange' });
+  const { setEmail, code, setCode, setStep } = useFindPassword();
+  const [sendEmail, setSendEmail] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('');
 
   const onSubmit: SubmitHandler<MemberFormData> = async (memberData: MemberFormData) => {
     try {
-      const res = await fetchRequestPasswordReset(memberData);
+      setIsLoading(true);
+      setEmail(memberData.email);
+      const res = await fetchAuthVerify(memberData.email);
       if (res === 200) {
-        setName(memberData.name);
-        setEmail(memberData.email);
-        setStep(1);
+        setSendEmail(true);
+        setIsLoading(false);
       }
     } catch (error) {
       if (error instanceof ValidateMemberError) alert(error.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleAuthVerifyCode = async () => {
+    if (!code) {
+      alert('코드를 입력해주세요');
+      return;
+    }
+    try {
+      const email = getValues('email');
+      const res = await fetchAuthVerifyCode(code, email);
+      if (res.isVerified) {
+        alert('이메일 인증 성공');
+        setStep(1);
+      }
+    } catch (error) {
+      console.log(error);
+      if (error instanceof ValidateMemberError) setErrorMsg(error.message);
     }
   };
 
@@ -48,29 +78,91 @@ function RequestPassword() {
             validate: (value) => value.includes('@') || '도메인을 선택해주세요.',
           }}
         />
+        {sendEmail && !isLoading && (
+          <p className="mt-1 font-CAP1 text-CAP1 leading-CAP1 text-green">
+            인증번호가 발송됐습니다.
+          </p>
+        )}
       </div>
-      <RegisterFormButtonComponent handleSubmit={handleSubmit} onSubmit={onSubmit}>
-        이메일로 인증하기
+      {sendEmail && (
+        <div>
+          <div className="flex flex-row justify-between gap-2">
+            <input
+              className="h-11 w-full rounded-lg border p-4"
+              placeholder="인증번호를 입력해주세요"
+              onChange={(e) => setCode(e.target.value)}
+            />
+            <button
+              onClick={handleAuthVerifyCode}
+              className="h-11 w-[135px] rounded-lg border border-stroke font-BTN1 text-BTN1 leading-BTN1 text-light_gray"
+            >
+              인증
+            </button>
+          </div>
+          {errorMsg && <p className="mt-1 font-CAP1 text-CAP1 leading-CAP1 text-red">{errorMsg}</p>}
+        </div>
+      )}
+      <RegisterFormButtonComponent
+        handleSubmit={handleSubmit}
+        onSubmit={onSubmit}
+        disabled={isLoading}
+      >
+        인증번호 보내기
       </RegisterFormButtonComponent>
     </div>
   );
 }
 
-function RequestCheck() {
-  const { email, setStep } = useFindPassword();
+function ResetPassword() {
+  const { email, code, setStep } = useFindPassword();
+  const [tempPw, setTempPw] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
+
+  const getTempPw = async () => {
+    setIsLoading(true);
+    try {
+      const res = await fetchPasswordReset(code, email);
+      console.log(res);
+      setTempPw(res.tempPassword);
+      setIsLoading(false);
+    } catch (error) {
+      console.log(error);
+      setIsLoading(false);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    getTempPw();
+  }, []);
+
+  if (isLoading)
+    return (
+      <div className="flex h-screen flex-row">
+        <Image src={IMAGES.DiceLoading} alt="loading" />
+      </div>
+    );
+
   return (
-    <div className="relative flex h-full flex-col items-center justify-center">
+    <div className="relative flex h-full flex-col items-center justify-center pb-[100px]">
       {/* TODO: 임시 아이콘 */}
       <div className="mb-10 flex size-10 items-center justify-center rounded-full bg-black">
         <Image className="bg-black" src={IMAGES.SendWhite} alt="send" width={24} height={24} />
       </div>
-      <p className="text-center font-BODY1 text-BODY1 leading-BODY1 text-deep_gray">
-        <span className="font-SUB2 text-SUB2 leading-SUB2 text-black">{email}</span>으로
+      <div className="text-center font-BODY1 text-BODY1 leading-BODY1 text-deep_gray">
+        <span className="font-SUB2 text-SUB2 leading-SUB2 text-black">{email}</span>님의
         <br />
-        비밀번호 재설정 이메일이 전송됐습니다.
-      </p>
+        임시 비밀번호가 발급됐습니다.
+        <br />
+        <p className="mt-1 font-SUB3 text-SUB3 leading-SUB3 text-black">{tempPw}</p>
+      </div>
       <button
-        onClick={() => setStep(2)}
+        onClick={() => {
+          setStep(0);
+          router.push('/member/login');
+        }}
         className="absolute bottom-0 mb-[30px] h-[52px] w-full rounded-xl bg-black font-BTN1 text-BTN1 leading-BTN1 text-white"
       >
         확인
@@ -79,61 +171,24 @@ function RequestCheck() {
   );
 }
 
-function ResetPassword() {
-  const { control, handleSubmit, getValues } = useForm<MemberFormData>({ mode: 'onChange' });
-
-  const onSubmit = (newPassword: MemberFormData) => {
-    console.log(newPassword);
-  };
-
-  const password_regex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[\W_]).{8,}$/;
-
-  return (
-    <div className="flex flex-col gap-6">
-      <div>
-        <p className="mb-2">새 비밀번호</p>
-        <InputComponent
-          config={memberConfig.password}
-          control={control}
-          rules={{
-            required: memberConfig.password.rules,
-            validate: (value) =>
-              password_regex.test(value) ||
-              '비밀번호는 8자 이상 / 영문, 숫자, 특수문자를 포함해야 합니다.',
-          }}
-        />
-      </div>
-      <div>
-        <p className="mb-2">새 비밀번호 확인</p>
-        <InputComponent
-          config={memberConfig.password_check}
-          control={control}
-          rules={{
-            required: memberConfig.password_check.rules,
-            validate: (value) => value === getValues('password') || '비밀번호가 일치하지 않습니다.',
-          }}
-        />
-      </div>
-      <RegisterFormButtonComponent handleSubmit={handleSubmit} onSubmit={onSubmit}>
-        확인
-      </RegisterFormButtonComponent>
-    </div>
-  );
-}
-
 export default function PasswordPage() {
   const { step } = useFindPassword();
+  const router = useRouter();
 
   return (
     <div className="flex h-screen flex-col">
       <header className="relative mb-6 flex h-12 items-center">
-        <Image className="absolute m-3" src={IMAGES.ArrowBackBlack} alt="back" />
+        <Image
+          onClick={router.back}
+          className="absolute m-3 cursor-pointer"
+          src={IMAGES.ArrowBackBlack}
+          alt="back"
+        />
         <p className="w-full text-center">{step === 2 ? '비밀번호 재설정' : '비밀번호 찾기'}</p>
       </header>
       <div className="h-full px-5">
-        {step === 0 && <RequestPassword />}
-        {step === 1 && <RequestCheck />}
-        {step === 2 && <ResetPassword />}
+        {step === 0 && <VerifyAuth />}
+        {step === 1 && <ResetPassword />}
       </div>
     </div>
   );

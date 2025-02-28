@@ -1,6 +1,6 @@
 import PopUpSettingLayout from '@layout/popUpSettingLayout';
 import { PopUpFormData } from '@type/popUpSetting';
-import formattedDiscountPrice from '@utils/formattedDiscountPrice';
+import formatDiscountPrice from '@utils/formatDiscountPrice';
 import { useGeocodeStore } from '@zustands/geocode/store';
 
 import React, { useCallback, useEffect, useState } from 'react';
@@ -36,37 +36,53 @@ export default function PopUpSettingComponent({
     watch,
     formState: { errors },
   } = useForm<PopUpFormData>({
-    defaultValues: { ...editData },
+    defaultValues: editData,
   });
 
-  const { setSelectedAddress } = useGeocodeStore();
+  const [isOn, setIsOn] = useState(true);
+  useEffect(() => {
+    setValue('isActivated', isOn);
+  }, [isOn]);
+
+  const { selectedAddress, setSelectedAddress } = useGeocodeStore();
 
   const getAddressFromCoords = useCallback(async () => {
-    try {
-      const response = await getReverseGeocode(editData.latitude, editData.longitude);
-      const city = response.results[0].region.area1.name;
-      const district = response.results[0].region.area2.name;
-      const address = response.results[1].land.name;
-      setValue('city', city);
-      setValue('district', district);
-      setValue('address', address);
-      setSelectedAddress({
-        roadAddress: `${city} ${district} ${address}`,
-        postalCode: response.results[1].land.addition1.value,
-      });
-    } catch (error) {
-      console.log(error);
+    if (editData && isEditMode) {
+      try {
+        const response = await getReverseGeocode(editData.latitude, editData.longitude);
+        const city = response.results[0].region.area1.name;
+        const district = response.results[0].region.area2.name;
+        const address = response.results[1].land.name;
+        setValue('city', city);
+        setValue('district', district);
+        setValue('address', address);
+        setSelectedAddress({
+          roadAddress: `${city} ${district} ${address}`,
+          postalCode: response.results[1].land.addition1.value,
+        });
+      } catch (error) {
+        console.log(error);
+      }
     }
   }, [editData, setSelectedAddress, setValue]);
 
   useEffect(() => {
     if (isEditMode) {
       getAddressFromCoords();
+    } else {
+      setSelectedAddress({
+        jibunAddress: '',
+        roadAddress: '',
+        sido: '',
+        sigugun: '',
+        postalCode: '',
+        latitude: 0,
+        longitude: 0,
+      });
     }
   }, [getAddressFromCoords, isEditMode]);
 
   const [geocodeModalOpen, setGeocodeModalOpen] = useState<boolean>(false);
-  const { selectedAddress } = useGeocodeStore();
 
   // setDiscountType 임시 삭제 나중에 추가 ..
   const [discountType] = useState<'할인율' | '할인 금액'>('할인율');
@@ -77,7 +93,7 @@ export default function PopUpSettingComponent({
   const [formattedPrice, setFormattedPrice] = useState<string>();
   useEffect(() => {
     if (watchDiscountFields && watchPriceFields) {
-      const returnValue = formattedDiscountPrice({
+      const returnValue = formatDiscountPrice({
         discount: watchDiscountFields,
         price: watchPriceFields,
         discountType,
@@ -110,7 +126,12 @@ export default function PopUpSettingComponent({
   };
 
   return (
-    <PopUpSettingLayout handleSubmit={handleSubmit} onSubmit={onSubmit}>
+    <PopUpSettingLayout
+      handleSubmit={handleSubmit}
+      onSubmit={onSubmit}
+      isOn={isOn}
+      setIsOn={setIsOn}
+    >
       <section className="flex flex-col gap-6 font-CAP1 text-CAP1 leading-CAP1">
         <p className="font-SUB1 text-SUB1 leading-SUB1">필수 정보 작성</p>
         {/* name - 공간 이름 */}

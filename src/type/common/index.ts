@@ -1,7 +1,7 @@
 export interface CommonConfig {
   type: string;
   placeholder: string;
-  rules: string;
+  rules?: string;
 }
 
 export interface CommonPopUpData {
@@ -10,7 +10,7 @@ export interface CommonPopUpData {
   category: string;
   openingTime: string;
   closingTime: string;
-  capacity: number;
+  capacity: number | null;
   tags: string[];
   details: string;
   websiteUrl: string;

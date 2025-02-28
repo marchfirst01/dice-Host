@@ -1,7 +1,7 @@
 import { IMAGES } from '@assets/index';
 import MySpaceListComponent from '@components/my/mySpaceList';
 import MyLayout from '@layout/myLayout';
-import { HostInfo, HostSpaceData } from '@type/my';
+import { HostInfoForm, HostSpaceData } from '@type/my';
 import { deleteToken } from '@utils/token';
 import { useHeaderStore } from '@zustands/header/headerStore';
 
@@ -16,7 +16,7 @@ export default function MyPage({
   hostInfo,
 }: {
   hostSpaceData: HostSpaceData[];
-  hostInfo: HostInfo;
+  hostInfo: HostInfoForm;
 }) {
   const router = useRouter();
 

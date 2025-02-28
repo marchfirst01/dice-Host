@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { HostInfo, HostSpaceData } from '@type/my';
+import { HostInfoForm, HostSpaceData } from '@type/my';
 
 import { fetchHostInfo, fetchHostSpace } from 'src/api/host';
 
@@ -13,7 +13,7 @@ export const useHostSpace = () => {
 };
 
 export const useHostInfo = () => {
-  return useQuery<HostInfo>({
+  return useQuery<HostInfoForm>({
     queryKey: ['hostInfo'],
     queryFn: () => fetchHostInfo(),
     initialData: {

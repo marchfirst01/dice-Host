@@ -53,17 +53,35 @@ export const fetchLogout = async () => {
   return res.status;
 };
 
-export const fetchRequestPasswordReset = async ({
-  email,
-  name,
-}: {
-  email: string;
-  name: string;
-}) => {
+export const fetchAuthVerify = async (email: string) => {
   try {
-    const res = await GuestPostAxiosInstance('/auth/password-reset/request', { email, name });
-    console.log(res);
+    const res = await GuestPostAxiosInstance('/auth/verify', email);
     return res.status;
+  } catch (error) {
+    console.log(error);
+    throw new ValidateMemberError('이메일 전송에 실패했습니다.', 'FAILED_TO_VERIFY_EMAIL');
+  }
+};
+
+export const fetchAuthVerifyCode = async (code: string, email: string) => {
+  try {
+    const res = await GuestPostAxiosInstance('/auth/verify/code', { code, email });
+    console.log(res);
+    return res.data;
+  } catch (error) {
+    console.log(error);
+    throw new ValidateMemberError('인증번호가 만료됐습니다.', 'BAD_REQUEST');
+  }
+};
+
+export const fetchPasswordReset = async (
+  code: string,
+  email: string,
+): Promise<{ email: string; tempPassword: string }> => {
+  try {
+    const res = await GuestPostAxiosInstance('/auth/password-reset', { code, email });
+    console.log(res);
+    return res.data;
   } catch (error) {
     console.log(error);
     throw new ValidateMemberError('해당 유저 정보를 찾을 수 없습니다.', 'NOT_FOUND');

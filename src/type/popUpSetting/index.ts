@@ -14,9 +14,9 @@ interface Address {
 // popUpSetting 페이지에서 react-hook-form에 연결되는 데이터
 interface PopUpFormData extends CommonPopUpData {
   imageList: (File | string)[];
-  size: number;
-  pricePerDay: string;
-  discountRate: string;
+  size: number | null;
+  pricePerDay: string | null;
+  discountRate: string | null;
   city: string;
   district: string;
   address: string;

@@ -1,8 +1,9 @@
 import { BANK, IMAGES } from '@assets/index';
+import InputComponent from '@components/common/Input';
 import DragModalComponent from '@components/common/dragModal';
 import ModalComponent from '@components/common/modal';
 import { useHostInfo } from '@hooks/useHost';
-import { HostInfo } from '@type/my';
+import { HostInfoForm } from '@type/my';
 
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -10,17 +11,19 @@ import { useForm } from 'react-hook-form';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { fetchHostUpdate } from 'src/api/host';
+import { hostInfoConfig } from 'src/context/host/hostInfoConfig';
 
 export default function MyUpdatePage() {
   const router = useRouter();
   const { data: defaultHostInfo } = useHostInfo();
   const {
     register,
+    control,
     handleSubmit,
     setValue,
     getValues,
     formState: { errors },
-  } = useForm<HostInfo>();
+  } = useForm<HostInfoForm>();
 
   useEffect(() => {
     setValue('name', defaultHostInfo.name);
@@ -40,9 +43,14 @@ export default function MyUpdatePage() {
     // const phone = getValues('phone');
   };
 
-  const onSubmit = async (hostInfo: HostInfo) => {
-    if (await fetchHostUpdate(hostInfo)) {
-      setIsCheckModalOpen(true);
+  const onSubmit = async (hostInfo: HostInfoForm) => {
+    try {
+      const res = await fetchHostUpdate(hostInfo);
+      if (res) {
+        setIsCheckModalOpen(true);
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -72,26 +80,21 @@ export default function MyUpdatePage() {
         </button>
       </header>
       <div className="relative flex flex-col gap-6 px-5 py-8 font-CAP1 text-CAP1 leading-CAP1 text-dark_gray">
-        <div>
-          <p>호스트 이름</p>
+        <div className="flex flex-col gap-2">
+          <p>{hostInfoConfig.name.display}</p>
+          <InputComponent config={hostInfoConfig.name} control={control} />
+        </div>
+        <div className="flex flex-col gap-2">
+          <p>{hostInfoConfig.email.display}</p>
           <input
-            {...register('name')}
-            className="mt-2 h-11 w-full rounded-lg border border-light_gray px-4"
+            disabled={true}
+            {...register('email')}
+            className="h-11 w-full rounded-lg border border-light_gray px-4"
           />
         </div>
-        <div>
-          <p>이메일</p>
-          <div className="mt-2 flex flex-row items-center justify-center gap-2">
-            <input
-              disabled={true}
-              {...register('email')}
-              className="h-11 w-full rounded-lg border border-light_gray px-4"
-            />
-          </div>
-        </div>
-        <div>
-          <p>휴대폰</p>
-          <div className="mt-2 flex flex-row items-center justify-center gap-2">
+        <div className="flex flex-col gap-2">
+          <p>{hostInfoConfig.phone.display}</p>
+          <div className="flex flex-row items-center justify-center gap-2">
             <input
               {...register('phone')}
               disabled={phoneChange}
@@ -106,15 +109,17 @@ export default function MyUpdatePage() {
             </button>
           </div>
         </div>
-        <div>
-          <p className="after:ml-0.5 after:text-red after:content-['*']">계좌번호</p>
+        <div className="flex flex-col gap-2">
+          <p className="after:ml-0.5 after:text-red after:content-['*']">
+            {hostInfoConfig.accountNumber.display}
+          </p>
           <div className="relative flex flex-row">
             <input
               {...register('accountNumber', { required: '계좌번호를 입력해주세요' })}
-              className="mt-2 h-11 w-full rounded-lg border border-light_gray px-4"
+              className="h-11 w-full rounded-lg border border-light_gray px-4"
               placeholder="계좌번호를 입력해주세요"
             />
-            <div className="absolute right-0 mt-2 flex flex-row items-center text-light_gray">
+            <div className="absolute right-0 flex flex-row items-center text-light_gray">
               <p>|</p>
               <button
                 type="button"
@@ -167,13 +172,9 @@ export default function MyUpdatePage() {
             <p className="mt-2 text-red">{errors.bankName.message}</p>
           ) : null}
         </div>
-        <div>
+        <div className="flex flex-col gap-2">
           <p className="after:ml-0.5 after:text-red after:content-['*']">비밀번호</p>
-          <input
-            {...register('password', { required: '비밀번호를 입력해주세요' })}
-            className="mt-2 h-11 w-full rounded-lg border border-light_gray px-4"
-            placeholder="비밀번호를 입력해주세요"
-          />
+          <InputComponent config={hostInfoConfig.password} control={control} />
           {errors.password && <p className="mt-2 text-red">{errors.password.message}</p>}
         </div>
         <button

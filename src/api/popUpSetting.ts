@@ -50,31 +50,14 @@ export const fetchSpaceRegister = async (formData: PopUpFormData) => {
   const imageUrlsRes = await uploadImage(formData.imageList);
 
   const registerData: PopUpRegisterResponse = {
-    name: formData.name,
-    description: formData.description,
+    ...formData,
     imageUrls: imageUrlsRes,
-    category: formData.category,
     openingTime: formatTimeTo24Hour(formData.openingTime),
     closingTime: formatTimeTo24Hour(formData.closingTime),
     size: Number(formData.size),
     capacity: Number(formData.capacity),
-    tags: formData.tags,
-    pricePerDay: Number(formData.pricePerDay.replace(/,/g, '')),
+    pricePerDay: Number(formData.pricePerDay?.replace(/,/g, '')),
     discountRate: Number(formData.discountRate),
-    details: formData.details,
-    // (1)서울시 (2)강남구 (3)강남대로 123 (4)2층 => latitude, longitude
-    // (1)city (2)district (3)location (4)address
-    latitude: formData.latitude,
-    longitude: formData.longitude,
-    city: formData.city,
-    district: formData.district,
-    address: formData.address,
-    detailAddress: formData.detailAddress,
-    websiteUrl: formData.websiteUrl,
-    contactNumber: formData.contactNumber,
-    facilityInfo: formData.facilityInfo,
-    notice: formData.notice,
-    isActivated: formData.isActivated,
   };
 
   console.log(registerData);
@@ -92,31 +75,15 @@ export const fetchSpaceIdUpdate = async (id: string, editData: PopUpFormData) =>
   const imageUrlsRes = await uploadImage(editData.imageList);
   const tempActivated = true;
   const registerData: PopUpRegisterResponse = {
-    name: editData.name,
-    description: editData.description,
+    ...editData,
     imageUrls: imageUrlsRes,
-    category: editData.category,
     openingTime: formatTimeTo24Hour(editData.openingTime),
     closingTime: formatTimeTo24Hour(editData.closingTime),
     size: Number(editData.size),
     capacity: Number(editData.capacity),
-    tags: editData.tags,
-    pricePerDay: Number(editData.pricePerDay.replace(/,/g, '')),
+    pricePerDay: Number(editData.pricePerDay?.replace(/,/g, '')),
     discountRate: Number(editData.discountRate),
     details: editData.details,
-    // (1)서울시 (2)강남구 (3)강남대로 123 (4)2층 => latitude, longitude
-    // (1)city (2)district (3)location (4)address
-    latitude: editData.latitude,
-    longitude: editData.longitude,
-    city: editData.city,
-    district: editData.district,
-    address: editData.address,
-    detailAddress: editData.detailAddress,
-    websiteUrl: editData.websiteUrl,
-    contactNumber: editData.contactNumber,
-    facilityInfo: editData.facilityInfo,
-    notice: editData.notice,
-    // isActivated: editData.isActivated,
     isActivated: tempActivated,
   };
   console.log('registerData', registerData);

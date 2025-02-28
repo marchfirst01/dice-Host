@@ -1,6 +1,8 @@
 import { IMAGES } from '@assets/index';
 import PopUpDetailLayout from '@layout/popUpDetailLayout';
 import { SpaceIdResponse } from '@type/popUp/popUpResponse';
+import formatDiscountPrice from '@utils/formatDiscountPrice';
+import { formatNumber } from '@utils/formatNumber';
 
 import React, { useEffect, useState } from 'react';
 
@@ -77,13 +79,27 @@ export default function PopUpDetailPage({
               {initialData.description}
             </p>
           </div>
-          <div>
-            <p className="font-CAP1 text-CAP1 leading-CAP1 text-light_gray">1일 대여</p>
+          {/* 할인 */}
+          <div className="flex flex-col">
+            <div className="flex flex-row gap-1">
+              <p className="font-CAP1 text-CAP1 leading-CAP1 text-dark_gray">1일 대여</p>
+              <p className="font-CAP1 text-CAP1 leading-CAP1 text-light_gray line-through">
+                {formatNumber(initialData.pricePerDay)}
+              </p>
+            </div>
             <div className="flex flex-row gap-[6px]">
               <p className="font-SUB2 text-SUB2 leading-SUB2 text-purple">
                 {initialData.discountRate}%
               </p>
-              <p className="font-SUB1 text-SUB1 leading-SUB1">{initialData.pricePerDay}원</p>
+              <p className="font-SUB1 text-SUB1 leading-SUB1 text-dark_gray">
+                {formatNumber(
+                  formatDiscountPrice({
+                    price: initialData.pricePerDay,
+                    discount: initialData.discountRate,
+                  }),
+                )}
+                원
+              </p>
             </div>
           </div>
           <hr className="my-6" />
