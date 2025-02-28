@@ -1,5 +1,4 @@
 import { PopUpConfig, PopUpFormData, PopUpId } from '@type/popUpSetting';
-import { formatNumber } from '@utils/formatNumber';
 
 import React from 'react';
 import { Control, Controller, UseControllerProps } from 'react-hook-form';
