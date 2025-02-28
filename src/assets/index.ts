@@ -39,6 +39,7 @@ import EyeOn from '@assets/member/eye-on.svg';
 // popUp
 import FloatingAddButton from '@assets/popUp/floatingAddButton.svg';
 import HeaderBack from '@assets/popUp/headerBack.svg';
+import HeartFull from '@assets/popUp/heart-full.svg';
 import Search from '@assets/popUp/search.svg';
 // popUpDetail
 import Globe from '@assets/popUpDetail/globe.svg';
@@ -103,6 +104,7 @@ const IMAGES = {
   // popUp
   FloatingAddButton,
   HeaderBack,
+  HeartFull,
   Search,
   // popUpDetail
   Globe,
