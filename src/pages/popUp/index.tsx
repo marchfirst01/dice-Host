@@ -9,13 +9,16 @@ import React from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 
-const PopUpPage = React.memo(({ hostSpaceData }: { hostSpaceData: HostSpaceData[] }) => {
+export default function PopUpPage({ hostSpaceData }: { hostSpaceData: HostSpaceData[] }) {
   const router = useRouter();
 
   const { searchText } = useSearchStore();
-  const filteredHostSpaceData = hostSpaceData.filter((space) =>
-    space.name.toLowerCase().includes(searchText.toLowerCase()),
-  );
+  let filteredHostSpaceData: HostSpaceData[] = [];
+  if (hostSpaceData) {
+    filteredHostSpaceData = hostSpaceData.filter((space) =>
+      space.name.toLowerCase().includes(searchText.toLowerCase()),
+    );
+  }
 
   return (
     hostSpaceData && (
@@ -32,15 +35,6 @@ const PopUpPage = React.memo(({ hostSpaceData }: { hostSpaceData: HostSpaceData[
               자신만의 공간을 추가해봐요
             </p>
           )}
-          {/* {hostSpaceData.length > 0 ? (
-            hostSpaceData.map((space) => <PopUpItem key={space.id} storeData={space} />)
-          ) : (
-            <p className="font-SUB1 text-SUB1 leading-SUB1">
-              아직 등록한 공간이 없어요!
-              <br />
-              자신만의 공간을 추가해봐요
-            </p>
-          )} */}
         </div>
         <div
           onClick={() => router.push({ pathname: '/popUpSetting', query: { mode: 'register' } })}
@@ -51,6 +45,4 @@ const PopUpPage = React.memo(({ hostSpaceData }: { hostSpaceData: HostSpaceData[
       </div>
     )
   );
-});
-
-export default PopUpPage;
+}
