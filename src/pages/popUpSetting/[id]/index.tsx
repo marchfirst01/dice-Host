@@ -13,6 +13,7 @@ export default function PopUpSettingPage() {
   const isEditMode = mode === 'edit';
 
   const { data, isFetching } = usePopUpId(id);
+  console.log(data);
 
   return (
     <>

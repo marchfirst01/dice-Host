@@ -26,7 +26,6 @@ export default function GeocodeModalComponent({
 
   const handleSearch = async () => {
     const response = await getGeocode(searchAddress);
-    console.log(response);
 
     // TODO: 검색 결과 여러 개 표시 - 현재는 한 개의 데이터만 표시됨 ex) 사가정로 검색 -> 사가정로 1, 사가정로 2 ... 등 여러 결과가 표시돼야함
     if (response.status === 'OK' && response.meta.totalCount > 0) {

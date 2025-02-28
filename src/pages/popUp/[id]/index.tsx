@@ -34,6 +34,8 @@ export default function PopUpDetailPage({
   const [isDescriptionDetailView, setIsDescriptionDetailView] = useState<boolean>(false);
   const [isUsageDetailView, setIsUsageDetailView] = useState<boolean>(false);
 
+  console.log(initialData);
+
   useEffect(() => {
     const mapDiv = document.getElementById('map');
     if (mapDiv && typeof naver !== 'undefined') {
