@@ -80,20 +80,18 @@ export default function PopUpDetailPage({
             </p>
           </div>
           {/* 할인 */}
-          <div className="flex flex-row items-end justify-between">
-            <div>
-              <p className="font-CAP1 text-CAP1 leading-CAP1 text-light_gray">1일 대여</p>
-              <div className="flex flex-row gap-1">
-                <p className="font-CAP1 text-CAP1 leading-CAP1 text-black">
-                  {initialData.discountRate}% 할인
-                </p>
-                <p className="font-CAP1 text-CAP1 leading-CAP1 text-light_gray line-through">
-                  {formatNumber(initialData.pricePerDay)}
-                </p>
-              </div>
+          <div className="flex flex-col">
+            <div className="flex flex-row gap-1">
+              <p className="font-CAP1 text-CAP1 leading-CAP1 text-dark_gray">1일 대여</p>
+              <p className="font-CAP1 text-CAP1 leading-CAP1 text-light_gray line-through">
+                {formatNumber(initialData.pricePerDay)}
+              </p>
             </div>
             <div className="flex flex-row gap-[6px]">
-              <p className="font-SUB1 text-SUB1 leading-SUB1 text-purple">
+              <p className="font-SUB2 text-SUB2 leading-SUB2 text-purple">
+                {initialData.discountRate}%
+              </p>
+              <p className="font-SUB1 text-SUB1 leading-SUB1 text-dark_gray">
                 {formatNumber(
                   formatDiscountPrice({
                     price: initialData.pricePerDay,
