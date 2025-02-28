@@ -119,21 +119,6 @@ function ResetPassword() {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
-  // const getTempPw = async () => {
-  //   setIsLoading(true);
-  //   try {
-  //     const res = await fetchPasswordReset(code, email);
-  //     console.log(res);
-  //     setTempPw(res.tempPassword);
-  //     setIsLoading(false);
-  //   } catch (error) {
-  //     console.log(error);
-  //     setIsLoading(false);
-  //   } finally {
-  //     setIsLoading(false);
-  //   }
-  // };
-
   const getTempPw = useCallback(async () => {
     setIsLoading(true);
     try {
@@ -145,15 +130,11 @@ function ResetPassword() {
     } finally {
       setIsLoading(false);
     }
-  }, [code, email]); // code와 email이 변경될 때만 getTempPw 함수가 다시 생성됨
+  }, [code, email]);
 
   useEffect(() => {
     getTempPw();
   }, [getTempPw]);
-
-  // useEffect(() => {
-  //   getTempPw();
-  // }, []);
 
   if (isLoading)
     return (
