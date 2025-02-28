@@ -1,6 +1,7 @@
 import { IMAGES } from '@assets/index';
 import RegisterFormButtonComponent from '@components/common/registerFormButton';
 import { PopUpFormData } from '@type/popUpSetting';
+import { useGeocodeStore } from '@zustands/geocode/store';
 
 import React, { useEffect, useState } from 'react';
 import { SubmitHandler } from 'react-hook-form';

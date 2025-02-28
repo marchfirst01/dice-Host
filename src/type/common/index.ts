@@ -10,7 +10,7 @@ export interface CommonPopUpData {
   category: string;
   openingTime: string;
   closingTime: string;
-  capacity: number;
+  capacity: number | null;
   tags: string[];
   details: string;
   websiteUrl: string;

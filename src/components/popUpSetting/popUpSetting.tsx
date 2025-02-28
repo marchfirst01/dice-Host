@@ -36,37 +36,48 @@ export default function PopUpSettingComponent({
     watch,
     formState: { errors },
   } = useForm<PopUpFormData>({
-    defaultValues: { ...editData },
+    defaultValues: editData,
   });
 
-  const { setSelectedAddress } = useGeocodeStore();
+  const { selectedAddress, setSelectedAddress } = useGeocodeStore();
 
   const getAddressFromCoords = useCallback(async () => {
-    try {
-      const response = await getReverseGeocode(editData.latitude, editData.longitude);
-      const city = response.results[0].region.area1.name;
-      const district = response.results[0].region.area2.name;
-      const address = response.results[1].land.name;
-      setValue('city', city);
-      setValue('district', district);
-      setValue('address', address);
-      setSelectedAddress({
-        roadAddress: `${city} ${district} ${address}`,
-        postalCode: response.results[1].land.addition1.value,
-      });
-    } catch (error) {
-      console.log(error);
+    if (editData && isEditMode) {
+      try {
+        const response = await getReverseGeocode(editData.latitude, editData.longitude);
+        const city = response.results[0].region.area1.name;
+        const district = response.results[0].region.area2.name;
+        const address = response.results[1].land.name;
+        setValue('city', city);
+        setValue('district', district);
+        setValue('address', address);
+        setSelectedAddress({
+          roadAddress: `${city} ${district} ${address}`,
+          postalCode: response.results[1].land.addition1.value,
+        });
+      } catch (error) {
+        console.log(error);
+      }
     }
   }, [editData, setSelectedAddress, setValue]);
 
   useEffect(() => {
     if (isEditMode) {
       getAddressFromCoords();
+    } else {
+      setSelectedAddress({
+        jibunAddress: '',
+        roadAddress: '',
+        sido: '',
+        sigugun: '',
+        postalCode: '',
+        latitude: 0,
+        longitude: 0,
+      });
     }
   }, [getAddressFromCoords, isEditMode]);
 
   const [geocodeModalOpen, setGeocodeModalOpen] = useState<boolean>(false);
-  const { selectedAddress } = useGeocodeStore();
 
   // setDiscountType 임시 삭제 나중에 추가 ..
   const [discountType] = useState<'할인율' | '할인 금액'>('할인율');
