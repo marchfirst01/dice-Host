@@ -39,6 +39,11 @@ export default function PopUpSettingComponent({
     defaultValues: editData,
   });
 
+  const [isOn, setIsOn] = useState(true);
+  useEffect(() => {
+    setValue('isActivated', isOn);
+  }, [isOn]);
+
   const { selectedAddress, setSelectedAddress } = useGeocodeStore();
 
   const getAddressFromCoords = useCallback(async () => {
@@ -121,7 +126,12 @@ export default function PopUpSettingComponent({
   };
 
   return (
-    <PopUpSettingLayout handleSubmit={handleSubmit} onSubmit={onSubmit}>
+    <PopUpSettingLayout
+      handleSubmit={handleSubmit}
+      onSubmit={onSubmit}
+      isOn={isOn}
+      setIsOn={setIsOn}
+    >
       <section className="flex flex-col gap-6 font-CAP1 text-CAP1 leading-CAP1">
         <p className="font-SUB1 text-SUB1 leading-SUB1">필수 정보 작성</p>
         {/* name - 공간 이름 */}

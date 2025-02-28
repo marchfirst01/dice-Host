@@ -1,9 +1,10 @@
 import { IMAGES } from '@assets/index';
 import RegisterFormButtonComponent from '@components/common/registerFormButton';
+import OnOffButtonComponent from '@components/popUpSetting/onOffButton';
 import { PopUpFormData } from '@type/popUpSetting';
 import { useGeocodeStore } from '@zustands/geocode/store';
 
-import React, { useEffect, useState } from 'react';
+import React, { Dispatch, useEffect, useState } from 'react';
 import { SubmitHandler } from 'react-hook-form';
 
 import Image from 'next/image';
@@ -15,12 +16,16 @@ interface PopUpSettingLayoutProps {
     onSubmit: SubmitHandler<PopUpFormData>,
   ) => (e?: React.BaseSyntheticEvent) => Promise<void>;
   onSubmit: SubmitHandler<PopUpFormData>;
+  isOn: boolean;
+  setIsOn: Dispatch<boolean>;
 }
 
 export default function PopUpSettingLayout({
   children,
   handleSubmit,
   onSubmit,
+  isOn,
+  setIsOn,
 }: PopUpSettingLayoutProps) {
   const router = useRouter();
   const childrenArray = React.Children.toArray(children);
@@ -56,18 +61,22 @@ export default function PopUpSettingLayout({
             height={24}
           />
           {isScrolled && (
-            <p className="mx-auto font-BODY1 text-BODY1 leading-BODY1 text-white">
-              팝업 공간 등록 관리자 페이지
-            </p>
+            <div className="flex w-full flex-row items-center justify-between pl-[51px] pr-5">
+              <p className="font-BODY1 text-BODY1 leading-BODY1 text-white">
+                팝업 공간 등록 관리자 페이지
+              </p>
+              <OnOffButtonComponent isOn={isOn} setIsOn={setIsOn} />
+            </div>
           )}
         </div>
       </header>
-      <div className="mb-5 bg-black pt-[48px]">
-        <p className="px-5 pb-6 pt-8 font-H1 text-H1 leading-H1 text-white">
+      <div className="mb-5 flex flex-row items-center justify-between bg-black px-5 pt-[48px]">
+        <p className="pb-6 pt-8 font-H1 text-H1 leading-H1 text-white">
           팝업 공간 등록
           <br />
           관리자 페이지
         </p>
+        <OnOffButtonComponent isOn={isOn} setIsOn={setIsOn} />
       </div>
       <div className="pb-[119px]">
         {childrenArray.map((child, index) => (
