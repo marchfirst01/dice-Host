@@ -18,7 +18,7 @@ export default function PopUpSettingPage() {
   return (
     <>
       {isFetching ? (
-        <div className="h-full">
+        <div className="flex h-screen flex-col items-center justify-center">
           <Image src={IMAGES.DiceLoading} alt="loading" />
         </div>
       ) : (

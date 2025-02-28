@@ -29,7 +29,7 @@ export default function MainPage() {
   return isLoggedIn ? (
     <MainLayout>
       {isFetching ? (
-        <div className="flex h-screen flex-row">
+        <div className="flex h-screen flex-col items-center justify-center">
           <Image src={IMAGES.DiceLoading} alt="loading" />
         </div>
       ) : (

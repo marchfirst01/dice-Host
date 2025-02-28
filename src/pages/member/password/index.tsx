@@ -138,8 +138,9 @@ function ResetPassword() {
 
   if (isLoading)
     return (
-      <div className="flex h-screen flex-row">
+      <div className="flex h-screen flex-col items-center justify-center">
         <Image src={IMAGES.DiceLoading} alt="loading" />
+        <p className="absolute">페이지 로딩중 ...</p>
       </div>
     );
 
