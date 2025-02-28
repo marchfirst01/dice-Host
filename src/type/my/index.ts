@@ -1,3 +1,5 @@
+import { CommonConfig } from '@type/common';
+
 export interface HostSpaceData {
   id: number;
   name: string;
@@ -12,7 +14,9 @@ export interface HostSpaceData {
   liked: boolean;
 }
 
-export interface HostInfo {
+export type HostInfoId = 'name' | 'email' | 'phone' | 'bankName' | 'accountNumber' | 'password';
+
+export interface HostInfoForm {
   name: string;
   email: string;
   phone: string;
@@ -20,3 +24,10 @@ export interface HostInfo {
   accountNumber: null | string;
   password: string;
 }
+
+export interface HostInfoConfig extends CommonConfig {
+  name: HostInfoId;
+  display: string;
+}
+
+export type HostInfoConfigList = Record<HostInfoId, HostInfoConfig>;

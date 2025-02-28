@@ -151,13 +151,13 @@ function ResetPassword() {
       <div className="mb-10 flex size-10 items-center justify-center rounded-full bg-black">
         <Image className="bg-black" src={IMAGES.SendWhite} alt="send" width={24} height={24} />
       </div>
-      <p className="text-center font-BODY1 text-BODY1 leading-BODY1 text-deep_gray">
+      <div className="text-center font-BODY1 text-BODY1 leading-BODY1 text-deep_gray">
         <span className="font-SUB2 text-SUB2 leading-SUB2 text-black">{email}</span>님의
         <br />
         임시 비밀번호가 발급됐습니다.
         <br />
         <p className="mt-1 font-SUB3 text-SUB3 leading-SUB3 text-black">{tempPw}</p>
-      </p>
+      </div>
       <button
         onClick={() => {
           setStep(0);
