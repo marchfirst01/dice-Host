@@ -14,7 +14,7 @@ export default function OnOffButtonComponent({ isOn, setIsOn }: OnOffButtonCompo
       onClick={() => setIsOn(!isOn)}
     >
       <div
-        className={`h-6 w-6 rounded-full bg-white shadow-md transition-transform duration-300 ${
+        className={`size-6 rounded-full bg-white shadow-md transition-transform duration-300 ${
           isOn ? 'translate-x-4' : 'translate-x-0'
         }`}
       />

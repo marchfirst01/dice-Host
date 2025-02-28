@@ -42,7 +42,7 @@ export default function PopUpSettingComponent({
   const [isOn, setIsOn] = useState(true);
   useEffect(() => {
     setValue('isActivated', isOn);
-  }, [isOn]);
+  }, [isOn, setValue]);
 
   const { selectedAddress, setSelectedAddress } = useGeocodeStore();
 
@@ -64,7 +64,7 @@ export default function PopUpSettingComponent({
         console.log(error);
       }
     }
-  }, [editData, setSelectedAddress, setValue]);
+  }, [isEditMode, editData, setSelectedAddress, setValue]);
 
   useEffect(() => {
     if (isEditMode) {
@@ -80,7 +80,7 @@ export default function PopUpSettingComponent({
         longitude: 0,
       });
     }
-  }, [getAddressFromCoords, isEditMode]);
+  }, [setSelectedAddress, getAddressFromCoords, isEditMode]);
 
   const [geocodeModalOpen, setGeocodeModalOpen] = useState<boolean>(false);
 

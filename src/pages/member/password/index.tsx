@@ -4,7 +4,7 @@ import RegisterFormButtonComponent from '@components/common/registerFormButton';
 import { MemberFormData } from '@type/member';
 import { useFindPassword } from '@zustands/findPassword/store';
 
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import Image from 'next/image';
@@ -119,24 +119,41 @@ function ResetPassword() {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
-  const getTempPw = async () => {
+  // const getTempPw = async () => {
+  //   setIsLoading(true);
+  //   try {
+  //     const res = await fetchPasswordReset(code, email);
+  //     console.log(res);
+  //     setTempPw(res.tempPassword);
+  //     setIsLoading(false);
+  //   } catch (error) {
+  //     console.log(error);
+  //     setIsLoading(false);
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
+
+  const getTempPw = useCallback(async () => {
     setIsLoading(true);
     try {
       const res = await fetchPasswordReset(code, email);
       console.log(res);
       setTempPw(res.tempPassword);
-      setIsLoading(false);
     } catch (error) {
       console.log(error);
-      setIsLoading(false);
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [code, email]); // code와 email이 변경될 때만 getTempPw 함수가 다시 생성됨
 
   useEffect(() => {
     getTempPw();
-  }, []);
+  }, [getTempPw]);
+
+  // useEffect(() => {
+  //   getTempPw();
+  // }, []);
 
   if (isLoading)
     return (
