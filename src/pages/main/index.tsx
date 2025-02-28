@@ -10,8 +10,11 @@ import MyPage from '../my';
 import PopUpPage from '../popUp';
 import ReservationPage from '../reservation';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 
 export default function MainPage() {
+  const router = useRouter();
+
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
 
   const { mainPageType } = useHeaderStore();
@@ -19,7 +22,6 @@ export default function MainPage() {
   const { data: hostSpaceData, isFetching } = useHostSpace();
   const { data: hostInfo } = useHostInfo();
 
-  console.log(hostSpaceData);
   useEffect(() => {
     setIsLoggedIn(getAccessToken() ? true : false);
   }, []);
@@ -37,6 +39,14 @@ export default function MainPage() {
       )}
     </MainLayout>
   ) : (
-    <p>login required</p>
+    <div>
+      <p>login required</p>
+      <button
+        onClick={() => router.push('/')}
+        className="rounded-lg bg-black px-3 py-2 font-BTN1 text-BTN1 leading-BTN1 text-white"
+      >
+        main
+      </button>
+    </div>
   );
 }

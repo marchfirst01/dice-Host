@@ -1,12 +1,13 @@
 import { IMAGES } from '@assets/index';
 import '@styles/globals.css';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { getAccessToken } from '@utils/token';
 
 import { useEffect, useState } from 'react';
 
 import type { AppProps } from 'next/app';
 import Image from 'next/image';
-import { Router } from 'next/router';
+import { Router, useRouter } from 'next/router';
 import Script from 'next/script';
 
 export default function App({ Component, pageProps }: AppProps) {
@@ -30,6 +31,17 @@ export default function App({ Component, pageProps }: AppProps) {
       Router.events.off('routeChangeError', handleComplete);
     };
   }, []);
+
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  const router = useRouter();
+
+  useEffect(() => {
+    setIsLoggedIn(getAccessToken() ? true : false);
+
+    if (isLoggedIn && router.pathname.startsWith('/member')) {
+      router.push('/');
+    }
+  }, [router]);
 
   return (
     <QueryClientProvider client={queryClient}>
