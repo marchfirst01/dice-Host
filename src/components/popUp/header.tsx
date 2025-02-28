@@ -1,10 +1,12 @@
 import { IMAGES } from '@assets/index';
+import { useSearchStore } from '@zustands/popUp/searchStore';
 
 import React from 'react';
 
 import Image from 'next/image';
 
 export default function Header() {
+  const { setSearchText } = useSearchStore();
   return (
     <div className="relative h-[214px] w-full">
       <div className="absolute -left-5 top-0 z-10 h-full w-screen max-w-[400px] bg-black opacity-40" />
@@ -18,6 +20,7 @@ export default function Header() {
             <input
               className="h-[51px] w-full rounded-lg border px-[41px] text-medium_gray"
               placeholder="등록한 공간의 이름을 검색해보세요"
+              onChange={(e) => setSearchText(e.target.value)}
             />
             <Image
               className="absolute left-[13px] top-1/2 -translate-y-1/2"

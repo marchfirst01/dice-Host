@@ -1,4 +1,6 @@
+import { IMAGES } from '@assets/index';
 import { StoreData } from '@type/popUp';
+import formatDiscountPrice from '@utils/formatDiscountPrice';
 import { formatNumber } from '@utils/formatNumber';
 
 import React from 'react';
@@ -21,32 +23,49 @@ export default function PopUpItem({
       <div className="relative h-[180px]">
         <Image
           className="aspect-[3/2] rounded-t-lg"
-          src={
-            storeData.imageUrl === 'www.example.com'
-              ? 'https://placehold.co/600x400/png'
-              : storeData.imageUrl
-          }
+          src={storeData.imageUrl}
           alt={storeData.name}
           layout="fill"
           objectFit="cover"
         />
       </div>
       <div className="relative flex flex-col px-4 pb-4 pt-2">
-        <div className="font-CAP1 text-CAP1 leading-CAP1 text-medium_gray">
-          {/* {storeData.cityName} · {storeData.neighborhoodName} */}
-          {storeData.address}
+        <div className="flex flex-row justify-between">
+          <div className="flex flex-col">
+            {/* {storeData.cityName} · {storeData.neighborhoodName} */}
+            <p className="font-CAP1 text-CAP1 leading-CAP1 text-medium_gray">{storeData.address}</p>
+            <p className="font-SUB2 text-SUB2 leading-SUB2">{storeData.name}</p>
+          </div>
+          <div className="flex flex-col items-center">
+            <Image src={IMAGES.HeartFull} alt="heart" />
+            <p className="font-CAP2 text-CAP2 leading-CAP2 text-purple">{storeData.likeCount}</p>
+          </div>
         </div>
-        <div className="font-SUB2 text-SUB2 leading-SUB2">{storeData.name}</div>
-        <div className="font-CAP1 text-CAP1 leading-CAP1 text-medium_gray">
+        <p className="font-CAP1 text-CAP1 leading-CAP1 text-medium_gray">
           {storeData.size}m² · {storeData.capacity}명 수용가능
-        </div>
-        <p className="mt-4 font-CAP1 text-CAP1 leading-CAP1 text-light_gray">1일 대여</p>
-        <div className="flex flex-row items-center gap-[6px]">
-          <p className="font-SUB2 text-SUB2 leading-SUB2 text-purple">{storeData.discountRate}%</p>
-          {/* 추후 숫자 포맷 함수 추가 필요 */}
-          <p className="font-SUB1 text-SUB1 leading-SUB1">
-            {formatNumber(storeData.pricePerDay)}원
-          </p>
+        </p>
+        <div className="flex flex-col items-end">
+          <div className="mt-4 flex flex-row items-center gap-2">
+            <p className="font-CAP1 text-CAP1 leading-CAP1 text-dark_gray">1일 대여</p>
+            <p className="font-CAP1 text-CAP1 leading-CAP1 text-light_gray line-through">
+              {formatNumber(storeData.pricePerDay)}
+            </p>
+          </div>
+          <div className="flex flex-row items-center gap-[6px]">
+            <p className="font-SUB2 text-SUB2 leading-SUB2 text-purple">
+              {storeData.discountRate}%
+            </p>
+            {/* 추후 숫자 포맷 함수 추가 필요 */}
+            <p className="font-SUB1 text-SUB1 leading-SUB1">
+              {formatNumber(
+                formatDiscountPrice({
+                  price: storeData.pricePerDay,
+                  discount: storeData.discountRate,
+                }),
+              )}
+              원
+            </p>
+          </div>
         </div>
       </div>
     </div>

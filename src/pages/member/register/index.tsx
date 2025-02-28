@@ -47,7 +47,7 @@ const RegisterPage = () => {
         </button>
       </ModalComponent>
       <Image
-        onClick={() => router.back()}
+        onClick={() => router.push('/')}
         className="absolute left-0 top-0 m-3 cursor-pointer"
         src={IMAGES.Close}
         width={12}
