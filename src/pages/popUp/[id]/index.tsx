@@ -40,6 +40,7 @@ export default function PopUpDetailPage({
     const mapDiv = document.getElementById('map');
     if (mapDiv && typeof naver !== 'undefined') {
       const map = new naver.maps.Map(mapDiv, {
+        // lat: x, lon: y (127, 33)
         center: new naver.maps.LatLng(initialData.latitude, initialData.longitude),
         zoom: 15,
       });
@@ -64,12 +65,9 @@ export default function PopUpDetailPage({
           pagination={{ clickable: true, type: 'fraction' }}
         >
           {initialData.imageUrls.map((image, index) => {
-            // TODO: 'www.example.com' 삭제필요
-            const imageUrl =
-              image === 'www.example.com' ? 'https://placehold.co/600x400/png' : image;
             return (
               <SwiperSlide key={index} className="aspect-[3/2] w-full">
-                <Image src={imageUrl} alt="image" layout="fill" objectFit="cover" />
+                <Image src={image} alt="image" layout="fill" objectFit="cover" />
               </SwiperSlide>
             );
           })}

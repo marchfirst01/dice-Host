@@ -32,8 +32,9 @@ export default function PopUpItem({
       <div className="relative flex flex-col px-4 pb-4 pt-2">
         <div className="flex flex-row justify-between">
           <div className="flex flex-col">
-            {/* {storeData.cityName} · {storeData.neighborhoodName} */}
-            <p className="font-CAP1 text-CAP1 leading-CAP1 text-medium_gray">{storeData.address}</p>
+            <p className="font-CAP1 text-CAP1 leading-CAP1 text-medium_gray">
+              {storeData.city} · {storeData.district}
+            </p>
             <p className="font-SUB2 text-SUB2 leading-SUB2">{storeData.name}</p>
           </div>
           <div className="flex flex-col items-center">

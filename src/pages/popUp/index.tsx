@@ -20,6 +20,8 @@ export default function PopUpPage({ hostSpaceData }: { hostSpaceData: HostSpaceD
     );
   }
 
+  console.log(hostSpaceData);
+
   return (
     hostSpaceData && (
       <div className="size-full">

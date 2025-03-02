@@ -35,8 +35,9 @@ export default function GeocodeModalComponent({
       const sido = result.addressElements[0].longName;
       const sigugun = result.addressElements[1].longName;
       const postalCode = result.addressElements[8].longName;
-      const latitude = result.x;
-      const longitude = result.y;
+      // x: longitude(경도), y: latitude(위도)
+      const longitude = result.x;
+      const latitude = result.y;
       setResultAddress([
         {
           jibunAddress,
@@ -44,8 +45,11 @@ export default function GeocodeModalComponent({
           sido,
           sigugun,
           postalCode,
-          latitude: Number(latitude),
-          longitude: Number(longitude),
+          // TODO: 임시 설정 - api 실행 시 lat <-> lon 바뀌는 문제
+          longitude: Number(latitude),
+          latitude: Number(longitude),
+          // longitude: Number(longitude), // 경도 (127)
+          // latitude: Number(latitude), // 위도 (33)
         },
       ]);
     } else {
@@ -54,6 +58,7 @@ export default function GeocodeModalComponent({
   };
 
   const handleClickAddress = (address: Address) => {
+    console.log('latitude', address.latitude, 'longitude', address.longitude);
     setSelectedAddress(address);
     setGeocodeModalOpen(false);
     setValue('address', address.roadAddress);

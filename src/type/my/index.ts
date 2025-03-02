@@ -4,6 +4,8 @@ export interface HostSpaceData {
   id: number;
   name: string;
   address: string;
+  city: string;
+  district: string;
   imageUrl: string;
   pricePerDay: number;
   discountRate: number;
