@@ -1,5 +1,5 @@
 import { IMAGES } from '@assets/index';
-import { StoreData } from '@type/popUp';
+import { HostSpaceData } from '@type/my';
 import formatDiscountPrice from '@utils/formatDiscountPrice';
 import { formatNumber } from '@utils/formatNumber';
 
@@ -11,15 +11,18 @@ import { useRouter } from 'next/router';
 export default function PopUpItem({
   storeData,
 }: {
-  storeData: StoreData;
-}): React.ReactElement<StoreData> {
+  storeData: HostSpaceData;
+}): React.ReactElement<HostSpaceData> {
   const router = useRouter();
 
   return (
     <div
       onClick={() => router.push(`/popUp/${storeData.id}`)}
-      className="aspect-[3/2] w-full cursor-pointer rounded-lg border border-stroke"
+      className="relative aspect-[3/2] w-full cursor-pointer rounded-lg border border-stroke"
     >
+      <div
+        className={`${!storeData.activated && 'absolute z-10 size-full rounded-lg bg-dark_gray/50'}`}
+      />
       <div className="relative h-[180px]">
         <Image
           className="aspect-[3/2] rounded-t-lg"

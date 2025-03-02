@@ -14,6 +14,9 @@ export interface HostSpaceData {
   size: number;
   likeCount: number;
   liked: boolean;
+  // TODO: activated -> isActivated
+  activated: boolean;
+  // isActivated: boolean;
 }
 
 export type HostInfoId = 'name' | 'email' | 'phone' | 'bankName' | 'accountNumber' | 'password';
