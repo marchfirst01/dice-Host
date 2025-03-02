@@ -40,7 +40,7 @@ export default function PopUpPage({ hostSpaceData }: { hostSpaceData: HostSpaceD
         </div>
         <div
           onClick={() => router.push({ pathname: '/popUpSetting', query: { mode: 'register' } })}
-          className="fixed bottom-20 left-1/2 translate-x-[115px] cursor-pointer"
+          className="fixed bottom-20 left-1/2 z-20 translate-x-[115px] cursor-pointer"
         >
           <Image src={IMAGES.FloatingAddButton} alt="floatingAddBtn" />
         </div>

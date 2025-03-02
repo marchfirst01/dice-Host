@@ -8,7 +8,7 @@ import Image from 'next/image';
 export default function MainFooterComponent() {
   const { mainPageType, setMainPageType } = useHeaderStore();
   return (
-    <div className="fixed bottom-0 flex w-full max-w-[400px] flex-row justify-around border-t border-stroke bg-white py-2">
+    <div className="fixed bottom-0 z-50 flex w-full max-w-[400px] flex-row justify-around border-t border-stroke bg-white py-2">
       <div
         onClick={() => setMainPageType('popUp')}
         className="flex cursor-pointer flex-col items-center gap-2"
