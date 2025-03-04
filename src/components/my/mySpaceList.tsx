@@ -6,10 +6,10 @@ import { useRouter } from 'next/router';
 function MySpaceItemComponent({ imageUrl, id }: { imageUrl: string; id: number }) {
   const router = useRouter();
   return (
-    <div className="flex size-20 shrink-0 cursor-pointer items-center justify-center overflow-hidden rounded-xl bg-medium_gray">
+    <div className="flex size-20 shrink-0 cursor-pointer items-center justify-center overflow-hidden rounded-xl">
       <Image
         onClick={() => router.push(`popUp/${id}`)}
-        className="size-full object-contain"
+        className="size-full object-cover"
         src={imageUrl}
         alt="spaceItem"
         width={80}

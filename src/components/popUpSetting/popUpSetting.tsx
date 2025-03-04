@@ -110,7 +110,7 @@ export default function PopUpSettingComponent({
     if (isEditMode && id) {
       try {
         await fetchSpaceIdUpdate(id, formData);
-        router.push(`popUp/${id}`);
+        router.push(`/popUp/${id}`);
       } catch (error) {
         console.log(error);
         alert(error);

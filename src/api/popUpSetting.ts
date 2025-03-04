@@ -16,7 +16,6 @@ export const fetchImageUpload = async (imageList: File[]): Promise<ImageUploadRe
       headers: { 'Content-Type': 'multipart/form-data' },
     });
     if (res.status !== 200) throw new Error('Failed to fetch image list');
-    console.log('image upload', res);
     return res.data;
   } catch (error) {
     console.log(error);
@@ -73,7 +72,7 @@ export const fetchSpaceRegister = async (formData: PopUpFormData) => {
 
 export const fetchSpaceIdUpdate = async (id: string, editData: PopUpFormData) => {
   const imageUrlsRes = await uploadImage(editData.imageList);
-  const tempActivated = true;
+  // const tempActivated = true;
   const registerData: PopUpRegisterResponse = {
     ...editData,
     imageUrls: imageUrlsRes,
@@ -84,7 +83,7 @@ export const fetchSpaceIdUpdate = async (id: string, editData: PopUpFormData) =>
     pricePerDay: Number(editData.pricePerDay?.replace(/,/g, '')),
     discountRate: Number(editData.discountRate),
     details: editData.details,
-    isActivated: tempActivated,
+    isActivated: editData.isActivated,
   };
   console.log('registerData', registerData);
   const res = await PostAxiosInstance(`/space/update/${id}`, registerData);

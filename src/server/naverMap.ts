@@ -22,6 +22,7 @@ export const getReverseGeocode = async (latitude: number, longitude: number) => 
   try {
     const response = await axios.get(`/api/naver/map-reversegeocode/v2/gc?`, {
       params: {
+        // ex) coords: 127,37
         coords: `${longitude},${latitude}`,
         orders: 'legalcode,roadaddr',
         output: 'json',

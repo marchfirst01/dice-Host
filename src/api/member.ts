@@ -32,9 +32,8 @@ export const fetchValidateEmail = async (email: string) => {
 
 export const fetchValidatePhone = async (phone: string) => {
   try {
-    console.log(phone);
     const res = await GuestPostAxiosInstance('/auth/validate/phone', phone.replace(/-/g, ''));
-    if (res.status === 200) return;
+    if (res.status === 200) return true;
   } catch (error) {
     console.log(error);
     throw new ValidateMemberError('중복된 휴대폰 번호입니다', 'DUPLICATE_PHONE');

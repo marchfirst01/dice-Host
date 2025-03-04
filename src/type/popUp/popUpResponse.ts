@@ -13,4 +13,5 @@ export interface SpaceIdResponse extends CommonPopUpData {
   address: string;
   detailAddress: string;
   likeCount: number;
+  isActivated: boolean;
 }
