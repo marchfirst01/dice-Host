@@ -21,7 +21,7 @@ export default function PopUpItem({
       className="relative aspect-[3/2] w-full cursor-pointer rounded-lg border border-stroke"
     >
       <div
-        className={`${!storeData.activated && 'absolute z-10 size-full rounded-lg bg-dark_gray/50'}`}
+        className={`${!storeData.isActivated && 'absolute z-10 size-full rounded-lg bg-dark_gray/50'}`}
       />
       <div className="relative h-[180px]">
         <Image

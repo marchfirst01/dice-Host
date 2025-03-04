@@ -45,11 +45,8 @@ export default function GeocodeModalComponent({
           sido,
           sigugun,
           postalCode,
-          // TODO: 임시 설정 - api 실행 시 lat <-> lon 바뀌는 문제
-          longitude: Number(latitude),
-          latitude: Number(longitude),
-          // longitude: Number(longitude), // 경도 (127)
-          // latitude: Number(latitude), // 위도 (33)
+          longitude: Number(longitude), // 경도 (127)
+          latitude: Number(latitude), // 위도 (33)
         },
       ]);
     } else {

@@ -13,10 +13,8 @@ export interface HostSpaceData {
   capacity: number;
   size: number;
   likeCount: number;
-  liked: boolean;
-  // TODO: activated -> isActivated
-  activated: boolean;
-  // isActivated: boolean;
+  isLiked: boolean;
+  isActivated: boolean;
 }
 
 export type HostInfoId = 'name' | 'email' | 'phone' | 'bankName' | 'accountNumber' | 'password';
