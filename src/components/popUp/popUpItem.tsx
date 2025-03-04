@@ -1,5 +1,5 @@
 import { IMAGES } from '@assets/index';
-import { StoreData } from '@type/popUp';
+import { HostSpaceData } from '@type/my';
 import formatDiscountPrice from '@utils/formatDiscountPrice';
 import { formatNumber } from '@utils/formatNumber';
 
@@ -11,15 +11,18 @@ import { useRouter } from 'next/router';
 export default function PopUpItem({
   storeData,
 }: {
-  storeData: StoreData;
-}): React.ReactElement<StoreData> {
+  storeData: HostSpaceData;
+}): React.ReactElement<HostSpaceData> {
   const router = useRouter();
 
   return (
     <div
       onClick={() => router.push(`/popUp/${storeData.id}`)}
-      className="aspect-[3/2] w-full cursor-pointer rounded-lg border border-stroke"
+      className="relative aspect-[3/2] w-full cursor-pointer rounded-lg border border-stroke"
     >
+      <div
+        className={`${!storeData.isActivated && 'absolute z-10 size-full rounded-lg bg-dark_gray/50'}`}
+      />
       <div className="relative h-[180px]">
         <Image
           className="aspect-[3/2] rounded-t-lg"
@@ -32,8 +35,9 @@ export default function PopUpItem({
       <div className="relative flex flex-col px-4 pb-4 pt-2">
         <div className="flex flex-row justify-between">
           <div className="flex flex-col">
-            {/* {storeData.cityName} · {storeData.neighborhoodName} */}
-            <p className="font-CAP1 text-CAP1 leading-CAP1 text-medium_gray">{storeData.address}</p>
+            <p className="font-CAP1 text-CAP1 leading-CAP1 text-medium_gray">
+              {storeData.city} · {storeData.district}
+            </p>
             <p className="font-SUB2 text-SUB2 leading-SUB2">{storeData.name}</p>
           </div>
           <div className="flex flex-col items-center">

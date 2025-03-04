@@ -26,7 +26,6 @@ export default function GeocodeModalComponent({
 
   const handleSearch = async () => {
     const response = await getGeocode(searchAddress);
-    console.log(response);
 
     // TODO: 검색 결과 여러 개 표시 - 현재는 한 개의 데이터만 표시됨 ex) 사가정로 검색 -> 사가정로 1, 사가정로 2 ... 등 여러 결과가 표시돼야함
     if (response.status === 'OK' && response.meta.totalCount > 0) {
@@ -36,8 +35,9 @@ export default function GeocodeModalComponent({
       const sido = result.addressElements[0].longName;
       const sigugun = result.addressElements[1].longName;
       const postalCode = result.addressElements[8].longName;
-      const latitude = result.x;
-      const longitude = result.y;
+      // x: longitude(경도), y: latitude(위도)
+      const longitude = result.x;
+      const latitude = result.y;
       setResultAddress([
         {
           jibunAddress,
@@ -45,8 +45,8 @@ export default function GeocodeModalComponent({
           sido,
           sigugun,
           postalCode,
-          latitude: Number(latitude),
-          longitude: Number(longitude),
+          longitude: Number(longitude), // 경도 (127)
+          latitude: Number(latitude), // 위도 (33)
         },
       ]);
     } else {
@@ -55,6 +55,7 @@ export default function GeocodeModalComponent({
   };
 
   const handleClickAddress = (address: Address) => {
+    console.log('latitude', address.latitude, 'longitude', address.longitude);
     setSelectedAddress(address);
     setGeocodeModalOpen(false);
     setValue('address', address.roadAddress);

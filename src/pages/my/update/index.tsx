@@ -11,6 +11,7 @@ import { useForm } from 'react-hook-form';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { fetchHostUpdate } from 'src/api/host';
+import { ValidateMemberError, fetchValidatePhone } from 'src/api/member';
 import { hostInfoConfig } from 'src/context/host/hostInfoConfig';
 
 export default function MyUpdatePage() {
@@ -25,22 +26,36 @@ export default function MyUpdatePage() {
     formState: { errors },
   } = useForm<HostInfoForm>();
 
+  const [bankText, setBankText] = useState(
+    defaultHostInfo.bankName ? defaultHostInfo.bankName : '은행 선택',
+  );
+
   useEffect(() => {
     setValue('name', defaultHostInfo.name);
     setValue('email', defaultHostInfo.email);
     setValue('phone', defaultHostInfo.phone);
     setValue('accountNumber', defaultHostInfo.accountNumber ? defaultHostInfo.accountNumber : null);
     setValue('bankName', defaultHostInfo.bankName ? defaultHostInfo.bankName : null);
+    setBankText(defaultHostInfo.bankName ? defaultHostInfo.bankName : '은행 선택');
   }, [setValue, defaultHostInfo]);
 
   const [phoneChange, setPhoneChange] = useState(true);
+  const [phoneErrorMsg, setPhoneErrorMsg] = useState('');
   const [isDragModalOpen, setIsDragModalOpen] = useState(false);
   const [isCheckModalOpen, setIsCheckModalOpen] = useState(false);
 
-  const handlePhoneValidate = () => {
-    setPhoneChange(!phoneChange);
-    //TODO: phone 중복 검사
-    // const phone = getValues('phone');
+  const handlePhoneValidate = async () => {
+    const phone = getValues('phone');
+    try {
+      const res = await fetchValidatePhone(phone);
+      if (res) {
+        setPhoneChange(!phoneChange);
+        setPhoneErrorMsg('');
+      }
+    } catch (error) {
+      console.log(error);
+      if (error instanceof ValidateMemberError) setPhoneErrorMsg(error.message);
+    }
   };
 
   const onSubmit = async (hostInfo: HostInfoForm) => {
@@ -102,12 +117,15 @@ export default function MyUpdatePage() {
             />
             <button
               type="button"
-              onClick={handlePhoneValidate}
+              onClick={() => (phoneChange ? setPhoneChange(false) : handlePhoneValidate())}
               className="h-11 w-[135px] text-nowrap rounded-lg border border-light_gray text-center text-light_gray"
             >
               {phoneChange ? '번호 변경' : '중복 확인'}
             </button>
           </div>
+          {phoneErrorMsg && (
+            <p className="font-CAP1 text-CAP1 leading-CAP1 text-red">{phoneErrorMsg}</p>
+          )}
         </div>
         <div className="flex flex-col gap-2">
           <p className="after:ml-0.5 after:text-red after:content-['*']">
@@ -126,7 +144,7 @@ export default function MyUpdatePage() {
                 onClick={() => setIsDragModalOpen(true)}
                 className="h-11 w-[118px]"
               >
-                {getValues('bankName') ? getValues('bankName') : '은행 선택'}
+                {bankText}
               </button>
               <DragModalComponent
                 isOpen={isDragModalOpen}
@@ -152,6 +170,7 @@ export default function MyUpdatePage() {
                         onClick={() => {
                           console.log(bank.bankName);
                           setValue('bankName', bank.bankName);
+                          setBankText(bank.bankName);
                           setIsDragModalOpen(false);
                         }}
                         className="flex flex-col items-center justify-center rounded-lg border py-4"

@@ -39,6 +39,8 @@ export const usePopUpId = (id: string) => {
     queryKey: ['popUp', id],
     queryFn: () => fetchSpaceId(id),
     initialData: initialData,
+    staleTime: 1000 * 60 * 5,
+    refetchOnMount: 'always',
     select: (data) => ({
       name: data.name,
       description: data.description,

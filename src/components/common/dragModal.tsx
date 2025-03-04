@@ -23,10 +23,14 @@ export default function DragModalComponent({ isOpen, onClose, children }: DragMo
   // 높이 조절 함수
   const updateHeight = useCallback(
     (deltaY: number) => {
-      if (!modalRef.current || !contentRef.current) return;
+      if (!contentRef.current) return;
 
-      const contentHeight = (contentRef.current.scrollHeight / window.innerHeight) * 100;
-      const maxAllowedHeight = Math.min(80, contentHeight); // 최대 80%까지 확장 가능
+      // children의 실제 높이 (px 단위)
+      const contentHeightPx = contentRef.current.scrollHeight;
+      const contentHeightVh = (contentHeightPx / window.innerHeight) * 100; // vh 변환
+
+      // 최대 허용 높이: contentHeightVh와 80vh 중 작은 값
+      const maxAllowedHeight = Math.min(80, contentHeightVh);
       const newHeight = Math.min(
         maxAllowedHeight,
         Math.max(40, modalHeight - (deltaY / window.innerHeight) * 100),
@@ -35,7 +39,7 @@ export default function DragModalComponent({ isOpen, onClose, children }: DragMo
       setModalHeight(newHeight);
     },
     [modalHeight],
-  ); // modalHeight를 의존성에 추가
+  );
 
   // 마우스 이벤트 핸들러
   const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -50,7 +54,7 @@ export default function DragModalComponent({ isOpen, onClose, children }: DragMo
       setStartY(e.clientY);
     },
     [isDragging, startY, updateHeight],
-  ); // updateHeight를 의존성에 추가
+  );
 
   const handleMouseUp = useCallback(() => {
     setIsDragging(false);
@@ -70,7 +74,7 @@ export default function DragModalComponent({ isOpen, onClose, children }: DragMo
       setStartY(e.touches[0].clientY);
     },
     [isDragging, startY, updateHeight],
-  ); // updateHeight를 의존성에 추가
+  );
 
   const handleTouchEnd = useCallback(() => {
     setIsDragging(false);
@@ -119,7 +123,13 @@ export default function DragModalComponent({ isOpen, onClose, children }: DragMo
         onMouseDown={handleMouseDown}
         onTouchStart={handleTouchStart} // 모바일 터치 이벤트 추가
       >
-        <div ref={contentRef} className="overflow-auto text-black">
+        <div
+          ref={contentRef}
+          className="overflow-auto text-black"
+          style={{
+            maxHeight: `calc(${modalHeight}vh - 20px)`, // 모달 내부 최대 높이 설정
+          }}
+        >
           {children}
         </div>
       </div>
