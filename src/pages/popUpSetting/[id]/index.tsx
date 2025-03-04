@@ -13,13 +13,12 @@ export default function PopUpSettingPage() {
   const isEditMode = mode === 'edit';
 
   const { data, isFetching } = usePopUpId(id);
-  console.log(data);
 
   return (
     <>
       {isFetching ? (
         <div className="flex h-screen flex-col items-center justify-center">
-          <Image src={IMAGES.DiceLoading} alt="loading" />
+          <Image src={IMAGES.DiceLoading} priority alt="loading" />
         </div>
       ) : (
         <PopUpSettingComponent id={id} isEditMode={isEditMode} editData={data} />

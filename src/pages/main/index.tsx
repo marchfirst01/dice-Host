@@ -30,7 +30,7 @@ export default function MainPage() {
     <MainLayout>
       {isFetching ? (
         <div className="flex h-screen flex-col items-center justify-center">
-          <Image src={IMAGES.DiceLoading} alt="loading" />
+          <Image src={IMAGES.DiceLoading} priority alt="loading" />
         </div>
       ) : (
         (mainPageType === 'popUp' && <PopUpPage hostSpaceData={hostSpaceData} />) ||

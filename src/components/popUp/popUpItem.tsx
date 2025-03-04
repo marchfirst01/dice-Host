@@ -28,8 +28,8 @@ export default function PopUpItem({
           className="aspect-[3/2] rounded-t-lg"
           src={storeData.imageUrl}
           alt={storeData.name}
-          layout="fill"
-          objectFit="cover"
+          fill
+          style={{ objectFit: 'cover' }}
         />
       </div>
       <div className="relative flex flex-col px-4 pb-4 pt-2">

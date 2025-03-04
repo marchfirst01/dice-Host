@@ -105,12 +105,12 @@ export default function PopUpSettingComponent({
 
   // 폼 제출
   const onSubmit: SubmitHandler<PopUpFormData> = async (formData: PopUpFormData) => {
-    console.log('submit form', formData);
-
     if (isEditMode && id) {
       try {
-        await fetchSpaceIdUpdate(id, formData);
-        router.push(`/popUp/${id}`);
+        const res = await fetchSpaceIdUpdate(id, formData);
+        if (res) {
+          router.push(`/popUp/${id}`);
+        }
       } catch (error) {
         console.log(error);
         alert(error);
