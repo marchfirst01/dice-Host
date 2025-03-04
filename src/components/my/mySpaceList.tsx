@@ -9,7 +9,7 @@ function MySpaceItemComponent({ imageUrl, id }: { imageUrl: string; id: number }
     <div className="flex size-20 shrink-0 cursor-pointer items-center justify-center overflow-hidden rounded-xl">
       <Image
         onClick={() => router.push(`popUp/${id}`)}
-        className="object-fit size-full"
+        className="size-full object-cover"
         src={imageUrl}
         alt="spaceItem"
         width={80}

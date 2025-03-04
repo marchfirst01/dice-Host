@@ -41,7 +41,7 @@ export default function App({ Component, pageProps }: AppProps) {
     if (isLoggedIn && router.pathname.startsWith('/member')) {
       router.push('/');
     }
-  }, [router]);
+  }, [isLoggedIn, router]);
 
   return (
     <QueryClientProvider client={queryClient}>
