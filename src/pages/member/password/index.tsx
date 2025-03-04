@@ -123,7 +123,6 @@ function ResetPassword() {
     setIsLoading(true);
     try {
       const res = await fetchPasswordReset(code, email);
-      console.log(res);
       setTempPw(res.tempPassword);
     } catch (error) {
       console.log(error);

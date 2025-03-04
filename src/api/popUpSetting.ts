@@ -59,8 +59,6 @@ export const fetchSpaceRegister = async (formData: PopUpFormData) => {
     discountRate: Number(formData.discountRate),
   };
 
-  console.log(registerData);
-
   try {
     const res = await PostAxiosInstance(`/space/register`, registerData);
     if (res.status !== 201) throw new Error('Failed to fetch posts');
@@ -72,7 +70,6 @@ export const fetchSpaceRegister = async (formData: PopUpFormData) => {
 
 export const fetchSpaceIdUpdate = async (id: string, editData: PopUpFormData) => {
   const imageUrlsRes = await uploadImage(editData.imageList);
-  // const tempActivated = true;
   const registerData: PopUpRegisterResponse = {
     ...editData,
     imageUrls: imageUrlsRes,
@@ -85,7 +82,6 @@ export const fetchSpaceIdUpdate = async (id: string, editData: PopUpFormData) =>
     details: editData.details,
     isActivated: editData.isActivated,
   };
-  console.log('registerData', registerData);
   const res = await PostAxiosInstance(`/space/update/${id}`, registerData);
   console.log(res);
 };

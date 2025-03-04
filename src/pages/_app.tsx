@@ -50,7 +50,6 @@ export default function App({ Component, pageProps }: AppProps) {
         strategy="lazyOnload" // 비동기적으로 로드
         onLoad={() => {
           setIsMapScriptLoaded(true); // 스크립트 로드 완료 시 상태 업데이트
-          console.log('Naver Maps script loaded successfully.');
         }}
       />
       {loading || !isMapScriptLoaded ? ( // 지도 스크립트가 로드되었을 때만 페이지를 렌더링

@@ -32,7 +32,11 @@ export default function GeocodeModalComponent({
       const result = response.addresses[0];
       const jibunAddress = result.jibunAddress;
       const roadAddress = result.roadAddress;
-      const sido = result.addressElements[0].longName;
+      // 서울특별시 -> 서울로 저장
+      const sido =
+        result.addressElements[0].longName === '서울특별시'
+          ? '서울'
+          : result.addressElements[0].longName;
       const sigugun = result.addressElements[1].longName;
       const postalCode = result.addressElements[8].longName;
       // x: longitude(경도), y: latitude(위도)
@@ -55,7 +59,6 @@ export default function GeocodeModalComponent({
   };
 
   const handleClickAddress = (address: Address) => {
-    console.log('latitude', address.latitude, 'longitude', address.longitude);
     setSelectedAddress(address);
     setGeocodeModalOpen(false);
     setValue('address', address.roadAddress);
