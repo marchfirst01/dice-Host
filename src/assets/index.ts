@@ -61,16 +61,6 @@ const BANK = [
   { bankImage: BankSinhan, bankName: '신한' },
   { bankImage: BankToss, bankName: '토스뱅크' },
   { bankImage: BankWoori, bankName: '우리' },
-  // 임시 테스트용
-  { bankImage: BankHana, bankName: '하나' },
-  { bankImage: BankIbk, bankName: 'IBK기업' },
-  { bankImage: BankKakao, bankName: '카카오뱅크' },
-  { bankImage: BankKookmin, bankName: 'KB국민' },
-  { bankImage: BankNh, bankName: 'NH농협' },
-  { bankImage: BankSaemaeul, bankName: '새마을' },
-  { bankImage: BankSinhan, bankName: '신한' },
-  { bankImage: BankToss, bankName: '토스뱅크' },
-  { bankImage: BankWoori, bankName: '우리' },
 ];
 const IMAGES = {
   // common/arrow
