@@ -25,12 +25,17 @@ export default function MyUpdatePage() {
     formState: { errors },
   } = useForm<HostInfoForm>();
 
+  const [bankText, setBankText] = useState(
+    defaultHostInfo.bankName ? defaultHostInfo.bankName : '은행 선택',
+  );
+
   useEffect(() => {
     setValue('name', defaultHostInfo.name);
     setValue('email', defaultHostInfo.email);
     setValue('phone', defaultHostInfo.phone);
     setValue('accountNumber', defaultHostInfo.accountNumber ? defaultHostInfo.accountNumber : null);
     setValue('bankName', defaultHostInfo.bankName ? defaultHostInfo.bankName : null);
+    setBankText(defaultHostInfo.bankName ? defaultHostInfo.bankName : '은행 선택');
   }, [setValue, defaultHostInfo]);
 
   const [phoneChange, setPhoneChange] = useState(true);
@@ -126,7 +131,7 @@ export default function MyUpdatePage() {
                 onClick={() => setIsDragModalOpen(true)}
                 className="h-11 w-[118px]"
               >
-                {getValues('bankName') ? getValues('bankName') : '은행 선택'}
+                {bankText}
               </button>
               <DragModalComponent
                 isOpen={isDragModalOpen}
@@ -152,6 +157,7 @@ export default function MyUpdatePage() {
                         onClick={() => {
                           console.log(bank.bankName);
                           setValue('bankName', bank.bankName);
+                          setBankText(bank.bankName);
                           setIsDragModalOpen(false);
                         }}
                         className="flex flex-col items-center justify-center rounded-lg border py-4"
