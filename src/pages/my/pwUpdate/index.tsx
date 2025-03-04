@@ -20,7 +20,6 @@ export default function PwUpdatePage() {
 
   const onSubmit = async (updatePw: PwResetForm) => {
     if (updatePw.password === updatePw.new_password) {
-      console.log(updatePw);
       setModalText('현재 비밀번호와 다른 비밀번호를 설정해주세요.');
       setIsCheckModalOpen(true);
       return;

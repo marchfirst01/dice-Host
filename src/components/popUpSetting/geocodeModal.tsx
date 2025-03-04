@@ -21,6 +21,7 @@ export default function GeocodeModalComponent({
 }) {
   const [searchAddress, setSearchAddress] = useState('');
   const [resultAddress, setResultAddress] = useState<Address[] | null>([]);
+  const [searchError, setSearchError] = useState(false);
 
   const { setSelectedAddress } = useGeocodeStore();
 
@@ -29,10 +30,15 @@ export default function GeocodeModalComponent({
 
     // TODO: 검색 결과 여러 개 표시 - 현재는 한 개의 데이터만 표시됨 ex) 사가정로 검색 -> 사가정로 1, 사가정로 2 ... 등 여러 결과가 표시돼야함
     if (response.status === 'OK' && response.meta.totalCount > 0) {
+      setSearchError(false);
       const result = response.addresses[0];
       const jibunAddress = result.jibunAddress;
       const roadAddress = result.roadAddress;
-      const sido = result.addressElements[0].longName;
+      // 서울특별시 -> 서울로 저장
+      const sido =
+        result.addressElements[0].longName === '서울특별시'
+          ? '서울'
+          : result.addressElements[0].longName;
       const sigugun = result.addressElements[1].longName;
       const postalCode = result.addressElements[8].longName;
       // x: longitude(경도), y: latitude(위도)
@@ -51,11 +57,12 @@ export default function GeocodeModalComponent({
       ]);
     } else {
       console.error('주소를 찾을 수 없습니다.');
+      setSearchError(true);
+      console.log(searchError);
     }
   };
 
   const handleClickAddress = (address: Address) => {
-    console.log('latitude', address.latitude, 'longitude', address.longitude);
     setSelectedAddress(address);
     setGeocodeModalOpen(false);
     setValue('address', address.roadAddress);
@@ -106,6 +113,11 @@ export default function GeocodeModalComponent({
               ))
             ) : (
               <div className="p-6">
+                {searchError && (
+                  <p className="mb-2 font-SUB2 text-SUB2 leading-SUB2">
+                    입력하신 주소를 찾을 수 없습니다.
+                  </p>
+                )}
                 <p className="font-H2 text-H2 leading-H2">tip</p>
                 <p className="mt-1">
                   아래와 같은 조합으로 검색을 하시면 더 정확한 결과과 검색됩니다.

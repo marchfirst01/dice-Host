@@ -38,7 +38,7 @@ export default function ReservationItemComponent({
               src={reservationItem.imageUrl}
               alt="image"
               fill={true}
-              objectFit="cover"
+              style={{ objectFit: 'cover' }}
             />
           </div>
         </div>

@@ -168,7 +168,6 @@ export default function MyUpdatePage() {
                       <div
                         key={index}
                         onClick={() => {
-                          console.log(bank.bankName);
                           setValue('bankName', bank.bankName);
                           setBankText(bank.bankName);
                           setIsDragModalOpen(false);

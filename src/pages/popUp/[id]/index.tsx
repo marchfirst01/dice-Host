@@ -34,8 +34,6 @@ export default function PopUpDetailPage({
   const [isDescriptionDetailView, setIsDescriptionDetailView] = useState<boolean>(false);
   const [isUsageDetailView, setIsUsageDetailView] = useState<boolean>(false);
 
-  console.log(initialData);
-
   useEffect(() => {
     const mapDiv = document.getElementById('map');
     if (mapDiv && typeof naver !== 'undefined') {
@@ -67,7 +65,7 @@ export default function PopUpDetailPage({
           {initialData.imageUrls.map((image, index) => {
             return (
               <SwiperSlide key={index} className="aspect-[3/2] w-full">
-                <Image src={image} alt="image" layout="fill" objectFit="cover" />
+                <Image src={image} alt="image" fill style={{ objectFit: 'cover' }} />
               </SwiperSlide>
             );
           })}
