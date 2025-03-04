@@ -83,5 +83,5 @@ export const fetchSpaceIdUpdate = async (id: string, editData: PopUpFormData) =>
     isActivated: editData.isActivated,
   };
   const res = await PostAxiosInstance(`/space/update/${id}`, registerData);
-  console.log(res);
+  if (res.status === 200) return true;
 };

@@ -11,7 +11,13 @@ export default function Header() {
     <div className="relative h-[214px] w-full">
       <div className="absolute -left-5 top-0 z-10 h-full w-screen max-w-[400px] bg-black opacity-40" />
       <div className="absolute -left-5 aspect-[3/2] h-[214px] w-screen max-w-[400px]">
-        <Image src={IMAGES.HeaderBack} layout="fill" objectFit="cover" alt="배경 이미지" />
+        <Image
+          src={IMAGES.HeaderBack}
+          fill
+          priority
+          style={{ objectFit: 'cover' }}
+          alt="배경 이미지"
+        />
       </div>
       <div className="absolute top-[63px] w-full border-stroke px-5">
         <div className="absolute z-20 w-full pr-10">

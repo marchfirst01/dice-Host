@@ -18,7 +18,7 @@ export default function PopUpSettingPage() {
     <>
       {isFetching ? (
         <div className="flex h-screen flex-col items-center justify-center">
-          <Image src={IMAGES.DiceLoading} alt="loading" />
+          <Image src={IMAGES.DiceLoading} priority alt="loading" />
         </div>
       ) : (
         <PopUpSettingComponent id={id} isEditMode={isEditMode} editData={data} />

@@ -54,7 +54,7 @@ export default function App({ Component, pageProps }: AppProps) {
       />
       {loading || !isMapScriptLoaded ? ( // 지도 스크립트가 로드되었을 때만 페이지를 렌더링
         <div className="flex h-screen flex-col items-center justify-center">
-          <Image src={IMAGES.DiceLoading} alt="loading" />
+          <Image src={IMAGES.DiceLoading} priority alt="loading" />
         </div>
       ) : (
         <Component {...pageProps} />
