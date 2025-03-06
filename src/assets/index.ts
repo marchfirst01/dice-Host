@@ -8,6 +8,8 @@ import BankSaemaeul from '@assets/bank/bank_saemaeul.svg';
 import BankSinhan from '@assets/bank/bank_sinhan.svg';
 import BankToss from '@assets/bank/bank_toss.svg';
 import BankWoori from '@assets/bank/bank_woori.svg';
+// chat
+import ChatBlack from '@assets/chat/chatBlack.svg';
 // common/arrow
 import ArrowBackBlack from '@assets/common/arrow/arrow-back-black.svg';
 import ArrowBackWhite from '@assets/common/arrow/arrow-back-white.svg';
@@ -75,6 +77,8 @@ const IMAGES = {
   DiceWhite,
   LogoBlack,
   LogoWhite,
+  //chat
+  ChatBlack,
   // mainFooter
   MyBlack,
   MyGray,
