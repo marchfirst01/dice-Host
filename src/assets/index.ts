@@ -10,6 +10,7 @@ import BankToss from '@assets/bank/bank_toss.svg';
 import BankWoori from '@assets/bank/bank_woori.svg';
 // chat
 import ChatBlack from '@assets/chat/chatBlack.svg';
+import ReportGray from '@assets/chat/report-gray.svg';
 // common/arrow
 import ArrowBackBlack from '@assets/common/arrow/arrow-back-black.svg';
 import ArrowBackWhite from '@assets/common/arrow/arrow-back-white.svg';
@@ -79,6 +80,7 @@ const IMAGES = {
   LogoWhite,
   //chat
   ChatBlack,
+  ReportGray,
   // mainFooter
   MyBlack,
   MyGray,

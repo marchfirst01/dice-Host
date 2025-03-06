@@ -1,18 +1,15 @@
 import { IMAGES } from '@assets/index';
 import { useMessageHostList } from '@hooks/useChat';
-import { formatMessageTimestamp } from '@utils/formatMessageTimeStamp';
+import { formatMessageListTimestamp } from '@utils/formatMessageTimeStamp';
 
-import React, { useState } from 'react';
+import React from 'react';
 
-import { dummy } from './dummy';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 
 export default function ChatPage() {
-  const { data } = useMessageHostList();
   const router = useRouter();
-
-  const [chatList] = useState(dummy);
+  const { data } = useMessageHostList();
 
   console.log(data);
   return (
@@ -31,10 +28,15 @@ export default function ChatPage() {
           <Image src={IMAGES.ChatBlack} alt="chat" />
         </h1>
         <section className="flex flex-col gap-3">
-          {chatList ? (
-            chatList.map((chat) => (
+          {data ? (
+            data.map((chat) => (
               <div
-                onClick={() => console.log(chat.id)}
+                onClick={() =>
+                  router.push({
+                    pathname: `/chat/${chat.id}`,
+                    query: { spaceName: chat.spaceName },
+                  })
+                }
                 className="flex w-full cursor-pointer flex-row py-[13px]"
               >
                 <div className="relative size-[54px] overflow-hidden rounded-full">
@@ -54,7 +56,9 @@ export default function ChatPage() {
                   </p>
                 </div>
                 <div className="flex w-[60px] flex-col items-end justify-between font-CAP2 text-CAP2 leading-CAP2">
-                  <p className="text-light_gray">{formatMessageTimestamp(chat.lastMessageAt)}</p>
+                  <p className="text-light_gray">
+                    {formatMessageListTimestamp(chat.lastMessageAt)}
+                  </p>
                   <span className="rounded-full bg-red px-2 py-1 text-center text-white">
                     {chat.unreadCount}
                   </span>
