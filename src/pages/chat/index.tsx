@@ -12,6 +12,7 @@ export default function ChatPage() {
   const { data } = useMessageHostList();
 
   console.log(data);
+
   return (
     <div>
       <header className="flex h-12 w-full flex-row px-5">

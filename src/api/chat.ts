@@ -1,4 +1,4 @@
-import { GetAxiosInstance } from '@axios/axios.method';
+import { GetAxiosInstance, PostAxiosInstance } from '@axios/axios.method';
 import { ChatList, PaginationResponse } from '@type/chat';
 
 export const fetchMessageHostList = async () => {
@@ -8,5 +8,11 @@ export const fetchMessageHostList = async () => {
 
 export const fetchMessageRoomId = async (roomId: number) => {
   const res = await GetAxiosInstance<PaginationResponse>(`message/${roomId}`);
+  return res.data;
+};
+
+export const fetchSendMessage = async (roomId: number, content: string) => {
+  const type = 'string';
+  const res = await PostAxiosInstance(`message/${roomId}`, { roomId, content, type });
   return res.data;
 };
