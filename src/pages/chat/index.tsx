@@ -35,7 +35,7 @@ export default function ChatPage() {
                 onClick={() =>
                   router.push({
                     pathname: `/chat/${chat.id}`,
-                    query: { spaceName: chat.spaceName },
+                    query: { name: chat.otherName },
                   })
                 }
                 className="flex w-full cursor-pointer flex-row py-[13px]"
@@ -50,7 +50,7 @@ export default function ChatPage() {
                 </div>
                 <div className="ml-2 mr-1 flex flex-grow flex-col justify-between py-[2.5px]">
                   <p className="font-SUB3 text-SUB3 leading-SUB3 text-dark_gray">
-                    {chat.spaceName}
+                    {chat.otherName}
                   </p>
                   <p className="font-BODY2 text-BODY2 leading-BODY2 text-medium_gray">
                     {chat.lastMessage}
@@ -60,9 +60,11 @@ export default function ChatPage() {
                   <p className="text-light_gray">
                     {formatMessageListTimestamp(chat.lastMessageAt)}
                   </p>
-                  <span className="rounded-full bg-red px-2 py-1 text-center text-white">
-                    {chat.unreadCount}
-                  </span>
+                  {chat.unreadCount !== 0 && (
+                    <span className="rounded-full bg-red px-2 py-1 text-center text-white">
+                      {chat.unreadCount}
+                    </span>
+                  )}
                 </div>
               </div>
             ))
