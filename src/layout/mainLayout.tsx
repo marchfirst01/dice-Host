@@ -33,7 +33,7 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
           />
         ) : (
           <Image
-            onClick={() => console.log('쪽지 페이지 이동')}
+            onClick={() => router.push('/chat')}
             className="cursor-pointer"
             src={IMAGES.SendGray}
             width={24}
