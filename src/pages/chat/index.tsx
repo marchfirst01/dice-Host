@@ -32,6 +32,7 @@ export default function ChatPage() {
           {data ? (
             data.map((chat) => (
               <div
+                key={chat.id}
                 onClick={() =>
                   router.push({
                     pathname: `/chat/${chat.id}`,
@@ -48,7 +49,7 @@ export default function ChatPage() {
                     style={{ objectFit: 'cover' }}
                   />
                 </div>
-                <div className="ml-2 mr-1 flex flex-grow flex-col justify-between py-[2.5px]">
+                <div className="ml-2 mr-1 flex grow flex-col justify-between py-[2.5px]">
                   <p className="font-SUB3 text-SUB3 leading-SUB3 text-dark_gray">
                     {chat.otherName}
                   </p>

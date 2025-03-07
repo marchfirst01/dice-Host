@@ -18,7 +18,7 @@ export default function ChatLayout({ children }: { children: React.ReactNode }) 
           src={IMAGES.ArrowBackBlack}
           alt="back"
         />
-        <p className="flex-grow text-center font-SUB2 text-SUB2 leading-SUB2">{name}</p>
+        <p className="grow text-center font-SUB2 text-SUB2 leading-SUB2">{name}</p>
         <Image src={IMAGES.ReportGray} alt="report" />
       </header>
       <div className="mx-5 my-6 rounded-lg bg-white p-4 font-CAP1 text-CAP1 leading-CAP1 text-deep_gray">
