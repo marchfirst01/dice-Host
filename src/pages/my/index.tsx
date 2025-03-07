@@ -58,7 +58,7 @@ export default function MyPage({
           </div>
         </div>
         <div className="flex flex-col gap-6 font-SUB3 text-SUB3 leading-SUB3 text-deep_gray">
-          <p onClick={() => router.push('/')} className="cursor-pointer">
+          <p onClick={() => router.push('/chat')} className="cursor-pointer">
             쪽지함
           </p>
           <hr />
