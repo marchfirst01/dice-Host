@@ -21,11 +21,19 @@ export default function PopUpItem({
       className="relative aspect-[3/2] w-full cursor-pointer rounded-lg border border-stroke"
     >
       <div
-        className={`${!storeData.isActivated && 'absolute z-10 size-full rounded-lg bg-dark_gray/50'}`}
-      />
+        className={`${!storeData.isActivated && 'absolute z-10 size-full rounded-lg bg-dark_gray/30'}`}
+      ></div>
       <div className="relative h-[180px]">
+        {!storeData.isActivated && (
+          <div className="absolute left-1/2 top-1/2 z-20 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center rounded-lg bg-black/50 px-4 py-3">
+            <p className="font-SUB2 text-SUB2 leading-SUB2 text-white">비공개 상태</p>
+            <p className="font-BODY2 text-BODY2 leading-BODY2 text-stroke">
+              게스트에게 노출되지 않음
+            </p>
+          </div>
+        )}
         <Image
-          className="aspect-[3/2] rounded-t-lg"
+          className={`aspect-[3/2] rounded-t-lg ${!storeData.isActivated && 'saturate-0'}`}
           src={storeData.imageUrl}
           alt={storeData.name}
           fill
@@ -38,14 +46,28 @@ export default function PopUpItem({
             <p className="font-CAP1 text-CAP1 leading-CAP1 text-medium_gray">
               {storeData.city} · {storeData.district}
             </p>
-            <p className="font-SUB2 text-SUB2 leading-SUB2">{storeData.name}</p>
+            <p
+              className={`font-SUB2 text-SUB2 leading-SUB2 ${!storeData.isActivated && 'text-deep_gray'}`}
+            >
+              {storeData.name}
+            </p>
           </div>
           <div className="flex flex-col items-center">
-            <Image src={IMAGES.HeartFull} alt="heart" />
-            <p className="font-CAP2 text-CAP2 leading-CAP2 text-purple">{storeData.likeCount}</p>
+            {!storeData.isActivated ? (
+              <Image src={IMAGES.HeartDisabled} alt="heart" />
+            ) : (
+              <Image src={IMAGES.HeartFull} alt="heart" />
+            )}
+            <p
+              className={`font-CAP2 text-CAP2 leading-CAP2 ${!storeData.isActivated ? 'text-light_gray' : 'text-purple'}`}
+            >
+              {storeData.likeCount}
+            </p>
           </div>
         </div>
-        <p className="font-CAP1 text-CAP1 leading-CAP1 text-medium_gray">
+        <p
+          className={`font-CAP1 text-CAP1 leading-CAP1 ${!storeData.isActivated ? 'text-light_gray' : 'text-medium_gray'}`}
+        >
           {storeData.size}m² · {storeData.capacity}명 수용가능
         </p>
         <div className="flex flex-col items-end">
@@ -56,11 +78,15 @@ export default function PopUpItem({
             </p>
           </div>
           <div className="flex flex-row items-center gap-[6px]">
-            <p className="font-SUB2 text-SUB2 leading-SUB2 text-purple">
+            <p
+              className={`font-SUB2 text-SUB2 leading-SUB2 ${!storeData.isActivated ? 'text-medium_gray' : 'text-purple'}`}
+            >
               {storeData.discountRate}%
             </p>
             {/* 추후 숫자 포맷 함수 추가 필요 */}
-            <p className="font-SUB1 text-SUB1 leading-SUB1">
+            <p
+              className={`font-SUB1 text-SUB1 leading-SUB1 ${!storeData.isActivated && 'text-deep_gray'}`}
+            >
               {formatNumber(
                 formatDiscountPrice({
                   price: storeData.pricePerDay,

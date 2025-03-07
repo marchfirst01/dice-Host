@@ -8,6 +8,11 @@ import BankSaemaeul from '@assets/bank/bank_saemaeul.svg';
 import BankSinhan from '@assets/bank/bank_sinhan.svg';
 import BankToss from '@assets/bank/bank_toss.svg';
 import BankWoori from '@assets/bank/bank_woori.svg';
+// chat
+import CameraGray from '@assets/chat/camera-gray.svg';
+import ChatBlack from '@assets/chat/chatBlack.svg';
+import ReportGray from '@assets/chat/report-gray.svg';
+import SendGrayFull from '@assets/chat/send-gray-full.svg';
 // common/arrow
 import ArrowBackBlack from '@assets/common/arrow/arrow-back-black.svg';
 import ArrowBackWhite from '@assets/common/arrow/arrow-back-white.svg';
@@ -37,6 +42,7 @@ import Delete from '@assets/member/delete.svg';
 import EyeOff from '@assets/member/eye-off.svg';
 import EyeOn from '@assets/member/eye-on.svg';
 // popUp
+import HeartDisabled from '@assets/popUp/HeartDisabled.svg';
 import FloatingAddButton from '@assets/popUp/floatingAddButton.svg';
 import HeaderBack from '@assets/popUp/headerBack.svg';
 import HeartFull from '@assets/popUp/heart-full.svg';
@@ -74,6 +80,11 @@ const IMAGES = {
   DiceWhite,
   LogoBlack,
   LogoWhite,
+  //chat
+  CameraGray,
+  ChatBlack,
+  ReportGray,
+  SendGrayFull,
   // mainFooter
   MyBlack,
   MyGray,
@@ -95,6 +106,7 @@ const IMAGES = {
   FloatingAddButton,
   HeaderBack,
   HeartFull,
+  HeartDisabled,
   Search,
   // popUpDetail
   Globe,
