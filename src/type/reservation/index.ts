@@ -22,6 +22,7 @@ export type ReservationStatus = 'PENDING' | 'ACCEPT' | 'DECLINE' | 'CANCEL';
 export type Reservation = {
   reservationId: number;
   spaceName: string;
+  brandName: string;
   startDate: string; // ISO 날짜 문자열
   endDate: string; // ISO 날짜 문자열
   message: string;

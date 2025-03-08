@@ -1,5 +1,6 @@
 import { IMAGES } from '@assets/index';
 import { Reservation, ReservationStatus } from '@type/reservation';
+import { calculateDaysBetween } from '@utils/calculateDays';
 import { formatNumber } from '@utils/formatNumber';
 
 import React from 'react';
@@ -59,7 +60,7 @@ export default function ReservationItemComponent({
             <p className="font-CAP1 text-CAP1 leading-CAP1 text-deep_gray">
               {reservationItem.startDate} ~ {reservationItem.endDate}
               <span className={`ml-2 ${status === 'CANCEL' ? 'text-deep_gray' : 'text-purple'}`}>
-                ({reservationItem.date}일)
+                ({calculateDaysBetween(reservationItem.startDate, reservationItem.endDate)}일)
               </span>
             </p>
           </div>
