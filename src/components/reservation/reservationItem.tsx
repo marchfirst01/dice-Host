@@ -1,10 +1,11 @@
 import { IMAGES } from '@assets/index';
-import { Reservation, ReservationItem, ReservationStatus } from '@type/reservation';
+import { Reservation, ReservationStatus } from '@type/reservation';
 import { formatNumber } from '@utils/formatNumber';
 
 import React from 'react';
 
 import Image from 'next/image';
+import { fetchReservationAccept, fetchReservationDecline } from 'src/api/reservation';
 
 export default function ReservationItemComponent({
   reservationItem,
@@ -13,6 +14,15 @@ export default function ReservationItemComponent({
   reservationItem: Reservation;
   status: ReservationStatus;
 }) {
+  const handleReservationAccept = async (reservationId: number) => {
+    const res = await fetchReservationAccept(reservationId);
+    if (res) alert('예약 수락');
+  };
+  const handleReservationDecline = async (reservationId: number) => {
+    const res = await fetchReservationDecline(reservationId);
+    if (res) alert('예약 거절');
+  };
+
   return (
     <div>
       <p className="flex justify-end font-CAP2 text-CAP2 leading-CAP2 text-light_gray">
@@ -70,7 +80,10 @@ export default function ReservationItemComponent({
             <button className="rounded-lg border border-stroke px-[32.75px] py-[15.5px] font-BTN1 text-BTN1 leading-BTN1 text-medium_gray">
               대기 거절
             </button>
-            <button className="rounded-lg border border-stroke bg-black px-[32.75px] py-[15.5px] font-BTN1 text-BTN1 leading-BTN1 text-white">
+            <button
+              onClick={() => handleReservationAccept(reservationItem.reservationId)}
+              className="rounded-lg border border-stroke bg-black px-[32.75px] py-[15.5px] font-BTN1 text-BTN1 leading-BTN1 text-white"
+            >
               예약 수락
             </button>
           </div>
@@ -80,12 +93,15 @@ export default function ReservationItemComponent({
             <button className="rounded-lg border p-[14px]">
               <Image src={IMAGES.SendBlack} alt="send" width={24} height={24} />
             </button>
-            <button className="w-full rounded-lg border border-stroke font-BTN1 text-BTN1 leading-BTN1 text-medium_gray">
+            <button
+              onClick={() => handleReservationDecline(reservationItem.reservationId)}
+              className="w-full rounded-lg border border-stroke font-BTN1 text-BTN1 leading-BTN1 text-medium_gray"
+            >
               예약 거절
             </button>
           </div>
         )}
-        {status === 'CANCEL' && (
+        {status === 'DECLINE' && (
           <button className="w-full rounded-lg bg-light_gray py-[15.5px] font-BTN1 text-BTN1 leading-BTN1 text-white">
             예약 취소됨
           </button>
