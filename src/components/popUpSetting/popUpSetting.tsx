@@ -39,10 +39,11 @@ export default function PopUpSettingComponent({
     defaultValues: editData,
   });
 
-  const [isOn, setIsOn] = useState(true);
+  const [isOn, setIsOn] = useState(editData.isActivated);
   useEffect(() => {
     setValue('isActivated', isOn);
-  }, [isOn, setValue]);
+    setIsOn(isOn);
+  }, [isOn, setIsOn, setValue]);
 
   const { selectedAddress, setSelectedAddress } = useGeocodeStore();
 
