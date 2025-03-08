@@ -2,7 +2,6 @@ import { GetAxiosInstance, PostAxiosInstance } from '@axios/axios.method';
 import { ReservationResponse } from '@type/reservation';
 
 export const fetchReservationList = async (status: string) => {
-  console.log(status);
   const res = await GetAxiosInstance<ReservationResponse>(
     `/reservation/host-list?status=${status}`,
   );
