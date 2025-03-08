@@ -179,9 +179,11 @@ export default function PopUpDetailPage({
                 주소 복사
               </p>
             </div>
-            <p className="ml-[26px] font-BODY1 text-BODY1 leading-BODY1 text-medium_gray">
-              · {initialData.detailAddress}
-            </p>
+            {initialData.detailAddress && (
+              <p className="ml-[26px] font-BODY1 text-BODY1 leading-BODY1 text-medium_gray">
+                · {initialData.detailAddress}
+              </p>
+            )}
           </div>
           <div className="h-[160px] w-full rounded-xl border border-stroke bg-light_gray">
             <div id="map" style={{ width: '100%', height: '160px' }} />

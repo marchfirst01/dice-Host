@@ -59,7 +59,7 @@ export default function ReservationItemComponent({
             <p className="font-CAP1 text-CAP1 leading-CAP1 text-semi_light_gray">대여 기간</p>
             <p className="font-CAP1 text-CAP1 leading-CAP1 text-deep_gray">
               {reservationItem.startDate} ~ {reservationItem.endDate}
-              <span className={`ml-2 ${status === 'CANCEL' ? 'text-deep_gray' : 'text-purple'}`}>
+              <span className={`ml-2 ${status === 'DECLINE' ? 'text-deep_gray' : 'text-purple'}`}>
                 ({calculateDaysBetween(reservationItem.startDate, reservationItem.endDate)}일)
               </span>
             </p>
@@ -67,7 +67,7 @@ export default function ReservationItemComponent({
           <div className="mb-4 flex flex-row justify-between">
             <p className="font-CAP1 text-CAP1 leading-CAP1 text-semi_light_gray">총 대여 가격</p>
             <p
-              className={`font-SUB1 text-SUB1 leading-SUB1 ${status === 'CANCEL' && 'text-deep_gray line-through'}`}
+              className={`font-SUB1 text-SUB1 leading-SUB1 ${status === 'DECLINE' && 'text-deep_gray line-through'}`}
             >
               {formatNumber(reservationItem.totalPrice)}원
             </p>

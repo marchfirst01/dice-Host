@@ -7,13 +7,15 @@ import React, { useEffect, useState } from 'react';
 export default function ReservationPage() {
   const [reservationStatus, setReservationStatus] = useState<ReservationStatus>('PENDING');
   const [filterData, setFilterData] = useState<Reservation[] | undefined>([]);
+  const [pendingCount, setPendingCount] = useState(0);
 
   const { data, refetch } = useReservationList(reservationStatus);
-  console.log(data);
-  const pendingCount = data?.content.filter((item) => item.status === 'PENDING').length;
 
   useEffect(() => {
     refetch();
+    if (reservationStatus === 'PENDING') {
+      setPendingCount(data ? data.content.filter((item) => item.status === 'PENDING').length : 0);
+    }
     const filterData = data?.content.filter((status) => status.status === reservationStatus);
     setFilterData(filterData);
   }, [data, reservationStatus]);
@@ -37,7 +39,7 @@ export default function ReservationPage() {
         </button>
         <button
           onClick={() => setReservationStatus('DECLINE')}
-          className={`w-[111.67px] py-3 font-BTN1 text-BTN1 leading-BTN1 ${reservationStatus === 'CANCEL' && 'border-b-2 border-black'}`}
+          className={`w-[111.67px] py-3 font-BTN1 text-BTN1 leading-BTN1 ${reservationStatus === 'DECLINE' && 'border-b-2 border-black'}`}
         >
           예약 취소
         </button>

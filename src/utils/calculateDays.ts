@@ -11,6 +11,3 @@ export function calculateDaysBetween(startDate: string, endDate: string): number
 
   return Math.ceil(diffDays); // 반올림해서 정수 반환
 }
-
-// 사용 예시
-console.log(calculateDaysBetween('2025-03-01', '2025-03-08')); // 7
