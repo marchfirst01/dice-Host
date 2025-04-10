@@ -1,20 +1,20 @@
 import { IMAGES } from '@assets/index';
-import { useHeaderStore } from '@zustands/header/headerStore';
 
 import React from 'react';
 
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 
-// TODO: 삭제
-export default function MainFooterComponent() {
-  const { mainPageType, setMainPageType } = useHeaderStore();
+export default function FooterComponent({ pageType }: { pageType: string }) {
+  const router = useRouter();
+
   return (
     <div className="fixed bottom-0 z-50 flex w-full max-w-[400px] flex-row justify-around border-t border-stroke bg-white py-2">
       <div
-        onClick={() => setMainPageType('popUp')}
+        onClick={() => router.push('/space')}
         className="flex cursor-pointer flex-col items-center gap-2"
       >
-        {mainPageType === 'popUp' ? (
+        {pageType === 'space' ? (
           <Image className="size-6" src={IMAGES.PlaceBlack} alt="place-cion" />
         ) : (
           <Image className="size-6" src={IMAGES.PlaceGray} alt="place-cion" />
@@ -22,10 +22,10 @@ export default function MainFooterComponent() {
         <p>팝업공간</p>
       </div>
       <div
-        onClick={() => setMainPageType('reservation')}
+        onClick={() => router.push('/reservation')}
         className="flex cursor-pointer flex-col items-center gap-2"
       >
-        {mainPageType === 'reservation' ? (
+        {pageType === 'reservation' ? (
           <Image className="size-6" src={IMAGES.ReservationBlack} alt="reservation-icon" />
         ) : (
           <Image className="size-6" src={IMAGES.ReservationGray} alt="reservation-icon" />
@@ -33,10 +33,10 @@ export default function MainFooterComponent() {
         <p>예약관리</p>
       </div>
       <div
-        onClick={() => setMainPageType('my')}
+        onClick={() => router.push('/host')}
         className="flex cursor-pointer flex-col items-center gap-2"
       >
-        {mainPageType === 'my' ? (
+        {pageType === 'host' ? (
           <Image className="size-6" src={IMAGES.MyBlack} alt="my-icon" />
         ) : (
           <Image className="size-6" src={IMAGES.MyGray} alt="my-icon" />
