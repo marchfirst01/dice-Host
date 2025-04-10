@@ -43,7 +43,7 @@ export default function MainPage() {
       <p>login required</p>
       <button
         onClick={() => router.push('/')}
-        className="rounded-lg bg-black px-3 py-2 font-BTN1 text-BTN1 leading-BTN1 text-white"
+        className="text-style-BTN1 rounded-lg bg-black px-3 py-2 text-white"
       >
         main
       </button>

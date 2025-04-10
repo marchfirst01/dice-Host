@@ -24,3 +24,36 @@ body {
 .swiper-pagination {
   @apply absolute bottom-5 left-[80%] w-fit rounded-full bg-[#00000080] px-[9px] py-[1.5px] text-center text-white !important;
 }
+
+@layer components {
+  .text-style-H1 {
+    @apply font-H1 text-H1 leading-H1;
+  }
+  .text-style-H2 {
+    @apply font-H2 text-H2 leading-H2;
+  }
+  .text-style-SUB1 {
+    @apply font-SUB1 text-SUB1 leading-SUB1;
+  }
+  .text-style-SUB2 {
+    @apply font-SUB2 text-SUB2 leading-SUB2;
+  }
+  .text-style-SUB3 {
+    @apply font-SUB3 text-SUB3 leading-SUB3;
+  }
+  .text-style-BODY1 {
+    @apply font-BODY1 text-BODY1 leading-BODY1;
+  }
+  .text-style-BODY2 {
+    @apply font-BODY2 text-BODY2 leading-BODY2;
+  }
+  .text-style-CAP1 {
+    @apply font-CAP1 text-CAP1 leading-CAP1;
+  }
+  .text-style-CAP2 {
+    @apply font-CAP2 text-CAP2 leading-CAP2;
+  }
+  .text-style-BTN1 {
+    @apply font-BTN1 text-BTN1 leading-BTN1;
+  }
+}

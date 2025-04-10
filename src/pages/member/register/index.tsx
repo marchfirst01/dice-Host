@@ -54,7 +54,7 @@ const RegisterPage = () => {
         height={12}
         alt="close"
       />
-      <p className="w-full font-H1 text-H1 leading-H1">회원가입</p>
+      <p className="text-style-H1 w-full">회원가입</p>
       <div className="flex flex-col gap-6 overflow-scroll">
         {/* name */}
         <div className="w-full">
@@ -82,11 +82,9 @@ const RegisterPage = () => {
           />
           {isValid &&
             (emailError ? (
-              <p className="mt-2 font-CAP1 text-CAP1 leading-CAP1 text-red">{emailError}</p>
+              <p className="text-style-CAP1 mt-2 text-red">{emailError}</p>
             ) : (
-              <p className="font-CAP1 text-CAP1 leading-CAP1 text-green">
-                {memberConfig.email.isValid}
-              </p>
+              <p className="text-style-CAP1 text-green">{memberConfig.email.isValid}</p>
             ))}
         </div>
         {/* password */}

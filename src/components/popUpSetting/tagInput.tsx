@@ -52,7 +52,7 @@ export default function TagInputComponent({ control, setValue }: TagInputCompone
           <input
             ref={inputRef}
             defaultValue={JSON.stringify(value)}
-            className="min-h-[44px] w-full rounded-lg border p-4 font-CAP1 text-CAP1 leading-CAP1 placeholder:text-light_gray"
+            className="text-style-CAP1 min-h-[44px] w-full rounded-lg border p-4 placeholder:text-light_gray"
             placeholder="태그 입력 (최대 5개)..."
           />
         );

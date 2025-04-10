@@ -18,10 +18,10 @@ export default function ChatLayout({ children }: { children: React.ReactNode }) 
           src={IMAGES.ArrowBackBlack}
           alt="back"
         />
-        <p className="grow text-center font-SUB2 text-SUB2 leading-SUB2">{name}</p>
+        <p className="text-style-SUB2 grow text-center">{name}</p>
         <Image src={IMAGES.ReportGray} alt="report" />
       </header>
-      <div className="mx-5 my-6 rounded-lg bg-white p-4 font-CAP1 text-CAP1 leading-CAP1 text-deep_gray">
+      <div className="text-style-CAP1 mx-5 my-6 rounded-lg bg-white p-4 text-deep_gray">
         ‘{name}’ 담당자님과의 쪽지가 시작되었습니다. 불필요한 비방과 부적절한 언행은 제재 대상이 될
         수 있습니다.
       </div>

@@ -82,7 +82,7 @@ export default function ImageUploadComponent({
             className="mt-1 flex size-20 shrink-0 cursor-pointer flex-col items-center justify-center rounded-xl border border-light_gray"
           >
             <Image src={IMAGES.ImageUpload} alt="upload" />
-            <div className="mt-0.5 flex flex-row gap-0.5 font-CAP2 text-CAP2 leading-CAP2">
+            <div className="text-style-CAP2 mt-0.5 flex flex-row gap-0.5">
               <p>
                 <span className="text-purple">{files.length}</span> / 10
               </p>

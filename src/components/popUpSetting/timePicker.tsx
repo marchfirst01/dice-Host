@@ -84,7 +84,7 @@ export default function TimePickerComponents({
         return (
           <div
             onClick={() => setOpenTimeModal(!openTimeModal)}
-            className="relative flex h-[44px] w-full items-center rounded-lg border p-4 font-CAP1 text-CAP1 leading-CAP1"
+            className="text-style-CAP1 relative flex h-[44px] w-full items-center rounded-lg border p-4"
           >
             <p className={`${value ? 'text-black' : 'text-light_gray'}`}>
               {value || (type === 'openingTime' ? '시작 시간' : '마감 시간')}

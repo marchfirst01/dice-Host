@@ -26,20 +26,20 @@ export default function ReservationPage() {
       <div className="fixed z-50 flex w-full max-w-[400px] -translate-x-5 flex-row justify-center bg-back_gray">
         <button
           onClick={() => setReservationStatus('PENDING')}
-          className={`w-[111.67px] py-3 font-BTN1 text-BTN1 leading-BTN1 ${reservationStatus === 'PENDING' && 'border-b-2 border-black'}`}
+          className={`text-style-BTN1 w-[111.67px] py-3 ${reservationStatus === 'PENDING' && 'border-b-2 border-black'}`}
         >
           대기중
           <span className="ml-1 rounded-full bg-red px-2 py-[2px] text-white">{pendingCount}</span>
         </button>
         <button
           onClick={() => setReservationStatus('ACCEPT')}
-          className={`w-[111.67px] py-3 font-BTN1 text-BTN1 leading-BTN1 ${reservationStatus === 'ACCEPT' && 'border-b-2 border-black'}`}
+          className={`text-style-BTN1 w-[111.67px] py-3 ${reservationStatus === 'ACCEPT' && 'border-b-2 border-black'}`}
         >
           예약 완료
         </button>
         <button
           onClick={() => setReservationStatus('DECLINE')}
-          className={`w-[111.67px] py-3 font-BTN1 text-BTN1 leading-BTN1 ${reservationStatus === 'DECLINE' && 'border-b-2 border-black'}`}
+          className={`text-style-BTN1 w-[111.67px] py-3 ${reservationStatus === 'DECLINE' && 'border-b-2 border-black'}`}
         >
           예약 취소
         </button>

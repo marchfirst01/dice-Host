@@ -36,18 +36,18 @@ export default function MyPage({
         <div>
           <div className="flex flex-row items-center gap-3">
             <Image src={IMAGES.DiceBlack} alt="profile" width={54} height={54} />
-            <p className="font-SUB1 text-SUB1 leading-SUB1">{hostInfo.name}</p>
+            <p className="text-style-SUB1">{hostInfo.name}</p>
           </div>
           <div>
             <div className="mt-4 flex flex-row items-center justify-between">
               {hostSpaceData && (
-                <p className="font-SUB3 text-SUB3 leading-SUB3">
+                <p className="text-style-SUB3">
                   등록한 공간 <span className="text-purple">{hostSpaceData.length}개</span>
                 </p>
               )}
               <p
                 onClick={() => setMainPageType('popUp')}
-                className="cursor-pointer font-CAP2 text-CAP2 leading-CAP2 text-medium_gray underline"
+                className="text-style-CAP2 cursor-pointer text-medium_gray underline"
               >
                 리스트 바로가기
               </p>
@@ -55,7 +55,7 @@ export default function MyPage({
             <MySpaceListComponent mySpaceList={hostSpaceData} />
           </div>
         </div>
-        <div className="flex flex-col gap-6 font-SUB3 text-SUB3 leading-SUB3 text-deep_gray">
+        <div className="text-style-SUB3 flex flex-col gap-6 text-deep_gray">
           <p onClick={() => router.push('/chat')} className="cursor-pointer">
             쪽지함
           </p>
@@ -86,7 +86,7 @@ export default function MyPage({
         </div>
         <p
           onClick={() => router.push({ pathname: '/my/withDraw', query: { name: hostInfo.name } })}
-          className="cursor-pointer font-SUB3 text-SUB3 leading-SUB3 text-deep_gray"
+          className="text-style-SUB3 cursor-pointer text-deep_gray"
         >
           탈퇴하기
         </p>

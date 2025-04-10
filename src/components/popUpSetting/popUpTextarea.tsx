@@ -22,7 +22,7 @@ export default function PopUpTextareaComponent({
       render={({ field: { onChange, value }, fieldState: { error } }) => (
         <>
           <textarea
-            className="h-40 w-full rounded-lg border border-stroke p-4 font-CAP1 text-CAP1 leading-CAP1 placeholder:font-BODY2 placeholder:text-BODY2 placeholder:leading-BODY2 placeholder:text-light_gray"
+            className="text-style-CAP1 h-40 w-full rounded-lg border border-stroke p-4 placeholder:font-BODY2 placeholder:text-BODY2 placeholder:leading-BODY2 placeholder:text-light_gray"
             onChange={onChange}
             value={typeof value === 'object' ? '' : value}
             placeholder={popUpConfig.placeholder}

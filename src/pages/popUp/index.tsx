@@ -29,7 +29,7 @@ export default function PopUpPage({ hostSpaceData }: { hostSpaceData: HostSpaceD
           {filteredHostSpaceData.length > 0 ? (
             filteredHostSpaceData.map((space) => <PopUpItem key={space.id} storeData={space} />)
           ) : (
-            <p className="font-SUB1 text-SUB1 leading-SUB1">
+            <p className="text-style-SUB1">
               아직 등록한 공간이 없어요!
               <br />
               자신만의 공간을 추가해봐요

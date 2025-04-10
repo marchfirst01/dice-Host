@@ -48,7 +48,7 @@ export default function PwUpdatePage() {
         <div onClick={() => router.back()} className="cursor-pointer p-3">
           <Image src={IMAGES.ArrowBackBlack} alt="back" />
         </div>
-        <p className="grow py-3 text-center font-SUB3 text-SUB3 leading-SUB3">비밀번호 재설정</p>
+        <p className="text-style-SUB3 grow py-3 text-center">비밀번호 재설정</p>
         <div className="w-12" />
       </header>
       <ModalComponent isOpen={isCheckModalOpen} onClose={() => setIsCheckModalOpen(true)}>
@@ -66,7 +66,7 @@ export default function PwUpdatePage() {
           확인
         </button>
       </ModalComponent>
-      <div className="flex flex-col gap-6 px-5 py-6 font-CAP1 text-CAP1 leading-CAP1">
+      <div className="text-style-CAP1 flex flex-col gap-6 px-5 py-6">
         <div>
           <p>현재 비밀번호</p>
           <InputComponent

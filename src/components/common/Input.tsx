@@ -43,9 +43,7 @@ export default function InputComponent<
             onChange={onChange}
             value={value || ''}
           />
-          {error && (
-            <p className="mt-1 font-CAP1 text-CAP1 leading-CAP1 text-red">{error.message}</p>
-          )}
+          {error && <p className="text-style-CAP1 mt-1 text-red">{error.message}</p>}
           {value ? (
             <Image
               onClick={() => onChange('')}

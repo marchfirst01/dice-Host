@@ -15,9 +15,7 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
       <div
         className={`fixed top-0 z-50 flex w-full max-w-[400px] flex-row items-center justify-between px-5 py-4 ${mainPageType === 'my' ? 'bg-white' : 'bg-black'}`}
       >
-        <p
-          className={`font-SUB1 text-SUB1 leading-SUB1 ${mainPageType === 'my' ? 'text-black' : 'text-white'}`}
-        >
+        <p className={`text-style-SUB1 ${mainPageType === 'my' ? 'text-black' : 'text-white'}`}>
           {mainPageType === 'popUp' && '등록한 팝업 공간'}
           {mainPageType === 'reservation' && '예약 관리'}
           {mainPageType === 'my' && '호스트 정보'}

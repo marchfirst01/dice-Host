@@ -133,10 +133,10 @@ export default function PopUpSettingComponent({
       isOn={isOn}
       setIsOn={setIsOn}
     >
-      <section className="flex flex-col gap-6 font-CAP1 text-CAP1 leading-CAP1">
-        <p className="font-SUB1 text-SUB1 leading-SUB1">필수 정보 작성</p>
+      <section className="text-style-CAP1 flex flex-col gap-6">
+        <p className="text-style-SUB1">필수 정보 작성</p>
         {/* name - 공간 이름 */}
-        <div className="flex w-full flex-col gap-2 font-CAP1 text-CAP1 leading-CAP1">
+        <div className="text-style-CAP1 flex w-full flex-col gap-2">
           <p className="after:ml-1 after:text-red after:content-['*']">
             {popUpConfigList.name.display}
           </p>
@@ -147,7 +147,7 @@ export default function PopUpSettingComponent({
           />
         </div>
         {/* description - 한 줄 소개 */}
-        <div className="flex w-full flex-col gap-2 font-CAP1 text-CAP1 leading-CAP1">
+        <div className="text-style-CAP1 flex w-full flex-col gap-2">
           <p className="after:ml-1 after:text-red after:content-['*']">
             {popUpConfigList.description.display}
           </p>
@@ -196,7 +196,7 @@ export default function PopUpSettingComponent({
           </div>
         </div>
         {/* size - 공간 크기 */}
-        <div className="flex w-full flex-col gap-2 font-CAP1 text-CAP1 leading-CAP1">
+        <div className="text-style-CAP1 flex w-full flex-col gap-2">
           <p className="after:ml-1 after:text-red after:content-['*']">
             {popUpConfigList.size.display}
           </p>
@@ -207,7 +207,7 @@ export default function PopUpSettingComponent({
           />
         </div>
         {/* capacity - 수용인원 */}
-        <div className="flex w-full flex-col gap-2 font-CAP1 text-CAP1 leading-CAP1">
+        <div className="text-style-CAP1 flex w-full flex-col gap-2">
           <p className="after:ml-1 after:text-red after:content-['*']">
             {popUpConfigList.capacity.display}
           </p>
@@ -218,7 +218,7 @@ export default function PopUpSettingComponent({
           />
         </div>
         {/* tags - 해시태그 */}
-        <div className="flex flex-col gap-2 font-CAP1 text-CAP1 leading-CAP1">
+        <div className="text-style-CAP1 flex flex-col gap-2">
           <p className="after:ml-1 after:text-red after:content-['*']">
             {popUpConfigList.tags.display}
           </p>
@@ -227,9 +227,9 @@ export default function PopUpSettingComponent({
       </section>
       {/* pricePerDay & discountRate */}
       <section>
-        <p className="mb-6 font-SUB1 text-SUB1 leading-SUB1">공간 대여 가격 작성</p>
+        <p className="text-style-SUB1 mb-6">공간 대여 가격 작성</p>
         <div className="flex flex-col gap-4">
-          <div className="flex w-full flex-col gap-2 font-CAP1 text-CAP1 leading-CAP1">
+          <div className="text-style-CAP1 flex w-full flex-col gap-2">
             <p className="after:ml-1 after:text-red after:content-['*']">
               {popUpConfigList.pricePerDay.display}
             </p>
@@ -239,8 +239,8 @@ export default function PopUpSettingComponent({
               rules={{ required: popUpConfigList.pricePerDay.rules }}
             />
           </div>
-          <div className="flex w-full flex-row items-end gap-2 font-CAP1 text-CAP1 leading-CAP1">
-            <div className="flex w-full flex-col gap-2 font-CAP1 text-CAP1 leading-CAP1">
+          <div className="text-style-CAP1 flex w-full flex-row items-end gap-2">
+            <div className="text-style-CAP1 flex w-full flex-col gap-2">
               <p className="after:ml-1 after:text-red after:content-['*']">
                 {popUpConfigList.discountRate.display}
               </p>
@@ -255,7 +255,7 @@ export default function PopUpSettingComponent({
             </div>
           </div>
           {watchDiscountFields && formattedPrice && (
-            <div className="flex flex-row justify-end gap-2 font-SUB2 text-SUB2 leading-SUB2">
+            <div className="text-style-SUB2 flex flex-row justify-end gap-2">
               <p className="text-red">{watchDiscountFields}% 할인</p>
               <p>{formattedPrice}원</p>
             </div>
@@ -263,9 +263,9 @@ export default function PopUpSettingComponent({
         </div>
       </section>
       <section>
-        <p className="mb-6 font-SUB1 text-SUB1 leading-SUB1">공간 소개글 작성</p>
+        <p className="text-style-SUB1 mb-6">공간 소개글 작성</p>
         {/* details - 자세한 소개 */}
-        <div className="flex w-full flex-col gap-2 font-CAP1 text-CAP1 leading-CAP1">
+        <div className="text-style-CAP1 flex w-full flex-col gap-2">
           <p className="after:ml-1 after:text-red after:content-['*']">
             {popUpConfigList.details.display}
           </p>
@@ -276,13 +276,13 @@ export default function PopUpSettingComponent({
           />
         </div>
       </section>
-      <section className="flex flex-col gap-6 font-CAP1 text-CAP1 leading-CAP1">
-        <p className="font-SUB1 text-SUB1 leading-SUB1">위치 안내 작성</p>
+      <section className="text-style-CAP1 flex flex-col gap-6">
+        <p className="text-style-SUB1">위치 안내 작성</p>
         <div className="relative w-full">
           <p className="after:ml-1 after:text-red after:content-['*']">위치</p>
           <div className="mb-1 mt-2 flex flex-row">
             <p
-              className={`flex h-[44px] w-full items-center rounded-lg border px-4 font-CAP1 text-CAP1 leading-CAP1 ${selectedAddress.postalCode ? 'text-black' : 'text-light_gray'}`}
+              className={`text-style-CAP1 flex h-[44px] w-full items-center rounded-lg border px-4 ${selectedAddress.postalCode ? 'text-black' : 'text-light_gray'}`}
             >
               {selectedAddress.postalCode
                 ? selectedAddress.postalCode
@@ -304,7 +304,7 @@ export default function PopUpSettingComponent({
             />
           </div>
           {selectedAddress.roadAddress && (
-            <p className="my-1 flex h-[44px] w-full items-center rounded-lg border px-4 font-CAP1 text-CAP1 leading-CAP1">
+            <p className="text-style-CAP1 my-1 flex h-[44px] w-full items-center rounded-lg border px-4">
               {selectedAddress.roadAddress}
             </p>
           )}
@@ -312,12 +312,12 @@ export default function PopUpSettingComponent({
           {errors.detailAddress && <p className="text-red">{errors.detailAddress.message}</p>}
         </div>
         {/* websiteUrl */}
-        <div className="flex w-full flex-col gap-2 font-CAP1 text-CAP1 leading-CAP1">
+        <div className="text-style-CAP1 flex w-full flex-col gap-2">
           <p>{popUpConfigList.websiteUrl.display}</p>
           <PopUpInputComponent popUpConfig={popUpConfigList.websiteUrl} control={control} />
         </div>
         {/* contactNumber - 문의 전화번호 */}
-        <div className="flex w-full flex-col gap-2 font-CAP1 text-CAP1 leading-CAP1">
+        <div className="text-style-CAP1 flex w-full flex-col gap-2">
           <p className="after:ml-1 after:text-red after:content-['*']">
             {popUpConfigList.contactNumber.display}
           </p>
@@ -329,9 +329,9 @@ export default function PopUpSettingComponent({
         </div>
       </section>
       <section className="flex flex-col gap-6">
-        <p className="font-SUB1 text-SUB1 leading-SUB1">시설 이용 및 공지사항 안내 작성</p>
+        <p className="text-style-SUB1">시설 이용 및 공지사항 안내 작성</p>
         {/* facilityInfo - 시설 이용 및 공지사항 안내 */}
-        <div className="flex w-full flex-col gap-2 font-CAP1 text-CAP1 leading-CAP1">
+        <div className="text-style-CAP1 flex w-full flex-col gap-2">
           <p className="after:ml-1 after:text-red after:content-['*']">
             {popUpConfigList.facilityInfo.display}
           </p>
@@ -342,7 +342,7 @@ export default function PopUpSettingComponent({
           />
         </div>
         {/* notice - 시설 이용 안내 */}
-        <div className="flex w-full flex-col gap-2 font-CAP1 text-CAP1 leading-CAP1">
+        <div className="text-style-CAP1 flex w-full flex-col gap-2">
           <p className="after:ml-1 after:text-red after:content-['*']">
             {popUpConfigList.notice.display}
           </p>

@@ -114,11 +114,9 @@ export default function GeocodeModalComponent({
             ) : (
               <div className="p-6">
                 {searchError && (
-                  <p className="mb-2 font-SUB2 text-SUB2 leading-SUB2">
-                    입력하신 주소를 찾을 수 없습니다.
-                  </p>
+                  <p className="text-style-SUB2 mb-2">입력하신 주소를 찾을 수 없습니다.</p>
                 )}
-                <p className="font-H2 text-H2 leading-H2">tip</p>
+                <p className="text-style-H2">tip</p>
                 <p className="mt-1">
                   아래와 같은 조합으로 검색을 하시면 더 정확한 결과과 검색됩니다.
                 </p>

@@ -61,16 +61,14 @@ export default function PopUpSettingLayout({
           />
           {isScrolled && (
             <div className="flex w-full flex-row items-center justify-between pl-[51px] pr-5">
-              <p className="font-BODY1 text-BODY1 leading-BODY1 text-white">
-                팝업 공간 등록 관리자 페이지
-              </p>
+              <p className="text-style-BODY1 text-white">팝업 공간 등록 관리자 페이지</p>
               <OnOffButtonComponent isOn={isOn} setIsOn={setIsOn} />
             </div>
           )}
         </div>
       </header>
       <div className="mb-5 flex flex-row items-center justify-between bg-black px-5 pt-[48px]">
-        <p className="pb-6 pt-8 font-H1 text-H1 leading-H1 text-white">
+        <p className="text-style-H1 pb-6 pt-8 text-white">
           팝업 공간 등록
           <br />
           관리자 페이지

@@ -26,10 +26,8 @@ export default function PopUpItem({
       <div className="relative h-[180px]">
         {!storeData.isActivated && (
           <div className="absolute left-1/2 top-1/2 z-20 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center rounded-lg bg-black/50 px-4 py-3">
-            <p className="font-SUB2 text-SUB2 leading-SUB2 text-white">비공개 상태</p>
-            <p className="font-BODY2 text-BODY2 leading-BODY2 text-stroke">
-              게스트에게 노출되지 않음
-            </p>
+            <p className="text-style-SUB2 text-white">비공개 상태</p>
+            <p className="text-style-BODY2 text-stroke">게스트에게 노출되지 않음</p>
           </div>
         )}
         <Image
@@ -43,12 +41,10 @@ export default function PopUpItem({
       <div className="relative flex flex-col px-4 pb-4 pt-2">
         <div className="flex flex-row justify-between">
           <div className="flex flex-col">
-            <p className="font-CAP1 text-CAP1 leading-CAP1 text-medium_gray">
+            <p className="text-style-CAP1 text-medium_gray">
               {storeData.city} · {storeData.district}
             </p>
-            <p
-              className={`font-SUB2 text-SUB2 leading-SUB2 ${!storeData.isActivated && 'text-deep_gray'}`}
-            >
+            <p className={`text-style-SUB2 ${!storeData.isActivated && 'text-deep_gray'}`}>
               {storeData.name}
             </p>
           </div>
@@ -59,34 +55,32 @@ export default function PopUpItem({
               <Image src={IMAGES.HeartFull} alt="heart" />
             )}
             <p
-              className={`font-CAP2 text-CAP2 leading-CAP2 ${!storeData.isActivated ? 'text-light_gray' : 'text-purple'}`}
+              className={`text-style-CAP2 ${!storeData.isActivated ? 'text-light_gray' : 'text-purple'}`}
             >
               {storeData.likeCount}
             </p>
           </div>
         </div>
         <p
-          className={`font-CAP1 text-CAP1 leading-CAP1 ${!storeData.isActivated ? 'text-light_gray' : 'text-medium_gray'}`}
+          className={`text-style-CAP1 ${!storeData.isActivated ? 'text-light_gray' : 'text-medium_gray'}`}
         >
           {storeData.size}m² · {storeData.capacity}명 수용가능
         </p>
         <div className="flex flex-col items-end">
           <div className="mt-4 flex flex-row items-center gap-2">
-            <p className="font-CAP1 text-CAP1 leading-CAP1 text-dark_gray">1일 대여</p>
-            <p className="font-CAP1 text-CAP1 leading-CAP1 text-light_gray line-through">
+            <p className="text-style-CAP1 text-dark_gray">1일 대여</p>
+            <p className="text-style-CAP1 text-light_gray line-through">
               {formatNumber(storeData.pricePerDay)}
             </p>
           </div>
           <div className="flex flex-row items-center gap-[6px]">
             <p
-              className={`font-SUB2 text-SUB2 leading-SUB2 ${!storeData.isActivated ? 'text-medium_gray' : 'text-purple'}`}
+              className={`text-style-SUB2 ${!storeData.isActivated ? 'text-medium_gray' : 'text-purple'}`}
             >
               {storeData.discountRate}%
             </p>
             {/* 추후 숫자 포맷 함수 추가 필요 */}
-            <p
-              className={`font-SUB1 text-SUB1 leading-SUB1 ${!storeData.isActivated && 'text-deep_gray'}`}
-            >
+            <p className={`text-style-SUB1 ${!storeData.isActivated && 'text-deep_gray'}`}>
               {formatNumber(
                 formatDiscountPrice({
                   price: storeData.pricePerDay,

@@ -87,14 +87,12 @@ export default function MyUpdatePage() {
         <div onClick={() => router.back()} className="cursor-pointer p-3">
           <Image src={IMAGES.ArrowBackWhite} alt="back" />
         </div>
-        <p className="grow py-3 text-center font-SUB3 text-SUB3 leading-SUB3 text-white">
-          호스트 정보 수정
-        </p>
+        <p className="text-style-SUB3 grow py-3 text-center text-white">호스트 정보 수정</p>
         <button type="submit" className="px-5 text-white">
           완료
         </button>
       </header>
-      <div className="relative flex flex-col gap-6 px-5 py-8 font-CAP1 text-CAP1 leading-CAP1 text-dark_gray">
+      <div className="text-style-CAP1 relative flex flex-col gap-6 px-5 py-8 text-dark_gray">
         <div className="flex flex-col gap-2">
           <p>{hostInfoConfig.name.display}</p>
           <InputComponent config={hostInfoConfig.name} control={control} />
@@ -123,9 +121,7 @@ export default function MyUpdatePage() {
               {phoneChange ? '번호 변경' : '중복 확인'}
             </button>
           </div>
-          {phoneErrorMsg && (
-            <p className="font-CAP1 text-CAP1 leading-CAP1 text-red">{phoneErrorMsg}</p>
-          )}
+          {phoneErrorMsg && <p className="text-style-CAP1 text-red">{phoneErrorMsg}</p>}
         </div>
         <div className="flex flex-col gap-2">
           <p className="after:ml-0.5 after:text-red after:content-['*']">
@@ -151,8 +147,8 @@ export default function MyUpdatePage() {
                 onClose={() => setIsDragModalOpen(false)}
               >
                 <div className="px-5 py-6">
-                  <p className="font-H2 text-H2 leading-H2 text-black">금융 기관 선택</p>
-                  <div className="flex h-12 flex-row justify-center font-SUB3 text-SUB3 leading-SUB3">
+                  <p className="text-style-H2 text-black">금융 기관 선택</p>
+                  <div className="text-style-SUB3 flex h-12 flex-row justify-center">
                     <div className="flex w-1/2 justify-center">
                       <button type="button" className="border-b-2 border-black">
                         은행

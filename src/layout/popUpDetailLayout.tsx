@@ -41,13 +41,13 @@ export default function PopUpDetailLayout({ children }: { children: React.ReactN
       <nav className="fixed bottom-0 z-[100] flex h-[84px] w-full max-w-[400px] flex-row items-center gap-3 border-t border-stroke bg-white px-5 py-4">
         <button
           onClick={() => console.log('삭제')}
-          className="h-full text-nowrap rounded-lg border border-stroke px-[35.5px] font-BTN1 text-BTN1 leading-BTN1"
+          className="text-style-BTN1 h-full text-nowrap rounded-lg border border-stroke px-[35.5px]"
         >
           삭제
         </button>
         <button
           onClick={() => router.push({ pathname: `/popUpSetting/${id}`, query: { mode: 'edit' } })}
-          className="flex size-full flex-row items-center justify-center gap-2 rounded-lg bg-black font-BTN1 text-BTN1 leading-BTN1 text-white"
+          className="text-style-BTN1 flex size-full flex-row items-center justify-center gap-2 rounded-lg bg-black text-white"
         >
           <p>수정하기</p>
         </button>
