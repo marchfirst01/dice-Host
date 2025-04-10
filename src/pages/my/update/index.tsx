@@ -76,7 +76,7 @@ export default function MyUpdatePage() {
         <button
           onClick={() => {
             setIsCheckModalOpen(false);
-            router.push('/main');
+            router.push('/space');
           }}
           className="mt-3 w-full text-purple"
         >

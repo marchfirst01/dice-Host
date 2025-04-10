@@ -57,7 +57,7 @@ export default function PwUpdatePage() {
           onClick={() => {
             if (modalText === '비밀번호 변경이 완료되었습니다.') {
               setIsCheckModalOpen(false);
-              router.push('/main');
+              router.push('/space');
             }
             setIsCheckModalOpen(false);
           }}

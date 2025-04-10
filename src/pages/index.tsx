@@ -14,7 +14,7 @@ export default function Home() {
   }, []);
 
   return isLoggedIn ? (
-    router.push('/main')
+    router.push('/space')
   ) : (
     <div className="flex h-screen flex-col items-center justify-center">
       <div className="space-y-4">

@@ -119,7 +119,7 @@ export default function PopUpSettingComponent({
     } else {
       try {
         await fetchSpaceRegister(formData);
-        router.push('/main');
+        router.push('/space');
       } catch (error) {
         console.log(error);
       }

@@ -23,7 +23,7 @@ export default function LoginPage() {
       const res = await fetchLogin(formData);
       setAccessToken(res.token.accessToken);
       setRefreshToken(res.token.refreshToken);
-      router.push('/main');
+      router.push('/space');
     } catch (error) {
       console.log(error);
       setIsModalOpen(true);

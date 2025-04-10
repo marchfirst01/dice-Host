@@ -14,7 +14,7 @@ export default function PopUpDetailLayout({ children }: { children: React.ReactN
     <div>
       <nav className="fixed z-10 h-12 w-full max-w-[400px] bg-black">
         <Image
-          onClick={() => router.push('/main')}
+          onClick={() => router.push('/space')}
           className="m-3 cursor-pointer"
           src={IMAGES.ArrowBackWhite}
           alt="arrow-back"
