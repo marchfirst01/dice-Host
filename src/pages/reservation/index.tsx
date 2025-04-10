@@ -1,5 +1,6 @@
 import ReservationItemComponent from '@components/reservation/reservationItem';
 import { useReservationList } from '@hooks/useReservation';
+import ReservationLayoutComponent from '@layout/reservationLayout';
 import { Reservation, ReservationStatus } from '@type/reservation';
 
 import React, { useEffect, useState } from 'react';
@@ -21,9 +22,9 @@ export default function ReservationPage() {
   }, [data, reservationStatus]);
 
   return (
-    <>
+    <ReservationLayoutComponent>
       {/* TODO: 클릭 된 아이템 표시 필요 */}
-      <div className="fixed z-50 flex w-full max-w-[400px] -translate-x-5 flex-row justify-center bg-back_gray">
+      <div className="fixed z-50 flex w-full max-w-[400px] flex-row justify-center bg-back_gray">
         <button
           onClick={() => setReservationStatus('PENDING')}
           className={`text-style-BTN1 w-[111.67px] py-3 ${reservationStatus === 'PENDING' && 'border-b-2 border-black'}`}
@@ -44,7 +45,7 @@ export default function ReservationPage() {
           예약 취소
         </button>
       </div>
-      <div className="pt-[45px]">
+      <div className="px-5 pt-[45px]">
         {filterData && filterData.length > 0 ? (
           filterData.map((item, index) => (
             <ReservationItemComponent key={index} reservationItem={item} status={item.status} />
@@ -53,6 +54,6 @@ export default function ReservationPage() {
           <p>no data</p>
         )}
       </div>
-    </>
+    </ReservationLayoutComponent>
   );
 }

@@ -31,7 +31,6 @@ export default function HostLayoutComponent({ children }: { children: React.Reac
           </div>
         );
       })}
-      {/* <div className="px-5">{children}</div> */}
       <FooterComponent pageType="host" />
     </div>
   );
