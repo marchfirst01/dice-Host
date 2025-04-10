@@ -1,5 +1,5 @@
 import { IMAGES } from '@assets/index';
-import MySpaceListComponent from '@components/my/mySpaceList';
+import HostSpaceListComponent from '@components/host/hostSpaceList';
 import { useHostInfo, useHostSpace } from '@hooks/useHost';
 import HostLayoutComponent from '@layout/hostLayout';
 import { deleteToken } from '@utils/token';
@@ -42,7 +42,7 @@ export default function HostPage() {
             리스트 바로가기
           </p>
         </div>
-        <MySpaceListComponent mySpaceList={hostSpaceData} />
+        <HostSpaceListComponent hostSpaceList={hostSpaceData} />
       </div>
       <div className="text-style-SUB3 flex flex-col gap-6 py-6 text-deep_gray">
         <p onClick={() => router.push('/chat')} className="cursor-pointer">
@@ -74,7 +74,7 @@ export default function HostPage() {
         </p>
       </div>
       <p
-        onClick={() => router.push({ pathname: '/my/withDraw', query: { name: hostInfo.name } })}
+        onClick={() => router.push({ pathname: '/host/withDraw', query: { name: hostInfo.name } })}
         className="text-style-SUB3 cursor-pointer py-6 text-deep_gray"
       >
         탈퇴하기
