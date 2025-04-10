@@ -10,7 +10,7 @@ import { useRouter } from 'next/router';
 export default function SpaceLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   return (
-    <div className="h-full pt-[60px]">
+    <div className="h-full pb-[73px] pt-[60px]">
       <header className="fixed top-0 z-50 flex w-full max-w-[400px] flex-row items-center justify-between bg-black px-5 py-4">
         <p className="text-style-SUB1 text-white">등록한 팝업 공간</p>
         <Image

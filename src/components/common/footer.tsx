@@ -5,7 +5,11 @@ import React from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 
-export default function FooterComponent({ pageType }: { pageType: string }) {
+export default function FooterComponent({
+  pageType,
+}: {
+  pageType: 'space' | 'reservation' | 'host';
+}) {
   const router = useRouter();
 
   return (
