@@ -7,7 +7,7 @@ import React from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 
-export default function SpaceLayout({ children }: { children: React.ReactNode }) {
+export default function SpaceListLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   return (
     <div className="h-full pb-[73px] pt-[60px]">

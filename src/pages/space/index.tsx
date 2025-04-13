@@ -1,7 +1,7 @@
 import { IMAGES } from '@assets/index';
-import PopUpItem from '@components/popUp/popUpItem';
+import SpaceItem from '@components/space/spaceItem';
 import { useHostSpace } from '@hooks/useHost';
-import SpaceLayout from '@layout/spaceLayout';
+import SpaceListLayout from '@layout/spaceListLayout';
 import { HostSpaceData } from '@type/my';
 import { useSearchStore } from '@zustands/popUp/searchStore';
 
@@ -32,7 +32,7 @@ export default function SpacePage() {
   }
 
   return (
-    <SpaceLayout>
+    <SpaceListLayout>
       {/* TODO: 드롭다운 추가하기 */}
       <button className="text-style-BTN1 my-4 flex flex-row items-center gap-0.5 rounded-full bg-back_gray py-[5.5px] pl-3 pr-2 text-deep_gray">
         최신순
@@ -41,7 +41,7 @@ export default function SpacePage() {
       {hostSpaceData && (
         <div className="flex flex-col gap-4">
           {filteredHostSpaceData.length > 0 ? (
-            filteredHostSpaceData.map((space) => <PopUpItem key={space.id} storeData={space} />)
+            filteredHostSpaceData.map((space) => <SpaceItem key={space.id} storeData={space} />)
           ) : (
             <p className="text-style-SUB1">
               아직 등록한 공간이 없어요!
@@ -57,6 +57,6 @@ export default function SpacePage() {
       >
         <Image src={IMAGES.FloatingAddButton} alt="floatingAddBtn" />
       </div>
-    </SpaceLayout>
+    </SpaceListLayout>
   );
 }

@@ -1,14 +1,14 @@
 import { IMAGES } from '@assets/index';
 import { HostSpaceData } from '@type/my';
-import formatDiscountPrice from '@utils/formatDiscountPrice';
-import { formatNumber } from '@utils/formatNumber';
+import discount from '@utils/calculate/discount';
+import { numberFormat } from '@utils/format/numberFormat';
 
 import React from 'react';
 
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 
-export default function PopUpItem({
+export default function SpaceItem({
   storeData,
 }: {
   storeData: HostSpaceData;
@@ -17,7 +17,7 @@ export default function PopUpItem({
 
   return (
     <div
-      onClick={() => router.push(`/popUp/${storeData.id}`)}
+      onClick={() => router.push(`/space/${storeData.id}/view`)}
       className="relative aspect-[3/2] w-full cursor-pointer rounded-lg border border-stroke"
     >
       <div
@@ -70,7 +70,7 @@ export default function PopUpItem({
           <div className="mt-4 flex flex-row items-center gap-2">
             <p className="text-style-CAP1 text-dark_gray">1일 대여</p>
             <p className="text-style-CAP1 text-light_gray line-through">
-              {formatNumber(storeData.pricePerDay)}
+              {numberFormat(storeData.pricePerDay)}
             </p>
           </div>
           <div className="flex flex-row items-center gap-[6px]">
@@ -79,10 +79,9 @@ export default function PopUpItem({
             >
               {storeData.discountRate}%
             </p>
-            {/* 추후 숫자 포맷 함수 추가 필요 */}
             <p className={`text-style-SUB1 ${!storeData.isActivated && 'text-deep_gray'}`}>
-              {formatNumber(
-                formatDiscountPrice({
+              {numberFormat(
+                discount({
                   price: storeData.pricePerDay,
                   discount: storeData.discountRate,
                 }),

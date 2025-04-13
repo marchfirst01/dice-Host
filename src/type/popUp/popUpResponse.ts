@@ -4,7 +4,7 @@ export interface SpaceIdResponse extends CommonPopUpData {
   id: number;
   imageUrls: string[];
   size: number;
-  pricePerDay: string;
+  pricePerDay: number;
   discountRate: number;
   latitude: number;
   longitude: number;
