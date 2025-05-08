@@ -1,5 +1,6 @@
 import { IMAGES } from '@assets/index';
-import { Address, PopUpFormData } from '@type/popUpSetting';
+import { Address } from '@type/popUpSetting';
+import { SpaceFormData } from '@type/space/spaceFormData';
 import { useGeocodeStore } from '@zustands/geocode/store';
 
 import React, { Dispatch, SetStateAction, useState } from 'react';
@@ -15,9 +16,9 @@ export default function GeocodeModalComponent({
   rules,
 }: {
   setGeocodeModalOpen: Dispatch<SetStateAction<boolean>>;
-  control: Control<PopUpFormData>;
-  setValue: UseFormSetValue<PopUpFormData>;
-  rules: UseControllerProps<PopUpFormData, 'address'>['rules'];
+  control: Control<SpaceFormData>;
+  setValue: UseFormSetValue<SpaceFormData>;
+  rules: UseControllerProps<SpaceFormData, 'address'>['rules'];
 }) {
   const [searchAddress, setSearchAddress] = useState('');
   const [resultAddress, setResultAddress] = useState<Address[] | null>([]);

@@ -1,4 +1,4 @@
-import { PopUpFormData } from '@type/popUpSetting';
+import { SpaceFormData } from '@type/space/spaceFormData';
 
 import React, { useEffect, useState } from 'react';
 import { Control, Controller, UseControllerProps } from 'react-hook-form';
@@ -35,14 +35,14 @@ function TimeList({
   );
 }
 
-export default function TimePickerComponents({
+export default function TimePickerComponent({
   type,
   control,
   rules,
 }: {
   type: 'openingTime' | 'closingTime';
-  control: Control<PopUpFormData>;
-  rules: UseControllerProps<PopUpFormData, 'openingTime' | 'closingTime'>['rules'];
+  control: Control<SpaceFormData>;
+  rules: UseControllerProps<SpaceFormData, 'openingTime' | 'closingTime'>['rules'];
 }) {
   const [openTimeModal, setOpenTimeModal] = useState<boolean>(false);
   const [selectedValues, setSelectedValues] = useState<{

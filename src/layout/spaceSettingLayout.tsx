@@ -1,7 +1,7 @@
 import { IMAGES } from '@assets/index';
 import RegisterFormButtonComponent from '@components/common/registerFormButton';
 import OnOffButtonComponent from '@components/space/setting/onOffButton';
-import { PopUpFormData } from '@type/popUpSetting';
+import { SpaceFormData } from '@type/space/spaceFormData';
 
 import React, { Dispatch, useEffect, useState } from 'react';
 import { SubmitHandler } from 'react-hook-form';
@@ -9,27 +9,29 @@ import { SubmitHandler } from 'react-hook-form';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 
-interface PopUpSettingLayoutProps {
+interface SpaceSettingLayerProps {
   children: React.ReactNode;
   handleSubmit: (
-    onSubmit: SubmitHandler<PopUpFormData>,
+    onSubmit: SubmitHandler<SpaceFormData>,
   ) => (e?: React.BaseSyntheticEvent) => Promise<void>;
-  onSubmit: SubmitHandler<PopUpFormData>;
+  onSubmit: SubmitHandler<SpaceFormData>;
   isOn: boolean;
   setIsOn: Dispatch<boolean>;
 }
 
-export default function PopUpSettingLayout({
+export default function SpaceSettingLayout({
   children,
   handleSubmit,
   onSubmit,
   isOn,
   setIsOn,
-}: PopUpSettingLayoutProps) {
+}: SpaceSettingLayerProps) {
   const router = useRouter();
+
   const childrenArray = React.Children.toArray(children);
 
   const [isScrolled, setIsScrolled] = useState(false);
+
   const handleScroll = () => {
     const currentScrollY = window.scrollY;
 
@@ -48,7 +50,7 @@ export default function PopUpSettingLayout({
   }, []);
 
   return (
-    <div className="relative">
+    <div>
       <header className="fixed z-50 flex h-[48px] w-full max-w-[400px] flex-row items-center bg-black">
         <div className="relative flex h-[48px] w-full items-center justify-center">
           <Image
@@ -86,7 +88,7 @@ export default function PopUpSettingLayout({
         ))}
       </div>
       <footer className="fixed bottom-0 z-10 flex h-[84px] w-full max-w-[400px] flex-row items-center gap-3 border-t border-stroke bg-white px-5 py-4">
-        <RegisterFormButtonComponent<PopUpFormData> handleSubmit={handleSubmit} onSubmit={onSubmit}>
+        <RegisterFormButtonComponent<SpaceFormData> handleSubmit={handleSubmit} onSubmit={onSubmit}>
           <p>작성 완료</p>
         </RegisterFormButtonComponent>
       </footer>

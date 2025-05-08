@@ -1,5 +1,5 @@
 import { IMAGES } from '@assets/index';
-import { PopUpFormData } from '@type/popUpSetting';
+import { SpaceFormData } from '@type/space/spaceFormData';
 
 import { useState } from 'react';
 import { Control, Controller, UseControllerProps } from 'react-hook-form';
@@ -8,8 +8,8 @@ import Image from 'next/image';
 import { category } from 'src/context/popUpSetting/category';
 
 interface CategoryDropdownComponentProps {
-  control: Control<PopUpFormData>;
-  rules: UseControllerProps<PopUpFormData, 'category'>['rules'];
+  control: Control<SpaceFormData>;
+  rules: UseControllerProps<SpaceFormData, 'category'>['rules'];
 }
 
 export default function CategoryDropdownComponent({

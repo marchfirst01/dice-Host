@@ -1,5 +1,5 @@
 import { IMAGES } from '@assets/index';
-import { PopUpFormData } from '@type/popUpSetting';
+import { SpaceFormData } from '@type/space/spaceFormData';
 
 import { ChangeEvent, useRef, useState } from 'react';
 import { Control, Controller, UseControllerProps } from 'react-hook-form';
@@ -9,10 +9,11 @@ import Image from 'next/image';
 
 interface ImageUploadComponentProps {
   editImageUrls?: string[];
-  control: Control<PopUpFormData>;
-  rules: UseControllerProps<PopUpFormData, 'imageList'>['rules'];
+  control: Control<SpaceFormData>;
+  rules: UseControllerProps<SpaceFormData, 'imageList'>['rules'];
 }
 
+// TODO: 이미지를 여기서 바로 등록할까? (API)
 export default function ImageUploadComponent({
   editImageUrls,
   control,

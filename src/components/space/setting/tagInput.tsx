@@ -1,4 +1,4 @@
-import { PopUpFormData } from '@type/popUpSetting';
+import { SpaceFormData } from '@type/space/spaceFormData';
 import Tagify from '@yaireo/tagify';
 import '@yaireo/tagify/dist/tagify.css';
 
@@ -6,8 +6,8 @@ import React, { useEffect, useRef } from 'react';
 import { Control, Controller } from 'react-hook-form';
 
 interface TagInputComponentProps {
-  control: Control<PopUpFormData>;
-  setValue: (name: keyof PopUpFormData, value: string[]) => void; // setValue 타입 정의
+  control: Control<SpaceFormData>;
+  setValue: (name: keyof SpaceFormData, value: string[]) => void; // setValue 타입 정의
 }
 
 export default function TagInputComponent({ control, setValue }: TagInputComponentProps) {

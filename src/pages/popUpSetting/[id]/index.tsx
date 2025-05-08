@@ -1,5 +1,4 @@
 import { IMAGES } from '@assets/index';
-import PopUpSettingComponent from '@components/popUpSetting/popUpSetting';
 import { usePopUpId } from '@hooks/usePopUp';
 
 import React from 'react';

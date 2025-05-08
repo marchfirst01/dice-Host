@@ -52,7 +52,7 @@ export default function SpacePage() {
         </div>
       )}
       <div
-        onClick={() => router.push({ pathname: '/popUpSetting', query: { mode: 'register' } })}
+        onClick={() => router.push({ pathname: '/space/new' })}
         className="fixed bottom-20 left-1/2 z-20 translate-x-[115px] cursor-pointer"
       >
         <Image src={IMAGES.FloatingAddButton} alt="floatingAddBtn" />
