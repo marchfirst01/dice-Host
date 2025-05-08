@@ -1,9 +1,10 @@
+import { useSpaceId } from '@hooks/useSpace';
 import SpaceSettingLayout from '@layout/spaceSettingLayout';
-import { SpaceFormData } from '@type/space/spaceFormData';
+import { SpaceFormData } from '@type/space/spaceType';
 import discount from '@utils/calculate/discount';
 import { useGeocodeStore } from '@zustands/geocode/store';
 
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import CategoryDropdownComponent from './categoryDropdown';
@@ -15,14 +16,35 @@ import TagInputComponent from './tagInput';
 import TimePickerComponent from './timePicker';
 import { SpaceConfig } from 'src/context/space/spaceConfig';
 
-export default function SpaceSettingComponent() {
+interface SpaceSettingComponentProps {
+  id?: string; // router.query
+}
+
+export default function SpaceSettingComponent({ id }: SpaceSettingComponentProps) {
   const {
     control,
+    reset,
     handleSubmit,
     setValue,
     watch,
     formState: { errors },
   } = useForm<SpaceFormData>();
+
+  const { data } = useSpaceId(id!);
+
+  useEffect(() => {
+    if (id) {
+      console.log('space setting component: ', id);
+    }
+  }, [id]);
+
+  useEffect(() => {
+    if (data) {
+      console.log(data);
+      // TODO:  tag, 주소, 시간
+      reset(data);
+    }
+  }, [data]);
 
   const [isOn, setIsOn] = useState(true);
 
@@ -46,6 +68,7 @@ export default function SpaceSettingComponent() {
 
   const [geocodeModalOpen, setGeocodeModalOpen] = useState<boolean>(false);
 
+  // TODO: onSubmit 구현
   const onSubmit = (formData: SpaceFormData) => {
     console.log(formData);
   };
@@ -85,8 +108,6 @@ export default function SpaceSettingComponent() {
           {/* image - 이미지 */}
           <p className="after:ml-1 after:text-red after:content-['*']">이미지 등록(최대 10장)</p>
           <ImageUploadComponent
-            // TODO: 기존 링크 불러오는 작업 (정보 수정 할 때 필요)
-            // editImageUrls={editData.imageList as string[]}
             control={control}
             rules={{ required: '이미지를 하나 이상 등록해주세요' }}
           />

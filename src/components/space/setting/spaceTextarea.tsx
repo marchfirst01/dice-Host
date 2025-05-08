@@ -1,5 +1,5 @@
 import { SpaceConfig, SpaceId } from '@type/space/spaceConfig';
-import { SpaceFormData } from '@type/space/spaceFormData';
+import { SpaceFormData } from '@type/space/spaceType';
 
 import React from 'react';
 import { Control, Controller, UseControllerProps } from 'react-hook-form';

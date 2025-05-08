@@ -44,7 +44,7 @@ export default function SpaceViewLayout({ children }: { children: React.ReactNod
           삭제
         </button>
         <button
-          onClick={() => router.push({ pathname: `/popUpSetting/${id}`, query: { mode: 'edit' } })}
+          onClick={() => router.push({ pathname: `/space/${id}/edit`, query: { mode: 'edit' } })}
           className="text-style-BTN1 flex size-full flex-row items-center justify-center gap-2 rounded-lg bg-black text-white"
         >
           <p>수정하기</p>

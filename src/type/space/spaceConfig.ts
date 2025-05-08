@@ -2,7 +2,7 @@ import { CommonConfig } from '@type/common';
 
 import { ControllerRenderProps } from 'react-hook-form';
 
-import { SpaceFormData } from './spaceFormData';
+import { SpaceFormData } from './spaceType';
 
 // 팝업 formData의 id들
 type SpaceId =

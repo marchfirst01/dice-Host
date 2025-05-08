@@ -1,4 +1,4 @@
-import { SpaceFormData } from '@type/space/spaceFormData';
+import { SpaceFormData } from '@type/space/spaceType';
 import Tagify from '@yaireo/tagify';
 import '@yaireo/tagify/dist/tagify.css';
 

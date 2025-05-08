@@ -1,7 +1,7 @@
 import { IMAGES } from '@assets/index';
 import RegisterFormButtonComponent from '@components/common/registerFormButton';
 import OnOffButtonComponent from '@components/space/setting/onOffButton';
-import { SpaceFormData } from '@type/space/spaceFormData';
+import { SpaceFormData } from '@type/space/spaceType';
 
 import React, { Dispatch, useEffect, useState } from 'react';
 import { SubmitHandler } from 'react-hook-form';
