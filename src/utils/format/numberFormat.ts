@@ -1,3 +1,4 @@
+// 10000 -> 10,000
 export function numberFormat(value: number | string): string {
   if (typeof value === 'string') {
     return Number(value).toLocaleString('ko-KR', { minimumIntegerDigits: 2 });

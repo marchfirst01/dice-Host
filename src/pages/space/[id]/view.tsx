@@ -87,7 +87,7 @@ export default function SpaceIdView({
           <div className="flex flex-row gap-[6px]">
             <p className="text-style-SUB2 text-purple">{initialData.discountRate}%</p>
             <p className="text-style-SUB2 text-dark_gray">
-              {numberFormat(discount(initialData.pricePerDay, initialData.discountRate))}원
+              {numberFormat(discount(initialData.discountRate, initialData.pricePerDay))}원
             </p>
           </div>
         </div>

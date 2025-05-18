@@ -80,13 +80,7 @@ export default function SpaceItem({
               {storeData.discountRate}%
             </p>
             <p className={`text-style-SUB1 ${!storeData.isActivated && 'text-deep_gray'}`}>
-              {numberFormat(
-                discount({
-                  price: storeData.pricePerDay,
-                  discount: storeData.discountRate,
-                }),
-              )}
-              원
+              {numberFormat(discount(storeData.discountRate, storeData.pricePerDay))}원
             </p>
           </div>
         </div>
