@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { Control, Controller, UseControllerProps } from 'react-hook-form';
 
 import Image from 'next/image';
-import { category } from 'src/context/popUpSetting/category';
+import { category } from 'src/context/space/category';
 
 interface CategoryDropdownComponentProps {
   control: Control<SpaceFormData>;

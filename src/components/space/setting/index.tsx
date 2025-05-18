@@ -2,6 +2,7 @@ import { useSpaceId } from '@hooks/useSpace';
 import SpaceSettingLayout from '@layout/spaceSettingLayout';
 import { SpaceFormData } from '@type/space/spaceType';
 import discount from '@utils/calculate/discount';
+import { transformFormToSubmitData } from '@utils/transform/spaceTransform';
 import { formatTimeToKorean } from '@utils/transform/timePickerTransform';
 import { useGeocodeStore } from '@zustands/geocode/store';
 
@@ -15,6 +16,8 @@ import SpaceInputComponent from './spaceInput';
 import SpaceTextareaComponent from './spaceTextarea';
 import TagInputComponent from './tagInput';
 import TimePickerComponent from './timePicker';
+import { useRouter } from 'next/router';
+import { fetchSpaceIdUpdate, fetchSpaceRegister } from 'src/api/space';
 import { SpaceConfig } from 'src/context/space/spaceConfig';
 import { getReverseGeocode } from 'src/server/naverMap';
 
@@ -23,6 +26,7 @@ interface SpaceSettingComponentProps {
 }
 
 export default function SpaceSettingComponent({ id }: SpaceSettingComponentProps) {
+  const router = useRouter();
   const {
     control,
     reset,
@@ -100,15 +104,26 @@ export default function SpaceSettingComponent({ id }: SpaceSettingComponentProps
     }
   }, [watchDiscountFields, watchPriceFields]);
 
-  // onSubmit 구현
-  const onSubmit = (formData: SpaceFormData) => {
-    // selectedAddress의 좌표 정보를 formData에 추가
-    const submitData = {
-      ...formData,
-      latitude: selectedAddress.latitude,
-      longitude: selectedAddress.longitude,
-    };
-    console.log(submitData);
+  const onSubmit = async (formData: SpaceFormData) => {
+    try {
+      // 폼 데이터를 제출용 데이터로 변환
+      const submitData = await transformFormToSubmitData(formData);
+
+      if (id) {
+        // 수정 모드 (ID가 존재하는 경우)
+        const res = await fetchSpaceIdUpdate(id, submitData);
+        if (res) {
+          router.push(`/space/${id}/view`);
+        }
+      } else {
+        // 등록 모드 (ID가 없는 경우)
+        const res = await fetchSpaceRegister(submitData);
+        router.push('/space');
+      }
+    } catch (error) {
+      console.error('저장 중 오류 발생:', error);
+      alert('저장에 실패했습니다. 다시 시도해주세요.');
+    }
   };
 
   return (

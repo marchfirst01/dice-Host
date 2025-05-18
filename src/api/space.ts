@@ -1,6 +1,6 @@
 import { PostAxiosInstance } from '@axios/axios.method';
 import { GuestGetAxiosInstance } from '@axios/guest.axios.method';
-import { SpaceIdResponse } from '@type/space/spaceType';
+import { SpaceIdResponse, SpaceSubmitData } from '@type/space/spaceType';
 
 // id 공간 정보 조회
 export const fetchSpaceId = async (id: string): Promise<SpaceIdResponse> => {
@@ -50,5 +50,27 @@ export const uploadImage = async (imageList: (File | string)[]): Promise<string[
   } catch (error) {
     console.error('이미지 업로드 중 오류 발생:', error);
     return [];
+  }
+};
+
+export const fetchSpaceRegister = async (submitData: SpaceSubmitData) => {
+  try {
+    const res = await PostAxiosInstance(`/space/register`, submitData);
+    if (res.status !== 201) throw new Error('공간 등록에 실패했습니다');
+    return res.data;
+  } catch (error) {
+    console.error('공간 등록 오류:', error);
+    throw error;
+  }
+};
+
+export const fetchSpaceIdUpdate = async (id: string, submitData: SpaceSubmitData) => {
+  try {
+    const res = await PostAxiosInstance(`/space/update/${id}`, submitData);
+    if (res.status !== 200) throw new Error('공간 수정에 실패했습니다');
+    return res.status;
+  } catch (error) {
+    console.error('공간 수정 오류:', error);
+    throw error;
   }
 };

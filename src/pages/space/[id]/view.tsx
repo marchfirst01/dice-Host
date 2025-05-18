@@ -10,7 +10,7 @@ import React, { useEffect, useState } from 'react';
 import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next';
 import Image from 'next/image';
 import { fetchSpaceId } from 'src/api/space';
-import { category } from 'src/context/popUpSetting/category';
+import { category } from 'src/context/space/category';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import { Pagination } from 'swiper/modules';

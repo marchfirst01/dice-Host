@@ -1,6 +1,5 @@
 import { IMAGES } from '@assets/index';
-import { Address } from '@type/popUpSetting';
-import { SpaceFormData } from '@type/space/spaceType';
+import { Address, SpaceFormData } from '@type/space/spaceType';
 import { useGeocodeStore } from '@zustands/geocode/store';
 
 import React, { Dispatch, SetStateAction, useState } from 'react';
