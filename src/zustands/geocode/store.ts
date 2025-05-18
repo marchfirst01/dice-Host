@@ -1,4 +1,4 @@
-import { Address } from '@type/popUpSetting';
+import { Address } from '@type/space/spaceType';
 
 import { create } from 'zustand';
 

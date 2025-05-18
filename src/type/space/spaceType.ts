@@ -1,5 +1,16 @@
 import { CommonSpaceData } from '@type/common';
 
+// 지도 response
+export interface Address {
+  jibunAddress: string;
+  roadAddress: string;
+  sido: string;
+  sigugun: string;
+  postalCode: string;
+  latitude: number;
+  longitude: number;
+}
+
 // 공간 정보 Form으로 받아온 정보들
 export interface SpaceFormData extends CommonSpaceData {
   // imageList: (File | string)[];

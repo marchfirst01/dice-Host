@@ -5,7 +5,7 @@ import discount from '@utils/calculate/discount';
 import { formatTimeToKorean } from '@utils/transform/timePickerTransform';
 import { useGeocodeStore } from '@zustands/geocode/store';
 
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import CategoryDropdownComponent from './categoryDropdown';
@@ -16,6 +16,7 @@ import SpaceTextareaComponent from './spaceTextarea';
 import TagInputComponent from './tagInput';
 import TimePickerComponent from './timePicker';
 import { SpaceConfig } from 'src/context/space/spaceConfig';
+import { getReverseGeocode } from 'src/server/naverMap';
 
 interface SpaceSettingComponentProps {
   id?: string; // router.query
@@ -32,19 +33,45 @@ export default function SpaceSettingComponent({ id }: SpaceSettingComponentProps
   } = useForm<SpaceFormData>();
 
   const { data } = useSpaceId(id!);
+  const { selectedAddress, setSelectedAddress } = useGeocodeStore();
+  const [isOn, setIsOn] = useState(true);
+  const [geocodeModalOpen, setGeocodeModalOpen] = useState<boolean>(false);
 
-  useEffect(() => {
-    if (id) {
-      console.log('space setting component: ', id);
+  const getAddressFromCoords = useCallback(async () => {
+    if (data && data.latitude && data.longitude) {
+      try {
+        const response = await getReverseGeocode(data.latitude, data.longitude);
+
+        if (response) {
+          const city = response.results[0].region.area1.name;
+          const district = response.results[0].region.area2.name;
+          const address = response.results[1].land.name;
+
+          // 폼 상태에 주소 정보 설정
+          setValue('city', city);
+          setValue('district', district);
+          setValue('address', address);
+
+          // Zustand 스토어에 주소 정보 저장
+          setSelectedAddress({
+            roadAddress: `${city} ${district} ${address}`,
+            postalCode: response.results[1].land.addition1.value,
+            jibunAddress: '',
+            sido: city,
+            sigugun: district,
+            latitude: data.latitude,
+            longitude: data.longitude,
+          });
+        }
+      } catch (error) {
+        console.error('좌표를 주소로 변환하는 중 오류 발생:', error);
+      }
     }
-  }, [id]);
+  }, [data, setValue, setSelectedAddress]);
 
+  // 데이터 로드 시 처리
   useEffect(() => {
     if (data) {
-      console.log(data);
-      // TODO: 주소, 시간
-      // defaultValue를 data로 초기화
-
       // 시간 형식 변환
       const formattedData = {
         ...data,
@@ -54,34 +81,34 @@ export default function SpaceSettingComponent({ id }: SpaceSettingComponentProps
 
       // 변환된 데이터로 리셋
       reset(formattedData);
-    }
-  }, [data]);
 
-  const [isOn, setIsOn] = useState(true);
+      // 좌표를 주소로 변환 처리
+      getAddressFromCoords();
+    }
+  }, [data, reset, getAddressFromCoords]);
 
   // 할인율 계산
   const watchDiscountFields = watch('discountRate');
   const watchPriceFields = watch('pricePerDay');
   const [formattedPrice, setFormattedPrice] = useState<string>();
+
   useEffect(() => {
     if (watchDiscountFields && watchPriceFields) {
       const returnValue = discount(watchDiscountFields, watchPriceFields);
       const formattedReturnValue = returnValue.toLocaleString();
       setFormattedPrice(formattedReturnValue);
     }
-  }, [watchDiscountFields, watchPriceFields, formattedPrice]);
+  }, [watchDiscountFields, watchPriceFields]);
 
-  // 주소
-  // TODO: 주소 변환 과정 추가 (주소 <-> 좌표)
-  const { selectedAddress, setSelectedAddress } = useGeocodeStore();
-
-  // const getAddressFromCoords = useCallback(async () => {}, []);
-
-  const [geocodeModalOpen, setGeocodeModalOpen] = useState<boolean>(false);
-
-  // TODO: onSubmit 구현
+  // onSubmit 구현
   const onSubmit = (formData: SpaceFormData) => {
-    console.log(formData);
+    // selectedAddress의 좌표 정보를 formData에 추가
+    const submitData = {
+      ...formData,
+      latitude: selectedAddress.latitude,
+      longitude: selectedAddress.longitude,
+    };
+    console.log(submitData);
   };
 
   return (
@@ -182,6 +209,7 @@ export default function SpaceSettingComponent({ id }: SpaceSettingComponentProps
           <TagInputComponent control={control} setValue={setValue} />
         </div>
       </section>
+
       {/* pricePerDay & discountRate */}
       <section>
         <p className="text-style-SUB1 mb-6">공간 대여 가격 작성</p>
@@ -219,6 +247,7 @@ export default function SpaceSettingComponent({ id }: SpaceSettingComponentProps
           )}
         </div>
       </section>
+
       <section>
         <p className="text-style-SUB1 mb-6">공간 소개글 작성</p>
         {/* details - 자세한 소개 */}
@@ -233,6 +262,7 @@ export default function SpaceSettingComponent({ id }: SpaceSettingComponentProps
           />
         </div>
       </section>
+
       <section className="text-style-CAP1 flex flex-col gap-6">
         <p className="text-style-SUB1">위치 안내 작성</p>
         <div className="relative w-full">
@@ -268,11 +298,13 @@ export default function SpaceSettingComponent({ id }: SpaceSettingComponentProps
           <SpaceInputComponent config={SpaceConfig.detailAddress} control={control} />
           {errors.detailAddress && <p className="text-red">{errors.detailAddress.message}</p>}
         </div>
+
         {/* websiteUrl */}
         <div className="text-style-CAP1 flex w-full flex-col gap-2">
           <p>{SpaceConfig.websiteUrl.display}</p>
           <SpaceInputComponent config={SpaceConfig.websiteUrl} control={control} />
         </div>
+
         {/* contactNumber - 문의 전화번호 */}
         <div className="text-style-CAP1 flex w-full flex-col gap-2">
           <p className="after:ml-1 after:text-red after:content-['*']">
@@ -285,6 +317,7 @@ export default function SpaceSettingComponent({ id }: SpaceSettingComponentProps
           />
         </div>
       </section>
+
       <section className="flex flex-col gap-6">
         <p className="text-style-SUB1">시설 이용 및 공지사항 안내 작성</p>
         {/* facilityInfo - 시설 이용 및 공지사항 안내 */}
