@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { transformResponseToFormData } from '@utils/spaceTransform';
+import { transformResponseToFormData } from '@utils/transform/spaceTransform';
 
 import { fetchSpaceId } from 'src/api/space';
 

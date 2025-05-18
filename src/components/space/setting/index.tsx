@@ -2,6 +2,7 @@ import { useSpaceId } from '@hooks/useSpace';
 import SpaceSettingLayout from '@layout/spaceSettingLayout';
 import { SpaceFormData } from '@type/space/spaceType';
 import discount from '@utils/calculate/discount';
+import { formatTimeToKorean } from '@utils/transform/timePickerTransform';
 import { useGeocodeStore } from '@zustands/geocode/store';
 
 import React, { useEffect, useState } from 'react';
@@ -43,7 +44,16 @@ export default function SpaceSettingComponent({ id }: SpaceSettingComponentProps
       console.log(data);
       // TODO: 주소, 시간
       // defaultValue를 data로 초기화
-      reset(data);
+
+      // 시간 형식 변환
+      const formattedData = {
+        ...data,
+        openingTime: formatTimeToKorean(data.openingTime),
+        closingTime: formatTimeToKorean(data.closingTime),
+      };
+
+      // 변환된 데이터로 리셋
+      reset(formattedData);
     }
   }, [data]);
 
