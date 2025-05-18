@@ -41,7 +41,8 @@ export default function SpaceSettingComponent({ id }: SpaceSettingComponentProps
   useEffect(() => {
     if (data) {
       console.log(data);
-      // TODO:  tag, 주소, 시간
+      // TODO: 주소, 시간
+      // defaultValue를 data로 초기화
       reset(data);
     }
   }, [data]);
