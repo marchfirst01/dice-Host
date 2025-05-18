@@ -16,6 +16,8 @@ export default function ImageUploadComponent({ control, rules }: ImageUploadComp
   // URL 미리보기 상태 관리
   const [previewUrls, setPreviewUrls] = useState<string[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  // 이전 value 값을 저장하기 위한 ref
+  const prevValueRef = useRef<(File | string)[]>([]);
 
   // 이미지 첨부 버튼 클릭
   const handleFileButtonClick = () => {
@@ -37,7 +39,9 @@ export default function ImageUploadComponent({ control, rules }: ImageUploadComp
     setPreviewUrls((prev) => [...prev, ...newPreviewUrls]);
 
     // react-hook-form에 값 업데이트
-    onChange([...currentValue, ...newFiles]);
+    const updatedValue = [...currentValue, ...newFiles];
+    onChange(updatedValue);
+    prevValueRef.current = updatedValue;
   };
 
   // 이미지 삭제
@@ -59,6 +63,7 @@ export default function ImageUploadComponent({ control, rules }: ImageUploadComp
     const updatedValue = [...currentValue];
     updatedValue.splice(index, 1);
     onChange(updatedValue);
+    prevValueRef.current = updatedValue;
   };
 
   return (
@@ -67,8 +72,18 @@ export default function ImageUploadComponent({ control, rules }: ImageUploadComp
       control={control}
       rules={rules}
       render={({ field: { onChange, value = [] }, fieldState: { error } }) => {
-        // value가 변경될 때 미리보기 URL 업데이트
+        // value가 변경될 때만 미리보기 URL 업데이트
         useEffect(() => {
+          // 이전 value와 현재 value를 비교하여 변경 사항이 없으면 반환
+          const isSameValue =
+            prevValueRef.current.length === value.length &&
+            prevValueRef.current.every((item, idx) => item === value[idx]);
+
+          if (isSameValue) return;
+
+          // 현재 value 저장
+          prevValueRef.current = value;
+
           // value가 비어있는 경우 미리보기도 비우기
           if (!value || value.length === 0) {
             // 기존 blob URL 해제
@@ -87,15 +102,13 @@ export default function ImageUploadComponent({ control, rules }: ImageUploadComp
               if (typeof item === 'string') {
                 return item; // 이미 문자열인 경우 그대로 사용
               } else if (item instanceof File) {
-                // File 객체인 경우 미리보기 URL 생성
-                // 이미 해당 파일에 대한 URL이 있는지 확인
-                const existingBlobUrl = previewUrls.find(
-                  (url) =>
-                    url.startsWith('blob:') && previewUrls.indexOf(url) === value.indexOf(item),
+                // 이미 존재하는 미리보기 URL을 재사용하거나 새로 생성
+                const existingUrlIndex = prevValueRef.current.findIndex(
+                  (prevItem) => prevItem === item,
                 );
 
-                if (existingBlobUrl) {
-                  return existingBlobUrl;
+                if (existingUrlIndex !== -1 && existingUrlIndex < previewUrls.length) {
+                  return previewUrls[existingUrlIndex];
                 }
 
                 return URL.createObjectURL(item);
@@ -104,8 +117,14 @@ export default function ImageUploadComponent({ control, rules }: ImageUploadComp
             })
             .filter(Boolean); // 빈 문자열 제거
 
-          // 미리보기 URL 업데이트
-          setPreviewUrls(urls);
+          // 이전 URL 목록과 새로운 URL 목록 비교하여 필요한 경우에만 업데이트
+          const needsUpdate =
+            urls.length !== previewUrls.length || urls.some((url, idx) => url !== previewUrls[idx]);
+
+          if (needsUpdate) {
+            // 미리보기 URL 업데이트
+            setPreviewUrls(urls);
+          }
 
           // 정리 함수
           return () => {
@@ -116,7 +135,7 @@ export default function ImageUploadComponent({ control, rules }: ImageUploadComp
               }
             });
           };
-        }, [value]);
+        }, [value]); // previewUrls는 의존성 배열에서 제외
 
         return (
           <div className="relative flex w-full max-w-[400px] flex-row gap-[6px]">
