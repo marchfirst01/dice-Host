@@ -1,7 +1,7 @@
 import { IMAGES } from '@assets/index';
 import { Reservation, ReservationStatus } from '@type/reservation';
 import { calculateDaysBetween } from '@utils/calculateDays';
-import { formatNumber } from '@utils/formatNumber';
+import { numberFormat } from '@utils/format/numberFormat';
 
 import React from 'react';
 
@@ -69,7 +69,7 @@ export default function ReservationItemComponent({
             <p
               className={`text-style-SUB1 ${status === 'DECLINE' && 'text-deep_gray line-through'}`}
             >
-              {formatNumber(reservationItem.totalPrice)}원
+              {numberFormat(reservationItem.totalPrice)}원
             </p>
           </div>
         </div>
