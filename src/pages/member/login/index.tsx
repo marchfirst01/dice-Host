@@ -23,7 +23,7 @@ export default function LoginPage() {
       const res = await fetchLogin(formData);
       setAccessToken(res.token.accessToken);
       setRefreshToken(res.token.refreshToken);
-      router.push('/main');
+      router.push('/space');
     } catch (error) {
       console.log(error);
       setIsModalOpen(true);
@@ -46,7 +46,7 @@ export default function LoginPage() {
         height={12}
         alt="close"
       />
-      <p className="w-full font-H1 text-H1 leading-H1">로그인</p>
+      <p className="text-style-H1 w-full">로그인</p>
       <div className="flex w-full flex-col gap-3">
         <InputComponent
           config={memberConfig.email}
@@ -68,7 +68,7 @@ export default function LoginPage() {
         </RegisterFormButtonComponent>
         <p
           onClick={() => router.push('/member/password')}
-          className="cursor-pointer font-BTN1 text-BTN1 leading-BTN1 text-medium_gray"
+          className="text-style-BTN1 cursor-pointer text-medium_gray"
         >
           비밀번호 찾기
         </p>

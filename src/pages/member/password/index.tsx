@@ -61,7 +61,7 @@ function VerifyAuth() {
   return (
     <div className="flex flex-col gap-6">
       <div>
-        <p className="mb-2 font-CAP1 text-CAP1 leading-CAP1">이름</p>
+        <p className="text-style-CAP1 mb-2">이름</p>
         <InputComponent
           config={memberConfig.name}
           control={control}
@@ -69,7 +69,7 @@ function VerifyAuth() {
         />
       </div>
       <div>
-        <p className="font-CAP1 text-CAP1 leading-CAP1">이메일 아이디</p>
+        <p className="text-style-CAP1">이메일 아이디</p>
         <InputComponent
           config={memberConfig.email}
           control={control}
@@ -79,9 +79,7 @@ function VerifyAuth() {
           }}
         />
         {sendEmail && !isLoading && (
-          <p className="mt-1 font-CAP1 text-CAP1 leading-CAP1 text-green">
-            인증번호가 발송됐습니다.
-          </p>
+          <p className="text-style-CAP1 mt-1 text-green">인증번호가 발송됐습니다.</p>
         )}
       </div>
       {sendEmail && (
@@ -94,12 +92,12 @@ function VerifyAuth() {
             />
             <button
               onClick={handleAuthVerifyCode}
-              className="h-11 w-[135px] rounded-lg border border-stroke font-BTN1 text-BTN1 leading-BTN1 text-light_gray"
+              className="text-style-BTN1 h-11 w-[135px] rounded-lg border border-stroke text-light_gray"
             >
               인증
             </button>
           </div>
-          {errorMsg && <p className="mt-1 font-CAP1 text-CAP1 leading-CAP1 text-red">{errorMsg}</p>}
+          {errorMsg && <p className="text-style-CAP1 mt-1 text-red">{errorMsg}</p>}
         </div>
       )}
       <RegisterFormButtonComponent
@@ -149,19 +147,19 @@ function ResetPassword() {
       <div className="mb-10 flex size-10 items-center justify-center rounded-full bg-black">
         <Image className="bg-black" src={IMAGES.SendWhite} alt="send" width={24} height={24} />
       </div>
-      <div className="text-center font-BODY1 text-BODY1 leading-BODY1 text-deep_gray">
-        <span className="font-SUB2 text-SUB2 leading-SUB2 text-black">{email}</span>님의
+      <div className="text-style-BODY1 text-center text-deep_gray">
+        <span className="text-black">{email}</span>님의
         <br />
         임시 비밀번호가 발급됐습니다.
         <br />
-        <p className="mt-1 font-SUB3 text-SUB3 leading-SUB3 text-black">{tempPw}</p>
+        <p className="text-style-SUB3 mt-1 text-black">{tempPw}</p>
       </div>
       <button
         onClick={() => {
           setStep(0);
           router.push('/member/login');
         }}
-        className="absolute bottom-0 mb-[30px] h-[52px] w-full rounded-xl bg-black font-BTN1 text-BTN1 leading-BTN1 text-white"
+        className="text-style-BTN1 absolute bottom-0 mb-[30px] h-[52px] w-full rounded-xl bg-black text-white"
       >
         확인
       </button>

@@ -1,13 +1,15 @@
 import ReservationItemComponent from '@components/reservation/reservationItem';
 import { useReservationList } from '@hooks/useReservation';
+import ReservationLayoutComponent from '@layout/reservationLayout';
 import { Reservation, ReservationStatus } from '@type/reservation';
+import { useReservationStore } from '@zustands/reservation/reservationStore';
 
 import React, { useEffect, useState } from 'react';
 
 export default function ReservationPage() {
-  const [reservationStatus, setReservationStatus] = useState<ReservationStatus>('PENDING');
+  const { reservationStatus, setPendingCount } = useReservationStore();
+
   const [filterData, setFilterData] = useState<Reservation[] | undefined>([]);
-  const [pendingCount, setPendingCount] = useState(0);
 
   const { data, refetch } = useReservationList(reservationStatus);
 
@@ -21,30 +23,8 @@ export default function ReservationPage() {
   }, [data, reservationStatus]);
 
   return (
-    <>
-      {/* TODO: 클릭 된 아이템 표시 필요 */}
-      <div className="fixed z-50 flex w-full max-w-[400px] -translate-x-5 flex-row justify-center bg-back_gray">
-        <button
-          onClick={() => setReservationStatus('PENDING')}
-          className={`w-[111.67px] py-3 font-BTN1 text-BTN1 leading-BTN1 ${reservationStatus === 'PENDING' && 'border-b-2 border-black'}`}
-        >
-          대기중
-          <span className="ml-1 rounded-full bg-red px-2 py-[2px] text-white">{pendingCount}</span>
-        </button>
-        <button
-          onClick={() => setReservationStatus('ACCEPT')}
-          className={`w-[111.67px] py-3 font-BTN1 text-BTN1 leading-BTN1 ${reservationStatus === 'ACCEPT' && 'border-b-2 border-black'}`}
-        >
-          예약 완료
-        </button>
-        <button
-          onClick={() => setReservationStatus('DECLINE')}
-          className={`w-[111.67px] py-3 font-BTN1 text-BTN1 leading-BTN1 ${reservationStatus === 'DECLINE' && 'border-b-2 border-black'}`}
-        >
-          예약 취소
-        </button>
-      </div>
-      <div className="pt-[45px]">
+    <ReservationLayoutComponent>
+      <div className="px-5 pt-[45px]">
         {filterData && filterData.length > 0 ? (
           filterData.map((item, index) => (
             <ReservationItemComponent key={index} reservationItem={item} status={item.status} />
@@ -53,6 +33,6 @@ export default function ReservationPage() {
           <p>no data</p>
         )}
       </div>
-    </>
+    </ReservationLayoutComponent>
   );
 }

@@ -53,13 +53,9 @@ export default function BankInputComponent({
               {/* TODO: 은행 선택창 */}
               <button className="w-[118px] text-nowrap text-light_gray">은행 선택</button>
             </div>
-            {error && (
-              <p className="mt-2 font-CAP1 text-CAP1 leading-CAP1 text-yellow">{error.message}</p>
-            )}
+            {error && <p className="text-style-CAP1 mt-2 text-yellow">{error.message}</p>}
             {!invalid && value && memberConfig.isValid && (
-              <p className={`mt-2 font-CAP1 text-CAP1 leading-CAP1 text-green`}>
-                {memberConfig.isValid}
-              </p>
+              <p className={`text-style-CAP1 mt-2 text-green`}>{memberConfig.isValid}</p>
             )}
           </div>
         );

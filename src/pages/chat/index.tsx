@@ -24,7 +24,7 @@ export default function ChatPage() {
         />
       </header>
       <main className="px-5">
-        <h1 className="flex flex-row gap-2 pb-6 pt-8 font-H1 text-H1 leading-H1">
+        <h1 className="text-style-H1 flex flex-row gap-2 pb-6 pt-8">
           <p>게스트와의 쪽지함</p>
           <Image src={IMAGES.ChatBlack} alt="chat" />
         </h1>
@@ -50,14 +50,10 @@ export default function ChatPage() {
                   />
                 </div>
                 <div className="ml-2 mr-1 flex grow flex-col justify-between py-[2.5px]">
-                  <p className="font-SUB3 text-SUB3 leading-SUB3 text-dark_gray">
-                    {chat.otherName}
-                  </p>
-                  <p className="font-BODY2 text-BODY2 leading-BODY2 text-medium_gray">
-                    {chat.lastMessage}
-                  </p>
+                  <p className="text-style-SUB3 text-dark_gray">{chat.otherName}</p>
+                  <p className="text-style-BODY2 text-medium_gray">{chat.lastMessage}</p>
                 </div>
-                <div className="flex w-[60px] flex-col items-end justify-between font-CAP2 text-CAP2 leading-CAP2">
+                <div className="text-style-CAP2 flex w-[60px] flex-col items-end justify-between">
                   <p className="text-light_gray">
                     {formatMessageListTimestamp(chat.lastMessageAt)}
                   </p>
