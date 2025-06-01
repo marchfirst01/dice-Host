@@ -6,12 +6,15 @@ import { deleteToken } from '@utils/token';
 
 import React from 'react';
 
+import { signOut, useSession } from 'next-auth/react';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { fetchLogout } from 'src/api/member';
 
 export default function HostPage() {
   const router = useRouter();
+  const { data: session } = useSession();
+  console.log(session);
 
   const { data: hostSpaceData } = useHostSpace();
   const { data: hostInfo } = useHostInfo();
@@ -30,6 +33,7 @@ export default function HostPage() {
         <div className="flex flex-row items-center gap-3 pb-4">
           <Image src={IMAGES.DiceBlack} alt="profile" width={54} height={54} />
           <p className="text-style-SUB1">{hostInfo.name}</p>
+          {session && <p className="text-style-SUB1">{session.user.name}</p>}
         </div>
         <div className="flex flex-row items-center justify-between pb-2">
           <p className="text-style-SUB3">
@@ -71,6 +75,9 @@ export default function HostPage() {
         <hr />
         <p onClick={() => handleLogout()} className="cursor-pointer">
           로그아웃
+        </p>
+        <p onClick={() => signOut({ callbackUrl: '/' })} className="cursor-pointer">
+          카카오 로그아웃
         </p>
       </div>
       <p

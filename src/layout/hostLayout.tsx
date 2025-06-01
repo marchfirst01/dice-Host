@@ -12,7 +12,7 @@ export default function HostLayoutComponent({ children }: { children: React.Reac
   const childrenArray = React.Children.toArray(children);
   return (
     <div className="h-full pb-[73px] pt-[68px]">
-      <header className="fixed top-0 z-50 flex w-full max-w-[400px] flex-row justify-between px-5 pt-8">
+      <header className="fixed top-0 z-50 flex w-full max-w-[400px] flex-row justify-between bg-white px-5 pt-8">
         <p className="text-style-H1">호스트 정보</p>
         <Image
           onClick={() => router.push('/my/update')}
