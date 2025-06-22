@@ -19,7 +19,7 @@ import TimePickerComponent from './timePicker';
 import { useRouter } from 'next/router';
 import { fetchSpaceIdUpdate, fetchSpaceRegister } from 'src/api/space';
 import { SpaceConfig } from 'src/context/space/spaceConfig';
-import { getReverseGeocode } from 'src/server/naverMap';
+import { getReverseGeocode } from 'src/server/kakaoMap';
 
 interface SpaceSettingComponentProps {
   id?: string; // router.query
