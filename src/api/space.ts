@@ -2,6 +2,8 @@ import { PostAxiosInstance } from '@axios/axios.method';
 import { GuestGetAxiosInstance } from '@axios/guest.axios.method';
 import { SpaceIdResponse, SpaceSubmitData } from '@type/space/spaceType';
 
+import axios from 'axios';
+
 // id 공간 정보 조회
 export const fetchSpaceId = async (id: string): Promise<SpaceIdResponse> => {
   const res = await GuestGetAxiosInstance(`/space/${id}`);
@@ -53,9 +55,62 @@ export const uploadImage = async (imageList: (File | string)[]): Promise<string[
   }
 };
 
+// 지하철역 정보 조회 함수
+const fetchNearestSubway = async (latitude: number, longitude: number) => {
+  const apiKey = process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY;
+
+  if (!apiKey) {
+    console.error('Kakao API 키가 설정되지 않았습니다.');
+    return null;
+  }
+
+  try {
+    const response = await axios.get('https://dapi.kakao.com/v2/local/search/category', {
+      headers: {
+        Authorization: `KakaoAK ${apiKey}`,
+      },
+      params: {
+        category_group_code: 'SW8', // 지하철역
+        x: longitude,
+        y: latitude,
+        sort: 'distance',
+        page: 1,
+        size: 1,
+      },
+    });
+
+    const firstPlace = response.data.documents[0];
+    if (!firstPlace) return null;
+
+    const { place_name, distance } = firstPlace;
+    const [stationName, lineName] = place_name.split(' ');
+
+    return { stationName, lineName, distance };
+  } catch (error) {
+    console.error('지하철역 정보 조회 실패:', error);
+    return null;
+  }
+};
+
 export const fetchSpaceRegister = async (submitData: SpaceSubmitData) => {
   try {
-    const res = await PostAxiosInstance(`/space/register`, submitData);
+    // 1. 지하철역 정보 조회
+    let nearestSubway = null;
+    if (submitData.latitude && submitData.longitude) {
+      nearestSubway = await fetchNearestSubway(submitData.latitude, submitData.longitude);
+    }
+
+    // 2. 지하철역 정보를 포함한 최종 데이터 구성 - 임시 구성
+    const finalSubmitData = {
+      ...submitData,
+      // nearestSubway,
+    };
+
+    console.log('지하철역 정보:', nearestSubway);
+
+    // 3. 서버로 데이터 전송
+    const res = await PostAxiosInstance(`/space/register`, finalSubmitData);
+
     if (res.status !== 201) throw new Error('공간 등록에 실패했습니다');
     return res.data;
   } catch (error) {
@@ -63,6 +118,17 @@ export const fetchSpaceRegister = async (submitData: SpaceSubmitData) => {
     throw error;
   }
 };
+
+// export const fetchSpaceRegister = async (submitData: SpaceSubmitData) => {
+//   try {
+//     const res = await PostAxiosInstance(`/space/register`, submitData);
+//     if (res.status !== 201) throw new Error('공간 등록에 실패했습니다');
+//     return res.data;
+//   } catch (error) {
+//     console.error('공간 등록 오류:', error);
+//     throw error;
+//   }
+// };
 
 export const fetchSpaceIdUpdate = async (id: string, submitData: SpaceSubmitData) => {
   try {
