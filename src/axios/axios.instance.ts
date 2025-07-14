@@ -15,6 +15,11 @@ const axiosInstance: AxiosInstance = axios.create({
   // withCredentials: true,
 });
 
+const axiosInstanceV2: AxiosInstance = axios.create({
+  baseURL: process.env.NEXT_PUBLIC_BASE_URL_V2,
+  // withCredentials: true,
+});
+
 // JWT 토큰 기반 API 요청
 axiosInstance.interceptors.request.use(
   async (config) => {
@@ -29,6 +34,54 @@ axiosInstance.interceptors.request.use(
     return config;
   },
   (error: Error) => {
+    return Promise.reject(error);
+  },
+);
+
+axiosInstanceV2.interceptors.request.use(
+  async (config) => {
+    const accessToken = await getAccessToken();
+
+    if (!accessToken) {
+      throw new Error('토큰 없음');
+    }
+
+    config.headers['Authorization'] = `Bearer ${accessToken}`;
+
+    return config;
+  },
+  (error: Error) => {
+    return Promise.reject(error);
+  },
+);
+
+// 기존 코드에 추가
+axiosInstanceV2.interceptors.response.use(
+  async (response) => {
+    return response;
+  },
+  async (error) => {
+    const originalRequest = error.config;
+
+    // 403 에러 발생 시 토큰 재발급 처리
+    if (error.response?.status === 403 && !originalRequest._retry) {
+      originalRequest._retry = true;
+
+      try {
+        const { data } = await refreshTokenRequest();
+        originalRequest.headers['Authorization'] = `Bearer ${data.accessToken}`;
+        return axiosInstanceV2(originalRequest); // V2 인스턴스로 재시도
+      } catch (refreshError) {
+        return Promise.reject(refreshError);
+      }
+    }
+
+    // 토큰 만료나 잘못된 토큰일 때 로그아웃 처리
+    if (error.response?.data?.code === 'AUTH_001') {
+      console.log('잘못된 토큰');
+      deleteToken();
+    }
+
     return Promise.reject(error);
   },
 );
@@ -82,4 +135,4 @@ axiosInstance.interceptors.response.use(
   },
 );
 
-export default axiosInstance;
+export { axiosInstance, axiosInstanceV2 };

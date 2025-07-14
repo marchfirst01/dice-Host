@@ -96,7 +96,7 @@ export default function EmailInputComponent({
                           setIsEmailClick(false); // 선택 후 드롭다운 닫기
                           handleChangeEmail(onChange);
                         }}
-                        className="px-2 py-[11.5px] font-BTN1 text-BTN1 leading-BTN1 text-medium_gray hover:bg-back_gray"
+                        className="text-style-BTN1 px-2 py-[11.5px] text-medium_gray hover:bg-back_gray"
                       >
                         {email}
                       </p>
@@ -107,7 +107,7 @@ export default function EmailInputComponent({
             </div>
             {error && isTouched && (
               <p
-                className={`mt-2 font-CAP1 text-CAP1 leading-CAP1 ${memberConfig.name === 'password' && error.type === 'validate' && 'text-yellow'} ${memberConfig.name === 'bank' && 'text-yellow'} text-red`}
+                className={`text-style-CAP1 mt-2 ${memberConfig.name === 'password' && error.type === 'validate' && 'text-yellow'} ${memberConfig.name === 'bank' && 'text-yellow'} text-red`}
               >
                 {error.message}
               </p>

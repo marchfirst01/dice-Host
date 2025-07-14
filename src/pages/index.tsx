@@ -1,4 +1,5 @@
 import { IMAGES } from '@assets/index';
+import KakaoLoginButton from '@components/kakaoLogin/kakaoLoginButton';
 import { getAccessToken } from '@utils/token';
 
 import { useEffect, useState } from 'react';
@@ -14,7 +15,7 @@ export default function Home() {
   }, []);
 
   return isLoggedIn ? (
-    router.push('/main')
+    router.push('/space')
   ) : (
     <div className="flex h-screen flex-col items-center justify-center">
       <div className="space-y-4">
@@ -30,7 +31,9 @@ export default function Home() {
           <Image src={IMAGES.DiceWhite} alt="주사위" />
           <p className="font-BTN1 text-BTN1 text-white">다이스 아이디로 로그인</p>
         </button>
-
+        <div className="w-full">
+          <KakaoLoginButton />
+        </div>
         <div className="flex flex-row items-center justify-center">
           <p className="py-2.5 font-BTN1 text-BTN1 text-medium_gray">아직 회원이 아니신가요?</p>
           <button

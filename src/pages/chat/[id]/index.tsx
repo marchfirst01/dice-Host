@@ -62,7 +62,7 @@ export default function ChatRoom() {
           <div key={chat.id} className={`${chat.isLoginUsersMessage ? 'text-right' : 'text-left'}`}>
             {/* (1) 첫 번째 메세지 이거나 (2) index-1 번째 시간과 index 번째 시간이 다른 경우 */}
             {index === 0 || !isSameDate(data.content[index - 1]?.createdAt, chat.createdAt) ? (
-              <p className="py-2 text-center font-CAP2 text-CAP2 leading-CAP2">
+              <p className="text-style-CAP2 py-2 text-center">
                 {formatMessageTimeStampToDay(chat.createdAt)}
               </p>
             ) : null}
@@ -70,14 +70,14 @@ export default function ChatRoom() {
             {index === 0 ||
             data.content[index - 1]?.senderName !== chat.senderName ||
             !isSameTime(data.content[index - 1].createdAt, chat.createdAt) ? (
-              <p className="pt-1 font-CAP1 text-CAP1 leading-CAP1 text-medium_gray">
+              <p className="text-style-CAP1 pt-1 text-medium_gray">
                 {/* 상대가 보낸 메세지일 때 이름 표시 */}
                 {!chat.isLoginUsersMessage && `${chat.senderName} · `}
                 {formatMessageTimeStampTo12Hour(chat.createdAt)}
               </p>
             ) : null}
             <p
-              className={`mb-1 inline-block rounded-lg ${index > 0 && data.content[index - 1]?.senderName === chat.senderName ? 'rounded-lg' : chat.isLoginUsersMessage ? 'rounded-tr-none' : 'rounded-tl-none'} ${chat.isLoginUsersMessage ? 'bg-dark_gray text-white' : 'bg-white'} px-3 py-2 font-BODY1 text-BODY1 leading-BODY1 text-deep_gray`}
+              className={`mb-1 inline-block rounded-lg ${index > 0 && data.content[index - 1]?.senderName === chat.senderName ? 'rounded-lg' : chat.isLoginUsersMessage ? 'rounded-tr-none' : 'rounded-tl-none'} ${chat.isLoginUsersMessage ? 'bg-dark_gray text-white' : 'bg-white'} text-style-BODY1 px-3 py-2 text-deep_gray`}
             >
               {chat.content}
             </p>

@@ -97,14 +97,14 @@ export default function PhoneInputComponent({
             </div>
             {error && (
               <p
-                className={`mt-2 font-CAP1 text-CAP1 leading-CAP1 ${memberConfig.name === 'password' && error.type === 'validate' && 'text-yellow'} ${memberConfig.name === 'bank' && 'text-yellow'} text-red`}
+                className={`text-style-CAP1 mt-2 ${memberConfig.name === 'password' && error.type === 'validate' && 'text-yellow'} ${memberConfig.name === 'bank' && 'text-yellow'} text-red`}
               >
                 {error.message}
               </p>
             )}
             {phoneMessage && (
               <p
-                className={`mt-2 font-CAP1 text-CAP1 leading-CAP1 ${phoneMessage === memberConfig.isValid ? 'text-green' : 'text-red'} `}
+                className={`text-style-CAP1 mt-2 ${phoneMessage === memberConfig.isValid ? 'text-green' : 'text-red'} `}
               >
                 {phoneMessage}
               </p>

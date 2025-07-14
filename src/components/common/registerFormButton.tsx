@@ -16,7 +16,7 @@ export default function RegisterFormButtonComponent<T extends FieldValues>({
     <button
       disabled={disabled}
       onClick={handleSubmit(onSubmit)}
-      className={`h-[52px] w-full rounded-lg p-4 font-BTN1 text-BTN1 leading-BTN1 text-white ${disabled ? 'bg-light_gray' : 'bg-black'}`}
+      className={`text-style-BTN1 h-[52px] w-full rounded-lg p-4 text-white ${disabled ? 'bg-light_gray' : 'bg-black'}`}
     >
       {children}
     </button>
