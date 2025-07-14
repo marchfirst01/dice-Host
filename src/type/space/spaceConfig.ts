@@ -7,18 +7,14 @@ import { SpaceFormData } from './spaceType';
 // 팝업 formData의 id들
 type SpaceId =
   | 'name'
-  | 'description'
   | 'openingTime'
   | 'closingTime'
   | 'size'
-  | 'capacity'
-  | 'tags'
   | 'pricePerDay'
   | 'discountRate'
   | 'details'
   | 'address'
   | 'detailAddress'
-  | 'websiteUrl'
   | 'contactNumber'
   | 'facilityInfo'
   | 'notice';

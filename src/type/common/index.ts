@@ -4,6 +4,28 @@ export interface CommonConfig {
   rules?: string;
 }
 
+export type FacilityKey =
+  | 'cctv'
+  | 'chair'
+  | 'circle_table'
+  | 'couch'
+  | 'desktop'
+  | 'drink'
+  | 'fire_extinguisher'
+  | 'firealarm'
+  | 'first_aid_kit'
+  | 'light'
+  | 'monitor'
+  | 'printer'
+  | 'projector'
+  | 'shelf'
+  | 'speaker'
+  | 'square_table'
+  | 'standing_table'
+  | 'tv'
+  | 'water_purifier'
+  | 'wifi';
+
 export interface CommonSpaceData {
   name: string;
   openingTime: string;
@@ -11,7 +33,11 @@ export interface CommonSpaceData {
   details: string;
   websiteUrl: string;
   contactNumber: string;
-  facilityInfo: string;
+  facilityInfo: {
+    key: FacilityKey;
+    number: number;
+    description: string;
+  }[];
   notice: string[];
   isActivated: boolean;
 }

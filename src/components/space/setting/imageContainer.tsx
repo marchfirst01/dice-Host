@@ -8,10 +8,12 @@ export default function ImageContainerComponent({
   index,
   url,
   onDelete,
+  hasMain = true,
 }: {
   index: number;
   url: string;
   onDelete: () => void;
+  hasMain?: boolean;
 }) {
   return (
     <div className="relative flex size-20 shrink-0 items-center justify-center rounded-xl border border-light_gray">
@@ -28,7 +30,7 @@ export default function ImageContainerComponent({
         fill
         style={{ objectFit: 'cover' }}
       />
-      {index === 0 && (
+      {index === 0 && hasMain && (
         <div className="text-style-CAP2 absolute bottom-0 z-10 w-full rounded-b-xl bg-[#00000080] py-[3px] text-center text-white">
           대표 이미지
         </div>

@@ -1,23 +1,43 @@
 import { IMAGES } from '@assets/index';
-import { SpaceFormData } from '@type/space/spaceType';
 
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
-import { Control, Controller, UseControllerProps } from 'react-hook-form';
+import { Control, Controller, FieldPath, UseControllerProps } from 'react-hook-form';
 
 import ImageContainerComponent from './imageContainer';
 import Image from 'next/image';
 
-interface ImageUploadComponentProps {
-  control: Control<SpaceFormData>;
-  rules: UseControllerProps<SpaceFormData, 'imageList'>['rules'];
+// 이미지 아이템 타입 정의
+type ImageItem = File | string;
+
+// 제네릭 타입 정의 - 이미지 필드는 ImageItem[] 타입이어야 함
+interface ImageUploadComponentProps<T extends Record<string, any>, K extends FieldPath<T>> {
+  control: Control<T>;
+  name: K; // 필드 이름을 동적으로 받기
+  rules?: UseControllerProps<T, K>['rules'];
 }
 
-export default function ImageUploadComponent({ control, rules }: ImageUploadComponentProps) {
+// 타입 가드 함수들
+const isFile = (item: unknown): item is File => {
+  return item instanceof File;
+};
+
+const isString = (item: unknown): item is string => {
+  return typeof item === 'string';
+};
+
+const isImageItem = (item: unknown): item is ImageItem => {
+  return isFile(item) || isString(item);
+};
+
+export default function ImageUploadComponent<
+  T extends Record<string, any>,
+  K extends FieldPath<T>,
+>({ control, name, rules }: ImageUploadComponentProps<T, K>) {
   // URL 미리보기 상태 관리
   const [previewUrls, setPreviewUrls] = useState<string[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
   // 이전 value 값을 저장하기 위한 ref
-  const prevValueRef = useRef<(File | string)[]>([]);
+  const prevValueRef = useRef<ImageItem[]>([]);
 
   // 이미지 첨부 버튼 클릭
   const handleFileButtonClick = () => {
@@ -27,8 +47,8 @@ export default function ImageUploadComponent({ control, rules }: ImageUploadComp
   // 파일 선택 처리
   const handleFileChange = (
     e: ChangeEvent<HTMLInputElement>,
-    onChange: (value: (File | string)[]) => void,
-    currentValue: (File | string)[],
+    onChange: (value: ImageItem[]) => void,
+    currentValue: ImageItem[],
   ) => {
     if (!e.target.files || e.target.files.length === 0) return;
 
@@ -47,8 +67,8 @@ export default function ImageUploadComponent({ control, rules }: ImageUploadComp
   // 이미지 삭제
   const handleDeleteImage = (
     index: number,
-    onChange: (value: (File | string)[]) => void,
-    currentValue: (File | string)[],
+    onChange: (value: ImageItem[]) => void,
+    currentValue: ImageItem[],
   ) => {
     // 미리보기에서 해당 URL 제거
     const removedPreviewUrl = previewUrls[index];
@@ -68,24 +88,27 @@ export default function ImageUploadComponent({ control, rules }: ImageUploadComp
 
   return (
     <Controller
-      name="imageList"
+      name={name} // 동적 필드 이름 사용
       control={control}
       rules={rules}
       render={({ field: { onChange, value = [] }, fieldState: { error } }) => {
         // value가 변경될 때만 미리보기 URL 업데이트
         useEffect(() => {
+          // value를 ImageItem[]로 타입 단언
+          const imageValue = (value as ImageItem[]) || [];
+
           // 이전 value와 현재 value를 비교하여 변경 사항이 없으면 반환
           const isSameValue =
-            prevValueRef.current.length === value.length &&
-            prevValueRef.current.every((item, idx) => item === value[idx]);
+            prevValueRef.current.length === imageValue.length &&
+            prevValueRef.current.every((item, idx) => item === imageValue[idx]);
 
           if (isSameValue) return;
 
           // 현재 value 저장
-          prevValueRef.current = value;
+          prevValueRef.current = imageValue;
 
           // value가 비어있는 경우 미리보기도 비우기
-          if (!value || value.length === 0) {
+          if (!imageValue || imageValue.length === 0) {
             // 기존 blob URL 해제
             previewUrls.forEach((url) => {
               if (url?.startsWith?.('blob:')) {
@@ -97,11 +120,11 @@ export default function ImageUploadComponent({ control, rules }: ImageUploadComp
           }
 
           // 현재 값에서 미리보기 URL 생성
-          const urls = value
+          const urls = imageValue
             .map((item) => {
-              if (typeof item === 'string') {
+              if (isString(item)) {
                 return item; // 이미 문자열인 경우 그대로 사용
-              } else if (item instanceof File) {
+              } else if (isFile(item)) {
                 // 이미 존재하는 미리보기 URL을 재사용하거나 새로 생성
                 const existingUrlIndex = prevValueRef.current.findIndex(
                   (prevItem) => prevItem === item,
@@ -142,11 +165,13 @@ export default function ImageUploadComponent({ control, rules }: ImageUploadComp
             {/* 파일 입력 필드 */}
             <input
               ref={fileInputRef}
-              id="fileInput"
+              id={`fileInput-${name}`} // 동적 id 생성
               className="hidden"
               type="file"
               accept="image/*"
-              onChange={(e) => handleFileChange(e, onChange, value)}
+              onChange={(e) =>
+                handleFileChange(e, onChange as (value: ImageItem[]) => void, value as ImageItem[])
+              }
             />
 
             {/* 업로드 버튼 */}
@@ -170,7 +195,14 @@ export default function ImageUploadComponent({ control, rules }: ImageUploadComp
                     key={`${index}-${url.slice(-8)}`}
                     index={index}
                     url={url}
-                    onDelete={() => handleDeleteImage(index, onChange, value)}
+                    onDelete={() =>
+                      handleDeleteImage(
+                        index,
+                        onChange as (value: ImageItem[]) => void,
+                        value as ImageItem[],
+                      )
+                    }
+                    hasMain={name === 'imageList'}
                   />
                 ))}
             </div>

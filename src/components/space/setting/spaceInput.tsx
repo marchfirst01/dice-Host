@@ -2,15 +2,32 @@ import { SpaceConfig, SpaceId } from '@type/space/spaceConfig';
 import { SpaceFormData } from '@type/space/spaceType';
 
 import React from 'react';
-import { Control, Controller, UseControllerProps } from 'react-hook-form';
+import { Control, Controller } from 'react-hook-form';
+
+// Input에 적합하지 않은 필드들
+const NON_INPUT_FIELDS = ['facilityInfo', 'imageList', 'popUpImageList'] as const;
+
+// Input에 적합한 SpaceId 타입
+type InputSpaceId = Exclude<SpaceId, (typeof NON_INPUT_FIELDS)[number]>;
 
 interface SpaceInputComponentProps {
   config: SpaceConfig;
   control: Control<SpaceFormData>;
-  rules?: UseControllerProps<SpaceFormData, SpaceId>['rules'];
+  rules?: any; // 타입 충돌을 피하기 위해 any 사용
+}
+
+// 런타임에 input 호환성 체크
+function isInputCompatible(fieldName: SpaceId): fieldName is InputSpaceId {
+  return !NON_INPUT_FIELDS.includes(fieldName as any);
 }
 
 export default function SpaceInputComponent({ config, control, rules }: SpaceInputComponentProps) {
+  // 런타임에 input 호환성 체크
+  if (!isInputCompatible(config.name)) {
+    console.error(`${config.name} 필드는 SpaceInputComponent에서 사용할 수 없습니다.`);
+    return null;
+  }
+
   return (
     <Controller
       name={config.name}
@@ -25,9 +42,15 @@ export default function SpaceInputComponent({ config, control, rules }: SpaceInp
           }
         };
 
-        // 숫자에 , 붙여주기
-        let displayValue = value;
+        // value가 객체나 배열인 경우 빈 문자열로 처리
+        let displayValue = '';
+        if (typeof value === 'string') {
+          displayValue = value;
+        } else if (typeof value === 'number') {
+          displayValue = value.toString();
+        }
 
+        // 숫자에 , 붙여주기
         if (config.type === 'number' && value !== null && value !== undefined && value !== '') {
           if (typeof value === 'number') {
             displayValue = value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
