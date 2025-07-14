@@ -4,22 +4,6 @@ export interface CommonConfig {
   rules?: string;
 }
 
-export interface CommonPopUpData {
-  name: string;
-  description: string;
-  category: string;
-  openingTime: string;
-  closingTime: string;
-  capacity: number | null;
-  tags: string[];
-  details: string;
-  websiteUrl: string;
-  contactNumber: string;
-  facilityInfo: string;
-  notice: string;
-  isActivated: boolean;
-}
-
 export interface CommonSpaceData {
   name: string;
   description: string;

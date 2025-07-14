@@ -16,6 +16,13 @@ import 'swiper/css/pagination';
 import { Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
+// 카카오맵 타입 선언
+declare global {
+  interface Window {
+    kakao: any;
+  }
+}
+
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
   const { id } = context.query as { id: string };
   try {
@@ -32,23 +39,56 @@ export default function SpaceIdView({
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   if (!initialData) return <p>데이터 로드에 실패했습니다.</p>;
 
-  // const [isDescriptionDetailView, setIsDescriptionDetailView] = useState<boolean>(false);
   const [isUsageDetailView, setIsUsageDetailView] = useState<boolean>(false);
+  const [mapLoaded, setMapLoaded] = useState(false);
 
-  // 지도
+  // 카카오맵 초기화
   useEffect(() => {
-    const mapDiv = document.getElementById('map');
-    if (mapDiv && typeof naver !== 'undefined') {
-      const map = new naver.maps.Map(mapDiv, {
-        // lat: x, lon: y (127, 33)
-        center: new naver.maps.LatLng(initialData.latitude, initialData.longitude),
-        zoom: 15,
-      });
+    const initializeMap = () => {
+      if (window.kakao && window.kakao.maps) {
+        const mapContainer = document.getElementById('map');
+        if (mapContainer) {
+          const mapOption = {
+            center: new window.kakao.maps.LatLng(initialData.latitude, initialData.longitude),
+            level: 3,
+          };
 
-      new naver.maps.Marker({
-        position: new naver.maps.LatLng(initialData.latitude, initialData.longitude),
-        map: map,
-      });
+          const map = new window.kakao.maps.Map(mapContainer, mapOption);
+
+          const markerPosition = new window.kakao.maps.LatLng(
+            initialData.latitude,
+            initialData.longitude,
+          );
+          const marker = new window.kakao.maps.Marker({
+            position: markerPosition,
+          });
+
+          marker.setMap(map);
+          setMapLoaded(true);
+        }
+      }
+    };
+
+    // 카카오 스크립트가 이미 로드되어 있다면 바로 초기화
+    if (window.kakao && window.kakao.maps) {
+      initializeMap();
+    } else {
+      // 스크립트 로드를 기다림 (최대 5초)
+      let attempts = 0;
+      const maxAttempts = 50; // 5초 (100ms * 50)
+
+      const checkKakao = setInterval(() => {
+        attempts++;
+        if (window.kakao && window.kakao.maps) {
+          clearInterval(checkKakao);
+          initializeMap();
+        } else if (attempts >= maxAttempts) {
+          clearInterval(checkKakao);
+          console.error('카카오맵 스크립트 로드 실패');
+        }
+      }, 100);
+
+      return () => clearInterval(checkKakao);
     }
   }, [initialData]);
 
@@ -129,9 +169,17 @@ export default function SpaceIdView({
               <Image src={IMAGES.PlaceMarker} alt="place-marker" width={24} height={24} />
               <p className="text-style-BODY1 text-dark_gray">{initialData.address}</p>
             </div>
-            {/* TODO: location(지번주소) 필요 */}
             <p
-              onClick={() => console.log('주소 복사:', initialData.address)}
+              onClick={() => {
+                navigator.clipboard
+                  .writeText(initialData.address)
+                  .then(() => {
+                    alert('주소가 복사되었습니다.');
+                  })
+                  .catch(() => {
+                    console.log('주소 복사:', initialData.address);
+                  });
+              }}
               className="text-style-CAP2 cursor-pointer text-medium_gray underline"
             >
               주소 복사
@@ -144,6 +192,11 @@ export default function SpaceIdView({
           )}
         </div>
         <div className="h-[160px] w-full rounded-xl border border-stroke bg-light_gray">
+          {!mapLoaded && (
+            <div className="flex h-full w-full items-center justify-center">
+              <p className="text-medium_gray">지도 로딩 중...</p>
+            </div>
+          )}
           <div id="map" style={{ width: '100%', height: '160px' }} />
         </div>
         <button

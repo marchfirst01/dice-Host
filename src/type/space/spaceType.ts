@@ -13,7 +13,6 @@ export interface Address {
 
 // 공간 정보 Form으로 받아온 정보들
 export interface SpaceFormData extends CommonSpaceData {
-  // imageList: (File | string)[];
   imageList: Array<string | File>;
   size: number;
   pricePerDay: number;

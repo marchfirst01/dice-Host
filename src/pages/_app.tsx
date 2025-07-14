@@ -15,7 +15,7 @@ export default function App({ Component, pageProps: { session, ...pageProps } }:
   const queryClient = new QueryClient();
 
   const [loading, setLoading] = useState(false);
-  const [isMapScriptLoaded, setIsMapScriptLoaded] = useState(false); // Naver Map script 로딩 상태 관리
+  const [isKakaoMapScriptLoaded, setIsKakaoMapScriptLoaded] = useState(false); // 카카오맵 script 로딩 상태 관리
 
   useEffect(() => {
     const handleStart = () => setLoading(true);
@@ -25,7 +25,6 @@ export default function App({ Component, pageProps: { session, ...pageProps } }:
     Router.events.on('routeChangeComplete', handleComplete);
     Router.events.on('routeChangeError', handleComplete);
 
-    // Cleanup the event listeners
     return () => {
       Router.events.off('routeChangeStart', handleStart);
       Router.events.off('routeChangeComplete', handleComplete);
@@ -48,13 +47,15 @@ export default function App({ Component, pageProps: { session, ...pageProps } }:
     <SessionProvider session={session}>
       <QueryClientProvider client={queryClient}>
         <Script
-          src={`https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${process.env.NEXT_PUBLIC_NMFClientId}&submodules=geocoder`}
-          strategy="lazyOnload" // 비동기적으로 로드
+          src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_JS_API_KEY}&libraries=services&autoload=false`}
+          strategy="afterInteractive"
           onLoad={() => {
-            setIsMapScriptLoaded(true); // 스크립트 로드 완료 시 상태 업데이트
+            window.kakao.maps.load(() => {
+              setIsKakaoMapScriptLoaded(true);
+            });
           }}
         />
-        {loading || !isMapScriptLoaded ? ( // 지도 스크립트가 로드되었을 때만 페이지를 렌더링
+        {loading || !isKakaoMapScriptLoaded ? (
           <div className="flex h-screen flex-col items-center justify-center">
             <Image src={IMAGES.DiceLoading} priority alt="loading" width={150} height={150} />
           </div>
