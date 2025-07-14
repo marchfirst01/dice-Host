@@ -17,6 +17,7 @@ export interface SpaceFormData extends CommonSpaceData {
   size: number;
   pricePerDay: number;
   discountRate: number;
+  popUpImageList?: Array<string | File>;
   city: string;
   district: string;
   address: string;
@@ -31,6 +32,7 @@ export interface SpaceSubmitData extends CommonSpaceData {
   size: number;
   pricePerDay: number;
   discountRate: number;
+  popUpImageUrls?: string[];
   latitude: number;
   longitude: number;
   city: string;
@@ -46,6 +48,11 @@ export interface SpaceIdResponse extends CommonSpaceData {
   size: number;
   pricePerDay: number;
   discountRate: number;
+  analysis: {
+    title: string;
+    description: string;
+  };
+  popUpImageUrls?: string[];
   latitude: number;
   longitude: number;
   city: string;

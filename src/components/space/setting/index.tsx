@@ -9,12 +9,10 @@ import { useGeocodeStore } from '@zustands/geocode/store';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-import CategoryDropdownComponent from './categoryDropdown';
 import GeocodeModalComponent from './geocodeModal';
 import ImageUploadComponent from './imageUpload';
 import SpaceInputComponent from './spaceInput';
 import SpaceTextareaComponent from './spaceTextarea';
-import TagInputComponent from './tagInput';
 import TimePickerComponent from './timePicker';
 import { useRouter } from 'next/router';
 import { fetchSpaceIdUpdate, fetchSpaceRegister } from 'src/api/space';
@@ -146,8 +144,9 @@ export default function SpaceSettingComponent({ id }: SpaceSettingComponentProps
             rules={{ required: SpaceConfig.name.rules }}
           />
         </div>
+        {/* TODO: 삭제 */}
         {/* description - 한 줄 소개 */}
-        <div>
+        {/* <div>
           <p className="after:ml-1 after:text-red after:content-['*']">
             {SpaceConfig.description.display}
           </p>
@@ -156,7 +155,7 @@ export default function SpaceSettingComponent({ id }: SpaceSettingComponentProps
             control={control}
             rules={{ required: SpaceConfig.description.rules }}
           />
-        </div>
+        </div> */}
         <div className="flex flex-col gap-1">
           {/* image - 이미지 */}
           <p className="after:ml-1 after:text-red after:content-['*']">이미지 등록(최대 10장)</p>
@@ -165,14 +164,15 @@ export default function SpaceSettingComponent({ id }: SpaceSettingComponentProps
             rules={{ required: '이미지를 하나 이상 등록해주세요' }}
           />
         </div>
+        {/* TODO: 삭제 */}
         {/* category - 공간 타입 */}
-        <div className="flex flex-col gap-2">
+        {/* <div className="flex flex-col gap-2">
           <p className="after:ml-1 after:text-red after:content-['*']">공간 유형</p>
           <CategoryDropdownComponent
             control={control}
             rules={{ required: '공간 유형을 선택해주세요' }}
           />
-        </div>
+        </div> */}
         {/* openingTime, closingTime - 공간 영업 시간 */}
         <div className="flex flex-col gap-2">
           <p className="after:ml-1 after:text-red after:content-['*']">공간 영업 시간</p>
@@ -205,8 +205,9 @@ export default function SpaceSettingComponent({ id }: SpaceSettingComponentProps
             rules={{ required: SpaceConfig.size.rules }}
           />
         </div>
+        {/* TODO: 삭제 */}
         {/* capacity - 수용인원 */}
-        <div className="text-style-CAP1 flex w-full flex-col gap-2">
+        {/* <div className="text-style-CAP1 flex w-full flex-col gap-2">
           <p className="after:ml-1 after:text-red after:content-['*']">
             {SpaceConfig.capacity.display}
           </p>
@@ -215,14 +216,14 @@ export default function SpaceSettingComponent({ id }: SpaceSettingComponentProps
             control={control}
             rules={{ required: SpaceConfig.capacity.rules }}
           />
-        </div>
+        </div> */}
         {/* tags - 해시태그 */}
-        <div className="text-style-CAP1 flex flex-col gap-2">
+        {/* <div className="text-style-CAP1 flex flex-col gap-2">
           <p className="after:ml-1 after:text-red after:content-['*']">
             {SpaceConfig.tags.display}
           </p>
           <TagInputComponent control={control} setValue={setValue} />
-        </div>
+        </div> */}
       </section>
 
       {/* pricePerDay & discountRate */}
@@ -277,6 +278,8 @@ export default function SpaceSettingComponent({ id }: SpaceSettingComponentProps
           />
         </div>
       </section>
+
+      <section>{/* TODO: 여기서 열렸던 팝업 이미지 */}</section>
 
       <section className="text-style-CAP1 flex flex-col gap-6">
         <p className="text-style-SUB1">위치 안내 작성</p>
@@ -347,7 +350,7 @@ export default function SpaceSettingComponent({ id }: SpaceSettingComponentProps
           />
         </div>
         {/* notice - 시설 이용 안내 */}
-        <div className="text-style-CAP1 flex w-full flex-col gap-2">
+        {/* <div className="text-style-CAP1 flex w-full flex-col gap-2">
           <p className="after:ml-1 after:text-red after:content-['*']">
             {SpaceConfig.notice.display}
           </p>
@@ -356,7 +359,7 @@ export default function SpaceSettingComponent({ id }: SpaceSettingComponentProps
             control={control}
             rules={{ required: SpaceConfig.notice.rules }}
           />
-        </div>
+        </div> */}
       </section>
     </SpaceSettingLayout>
   );

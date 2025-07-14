@@ -119,17 +119,6 @@ export const fetchSpaceRegister = async (submitData: SpaceSubmitData) => {
   }
 };
 
-// export const fetchSpaceRegister = async (submitData: SpaceSubmitData) => {
-//   try {
-//     const res = await PostAxiosInstance(`/space/register`, submitData);
-//     if (res.status !== 201) throw new Error('공간 등록에 실패했습니다');
-//     return res.data;
-//   } catch (error) {
-//     console.error('공간 등록 오류:', error);
-//     throw error;
-//   }
-// };
-
 export const fetchSpaceIdUpdate = async (id: string, submitData: SpaceSubmitData) => {
   try {
     const res = await PostAxiosInstance(`/space/update/${id}`, submitData);

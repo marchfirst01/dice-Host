@@ -1,7 +1,7 @@
 // [id] 공간 조회
 import { IMAGES } from '@assets/index';
 import SpaceViewLayout from '@layout/spaceViewLayout';
-import { SpaceIdResponse } from '@type/popUp/popUpResponse';
+import { SpaceIdResponse } from '@type/space/spaceType';
 import discount from '@utils/calculate/discount';
 import { numberFormat } from '@utils/format/numberFormat';
 
@@ -10,7 +10,6 @@ import React, { useEffect, useState } from 'react';
 import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next';
 import Image from 'next/image';
 import { fetchSpaceId } from 'src/api/space';
-import { category } from 'src/context/space/category';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import { Pagination } from 'swiper/modules';
@@ -114,7 +113,6 @@ export default function SpaceIdView({
         {/* name, description */}
         <div className="mb-4">
           <p className="text-style-H2">{initialData.name}</p>
-          <p className="text-style-SUB3 text-semi_light_gray">{initialData.description}</p>
         </div>
         {/* discount, pricePerDay */}
         <div className="flex flex-col">
@@ -135,30 +133,11 @@ export default function SpaceIdView({
         {/* category, time, capacity */}
         <div className="text-style-CAP1 mb-5 flex flex-col gap-2 text-deep_gray">
           <div className="flex flex-row gap-5">
-            <p>공간유형</p>
-            <p>{category.find((item) => item.id === initialData.category)?.name}</p>
-          </div>
-          <div className="flex flex-row gap-5">
             <p>영업 시간</p>
             <p>
               {initialData.openingTime.slice(0, -3)} ~ {initialData.closingTime.slice(0, -3)}
             </p>
           </div>
-          <div className="flex flex-row gap-5">
-            <p>수용인원</p>
-            <p>최대 {initialData.capacity}인</p>
-          </div>
-        </div>
-        {/* tag */}
-        <div className="flex w-full flex-row flex-wrap gap-1">
-          {initialData.tags.map((tag, index) => (
-            <p
-              key={index}
-              className="text-style-CAP1 rounded-full border border-stroke px-[10px] py-1 text-light_gray"
-            >
-              #<span className="ml-[2px] text-deep_gray">{tag}</span>
-            </p>
-          ))}
         </div>
       </section>
       <section className="flex flex-col gap-4">
