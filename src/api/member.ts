@@ -1,5 +1,5 @@
 import { PostAxiosInstance } from '@axios/axios.method';
-import { GuestPostAxiosInstance } from '@axios/guest.axios.method';
+import { GuestPostAxiosInstance, GuestPostAxiosInstanceV2 } from '@axios/guest.axios.method';
 import { MemberFormData } from '@type/member';
 import { LoginResponse } from '@type/member/memberResponse';
 
@@ -42,7 +42,14 @@ export const fetchValidatePhone = async (phone: string) => {
 
 export const fetchRegister = async (formData: MemberFormData) => {
   const { email, name, password, phone } = formData;
-  const res = await GuestPostAxiosInstance('/auth/signup', { email, name, password, phone });
+  const userRole = 0;
+  const res = await GuestPostAxiosInstanceV2('/auth/signup', {
+    email,
+    name,
+    password,
+    phone,
+    userRole,
+  });
   if (res.status !== 200) throw new Error('회원가입 실패');
   return;
 };
