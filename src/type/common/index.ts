@@ -40,4 +40,5 @@ export interface CommonSpaceData {
   }[];
   notice: string[];
   isActivated: boolean;
+  tags: string[];
 }

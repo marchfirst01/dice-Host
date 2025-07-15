@@ -13,10 +13,12 @@ import GeocodeModalComponent from './geocodeModal';
 import ImageUploadComponent from './imageUpload';
 import SpaceInputComponent from './spaceInput';
 import SpaceTextareaComponent from './spaceTextarea';
+import TagItem from './tagItem';
 import TimePickerComponent from './timePicker';
 import { useRouter } from 'next/router';
 import { fetchSpaceIdUpdate, fetchSpaceRegister } from 'src/api/space';
 import { SpaceConfig } from 'src/context/space/spaceConfig';
+import { tagList } from 'src/context/space/tagList';
 import { getReverseGeocode } from 'src/server/kakaoMap';
 
 interface SpaceSettingComponentProps {
@@ -30,6 +32,7 @@ export default function SpaceSettingComponent({ id }: SpaceSettingComponentProps
     reset,
     handleSubmit,
     setValue,
+    getValues,
     watch,
     formState: { errors },
   } = useForm<SpaceFormData>();
@@ -186,6 +189,30 @@ export default function SpaceSettingComponent({ id }: SpaceSettingComponentProps
           />
         </div>
       </section>
+
+      <div>
+        <div className="flex flex-col gap-6">
+          <div>
+            <p className="text-style-SUB1 mb-2">더 좋은 동네 해시태그 요청</p>
+            <p className="text-style-BODY2 text-medium_gray">
+              공간이 위치한 동네를 잘 나타내는 태그를 1~5개 골라주세요. 저희가 확인 후 더 알맞은
+              태그가 있다면 보완해드릴게요.
+            </p>
+          </div>
+          {Object.entries(tagList).map(([category, tags]) => (
+            <div key={category}>
+              <h3 className="text-style-CAP1 mb-1">{category}</h3>
+              <div className="flex flex-wrap gap-1">
+                {tags.map((tag, index) => (
+                  <TagItem key={index} setValue={setValue} getValues={getValues}>
+                    {tag}
+                  </TagItem>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
 
       {/* pricePerDay & discountRate */}
       <section>
