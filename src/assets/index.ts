@@ -24,6 +24,27 @@ import DiceBlack from '@assets/common/logo/dice-black.svg';
 import DiceWhite from '@assets/common/logo/dice-white.svg';
 import LogoBlack from '@assets/common/logo/logo-black.svg';
 import LogoWhite from '@assets/common/logo/logo-white.svg';
+// facility
+import cctv from '@assets/facility/cctv.svg';
+import chair from '@assets/facility/chair.svg';
+import circleTable from '@assets/facility/circle-table.svg';
+import couch from '@assets/facility/couch.svg';
+import desktop from '@assets/facility/desktop.svg';
+import drink from '@assets/facility/drink.svg';
+import fireExtinguisher from '@assets/facility/fire-extinguisher.svg';
+import firealarm from '@assets/facility/firealarm.svg';
+import firstAidKit from '@assets/facility/first-aid-kit.svg';
+import light from '@assets/facility/light.svg';
+import monitor from '@assets/facility/monitor.svg';
+import printer from '@assets/facility/printer.svg';
+import projector from '@assets/facility/projector.svg';
+import shelf from '@assets/facility/shelf.svg';
+import speaker from '@assets/facility/speaker.svg';
+import squareTable from '@assets/facility/square-table.svg';
+import standingTable from '@assets/facility/standing-table.svg';
+import tv from '@assets/facility/tv.svg';
+import waterPurifier from '@assets/facility/water-purifier.svg';
+import wifi from '@assets/facility/wifi.svg';
 // mainFooter
 import MyBlack from '@assets/mainFooter/my-black.svg';
 import MyGray from '@assets/mainFooter/my-gray.svg';
@@ -80,6 +101,27 @@ const IMAGES = {
   DiceWhite,
   LogoBlack,
   LogoWhite,
+  // facility
+  cctv,
+  chair,
+  circleTable,
+  couch,
+  desktop,
+  drink,
+  fireExtinguisher,
+  firealarm,
+  firstAidKit,
+  light,
+  monitor,
+  printer,
+  projector,
+  shelf,
+  speaker,
+  squareTable,
+  standingTable,
+  tv,
+  waterPurifier,
+  wifi,
   //chat
   CameraGray,
   ChatBlack,
