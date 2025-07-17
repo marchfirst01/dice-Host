@@ -7,23 +7,23 @@ export interface CommonConfig {
 export type FacilityKey =
   | 'cctv'
   | 'chair'
-  | 'circle_table'
+  | 'circleTable'
   | 'couch'
   | 'desktop'
   | 'drink'
-  | 'fire_extinguisher'
+  | 'fireExtinguisher'
   | 'firealarm'
-  | 'first_aid_kit'
+  | 'firstAidKit'
   | 'light'
   | 'monitor'
   | 'printer'
   | 'projector'
   | 'shelf'
   | 'speaker'
-  | 'square_table'
-  | 'standing_table'
+  | 'squareTable'
+  | 'standingTable'
   | 'tv'
-  | 'water_purifier'
+  | 'waterPurifier'
   | 'wifi';
 
 export interface CommonSpaceData {
@@ -36,7 +36,6 @@ export interface CommonSpaceData {
   facilityInfo: {
     key: FacilityKey;
     number: number;
-    description: string;
   }[];
   notice: string[];
   isActivated: boolean;

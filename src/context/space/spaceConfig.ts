@@ -8,13 +8,6 @@ export const SpaceConfig: SpaceConfigList = {
     placeholder: '팝업 공간의 이름을 입력해주세요',
     rules: '팝업 공간의 이름을 입력해주세요',
   },
-  description: {
-    name: 'description',
-    type: '',
-    display: '공간 한줄 소개',
-    placeholder: '공간의 특징을 짧게 소개해주세요',
-    rules: '공간의 특징을 입력해주세요',
-  },
   openingTime: {
     name: 'openingTime',
     type: '',
@@ -39,24 +32,6 @@ export const SpaceConfig: SpaceConfigList = {
       const value = e.target.value.replace(/[^0-9]/g, '');
       filed.onChange(Number(value));
     },
-  },
-  capacity: {
-    name: 'capacity',
-    type: 'number',
-    display: '수용 인원',
-    placeholder: '수용 가능한 최대 인원을 입력해주세요',
-    rules: '수용 가능한 최대 인원을 입력해주세요',
-    handleOnChange: (e, filed) => {
-      const value = e.target.value.replace(/[^0-9]/g, ''); // 숫자만 남기기;
-      filed.onChange(Number(value));
-    },
-  },
-  tags: {
-    name: 'tags',
-    type: '',
-    display: '공간 해시태그(최대 5개)',
-    placeholder: '예) #갤러리 #성수동 #촬영 #성수역 도보 5분',
-    rules: '해시태그를 한 개 이상 입력해주세요',
   },
   pricePerDay: {
     name: 'pricePerDay',
@@ -105,12 +80,6 @@ export const SpaceConfig: SpaceConfigList = {
     placeholder: '공간의 상세주소를 입력해주세요',
     rules: '공간 주소를 입력해주세요',
   },
-  websiteUrl: {
-    name: 'websiteUrl',
-    type: '',
-    display: '웹사이트',
-    placeholder: '팝업 공간 관련 웹사이트 URL을 입력해주세요',
-  },
   contactNumber: {
     name: 'contactNumber',
     type: '',
@@ -135,7 +104,7 @@ export const SpaceConfig: SpaceConfigList = {
   facilityInfo: {
     name: 'facilityInfo',
     type: '',
-    display: '시설 이용 및 공지사항 안내 작성',
+    display: '',
     placeholder:
       '예) 공간별 조명 밝기 조절 가능/빔프로젝터/스피커(RoomA/C 각 2개)/Wifi, CCTV, 소화기',
     rules: '시설 이용 및 공지사항을 작성해주세요',

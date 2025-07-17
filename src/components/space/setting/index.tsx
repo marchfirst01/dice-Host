@@ -9,6 +9,7 @@ import { useGeocodeStore } from '@zustands/geocode/store';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
+import FacilityItem from './facilityItem';
 import GeocodeModalComponent from './geocodeModal';
 import ImageUploadComponent from './imageUpload';
 import SpaceInputComponent from './spaceInput';
@@ -17,6 +18,7 @@ import TagItem from './tagItem';
 import TimePickerComponent from './timePicker';
 import { useRouter } from 'next/router';
 import { fetchSpaceIdUpdate, fetchSpaceRegister } from 'src/api/space';
+import { FacilityConfig } from 'src/context/space/facilityConfig';
 import { SpaceConfig } from 'src/context/space/spaceConfig';
 import { tagList } from 'src/context/space/tagList';
 import { getReverseGeocode } from 'src/server/kakaoMap';
@@ -189,7 +191,6 @@ export default function SpaceSettingComponent({ id }: SpaceSettingComponentProps
           />
         </div>
       </section>
-
       <div>
         <div className="flex flex-col gap-6">
           <div>
@@ -213,7 +214,6 @@ export default function SpaceSettingComponent({ id }: SpaceSettingComponentProps
           ))}
         </div>
       </div>
-
       {/* pricePerDay & discountRate */}
       <section>
         <p className="text-style-SUB1 mb-6">공간 대여 가격 작성</p>
@@ -251,7 +251,6 @@ export default function SpaceSettingComponent({ id }: SpaceSettingComponentProps
           )}
         </div>
       </section>
-
       <section>
         <p className="text-style-SUB1 mb-6">공간 소개글 작성</p>
         {/* details - 자세한 소개 */}
@@ -266,7 +265,6 @@ export default function SpaceSettingComponent({ id }: SpaceSettingComponentProps
           />
         </div>
       </section>
-
       <section>
         <div className="flex flex-col gap-1">
           {/* image - 이미지 */}
@@ -281,7 +279,6 @@ export default function SpaceSettingComponent({ id }: SpaceSettingComponentProps
           />
         </div>
       </section>
-
       <section className="text-style-CAP1 flex flex-col gap-6">
         <p className="text-style-SUB1">위치 안내 작성</p>
         <div className="relative w-full">
@@ -330,20 +327,23 @@ export default function SpaceSettingComponent({ id }: SpaceSettingComponentProps
           />
         </div>
       </section>
+      <section>
+        {/* facilityInfo - 시설 이용 및 공지사항 안내 */}
+        <p className="text-style-SUB1 mb-2">이용 가능한 시설·집기 등록</p>
+        <div className="text-style-CAP1 flex w-full flex-col gap-3">
+          {Object.values(FacilityConfig).map((facility) => (
+            <FacilityItem
+              key={facility.id}
+              item={facility}
+              setValue={setValue}
+              getValues={getValues}
+            />
+          ))}
+        </div>
+      </section>
 
       <section className="flex flex-col gap-6">
-        <p className="text-style-SUB1">시설 이용 및 공지사항 안내 작성</p>
-        {/* facilityInfo - 시설 이용 및 공지사항 안내 */}
-        <div className="text-style-CAP1 flex w-full flex-col gap-2">
-          <p className="after:ml-1 after:text-red after:content-['*']">
-            {SpaceConfig.facilityInfo.display}
-          </p>
-          <SpaceTextareaComponent
-            config={SpaceConfig.facilityInfo}
-            control={control}
-            rules={{ required: SpaceConfig.facilityInfo.rules }}
-          />
-        </div>
+        <p className="text-style-SUB1">공지사항 안내 작성</p>
         {/* notice - 공지사항 */}
         <div className="text-style-CAP1 flex w-full flex-col gap-2">
           <p className="after:ml-1 after:text-red after:content-['*']">
