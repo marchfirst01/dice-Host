@@ -133,7 +133,13 @@ export const fetchSpaceRegister = async (submitData: SpaceSubmitData) => {
 
 export const fetchSpaceIdUpdate = async (id: string, submitData: SpaceSubmitData) => {
   try {
-    const res = await PostAxiosInstance(`/space/update/${id}`, submitData);
+    console.log(submitData);
+    const { facilityInfo, ...rest } = submitData;
+    const temp = {
+      ...rest,
+      facilityInfo: 'temp',
+    };
+    const res = await PostAxiosInstance(`/space/update/${id}`, temp);
     if (res.status !== 200) throw new Error('공간 수정에 실패했습니다');
     return res.status;
   } catch (error) {
