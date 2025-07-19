@@ -8,7 +8,7 @@ import { UseFormGetValues, UseFormSetValue } from 'react-hook-form';
 
 import Image from 'next/image';
 
-export default function FacilityItem({
+export default function FacilitySetting({
   item,
   setValue,
   getValues,

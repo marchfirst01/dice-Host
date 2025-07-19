@@ -18,7 +18,7 @@ export const FacilityConfig: FacilityConfigList = {
   },
   couch: {
     id: 'couch',
-    name: 'CCTV',
+    name: '쇼파',
     number: 0,
   },
   desktop: {

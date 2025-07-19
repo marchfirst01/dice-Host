@@ -1,5 +1,5 @@
 import { IMAGES } from '@assets/index';
-import HostSpaceListComponent from '@components/host/hostSpaceList';
+import { ImageItem } from '@components/common/ImageItem';
 import { useHostInfo, useHostSpace } from '@hooks/useHost';
 import HostLayoutComponent from '@layout/hostLayout';
 import { deleteToken } from '@utils/token';
@@ -46,7 +46,11 @@ export default function HostPage() {
             리스트 바로가기
           </p>
         </div>
-        <HostSpaceListComponent hostSpaceList={hostSpaceData} />
+        <div className="flex flex-row gap-1 overflow-x-scroll">
+          {hostSpaceData.map((space) => (
+            <ImageItem key={space.id} size={20} imageUrl={space.imageUrl} id={space.id} />
+          ))}
+        </div>
       </div>
       <div className="text-style-SUB3 flex flex-col gap-6 py-6 text-deep_gray">
         <p onClick={() => router.push('/chat')} className="cursor-pointer">

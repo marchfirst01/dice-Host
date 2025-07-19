@@ -1,6 +1,11 @@
 // [id] 공간 조회
 import { IMAGES } from '@assets/index';
+import { ImageItem } from '@components/common/ImageItem';
+import FacilityItem from '@components/space/facilityItem';
+import LocalAnalysisCard from '@components/space/localAnalysisCard';
+import ImageContainerComponent from '@components/space/setting/imageContainer';
 import SpaceViewLayout from '@layout/spaceViewLayout';
+import { FacilityKey } from '@type/common';
 import { SpaceIdResponse } from '@type/space/spaceType';
 import discount from '@utils/calculate/discount';
 import { numberFormat } from '@utils/format/numberFormat';
@@ -32,6 +37,15 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
     return { props: { initialData: {} as SpaceIdResponse } };
   }
 };
+
+const tempTag = ['20대 여성이 가장 많아요', '데이트 장소 핫플', '주말에 사람이 가장 많아요'];
+const tempFacility: { id: FacilityKey; number: number }[] = [
+  { id: 'waterPurifier', number: 1 },
+  { id: 'couch', number: 4 },
+  { id: 'tv', number: 1 },
+  { id: 'firealarm', number: 0 },
+  { id: 'desktop', number: 5 },
+];
 
 export default function SpaceIdView({
   initialData,
@@ -109,28 +123,31 @@ export default function SpaceIdView({
           );
         })}
       </Swiper>
-      <section className="mt-5">
-        {/* name, description */}
-        <div className="mb-4">
-          <p className="text-style-H2">{initialData.name}</p>
-        </div>
-        {/* discount, pricePerDay */}
-        <div className="flex flex-col">
-          <div className="flex flex-row gap-1">
-            <p className="text-style-CAP1 text-dark_gray">1일 대여</p>
-            <p className="text-style-CAP1 text-light_gray line-through">
-              {numberFormat(initialData.pricePerDay)}
-            </p>
+      <section className="mt-5 flex flex-col gap-4">
+        <div>
+          {/* name, description */}
+          <div className="mb-4">
+            <p className="text-style-H2">{initialData.name}</p>
           </div>
-          <div className="flex flex-row gap-[6px]">
-            <p className="text-style-SUB2 text-purple">{initialData.discountRate}%</p>
-            <p className="text-style-SUB2 text-dark_gray">
-              {numberFormat(discount(initialData.discountRate, initialData.pricePerDay))}원
-            </p>
+          {/* TODO: 가까운 지하철역 정보 추가 */}
+          {/* discount, pricePerDay */}
+          <div className="flex flex-col">
+            <div className="flex flex-row gap-1">
+              <p className="text-style-CAP1 text-dark_gray">1일 대여</p>
+              <p className="text-style-CAP1 text-light_gray line-through">
+                {numberFormat(initialData.pricePerDay)}
+              </p>
+            </div>
+            <div className="flex flex-row gap-[6px]">
+              <p className="text-style-SUB2 text-purple">{initialData.discountRate}%</p>
+              <p className="text-style-SUB2 text-dark_gray">
+                {numberFormat(discount(initialData.discountRate, initialData.pricePerDay))}원
+              </p>
+            </div>
           </div>
         </div>
-        <hr className="my-6" />
-        {/* category, time, capacity */}
+        <LocalAnalysisCard />
+        {/* time, size, tags */}
         <div className="text-style-CAP1 mb-5 flex flex-col gap-2 text-deep_gray">
           <div className="flex flex-row gap-5">
             <p>영업 시간</p>
@@ -138,7 +155,78 @@ export default function SpaceIdView({
               {initialData.openingTime.slice(0, -3)} ~ {initialData.closingTime.slice(0, -3)}
             </p>
           </div>
+          <div className="flex flex-row gap-5">
+            <p>공간 크기</p>
+            {/* TODO: 평 계산 과정 추가 */}
+            <p>{initialData.size}㎡</p>
+          </div>
+          <hr className="my-5" />
+          <p className="text-style-CAP1 text-black">동네 해시태그</p>
+          <div className="flex flex-wrap gap-1">
+            {tempTag.map((tag) => (
+              <div
+                className={`text-style-CAP1 w-fit rounded-full border border-stroke px-[10px] py-1 text-deep_gray`}
+              >
+                <p># {tag}</p>
+              </div>
+            ))}
+          </div>
         </div>
+      </section>
+      {/* details */}
+      <section className="flex flex-col gap-4">
+        <p className="text-style-SUB2">팝업 공간 소개</p>
+        <p className="text-style-BODY1 text-deep_gray">{initialData.details}</p>
+      </section>
+      {/* popUpImageUrls */}
+      <section>
+        <p className="text-style-SUB2 mb-4">여기서 열렸던 팝업 사진</p>
+        <div className="flex h-32 w-full flex-row gap-1 overflow-x-scroll">
+          {/* TODO: imageUrls -> popUpImageUrls */}
+          {initialData.imageUrls.length > 0 &&
+            initialData.imageUrls.map((item, index) => (
+              <ImageItem key={index} size={32} imageUrl={item} />
+            ))}
+        </div>
+      </section>
+      <section className="flex flex-col gap-4">
+        <p className="text-style-SUB2">시설 이용 안내</p>
+        <div className="grid grid-cols-2 gap-4">
+          {tempFacility
+            .slice(0, tempFacility.length > 4 && !isUsageDetailView ? 4 : tempFacility.length)
+            .map((item, index) => (
+              <FacilityItem key={index} facility={item} />
+            ))}
+        </div>
+
+        {/* 아이템이 5개 이상일 때만 버튼 표시 */}
+        {tempFacility.length > 4 && (
+          <div className="relative flex w-full">
+            <button
+              onClick={() => setIsUsageDetailView(!isUsageDetailView)}
+              className="h-[52px] w-full cursor-pointer rounded-lg border border-stroke text-medium_gray"
+            >
+              {isUsageDetailView ? '간략히 보기' : '자세히 보기'}
+            </button>
+            {isUsageDetailView ? (
+              <Image
+                className="absolute right-0 top-0 mx-4 translate-y-1/2 rotate-180"
+                src={IMAGES.ArrowDownGray}
+                alt="arrow-down"
+                width={24}
+                height={24}
+              />
+            ) : (
+              <Image
+                className="absolute right-0 top-0 mx-4 translate-y-1/2"
+                src={IMAGES.ArrowDownGray}
+                alt="arrow-down"
+                width={24}
+                height={24}
+              />
+            )}
+          </div>
+        )}
       </section>
       <section className="flex flex-col gap-4">
         <p className="text-style-SUB2">위치 안내</p>
@@ -186,37 +274,7 @@ export default function SpaceIdView({
           웹사이트 바로가기
         </button>
       </section>
-      <section className="flex flex-col gap-4">
-        <p className="text-style-SUB2">시설 이용 안내</p>
-        <div className={`text-style-BODY1 flex flex-col gap-1 whitespace-pre-line text-deep_gray`}>
-          {initialData.facilityInfo}
-        </div>
-        <div className="relative flex w-full">
-          <button
-            onClick={() => setIsUsageDetailView(!isUsageDetailView)}
-            className="h-[52px] w-full cursor-pointer rounded-lg border border-stroke text-medium_gray"
-          >
-            {isUsageDetailView ? '간략히 보기' : '자세히 보기'}
-          </button>
-          {isUsageDetailView ? (
-            <Image
-              className="absolute right-0 top-0 mx-4 translate-y-1/2 rotate-180"
-              src={IMAGES.ArrowDownGray}
-              alt="arrow-down"
-              width={24}
-              height={24}
-            />
-          ) : (
-            <Image
-              className="absolute right-0 top-0 mx-4 translate-y-1/2"
-              src={IMAGES.ArrowDownGray}
-              alt="arrow-down"
-              width={24}
-              height={24}
-            />
-          )}
-        </div>
-      </section>
+
       <section className="mb-4">
         <p className="text-style-SUB2 mb-4">공지사항 안내</p>
         <div className="text-style-BODY1 flex flex-col gap-1 whitespace-pre-line rounded-lg border border-stroke bg-back_gray p-4 text-deep_gray">

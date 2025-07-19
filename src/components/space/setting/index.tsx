@@ -9,7 +9,7 @@ import { useGeocodeStore } from '@zustands/geocode/store';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-import FacilityItem from './facilityItem';
+import FacilitySetting from './facilitySetting';
 import GeocodeModalComponent from './geocodeModal';
 import ImageUploadComponent from './imageUpload';
 import SpaceInputComponent from './spaceInput';
@@ -272,11 +272,7 @@ export default function SpaceSettingComponent({ id }: SpaceSettingComponentProps
           <p className="text-style-BODY2 text-medium_gray">
             해당 공간에서 열렸던 팝업 사진을 10장까지 등록 가능해요.
           </p>
-          <ImageUploadComponent
-            name="popUpImageList"
-            control={control}
-            rules={{ required: '이미지를 하나 이상 등록해주세요' }}
-          />
+          <ImageUploadComponent name="popUpImageList" control={control} />
         </div>
       </section>
       <section className="text-style-CAP1 flex flex-col gap-6">
@@ -332,7 +328,7 @@ export default function SpaceSettingComponent({ id }: SpaceSettingComponentProps
         <p className="text-style-SUB1 mb-2">이용 가능한 시설·집기 등록</p>
         <div className="text-style-CAP1 flex w-full flex-col gap-3">
           {Object.values(FacilityConfig).map((facility) => (
-            <FacilityItem
+            <FacilitySetting
               key={facility.id}
               item={facility}
               setValue={setValue}

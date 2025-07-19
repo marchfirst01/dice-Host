@@ -110,7 +110,7 @@ export const fetchSpaceRegister = async (submitData: SpaceSubmitData) => {
       // 임시 객체 - 삭제 필요
       facilityInfo: 'temp',
       description: 'temp',
-      category: 'temp',
+      category: 'CAFE',
       capacity: 0,
       detailAddress: 'temp',
       websiteUrl: 'temp',

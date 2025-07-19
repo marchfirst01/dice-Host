@@ -32,7 +32,12 @@ export default function SpaceItem({
         )}
         <Image
           className={`aspect-[3/2] rounded-t-lg ${!storeData.isActivated && 'saturate-0'}`}
-          src={storeData.imageUrl}
+          // TODO: 삭제
+          src={
+            storeData.imageUrl === 'www.example.com'
+              ? 'https://cmc-dice-bucket.s3.ap-northeast-2.amazonaws.com/34/55bc44a7-42a9-4467-b9c2-6ac19c1dbd85.jpg'
+              : storeData.imageUrl
+          }
           alt={storeData.name}
           fill
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
