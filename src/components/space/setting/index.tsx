@@ -1,5 +1,6 @@
 import { useSpaceId } from '@hooks/useSpace';
 import SpaceSettingLayout from '@layout/spaceSettingLayout';
+import { FacilityKey } from '@type/common';
 import { SpaceFormData } from '@type/space/spaceType';
 import discount from '@utils/calculate/discount';
 import { transformFormToSubmitData } from '@utils/transform/spaceTransform';
@@ -9,12 +10,12 @@ import { useGeocodeStore } from '@zustands/geocode/store';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-import FacilitySetting from './facilitySetting';
+import FacilityList from './facilityList';
 import GeocodeModalComponent from './geocodeModal';
 import ImageUploadComponent from './imageUpload';
 import SpaceInputComponent from './spaceInput';
 import SpaceTextareaComponent from './spaceTextarea';
-import TagItem from './tagItem';
+import TagList from './tagList';
 import TimePickerComponent from './timePicker';
 import { useRouter } from 'next/router';
 import { fetchSpaceIdUpdate, fetchSpaceRegister } from 'src/api/space';
@@ -49,10 +50,10 @@ export default function SpaceSettingComponent({ id }: SpaceSettingComponentProps
       try {
         const response = await getReverseGeocode(data.latitude, data.longitude);
 
-        if (response) {
-          const city = response.results[0].region.area1.name;
-          const district = response.results[0].region.area2.name;
-          const address = response.results[1].land.name;
+        if (response && response.documents && response.documents.length > 0) {
+          const city = response.documents[0].road_address.region_1depth_name;
+          const district = response.documents[0].road_address.region_2depth_name;
+          const address = response.documents[0].road_address.address_name;
 
           // 폼 상태에 주소 정보 설정
           setValue('city', city);
@@ -61,9 +62,9 @@ export default function SpaceSettingComponent({ id }: SpaceSettingComponentProps
 
           // Zustand 스토어에 주소 정보 저장
           setSelectedAddress({
-            roadAddress: `${city} ${district} ${address}`,
-            postalCode: response.results[1].land.addition1.value,
-            jibunAddress: '',
+            roadAddress: address, // 전체 도로명 주소
+            postalCode: response.documents[0].road_address.zone_no,
+            jibunAddress: response.documents[0].address.address_name, // 지번 주소
             sido: city,
             sigugun: district,
             latitude: data.latitude,
@@ -75,6 +76,24 @@ export default function SpaceSettingComponent({ id }: SpaceSettingComponentProps
       }
     }
   }, [data, setValue, setSelectedAddress]);
+
+  // TODO: 삭제
+  const tempData: {
+    tags: string[];
+    facilityInfo: {
+      key: FacilityKey;
+      number: number;
+    }[];
+  } = {
+    tags: ['연인이랑 데이트하기 좋은 곳', '감성 로컬 거리', '브런치 맛집 밀집'],
+    facilityInfo: [
+      { key: 'waterPurifier', number: 1 },
+      { key: 'couch', number: 4 },
+      { key: 'tv', number: 1 },
+      { key: 'firealarm', number: 0 },
+      { key: 'desktop', number: 5 },
+    ],
+  };
 
   // 데이터 로드 시 처리
   useEffect(() => {
@@ -89,10 +108,36 @@ export default function SpaceSettingComponent({ id }: SpaceSettingComponentProps
       // 변환된 데이터로 리셋
       reset(formattedData);
 
+      // 해시태그 초기값 설정
+      if (tempData.tags && tempData.tags.length > 0) {
+        setValue('tags', tempData.tags);
+      }
+
+      // facility 초기값 설정
+      if (tempData.facilityInfo) {
+        if (Array.isArray(tempData.facilityInfo)) {
+          // 이미 배열 형태라면 그대로 설정
+          setValue('facilityInfo', tempData.facilityInfo);
+        } else if (typeof tempData.facilityInfo === 'object') {
+          // 객체 형태라면 배열로 변환
+          const updatedFacilityInfo: { key: FacilityKey; number: number }[] = Object.entries(
+            tempData.facilityInfo as Record<string, { number: number }>,
+          ).map(([facilityKey, facilityValue]) => ({
+            key: facilityKey as FacilityKey,
+            number: facilityValue.number,
+          }));
+          setValue('facilityInfo', updatedFacilityInfo);
+        }
+      }
+
       // 좌표를 주소로 변환 처리
       getAddressFromCoords();
     }
-  }, [data, reset, getAddressFromCoords]);
+  }, [data, reset, getAddressFromCoords, setValue]);
+
+  useEffect(() => {
+    console.log(getValues('tags'));
+  }, [getValues('tags')]);
 
   // 할인율 계산
   const watchDiscountFields = watch('discountRate');
@@ -200,17 +245,15 @@ export default function SpaceSettingComponent({ id }: SpaceSettingComponentProps
               태그가 있다면 보완해드릴게요.
             </p>
           </div>
+          {/* tags */}
           {Object.entries(tagList).map(([category, tags]) => (
-            <div key={category}>
-              <h3 className="text-style-CAP1 mb-1">{category}</h3>
-              <div className="flex flex-wrap gap-1">
-                {tags.map((tag, index) => (
-                  <TagItem key={index} setValue={setValue} getValues={getValues}>
-                    {tag}
-                  </TagItem>
-                ))}
-              </div>
-            </div>
+            <TagList
+              key={category}
+              category={category}
+              tags={tags}
+              setValue={setValue}
+              watch={watch}
+            />
           ))}
         </div>
       </div>
@@ -326,16 +369,11 @@ export default function SpaceSettingComponent({ id }: SpaceSettingComponentProps
       <section>
         {/* facilityInfo - 시설 이용 및 공지사항 안내 */}
         <p className="text-style-SUB1 mb-2">이용 가능한 시설·집기 등록</p>
-        <div className="text-style-CAP1 flex w-full flex-col gap-3">
-          {Object.values(FacilityConfig).map((facility) => (
-            <FacilitySetting
-              key={facility.id}
-              item={facility}
-              setValue={setValue}
-              getValues={getValues}
-            />
-          ))}
-        </div>
+        <FacilityList
+          facilities={Object.values(FacilityConfig)}
+          setValue={setValue}
+          watch={watch}
+        />
       </section>
 
       <section className="flex flex-col gap-6">
