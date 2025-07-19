@@ -3,7 +3,6 @@ import { IMAGES } from '@assets/index';
 import { ImageItem } from '@components/common/ImageItem';
 import FacilityItem from '@components/space/facilityItem';
 import LocalAnalysisCard from '@components/space/localAnalysisCard';
-import ImageContainerComponent from '@components/space/setting/imageContainer';
 import SpaceViewLayout from '@layout/spaceViewLayout';
 import { FacilityKey } from '@type/common';
 import { SpaceIdResponse } from '@type/space/spaceType';
@@ -19,13 +18,6 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import { Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
-
-// 카카오맵 타입 선언
-declare global {
-  interface Window {
-    kakao: any;
-  }
-}
 
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
   const { id } = context.query as { id: string };
@@ -50,13 +42,17 @@ const tempFacility: { id: FacilityKey; number: number }[] = [
 export default function SpaceIdView({
   initialData,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  if (!initialData) return <p>데이터 로드에 실패했습니다.</p>;
-
+  // React Hook들을 조건부 렌더링 이전에 모두 선언
   const [isUsageDetailView, setIsUsageDetailView] = useState<boolean>(false);
   const [mapLoaded, setMapLoaded] = useState(false);
 
   // 카카오맵 초기화
   useEffect(() => {
+    // initialData가 없으면 early return
+    if (!initialData || !initialData.latitude || !initialData.longitude) {
+      return;
+    }
+
     const initializeMap = () => {
       if (window.kakao && window.kakao.maps) {
         const mapContainer = document.getElementById('map');
@@ -105,6 +101,11 @@ export default function SpaceIdView({
     }
   }, [initialData]);
 
+  // 조건부 렌더링을 Hook 선언 이후에 배치
+  if (!initialData) {
+    return <p>데이터 로드에 실패했습니다.</p>;
+  }
+
   console.log(initialData);
   return (
     <SpaceViewLayout>
@@ -115,7 +116,7 @@ export default function SpaceIdView({
         slidesPerView={1}
         pagination={{ clickable: true, type: 'fraction' }}
       >
-        {initialData.imageUrls.map((image, index) => {
+        {initialData.imageUrls?.map((image, index) => {
           return (
             <SwiperSlide key={index} className="aspect-[3/2] w-full">
               <Image src={image} alt="image" fill style={{ objectFit: 'cover' }} />
@@ -152,7 +153,7 @@ export default function SpaceIdView({
           <div className="flex flex-row gap-5">
             <p>영업 시간</p>
             <p>
-              {initialData.openingTime.slice(0, -3)} ~ {initialData.closingTime.slice(0, -3)}
+              {initialData.openingTime?.slice(0, -3)} ~ {initialData.closingTime?.slice(0, -3)}
             </p>
           </div>
           <div className="flex flex-row gap-5">
@@ -163,8 +164,9 @@ export default function SpaceIdView({
           <hr className="my-5" />
           <p className="text-style-CAP1 text-black">동네 해시태그</p>
           <div className="flex flex-wrap gap-1">
-            {tempTag.map((tag) => (
+            {tempTag.map((tag, index) => (
               <div
+                key={index}
                 className={`text-style-CAP1 w-fit rounded-full border border-stroke px-[10px] py-1 text-deep_gray`}
               >
                 <p># {tag}</p>
@@ -183,7 +185,7 @@ export default function SpaceIdView({
         <p className="text-style-SUB2 mb-4">여기서 열렸던 팝업 사진</p>
         <div className="flex h-32 w-full flex-row gap-1 overflow-x-scroll">
           {/* TODO: imageUrls -> popUpImageUrls */}
-          {initialData.imageUrls.length > 0 &&
+          {initialData.imageUrls?.length > 0 &&
             initialData.imageUrls.map((item, index) => (
               <ImageItem key={index} size={32} imageUrl={item} />
             ))}
@@ -260,7 +262,7 @@ export default function SpaceIdView({
         </div>
         <div className="h-[160px] w-full rounded-xl border border-stroke bg-light_gray">
           {!mapLoaded && (
-            <div className="flex h-full w-full items-center justify-center">
+            <div className="flex size-full items-center justify-center">
               <p className="text-medium_gray">지도 로딩 중...</p>
             </div>
           )}

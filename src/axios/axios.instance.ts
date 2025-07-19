@@ -10,6 +10,12 @@ import { GuestPostAxiosInstance } from './guest.axios.method';
 import axios, { AxiosInstance } from 'axios';
 import Router from 'next/router';
 
+// 토큰 갱신 응답 타입 정의
+interface TokenRefreshResponse {
+  accessToken: string;
+  refreshToken: string;
+}
+
 const axiosInstance: AxiosInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BASE_URL,
   // withCredentials: true,
@@ -55,6 +61,26 @@ axiosInstanceV2.interceptors.request.use(
   },
 );
 
+const refreshTokenRequest = async (): Promise<TokenRefreshResponse> => {
+  try {
+    const refreshToken = await getRefreshToken();
+    const response = await GuestPostAxiosInstance<TokenRefreshResponse>('/auth/reissue', {
+      refreshToken: refreshToken,
+    });
+
+    const data = response.data;
+    await setAccessToken(data.accessToken);
+    await setRefreshToken(data.refreshToken);
+    return data;
+  } catch (error) {
+    console.log(error);
+    deleteToken();
+    alert('로그인을 다시 해주세요');
+    Router.push('/');
+    throw error;
+  }
+};
+
 // 기존 코드에 추가
 axiosInstanceV2.interceptors.response.use(
   async (response) => {
@@ -68,7 +94,7 @@ axiosInstanceV2.interceptors.response.use(
       originalRequest._retry = true;
 
       try {
-        const { data } = await refreshTokenRequest();
+        const data = await refreshTokenRequest(); // 이제 data 타입이 명확함
         originalRequest.headers['Authorization'] = `Bearer ${data.accessToken}`;
         return axiosInstanceV2(originalRequest); // V2 인스턴스로 재시도
       } catch (refreshError) {
@@ -86,23 +112,6 @@ axiosInstanceV2.interceptors.response.use(
   },
 );
 
-const refreshTokenRequest = async () => {
-  try {
-    const refreshToken = await getRefreshToken();
-    const { data } = await GuestPostAxiosInstance('/auth/reissue', {
-      refreshToken: refreshToken,
-    });
-    await setAccessToken(data.accessToken);
-    await setRefreshToken(data.refreshToken);
-    return data;
-  } catch (error) {
-    console.log(error);
-    deleteToken();
-    alert('로그인을 다시 해주세요');
-    Router.push('/');
-  }
-};
-
 // 토큰 관련 에러 처리
 axiosInstance.interceptors.response.use(
   async (response) => {
@@ -117,7 +126,7 @@ axiosInstance.interceptors.response.use(
       originalRequest._retry = true; // 무한 루프 방지
 
       try {
-        const { data } = await refreshTokenRequest();
+        const data = await refreshTokenRequest(); // 이제 data 타입이 명확함
         originalRequest.headers['Authorization'] = `Bearer ${data.accessToken}`;
         return axiosInstance(originalRequest); // 기존 요청 재시도
       } catch (refreshError) {

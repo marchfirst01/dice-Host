@@ -6,7 +6,7 @@ export function formatTimeToKorean(timeString: string) {
   // 형식이 "08:00:00"인 경우 처리
   const match = timeString.match(/(\d{2}):(\d{2}):(\d{2})/);
   if (match) {
-    const [_, hours, minutes] = match;
+    const [, hours, minutes] = match;
     const hour = parseInt(hours, 10);
 
     // 오전/오후 구분
@@ -27,7 +27,7 @@ export function formatKoreanTimeTo24(koreanTimeString: string): string {
   // "오전/오후 H:MM" 형식의 시간을 매칭
   const match = koreanTimeString.match(/(오전|오후)\s+(\d{1,2}):(\d{2})/);
   if (match) {
-    const [_, period, hourStr, minutes] = match;
+    const [, period, hourStr, minutes] = match;
     let hour = parseInt(hourStr, 10);
 
     // 오전/오후에 따라 시간 조정

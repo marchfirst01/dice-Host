@@ -1,7 +1,7 @@
 import { SpaceFormData } from '@type/space/spaceType';
 
 import React, { useEffect, useRef, useState } from 'react';
-import { Control, Controller, UseControllerProps } from 'react-hook-form';
+import { Control, Controller, UseControllerProps, useWatch } from 'react-hook-form';
 
 // 시간 옵션
 const period = ['오전', '오후'];
@@ -46,7 +46,7 @@ function TimeList({
   return (
     <div
       ref={listRef}
-      className="scrollbar-hide mx-auto flex w-full max-w-[100px] flex-col gap-1 overflow-scroll pb-[240px]"
+      className="mx-auto flex w-full max-w-[100px] flex-col gap-1 overflow-scroll pb-[240px]"
       style={{ maxHeight: '220px' }}
     >
       {timeOptions[type].map((item) => (
@@ -86,6 +86,20 @@ export default function CustomTimePickerComponent({
   const [formattedValue, setFormattedValue] = useState('');
   const modalRef = useRef<HTMLDivElement>(null);
 
+  // useWatch로 현재 필드 값을 감지 (Hook 규칙 준수)
+  const watchedValue = useWatch({
+    control,
+    name: type,
+    defaultValue: '',
+  });
+
+  // 컴포넌트 초기화 시 기존 값 로드 (Hook을 최상위로 이동)
+  useEffect(() => {
+    if (watchedValue && watchedValue !== formattedValue) {
+      setFormattedValue(watchedValue);
+    }
+  }, [watchedValue, formattedValue]);
+
   // 모달 외부 클릭 시 닫기
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -117,13 +131,6 @@ export default function CustomTimePickerComponent({
       control={control}
       rules={rules}
       render={({ field: { onChange, value = '' }, fieldState: { error } }) => {
-        // 컴포넌트 초기화 시 기존 값 로드
-        useEffect(() => {
-          if (value && value !== formattedValue) {
-            setFormattedValue(value);
-          }
-        }, [value]);
-
         const handleSelect = (key: 'period' | 'hours' | 'minutes', newValue: string) => {
           const updatedValues = { ...selectedValues, [key]: newValue };
           setSelectedValues(updatedValues);

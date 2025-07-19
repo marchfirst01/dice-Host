@@ -8,7 +8,22 @@ import { Control, Controller, UseControllerProps, UseFormSetValue } from 'react-
 import Image from 'next/image';
 import { getGeocode } from 'src/server/kakaoMap';
 
-// 네이버 -> 카카오맵으로 변경
+// 카카오 API 응답 타입 정의
+interface KakaoDocument {
+  x: string; // longitude
+  y: string; // latitude
+  road_address?: {
+    address_name: string;
+    zone_no: string;
+  };
+  address?: {
+    address_name: string;
+  };
+}
+
+interface KakaoResponse {
+  documents: KakaoDocument[];
+}
 
 export default function GeocodeModalComponent({
   setGeocodeModalOpen,
@@ -28,14 +43,14 @@ export default function GeocodeModalComponent({
   const { setSelectedAddress } = useGeocodeStore();
 
   const handleSearch = async () => {
-    const response = await getGeocode(searchAddress);
+    const response: KakaoResponse = await getGeocode(searchAddress);
 
     // 카카오맵 API 응답 구조에 맞게 변경
     if (response.documents && response.documents.length > 0) {
       setSearchError(false);
 
       // 여러 결과를 모두 표시하도록 변경
-      const addresses: Address[] = response.documents.map((doc: any) => {
+      const addresses: Address[] = response.documents.map((doc: KakaoDocument) => {
         // 도로명 주소가 있으면 도로명 주소, 없으면 지번 주소 사용
         const roadAddress = doc.road_address?.address_name || '';
         const jibunAddress = doc.address?.address_name || '';
@@ -43,7 +58,7 @@ export default function GeocodeModalComponent({
         // 주소 구성 요소 파싱
         const addressParts = (roadAddress || jibunAddress).split(' ');
         let sido = addressParts[0] || '';
-        let sigugun = addressParts[1] || '';
+        const sigugun = addressParts[1] || ''; // const로 변경
 
         // 서울특별시 -> 서울로 변경
         if (sido === '서울특별시') {

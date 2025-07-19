@@ -35,7 +35,6 @@ export default function SpaceSettingComponent({ id }: SpaceSettingComponentProps
     reset,
     handleSubmit,
     setValue,
-    getValues,
     watch,
     formState: { errors },
   } = useForm<SpaceFormData>();
@@ -77,26 +76,26 @@ export default function SpaceSettingComponent({ id }: SpaceSettingComponentProps
     }
   }, [data, setValue, setSelectedAddress]);
 
-  // TODO: 삭제
-  const tempData: {
-    tags: string[];
-    facilityInfo: {
-      key: FacilityKey;
-      number: number;
-    }[];
-  } = {
-    tags: ['연인이랑 데이트하기 좋은 곳', '감성 로컬 거리', '브런치 맛집 밀집'],
-    facilityInfo: [
-      { key: 'waterPurifier', number: 1 },
-      { key: 'couch', number: 4 },
-      { key: 'tv', number: 1 },
-      { key: 'firealarm', number: 0 },
-      { key: 'desktop', number: 5 },
-    ],
-  };
-
   // 데이터 로드 시 처리
   useEffect(() => {
+    // TODO: 삭제
+    const tempData: {
+      tags: string[];
+      facilityInfo: {
+        key: FacilityKey;
+        number: number;
+      }[];
+    } = {
+      tags: ['연인이랑 데이트하기 좋은 곳', '감성 로컬 거리', '브런치 맛집 밀집'],
+      facilityInfo: [
+        { key: 'waterPurifier', number: 1 },
+        { key: 'couch', number: 4 },
+        { key: 'tv', number: 1 },
+        { key: 'firealarm', number: 0 },
+        { key: 'desktop', number: 5 },
+      ],
+    };
+
     if (data) {
       // 시간 형식 변환
       const formattedData = {
@@ -135,10 +134,6 @@ export default function SpaceSettingComponent({ id }: SpaceSettingComponentProps
     }
   }, [data, reset, getAddressFromCoords, setValue]);
 
-  useEffect(() => {
-    console.log(getValues('tags'));
-  }, [getValues('tags')]);
-
   // 할인율 계산
   const watchDiscountFields = watch('discountRate');
   const watchPriceFields = watch('pricePerDay');
@@ -165,7 +160,7 @@ export default function SpaceSettingComponent({ id }: SpaceSettingComponentProps
         }
       } else {
         // 등록 모드 (ID가 없는 경우)
-        const res = await fetchSpaceRegister(submitData);
+        await fetchSpaceRegister(submitData);
         router.push('/space');
       }
     } catch (error) {

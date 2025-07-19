@@ -2,7 +2,7 @@ import { SpaceConfig, SpaceId } from '@type/space/spaceConfig';
 import { SpaceFormData } from '@type/space/spaceType';
 
 import React from 'react';
-import { Control, Controller } from 'react-hook-form';
+import { Control, Controller, UseControllerProps } from 'react-hook-form';
 
 // Input에 적합하지 않은 필드들
 const NON_INPUT_FIELDS = ['facilityInfo', 'imageList', 'popUpImageList'] as const;
@@ -11,14 +11,14 @@ const NON_INPUT_FIELDS = ['facilityInfo', 'imageList', 'popUpImageList'] as cons
 type InputSpaceId = Exclude<SpaceId, (typeof NON_INPUT_FIELDS)[number]>;
 
 interface SpaceInputComponentProps {
-  config: SpaceConfig;
+  config: SpaceConfig; // 원래대로 SpaceConfig 타입 유지
   control: Control<SpaceFormData>;
-  rules?: any; // 타입 충돌을 피하기 위해 any 사용
+  rules?: UseControllerProps<SpaceFormData, SpaceId>['rules']; // SpaceId로 되돌림
 }
 
 // 런타임에 input 호환성 체크
 function isInputCompatible(fieldName: SpaceId): fieldName is InputSpaceId {
-  return !NON_INPUT_FIELDS.includes(fieldName as any);
+  return !NON_INPUT_FIELDS.includes(fieldName as (typeof NON_INPUT_FIELDS)[number]);
 }
 
 export default function SpaceInputComponent({ config, control, rules }: SpaceInputComponentProps) {
@@ -30,9 +30,9 @@ export default function SpaceInputComponent({ config, control, rules }: SpaceInp
 
   return (
     <Controller
-      name={config.name}
+      name={config.name as InputSpaceId} // 런타임 체크 후 타입 단언
       control={control}
-      rules={rules}
+      rules={rules as UseControllerProps<SpaceFormData, InputSpaceId>['rules']} // rules도 타입 단언
       render={({ field: { onChange, value }, fieldState: { error } }) => {
         const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
           if (config.handleOnChange) {

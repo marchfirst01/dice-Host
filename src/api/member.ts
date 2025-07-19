@@ -3,6 +3,19 @@ import { GuestPostAxiosInstance, GuestPostAxiosInstanceV2 } from '@axios/guest.a
 import { MemberFormData } from '@type/member';
 import { LoginResponse } from '@type/member/memberResponse';
 
+interface AuthVerifyResponse {
+  status: number;
+}
+
+interface AuthVerifyCodeResponse {
+  isVerified: boolean;
+}
+
+interface PasswordResetResponse {
+  email: string;
+  tempPassword: string;
+}
+
 export class ValidateMemberError extends Error {
   code: string;
 
@@ -15,7 +28,7 @@ export class ValidateMemberError extends Error {
 
 export const fetchLogin = async (formData: MemberFormData): Promise<LoginResponse> => {
   const { email, password } = formData;
-  const res = await GuestPostAxiosInstance('/auth/login', { email, password });
+  const res = await GuestPostAxiosInstance<LoginResponse>('/auth/login', { email, password });
   if (res.status !== 200) throw new Error('Failed to fetch login');
   return res.data;
 };
@@ -59,34 +72,41 @@ export const fetchLogout = async () => {
   return res.status;
 };
 
-export const fetchAuthVerify = async (email: string) => {
+export const fetchAuthVerify = async (email: string): Promise<number> => {
   try {
-    const res = await GuestPostAxiosInstance('/auth/verify', email);
-    return res.status;
+    const res = await GuestPostAxiosInstance<AuthVerifyResponse>('/auth/verify', { email });
+    return res.status; // 또는 적절한 반환값
   } catch (error) {
     console.log(error);
-    throw new ValidateMemberError('이메일 전송에 실패했습니다.', 'FAILED_TO_VERIFY_EMAIL');
+    throw new ValidateMemberError('인증 요청 실패', 'VERIFY_FAILED');
   }
 };
 
-export const fetchAuthVerifyCode = async (code: string, email: string) => {
+export const fetchAuthVerifyCode = async (
+  code: string,
+  email: string,
+): Promise<AuthVerifyCodeResponse> => {
   try {
-    const res = await GuestPostAxiosInstance('/auth/verify/code', { code, email });
-    console.log(res);
+    const res = await GuestPostAxiosInstance<AuthVerifyCodeResponse>('/auth/verify-code', {
+      code,
+      email,
+    });
     return res.data;
   } catch (error) {
     console.log(error);
-    throw new ValidateMemberError('인증번호가 만료됐습니다.', 'BAD_REQUEST');
+    throw new ValidateMemberError('코드 인증 실패', 'CODE_VERIFY_FAILED');
   }
 };
 
 export const fetchPasswordReset = async (
   code: string,
   email: string,
-): Promise<{ email: string; tempPassword: string }> => {
+): Promise<PasswordResetResponse> => {
   try {
-    const res = await GuestPostAxiosInstance('/auth/password-reset', { code, email });
-    console.log(res);
+    const res = await GuestPostAxiosInstance<PasswordResetResponse>('/auth/password-reset', {
+      code,
+      email,
+    });
     return res.data;
   } catch (error) {
     console.log(error);

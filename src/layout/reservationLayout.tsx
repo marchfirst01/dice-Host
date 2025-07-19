@@ -10,7 +10,7 @@ export default function ReservationLayoutComponent({ children }: { children: Rea
       <header className="fixed top-0 z-[60] w-full max-w-[400px] bg-black px-5 pb-6 pt-8 text-white">
         <p className="text-style-H1">예약 관리</p>
       </header>
-      <div className="fixed top-[84.8px] z-[50] flex w-full max-w-[400px] flex-row justify-center bg-back_gray">
+      <div className="fixed top-[84.8px] z-50 flex w-full max-w-[400px] flex-row justify-center bg-back_gray">
         <button
           onClick={() => setReservationStatus('PENDING')}
           className={`text-style-BTN1 w-[111.67px] py-3 ${reservationStatus === 'PENDING' && 'border-b-2 border-black'}`}

@@ -6,7 +6,7 @@ import axios from 'axios';
 
 // id 공간 정보 조회
 export const fetchSpaceId = async (id: string): Promise<SpaceIdResponse> => {
-  const res = await GuestGetAxiosInstance(`/space/${id}`);
+  const res = await GuestGetAxiosInstance<SpaceIdResponse>(`/space/${id}`);
   if (res.status !== 200) throw new Error('Failed to fetch posts');
   return res.data;
 };
@@ -102,6 +102,7 @@ export const fetchSpaceRegister = async (submitData: SpaceSubmitData) => {
 
     // TODO: 추후 삭제
     const { popUpImageUrls, facilityInfo, ...rest } = submitData;
+    console.log(popUpImageUrls, facilityInfo);
 
     // TODO: 임시 객체 (rest) 삭제하고 ...submitData로 변경 필요 + 가까운 지하철역 정보 추가
     // 2. 지하철역 정보를 포함한 최종 데이터 구성 - 임시 구성
@@ -133,8 +134,8 @@ export const fetchSpaceRegister = async (submitData: SpaceSubmitData) => {
 
 export const fetchSpaceIdUpdate = async (id: string, submitData: SpaceSubmitData) => {
   try {
-    console.log(submitData);
     const { facilityInfo, ...rest } = submitData;
+    console.log(facilityInfo);
     const temp = {
       ...rest,
       facilityInfo: 'temp',

@@ -33,7 +33,7 @@ export default function HostPage() {
         <div className="flex flex-row items-center gap-3 pb-4">
           <Image src={IMAGES.DiceBlack} alt="profile" width={54} height={54} />
           <p className="text-style-SUB1">{hostInfo.name}</p>
-          {session && <p className="text-style-SUB1">{session.user.name}</p>}
+          {session && <p className="text-style-SUB1">{session.user?.name}</p>}
         </div>
         <div className="flex flex-row items-center justify-between pb-2">
           <p className="text-style-SUB3">

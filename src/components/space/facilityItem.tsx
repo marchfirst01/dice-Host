@@ -13,7 +13,7 @@ export default function FacilityItem({
 }) {
   return (
     <div className="flex w-full flex-row items-center gap-2">
-      <div className="flex h-[52px] w-[52px] items-center justify-center rounded-lg border border-stroke bg-back_gray">
+      <div className="flex size-[52px] items-center justify-center rounded-lg border border-stroke bg-back_gray">
         <Image src={FACILITY[facility.id]} alt="facility" width={24} height={24} />
       </div>
       <p className="text-style-BODY1 text-deep_gray">

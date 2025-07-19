@@ -1,7 +1,7 @@
 import ReservationItemComponent from '@components/reservation/reservationItem';
 import { useReservationList } from '@hooks/useReservation';
 import ReservationLayoutComponent from '@layout/reservationLayout';
-import { Reservation, ReservationStatus } from '@type/reservation';
+import { Reservation } from '@type/reservation';
 import { useReservationStore } from '@zustands/reservation/reservationStore';
 
 import React, { useEffect, useState } from 'react';
@@ -20,7 +20,7 @@ export default function ReservationPage() {
     }
     const filterData = data?.content.filter((status) => status.status === reservationStatus);
     setFilterData(filterData);
-  }, [data, reservationStatus]);
+  }, [data, refetch, setPendingCount, reservationStatus]);
 
   return (
     <ReservationLayoutComponent>
