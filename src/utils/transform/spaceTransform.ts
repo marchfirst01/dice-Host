@@ -13,15 +13,27 @@ export function transformResponseToFormData(response: SpaceIdResponse): SpaceFor
 }
 
 // 폼 데이터를 제출 데이터로 변환
-export async function transformFormToSubmitData(formData: SpaceFormData): Promise<SpaceSubmitData> {
+export async function transformFormToSubmitData({
+  formData,
+  isActivated,
+}: {
+  formData: SpaceFormData;
+  isActivated: boolean;
+}): Promise<SpaceSubmitData> {
   const imageUrls = await uploadImage(formData.imageList);
+  let popUpImageUrls;
+  if (formData.popUpImageList) {
+    popUpImageUrls = await uploadImage(formData.popUpImageList);
+  }
   const openingTime = formatKoreanTimeTo24(formData.openingTime);
   const closingTime = formatKoreanTimeTo24(formData.closingTime);
-  const { imageList, ...rest } = formData;
+  const { imageList, popUpImageList, ...rest } = formData;
   return {
     ...rest,
     imageUrls,
+    popUpImageUrls,
     openingTime,
     closingTime,
+    isActivated,
   };
 }

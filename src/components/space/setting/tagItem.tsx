@@ -1,6 +1,6 @@
 import { SpaceFormData } from '@type/space/spaceType';
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { UseFormGetValues, UseFormSetValue } from 'react-hook-form';
 
 export default function TagItem({

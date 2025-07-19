@@ -110,7 +110,7 @@ export default function SpaceSettingComponent({ id }: SpaceSettingComponentProps
   const onSubmit = async (formData: SpaceFormData) => {
     try {
       // 폼 데이터를 제출용 데이터로 변환
-      const submitData = await transformFormToSubmitData(formData);
+      const submitData = await transformFormToSubmitData({ formData, isActivated: isOn });
 
       if (id) {
         // 수정 모드 (ID가 존재하는 경우)

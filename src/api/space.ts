@@ -100,9 +100,21 @@ export const fetchSpaceRegister = async (submitData: SpaceSubmitData) => {
       nearestSubway = await fetchNearestSubway(submitData.latitude, submitData.longitude);
     }
 
+    // TODO: 추후 삭제
+    const { popUpImageUrls, facilityInfo, ...rest } = submitData;
+
+    // TODO: 임시 객체 (rest) 삭제하고 ...submitData로 변경 필요 + 가까운 지하철역 정보 추가
     // 2. 지하철역 정보를 포함한 최종 데이터 구성 - 임시 구성
     const finalSubmitData = {
-      ...submitData,
+      ...rest,
+      // 임시 객체 - 삭제 필요
+      facilityInfo: 'temp',
+      description: 'temp',
+      category: 'temp',
+      capacity: 0,
+      detailAddress: 'temp',
+      websiteUrl: 'temp',
+      // ...submitData,
       // nearestSubway,
     };
 
