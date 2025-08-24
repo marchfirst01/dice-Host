@@ -1,4 +1,6 @@
 import { IMAGES } from '@assets/index';
+import onBoarding from '@assets/onBoarding.gif';
+import tooltip from '@assets/tooltip.svg';
 import { GoogleLoginButton } from '@components/socialLogin/googleLoginButton';
 import KakaoLoginButton from '@components/socialLogin/kakaoLoginButton';
 import { NaverLoginButton } from '@components/socialLogin/naverLoginButton';
@@ -12,6 +14,7 @@ import { useRouter } from 'next/router';
 export default function Home() {
   const router = useRouter();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+
   useEffect(() => {
     setIsLoggedIn(getAccessToken() ? true : false);
   }, []);
@@ -19,13 +22,17 @@ export default function Home() {
   return isLoggedIn ? (
     router.push('/space')
   ) : (
-    <div className="flex h-screen flex-col items-center justify-center">
-      <div className="space-y-4">
-        <Image src={IMAGES.LogoBlack} alt="로고 이미지" />
-        <p className="text-style-SUB2 text-center text-SUB2">팝업 운영 올인원 솔루션</p>
+    <div className="flex min-h-screen flex-col items-center justify-center px-5 py-8">
+      {/* 온보딩 이미지 섹션 */}
+      <div className="mb-8 flex w-full max-w-sm flex-col items-center space-y-4">
+        <div className="relative aspect-square w-full max-w-[300px] sm:max-w-[350px] md:max-w-[400px]">
+          <Image src={onBoarding} alt="로고 이미지" fill className="object-contain" priority />
+        </div>
       </div>
-      <div className="mx-5 flex flex-col items-center justify-center gap-2">
-        <p className="text-style-SUB1">여유 공간 등록하고, 손쉽게 호스트 되기</p>
+
+      {/* 설명 텍스트 섹션 */}
+      <div className="mb-8 flex w-full max-w-[400px] flex-col items-center justify-center gap-2 px-4">
+        <p className="text-style-SUB1 text-center">여유 공간 등록하고, 손쉽게 호스트 되기</p>
         <p className="text-style-SUB3 text-center text-medium_gray">
           비어있는 공간을 등록하면, 팝업을 운영하고 싶은
           <br />
@@ -33,12 +40,16 @@ export default function Home() {
         </p>
       </div>
 
-      <div className="fixed bottom-[34px] w-full max-w-[400px] space-y-[11px] px-5 pb-5 pt-4">
+      {/* 로그인 버튼 섹션 */}
+      <div className="flex w-full max-w-[400px] flex-col items-center justify-center space-y-[11px] px-5 pb-5 pt-4">
+        <Image src={tooltip} alt="tooltip" />
+
         <div className="flex w-full flex-row justify-center gap-3">
           <KakaoLoginButton />
           <GoogleLoginButton />
           <NaverLoginButton />
         </div>
+
         <button
           onClick={() => router.push(`/member/login`)}
           className="flex w-full flex-row items-center justify-center space-x-2 rounded-lg border border-stroke bg-white p-4"
@@ -46,6 +57,7 @@ export default function Home() {
           <Image src={IMAGES.DiceBlack} alt="주사위" />
           <p className="font-BTN1 text-BTN1 text-black">다이스 아이디로 로그인</p>
         </button>
+
         <div className="flex flex-row items-center justify-center">
           <p className="py-2.5 font-BTN1 text-BTN1 text-medium_gray">아직 회원이 아니신가요?</p>
           <button
