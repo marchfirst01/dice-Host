@@ -4,6 +4,7 @@ interface FacilityConfig {
   id: FacilityKey;
   name: string;
   number: number;
+  countable: boolean;
 }
 
 type FacilityConfigList = Record<FacilityKey, FacilityConfig>;

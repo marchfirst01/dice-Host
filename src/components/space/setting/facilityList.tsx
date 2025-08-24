@@ -67,6 +67,7 @@ export default function FacilityList({ facilities, setValue, watch }: FacilityLi
         const existingItem = facilityInfo.find((f) => f.key === facility.id);
         const isSelected = !!existingItem;
         const currentNumber = existingItem?.number || 0;
+        const isCountable = facility.countable !== false; // 기본값은 true
 
         return (
           <div
@@ -95,19 +96,21 @@ export default function FacilityList({ facilities, setValue, watch }: FacilityLi
             </div>
 
             <div className="flex flex-row items-center space-x-2">
-              <div className="flex flex-row items-center space-x-1">
-                <Image
-                  onClick={(e) => handleDecrease(facility.id, e)}
-                  src={isSelected ? FACILITY.minus : FACILITY.minusGrey}
-                  alt="minus"
-                />
-                <p className="w-[30px] text-center">{currentNumber}</p>
-                <Image
-                  onClick={(e) => handleIncrease(facility.id, e)}
-                  src={isSelected ? FACILITY.plus : FACILITY.plusGrey}
-                  alt="plus"
-                />
-              </div>
+              {isCountable && (
+                <div className="flex flex-row items-center space-x-1">
+                  <Image
+                    onClick={(e) => handleDecrease(facility.id, e)}
+                    src={isSelected ? FACILITY.minus : FACILITY.minusGrey}
+                    alt="minus"
+                  />
+                  <p className="w-[30px] text-center">{currentNumber}</p>
+                  <Image
+                    onClick={(e) => handleIncrease(facility.id, e)}
+                    src={isSelected ? FACILITY.plus : FACILITY.plusGrey}
+                    alt="plus"
+                  />
+                </div>
+              )}
             </div>
           </div>
         );
