@@ -15,7 +15,7 @@ export default function HostLayoutComponent({ children }: { children: React.Reac
       <header className="fixed top-0 z-50 flex w-full max-w-[400px] flex-row justify-between bg-white px-5 pt-8">
         <p className="text-style-H1">호스트 정보</p>
         <Image
-          onClick={() => router.push('/my/update')}
+          onClick={() => router.push('/host/update')}
           className="cursor-pointer"
           src={IMAGES.EditGray}
           alt="edit-icon"

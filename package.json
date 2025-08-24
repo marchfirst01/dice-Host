@@ -14,7 +14,7 @@
     "@yaireo/tagify": "^4.33.2",
     "axios": "^1.7.9",
     "kakao-js-sdk": "^1.2.3",
-    "next": "15.1.4",
+    "next": "^15.5.0",
     "next-auth": "^4.24.11",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",

@@ -20,10 +20,14 @@ export default function HostPage() {
   const { data: hostInfo } = useHostInfo();
 
   const handleLogout = async () => {
-    const res = await fetchLogout();
-    if (res === 200) {
-      deleteToken();
-      router.push('/');
+    if (session) {
+      signOut({ callbackUrl: '/' });
+    } else {
+      const res = await fetchLogout();
+      if (res === 200) {
+        deleteToken();
+        router.push('/');
+      }
     }
   };
 
@@ -79,9 +83,6 @@ export default function HostPage() {
         <hr />
         <p onClick={() => handleLogout()} className="cursor-pointer">
           로그아웃
-        </p>
-        <p onClick={() => signOut({ callbackUrl: '/' })} className="cursor-pointer">
-          카카오 로그아웃
         </p>
       </div>
       <p
