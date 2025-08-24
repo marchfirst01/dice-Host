@@ -1,6 +1,15 @@
+import { signIn } from 'next-auth/react';
+
 export const GoogleLoginButton = () => {
   return (
-    <button className="flex h-[52px] w-[52px] items-center justify-center rounded-full border border-gray-300 bg-white px-4 py-2 transition-colors hover:bg-gray-50">
+    <button
+      onClick={() =>
+        signIn('google', {
+          callbackUrl: '/space',
+        })
+      }
+      className="flex h-[52px] w-[52px] items-center justify-center rounded-full border border-gray-300 bg-white px-4 py-2 transition-colors hover:bg-gray-50"
+    >
       <div className="flex items-center">
         <svg
           width="24"
