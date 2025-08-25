@@ -1,6 +1,15 @@
+import { signIn } from 'next-auth/react';
+
 export const NaverLoginButton = () => {
   return (
-    <button className="flex h-[52px] w-[52px] items-center justify-center rounded-full bg-[#03C75A] px-4 py-2 text-white transition-colors hover:bg-[#02B350]">
+    <button
+      onClick={() =>
+        signIn('naver', {
+          callbackUrl: '/space',
+        })
+      }
+      className="flex h-[52px] w-[52px] items-center justify-center rounded-full bg-[#03C75A] px-4 py-2 text-white transition-colors hover:bg-[#02B350]"
+    >
       <div className="flex items-center">
         <svg
           width="24"
