@@ -3,7 +3,7 @@ import InputComponent from '@components/common/Input';
 import ModalComponent from '@components/common/modal';
 import RegisterFormButtonComponent from '@components/common/registerFormButton';
 import { MemberFormData } from '@type/member';
-import { setAccessToken, setRefreshToken } from '@utils/token';
+import { setAccessToken, setRefreshToken } from '@utils/cookie';
 
 import React, { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';

@@ -1,7 +1,7 @@
 import { IMAGES } from '@assets/index';
 import '@styles/globals.css';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { getAccessToken } from '@utils/token';
+import { getAccessToken } from '@utils/cookie';
 
 import { useEffect, useState } from 'react';
 

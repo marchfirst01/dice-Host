@@ -2,7 +2,7 @@ import { IMAGES } from '@assets/index';
 import { ImageItem } from '@components/common/ImageItem';
 import { useHostInfo, useHostSpace } from '@hooks/useHost';
 import HostLayoutComponent from '@layout/hostLayout';
-import { deleteToken } from '@utils/token';
+import { clearTokens } from '@utils/cookie';
 
 import React from 'react';
 
@@ -25,7 +25,7 @@ export default function HostPage() {
     } else {
       const res = await fetchLogout();
       if (res === 200) {
-        deleteToken();
+        clearTokens();
         router.push('/');
       }
     }

@@ -1,10 +1,10 @@
 import {
-  deleteToken,
+  clearTokens,
   getAccessToken,
   getRefreshToken,
   setAccessToken,
   setRefreshToken,
-} from '@utils/token';
+} from '@utils/cookie';
 
 import { GuestPostAxiosInstance } from './guest.axios.method';
 import axios, { AxiosInstance } from 'axios';
@@ -28,8 +28,8 @@ const axiosInstanceV2: AxiosInstance = axios.create({
 
 // JWT 토큰 기반 API 요청
 axiosInstance.interceptors.request.use(
-  async (config) => {
-    const accessToken = await getAccessToken();
+  (config) => {
+    const accessToken = getAccessToken();
 
     if (!accessToken) {
       throw new Error('토큰 없음');
@@ -45,8 +45,8 @@ axiosInstance.interceptors.request.use(
 );
 
 axiosInstanceV2.interceptors.request.use(
-  async (config) => {
-    const accessToken = await getAccessToken();
+  (config) => {
+    const accessToken = getAccessToken();
 
     if (!accessToken) {
       throw new Error('토큰 없음');
@@ -63,18 +63,18 @@ axiosInstanceV2.interceptors.request.use(
 
 const refreshTokenRequest = async (): Promise<TokenRefreshResponse> => {
   try {
-    const refreshToken = await getRefreshToken();
+    const refreshToken = getRefreshToken();
     const response = await GuestPostAxiosInstance<TokenRefreshResponse>('/auth/reissue', {
       refreshToken: refreshToken,
     });
 
     const data = response.data;
-    await setAccessToken(data.accessToken);
-    await setRefreshToken(data.refreshToken);
+    setAccessToken(data.accessToken);
+    setRefreshToken(data.refreshToken);
     return data;
   } catch (error) {
     console.log(error);
-    deleteToken();
+    clearTokens();
     alert('로그인을 다시 해주세요');
     Router.push('/');
     throw error;
@@ -83,7 +83,7 @@ const refreshTokenRequest = async (): Promise<TokenRefreshResponse> => {
 
 // 기존 코드에 추가
 axiosInstanceV2.interceptors.response.use(
-  async (response) => {
+  (response) => {
     return response;
   },
   async (error) => {
@@ -105,7 +105,7 @@ axiosInstanceV2.interceptors.response.use(
     // 토큰 만료나 잘못된 토큰일 때 로그아웃 처리
     if (error.response?.data?.code === 'AUTH_001') {
       console.log('잘못된 토큰');
-      deleteToken();
+      clearTokens();
     }
 
     return Promise.reject(error);
@@ -114,7 +114,7 @@ axiosInstanceV2.interceptors.response.use(
 
 // 토큰 관련 에러 처리
 axiosInstance.interceptors.response.use(
-  async (response) => {
+  (response) => {
     return response;
   },
 
@@ -137,7 +137,7 @@ axiosInstance.interceptors.response.use(
     // 토큰 만료나 잘못된 토큰일 때 로그아웃 처리
     if (error.response?.data?.code === 'AUTH_001') {
       console.log('잘못된 토큰');
-      deleteToken();
+      clearTokens();
     }
 
     return Promise.reject(error);

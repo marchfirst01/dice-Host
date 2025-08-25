@@ -1,7 +1,7 @@
 import { IMAGES } from '@assets/index';
 import DragModalComponent from '@components/common/dragModal';
 import ModalComponent from '@components/common/modal';
-import { deleteToken } from '@utils/token';
+import { clearTokens } from '@utils/cookie';
 
 import React, { useState } from 'react';
 
@@ -25,7 +25,7 @@ export default function WithDrawPage() {
       const res = await fetchWithDraw(reason);
       if (res === 200) {
         alert('탈퇴 완료');
-        deleteToken();
+        clearTokens();
         router.push('/');
       }
     } catch (error) {
