@@ -6,7 +6,7 @@ import axios from 'axios';
 
 // id 공간 정보 조회
 export const fetchSpaceId = async (id: string): Promise<SpaceIdResponse> => {
-  const res = await GuestGetAxiosInstance<SpaceIdResponse>(`/space/${id}`);
+  const res = await GuestGetAxiosInstance<SpaceIdResponse>(`/v1/space/${id}`);
   if (res.status !== 200) throw new Error('Failed to fetch posts');
   return res.data;
 };
@@ -22,7 +22,7 @@ export const fetchImageUpload = async (imageList: File[]): Promise<ImageUploadRe
     imageList.forEach((image) => {
       formData.append('images', image);
     });
-    const res = await PostAxiosInstance<FormData, ImageUploadResponse>(`/s3/uploads`, formData, {
+    const res = await PostAxiosInstance<FormData, ImageUploadResponse>(`/v1/s3/uploads`, formData, {
       headers: { 'Content-Type': 'multipart/form-data' },
     });
     if (res.status !== 200) throw new Error('Failed to fetch image list');
@@ -85,7 +85,15 @@ const fetchNearestSubway = async (latitude: number, longitude: number) => {
     const { place_name, distance } = firstPlace;
     const [stationName, lineName] = place_name.split(' ');
 
-    return { stationName, lineName, distance };
+    // 호선명에서 숫자만 추출
+    const lineNumberMatch = lineName.match(/(\d+)/);
+    const lineNumber = lineNumberMatch ? parseInt(lineNumberMatch[1]) : 0;
+
+    return {
+      stationName,
+      lineNumber,
+      distance: parseInt(distance),
+    };
   } catch (error) {
     console.error('지하철역 정보 조회 실패:', error);
     return null;
@@ -100,32 +108,19 @@ export const fetchSpaceRegister = async (submitData: SpaceSubmitData) => {
       nearestSubway = await fetchNearestSubway(submitData.latitude, submitData.longitude);
     }
 
-    // TODO: 추후 삭제
-    const { popUpImageUrls, facilityInfo, ...rest } = submitData;
-    console.log(popUpImageUrls, facilityInfo);
-
-    // TODO: 임시 객체 (rest) 삭제하고 ...submitData로 변경 필요 + 가까운 지하철역 정보 추가
-    // 2. 지하철역 정보를 포함한 최종 데이터 구성 - 임시 구성
+    // 2. 지하철역 정보를 포함한 최종 데이터 구성
     const finalSubmitData = {
-      ...rest,
-      // 임시 객체 - 삭제 필요
-      facilityInfo: 'temp',
-      description: 'temp',
-      category: 'CAFE',
-      capacity: 0,
-      detailAddress: 'temp',
-      websiteUrl: 'temp',
-      // ...submitData,
-      // nearestSubway,
+      ...submitData,
+      nearestSubway,
     };
 
-    console.log('지하철역 정보:', nearestSubway);
+    console.log(finalSubmitData);
 
     // 3. 서버로 데이터 전송
-    const res = await PostAxiosInstance(`/space/register`, finalSubmitData);
+    const res = await PostAxiosInstance(`/v2/space/register`, finalSubmitData);
 
     if (res.status !== 201) throw new Error('공간 등록에 실패했습니다');
-    return res.data;
+    return res.status;
   } catch (error) {
     console.error('공간 등록 오류:', error);
     throw error;
@@ -134,13 +129,13 @@ export const fetchSpaceRegister = async (submitData: SpaceSubmitData) => {
 
 export const fetchSpaceIdUpdate = async (id: string, submitData: SpaceSubmitData) => {
   try {
-    const { facilityInfo, ...rest } = submitData;
-    console.log(facilityInfo);
+    const { facilityInfos, ...rest } = submitData;
+    console.log(facilityInfos);
     const temp = {
       ...rest,
-      facilityInfo: 'temp',
+      facilityInfos: 'temp',
     };
-    const res = await PostAxiosInstance(`/space/update/${id}`, temp);
+    const res = await PostAxiosInstance(`/v1/space/update/${id}`, temp);
     if (res.status !== 200) throw new Error('공간 수정에 실패했습니다');
     return res.status;
   } catch (error) {

@@ -2,18 +2,18 @@ import { GetAxiosInstance, PostAxiosInstance } from '@axios/axios.method';
 import { HostInfoForm, HostSpaceData } from '@type/my';
 
 export const fetchHostSpace = async (): Promise<HostSpaceData[]> => {
-  const res = await GetAxiosInstance<HostSpaceData[]>('/host/space');
+  const res = await GetAxiosInstance<HostSpaceData[]>('/v1/host/space');
   return res.data;
 };
 
 export const fetchHostInfo = async () => {
-  const res = await GetAxiosInstance<HostInfoForm>('/host/info');
+  const res = await GetAxiosInstance<HostInfoForm>('/v1/host/info');
   return res.data;
 };
 
 export const fetchHostUpdate = async (hostUpdate: HostInfoForm) => {
   try {
-    const res = await PostAxiosInstance('/host/update', hostUpdate);
+    const res = await PostAxiosInstance('/v1/host/update', hostUpdate);
     if (res.status === 200) return true;
   } catch (error) {
     console.log(error);
@@ -26,7 +26,7 @@ export const fetchPasswordUpdate = async (passwordUpdate: {
   newPassword: string;
 }) => {
   try {
-    const res = await PostAxiosInstance('auth/password-update', passwordUpdate);
+    const res = await PostAxiosInstance('/v1/auth/password-update', passwordUpdate);
     if (res.status === 200) return res.status;
   } catch (error) {
     console.log(error);
@@ -36,6 +36,6 @@ export const fetchPasswordUpdate = async (passwordUpdate: {
 
 export const fetchWithDraw = async (reason: string) => {
   console.log(reason);
-  const res = await PostAxiosInstance('auth/withdraw');
+  const res = await PostAxiosInstance('/v1/auth/withdraw');
   return res.status;
 };

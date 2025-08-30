@@ -1,5 +1,5 @@
 import { PostAxiosInstance } from '@axios/axios.method';
-import { GuestPostAxiosInstance, GuestPostAxiosInstanceV2 } from '@axios/guest.axios.method';
+import { GuestPostAxiosInstance } from '@axios/guest.axios.method';
 import { MemberFormData } from '@type/member';
 import { LoginResponse } from '@type/member/memberResponse';
 
@@ -28,14 +28,14 @@ export class ValidateMemberError extends Error {
 
 export const fetchLogin = async (formData: MemberFormData): Promise<LoginResponse> => {
   const { email, password } = formData;
-  const res = await GuestPostAxiosInstance<LoginResponse>('/auth/login', { email, password });
+  const res = await GuestPostAxiosInstance<LoginResponse>('/v1/auth/login', { email, password });
   if (res.status !== 200) throw new Error('Failed to fetch login');
   return res.data;
 };
 
 export const fetchValidateEmail = async (email: string) => {
   try {
-    const res = await GuestPostAxiosInstance('/auth/validate/email', { email });
+    const res = await GuestPostAxiosInstance('/v1/auth/validate/email', { email });
     if (res.status === 200) return;
   } catch (error) {
     console.log(error);
@@ -45,7 +45,7 @@ export const fetchValidateEmail = async (email: string) => {
 
 export const fetchValidatePhone = async (phone: string) => {
   try {
-    const res = await GuestPostAxiosInstance('/auth/validate/phone', phone.replace(/-/g, ''));
+    const res = await GuestPostAxiosInstance('/v1/auth/validate/phone', phone.replace(/-/g, ''));
     if (res.status === 200) return true;
   } catch (error) {
     console.log(error);
@@ -56,7 +56,7 @@ export const fetchValidatePhone = async (phone: string) => {
 export const fetchRegister = async (formData: MemberFormData) => {
   const { email, name, password, phone } = formData;
   const userRole = 0;
-  const res = await GuestPostAxiosInstanceV2('/auth/signup', {
+  const res = await GuestPostAxiosInstance('/v2/auth/signup', {
     email,
     name,
     password,
@@ -68,13 +68,13 @@ export const fetchRegister = async (formData: MemberFormData) => {
 };
 
 export const fetchLogout = async () => {
-  const res = await PostAxiosInstance('/auth/logout');
+  const res = await PostAxiosInstance('/v1/auth/logout');
   return res.status;
 };
 
 export const fetchAuthVerify = async (email: string): Promise<number> => {
   try {
-    const res = await GuestPostAxiosInstance<AuthVerifyResponse>('/auth/verify', { email });
+    const res = await GuestPostAxiosInstance<AuthVerifyResponse>('/v1/auth/verify', { email });
     return res.status; // 또는 적절한 반환값
   } catch (error) {
     console.log(error);
@@ -87,7 +87,7 @@ export const fetchAuthVerifyCode = async (
   email: string,
 ): Promise<AuthVerifyCodeResponse> => {
   try {
-    const res = await GuestPostAxiosInstance<AuthVerifyCodeResponse>('/auth/verify-code', {
+    const res = await GuestPostAxiosInstance<AuthVerifyCodeResponse>('/v1/auth/verify-code', {
       code,
       email,
     });
