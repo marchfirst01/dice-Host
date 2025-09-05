@@ -280,7 +280,7 @@ export default function SpaceIdView({
       <section className="mb-4">
         <p className="text-style-SUB2 mb-4">공지사항 안내</p>
         <div className="text-style-BODY1 flex flex-col gap-1 whitespace-pre-line rounded-lg border border-stroke bg-back_gray p-4 text-deep_gray">
-          {initialData.notice}
+          {initialData.notices}
         </div>
       </section>
     </SpaceViewLayout>
