@@ -1,13 +1,13 @@
-import { signIn } from 'next-auth/react';
+// import { signIn } from 'next-auth/react';
 
 export const NaverLoginButton = () => {
   return (
     <button
-      onClick={() =>
-        signIn('naver', {
-          callbackUrl: '/space',
-        })
-      }
+      // onClick={() =>
+      //   signIn('naver', {
+      //     callbackUrl: '/space',
+      //   })
+      // }
       className="flex size-[52px] items-center justify-center rounded-full bg-[#03C75A] px-4 py-2 text-white transition-colors hover:bg-[#02B350]"
     >
       <div className="flex items-center">

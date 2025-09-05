@@ -1,13 +1,13 @@
-import { signIn } from 'next-auth/react';
+// import { signIn } from 'next-auth/react';
 
 export const GoogleLoginButton = () => {
   return (
     <button
-      onClick={() =>
-        signIn('google', {
-          callbackUrl: '/space',
-        })
-      }
+      // onClick={() =>
+      //   signIn('google', {
+      //     callbackUrl: '/space',
+      //   })
+      // }
       className="flex size-[52px] items-center justify-center rounded-full border border-gray-300 bg-white px-4 py-2 transition-colors hover:bg-gray-50"
     >
       <div className="flex items-center">

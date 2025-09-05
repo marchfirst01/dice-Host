@@ -5,7 +5,7 @@ import { getAccessToken } from '@utils/cookie';
 
 import { useEffect, useState } from 'react';
 
-import { SessionProvider } from 'next-auth/react';
+// import { SessionProvider } from 'next-auth/react';
 import type { AppProps } from 'next/app';
 import Image from 'next/image';
 import { Router, useRouter } from 'next/router';
@@ -44,25 +44,25 @@ export default function App({ Component, pageProps: { session, ...pageProps } }:
   }, [isLoggedIn, router]);
 
   return (
-    <SessionProvider session={session}>
-      <QueryClientProvider client={queryClient}>
-        <Script
-          src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_JS_API_KEY}&libraries=services&autoload=false`}
-          strategy="afterInteractive"
-          onLoad={() => {
-            window.kakao.maps.load(() => {
-              setIsKakaoMapScriptLoaded(true);
-            });
-          }}
-        />
-        {loading || !isKakaoMapScriptLoaded ? (
-          <div className="flex h-screen flex-col items-center justify-center">
-            <Image src={IMAGES.DiceLoading} priority alt="loading" width={150} height={150} />
-          </div>
-        ) : (
-          <Component {...pageProps} />
-        )}
-      </QueryClientProvider>
-    </SessionProvider>
+    // <SessionProvider session={session}>
+    <QueryClientProvider client={queryClient}>
+      <Script
+        src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_JS_API_KEY}&libraries=services&autoload=false`}
+        strategy="afterInteractive"
+        onLoad={() => {
+          window.kakao.maps.load(() => {
+            setIsKakaoMapScriptLoaded(true);
+          });
+        }}
+      />
+      {loading || !isKakaoMapScriptLoaded ? (
+        <div className="flex h-screen flex-col items-center justify-center">
+          <Image src={IMAGES.DiceLoading} priority alt="loading" width={150} height={150} />
+        </div>
+      ) : (
+        <Component {...pageProps} />
+      )}
+    </QueryClientProvider>
+    // </SessionProvider>
   );
 }

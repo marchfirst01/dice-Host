@@ -1,13 +1,13 @@
-import { signIn } from 'next-auth/react';
+// import { signIn } from 'next-auth/react';
 
 const KakaoLoginButton = () => {
   return (
     <button
-      onClick={() =>
-        signIn('kakao', {
-          callbackUrl: '/space',
-        })
-      }
+      // onClick={() =>
+      //   signIn('kakao', {
+      //     callbackUrl: '/space',
+      //   })
+      // }
       className="flex size-[52px] items-center justify-center rounded-full bg-yellow px-4 py-2 text-black transition-colors"
     >
       <div className="flex items-center">
