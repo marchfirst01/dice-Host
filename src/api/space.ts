@@ -129,8 +129,8 @@ export const fetchSpaceRegister = async (submitData: SpaceSubmitData) => {
 
 export const fetchSpaceIdUpdate = async (id: string, submitData: SpaceSubmitData) => {
   try {
-    const { facilityInfo, ...rest } = submitData;
-    console.log(facilityInfo);
+    const { facilityInfos, ...rest } = submitData;
+    console.log(facilityInfos);
     const temp = {
       ...rest,
       facilityInfos: 'temp',

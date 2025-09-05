@@ -11,7 +11,7 @@ import Image from 'next/image';
 import { Router, useRouter } from 'next/router';
 import Script from 'next/script';
 
-export default function App({ Component, pageProps: { session, ...pageProps } }: AppProps) {
+export default function App({ Component, pageProps: { ...pageProps } }: AppProps) {
   const queryClient = new QueryClient();
 
   const [loading, setLoading] = useState(false);
