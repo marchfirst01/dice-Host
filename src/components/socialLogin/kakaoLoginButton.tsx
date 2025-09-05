@@ -8,7 +8,7 @@ const KakaoLoginButton = () => {
           callbackUrl: '/space',
         })
       }
-      className="flex h-[52px] w-[52px] items-center justify-center rounded-full bg-yellow px-4 py-2 text-black transition-colors"
+      className="flex size-[52px] items-center justify-center rounded-full bg-yellow px-4 py-2 text-black transition-colors"
     >
       <div className="flex items-center">
         <svg

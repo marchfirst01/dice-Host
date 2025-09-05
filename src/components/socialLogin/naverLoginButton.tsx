@@ -8,7 +8,7 @@ export const NaverLoginButton = () => {
           callbackUrl: '/space',
         })
       }
-      className="flex h-[52px] w-[52px] items-center justify-center rounded-full bg-[#03C75A] px-4 py-2 text-white transition-colors hover:bg-[#02B350]"
+      className="flex size-[52px] items-center justify-center rounded-full bg-[#03C75A] px-4 py-2 text-white transition-colors hover:bg-[#02B350]"
     >
       <div className="flex items-center">
         <svg

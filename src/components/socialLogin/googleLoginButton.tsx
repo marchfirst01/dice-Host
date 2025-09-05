@@ -8,7 +8,7 @@ export const GoogleLoginButton = () => {
           callbackUrl: '/space',
         })
       }
-      className="flex h-[52px] w-[52px] items-center justify-center rounded-full border border-gray-300 bg-white px-4 py-2 transition-colors hover:bg-gray-50"
+      className="flex size-[52px] items-center justify-center rounded-full border border-gray-300 bg-white px-4 py-2 transition-colors hover:bg-gray-50"
     >
       <div className="flex items-center">
         <svg

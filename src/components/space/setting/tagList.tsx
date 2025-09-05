@@ -34,7 +34,7 @@ export default function TagList({ category, tags, setValue, watch }: TagListProp
             <div
               key={index}
               onClick={() => handleTagClick(tag)}
-              className={`text-style-CAP1 } w-fit cursor-pointer rounded-full border px-[10px] py-1 text-deep_gray ${isSelected ? 'border-purple text-purple' : 'border-stroke text-deep_gray'}`}
+              className={`text-style-CAP1 w-fit cursor-pointer rounded-full border px-[10px] py-1 text-deep_gray ${isSelected ? 'border-purple text-purple' : 'border-stroke text-deep_gray'}`}
             >
               # {tag}
             </div>
