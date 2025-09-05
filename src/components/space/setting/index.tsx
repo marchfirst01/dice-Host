@@ -78,24 +78,6 @@ export default function SpaceSettingComponent({ id }: SpaceSettingComponentProps
 
   // 데이터 로드 시 처리
   useEffect(() => {
-    // TODO: 삭제
-    const tempData: {
-      tags: string[];
-      facilityInfo: {
-        key: FacilityKey;
-        number: number;
-      }[];
-    } = {
-      tags: ['연인이랑 데이트하기 좋은 곳', '감성 로컬 거리', '브런치 맛집 밀집'],
-      facilityInfo: [
-        { key: 'waterPurifier', number: 1 },
-        { key: 'couch', number: 4 },
-        { key: 'tv', number: 1 },
-        { key: 'firealarm', number: 0 },
-        { key: 'desktop', number: 5 },
-      ],
-    };
-
     if (data) {
       // 시간 형식 변환
       const formattedData = {
@@ -107,25 +89,24 @@ export default function SpaceSettingComponent({ id }: SpaceSettingComponentProps
       // 변환된 데이터로 리셋
       reset(formattedData);
 
-      // 해시태그 초기값 설정
-      if (tempData.tags && tempData.tags.length > 0) {
-        setValue('tags', tempData.tags);
+      // 해시태그 초기값 설정 (서버 데이터에서)
+      if (data.tags && data.tags.length > 0) {
+        setValue('tags', data.tags);
       }
 
-      // facility 초기값 설정
-      if (tempData.facilityInfo) {
-        if (Array.isArray(tempData.facilityInfo)) {
+      if (data.facilityInfos) {
+        if (Array.isArray(data.facilityInfos)) {
           // 이미 배열 형태라면 그대로 설정
-          setValue('facilityInfo', tempData.facilityInfo);
-        } else if (typeof tempData.facilityInfo === 'object') {
+          setValue('facilityInfos', data.facilityInfos);
+        } else if (typeof data.facilityInfos === 'object') {
           // 객체 형태라면 배열로 변환
           const updatedFacilityInfo: { key: FacilityKey; number: number }[] = Object.entries(
-            tempData.facilityInfo as Record<string, { number: number }>,
+            data.facilityInfos as Record<string, { number: number }>,
           ).map(([facilityKey, facilityValue]) => ({
             key: facilityKey as FacilityKey,
             number: facilityValue.number,
           }));
-          setValue('facilityInfo', updatedFacilityInfo);
+          setValue('facilityInfos', updatedFacilityInfo);
         }
       }
 
@@ -376,12 +357,12 @@ export default function SpaceSettingComponent({ id }: SpaceSettingComponentProps
         {/* notice - 공지사항 */}
         <div className="text-style-CAP1 flex w-full flex-col gap-2">
           <p className="after:ml-1 after:text-red after:content-['*']">
-            {SpaceConfig.notice.display}
+            {SpaceConfig.notices.display}
           </p>
           <SpaceTextareaComponent
-            config={SpaceConfig.notice}
+            config={SpaceConfig.notices}
             control={control}
-            rules={{ required: SpaceConfig.notice.rules }}
+            rules={{ required: SpaceConfig.notices.rules }}
           />
         </div>
       </section>

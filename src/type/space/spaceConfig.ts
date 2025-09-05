@@ -16,8 +16,8 @@ type SpaceId =
   | 'address'
   | 'detailAddress'
   | 'contactNumber'
-  | 'facilityInfo'
-  | 'notice';
+  | 'facilityInfos'
+  | 'notices';
 
 // 개별 spaceConfig 타입
 interface SpaceConfig extends CommonConfig {

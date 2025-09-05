@@ -1,9 +1,9 @@
 import { IMAGES } from '@assets/index';
 import onBoarding from '@assets/onBoarding.gif';
-import tooltip from '@assets/tooltip.svg';
-import { GoogleLoginButton } from '@components/socialLogin/googleLoginButton';
-import KakaoLoginButton from '@components/socialLogin/kakaoLoginButton';
-import { NaverLoginButton } from '@components/socialLogin/naverLoginButton';
+// import tooltip from '@assets/tooltip.svg';
+// import { GoogleLoginButton } from '@components/socialLogin/googleLoginButton';
+// import KakaoLoginButton from '@components/socialLogin/kakaoLoginButton';
+// import { NaverLoginButton } from '@components/socialLogin/naverLoginButton';
 import { getAccessToken } from '@utils/cookie';
 
 import { useEffect, useState } from 'react';

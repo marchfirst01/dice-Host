@@ -33,11 +33,11 @@ export interface CommonSpaceData {
   details: string;
   websiteUrl: string;
   contactNumber: string;
-  facilityInfo: {
+  facilityInfos: {
     key: FacilityKey;
     number: number;
   }[];
-  notice: string[];
+  notices: string[];
   isActivated: boolean;
   tags: string[];
 }

@@ -15,7 +15,7 @@ interface FacilityListProps {
 }
 
 export default function FacilityList({ facilities, setValue, watch }: FacilityListProps) {
-  const facilityInfo = watch('facilityInfo') || [];
+  const facilityInfo = watch('facilityInfos') || [];
 
   const handleItemClick = (facilityId: string) => {
     const existingItem = facilityInfo.find((facility) => facility.key === facilityId);
@@ -23,11 +23,11 @@ export default function FacilityList({ facilities, setValue, watch }: FacilityLi
     if (existingItem) {
       // 이미 선택된 아이템이면 배열에서 제거
       const updatedFacilityInfo = facilityInfo.filter((facility) => facility.key !== facilityId);
-      setValue('facilityInfo', updatedFacilityInfo);
+      setValue('facilityInfos', updatedFacilityInfo);
     } else {
       // 선택되지 않은 아이템이면 배열에 추가
       const updatedFacilityInfo = [...facilityInfo, { key: facilityId as FacilityKey, number: 1 }];
-      setValue('facilityInfo', updatedFacilityInfo);
+      setValue('facilityInfos', updatedFacilityInfo);
     }
   };
 
@@ -39,10 +39,10 @@ export default function FacilityList({ facilities, setValue, watch }: FacilityLi
       const updatedFacilityInfo = facilityInfo.map((facility) =>
         facility.key === facilityId ? { ...facility, number: facility.number + 1 } : facility,
       );
-      setValue('facilityInfo', updatedFacilityInfo);
+      setValue('facilityInfos', updatedFacilityInfo);
     } else {
       const updatedFacilityInfo = [...facilityInfo, { key: facilityId as FacilityKey, number: 1 }];
-      setValue('facilityInfo', updatedFacilityInfo);
+      setValue('facilityInfos', updatedFacilityInfo);
     }
   };
 
@@ -54,10 +54,10 @@ export default function FacilityList({ facilities, setValue, watch }: FacilityLi
       const updatedFacilityInfo = facilityInfo.map((facility) =>
         facility.key === facilityId ? { ...facility, number: facility.number - 1 } : facility,
       );
-      setValue('facilityInfo', updatedFacilityInfo);
+      setValue('facilityInfos', updatedFacilityInfo);
     } else if (existingItem && existingItem.number === 1) {
       const updatedFacilityInfo = facilityInfo.filter((facility) => facility.key !== facilityId);
-      setValue('facilityInfo', updatedFacilityInfo);
+      setValue('facilityInfos', updatedFacilityInfo);
     }
   };
 

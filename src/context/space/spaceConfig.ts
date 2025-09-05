@@ -101,16 +101,16 @@ export const SpaceConfig: SpaceConfigList = {
     },
     rules: '게스트가 연락할 휴대폰/유선번호를 입력해주세요',
   },
-  facilityInfo: {
-    name: 'facilityInfo',
+  facilityInfos: {
+    name: 'facilityInfos',
     type: '',
     display: '',
     placeholder:
       '예) 공간별 조명 밝기 조절 가능/빔프로젝터/스피커(RoomA/C 각 2개)/Wifi, CCTV, 소화기',
     rules: '시설 이용 및 공지사항을 작성해주세요',
   },
-  notice: {
-    name: 'notice',
+  notices: {
+    name: 'notices',
     type: '',
     display: '시설 이용 안내',
     placeholder:
