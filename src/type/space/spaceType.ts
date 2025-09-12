@@ -12,7 +12,7 @@ export interface Address {
 }
 
 // 공간 정보 Form으로 받아온 정보들
-export interface SpaceFormData extends CommonSpaceData {
+export interface SpaceFormData extends Omit<CommonSpaceData, 'notices'> {
   imageList: Array<string | File>;
   size: number;
   pricePerDay: number;
@@ -24,6 +24,7 @@ export interface SpaceFormData extends CommonSpaceData {
   detailAddress: string;
   latitude: number;
   longitude: number;
+  notices: string;
 }
 
 // 공간 정보를 등록/수정할 때 api로 전달하는 데이터 (FormData -> SubmitData)

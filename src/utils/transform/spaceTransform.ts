@@ -5,10 +5,12 @@ import { uploadImage } from 'src/api/space';
 
 // API(fetchSpaceId) 응답 데이터를 폼 데이터로 변환
 export function transformResponseToFormData(response: SpaceIdResponse): SpaceFormData {
-  const { id, imageUrls, likeCount, isLiked, messageRoomId, ...commonFiled } = response;
+  const { id, imageUrls, likeCount, isLiked, messageRoomId, notices, ...commonFiled } = response;
+  const noticeString: string = notices.join('\n');
   console.log(id, likeCount, isLiked, messageRoomId);
   return {
     ...commonFiled,
+    notices: noticeString,
     imageList: imageUrls,
   };
 }
@@ -28,13 +30,15 @@ export async function transformFormToSubmitData({
   }
   const openingTime = formatKoreanTimeTo24(formData.openingTime);
   const closingTime = formatKoreanTimeTo24(formData.closingTime);
-  // TODO: imageList, popUpImageList return 값에 추가 필요
-  const { imageList, popUpImageList, ...rest } = formData;
+  const noticeList: string[] = formData.notices.split('\n');
+
+  const { imageList, popUpImageList, notices, ...rest } = formData;
   console.log(imageList, popUpImageList);
   return {
     ...rest,
     imageUrls,
     popUpImageUrls,
+    notices: noticeList,
     openingTime,
     closingTime,
     isActivated,
