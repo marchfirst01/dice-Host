@@ -3,7 +3,6 @@ import { fetchOAuthLogin } from '@api/member';
 const GoogleLoginButton = () => {
   const handleSocialLoginBtn = async (social: string) => {
     const res = await fetchOAuthLogin(social);
-    console.log(res);
     window.open(res.socialLoginUrl, '_blank');
   };
 
