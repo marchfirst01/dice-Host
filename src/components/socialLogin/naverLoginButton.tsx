@@ -1,13 +1,13 @@
-// import { signIn } from 'next-auth/react';
+import { fetchOAuthLogin } from '@api/member';
 
-export const NaverLoginButton = () => {
+const NaverLoginButton = () => {
+  const handleSocialLoginBtn = async (social: string) => {
+    const res = await fetchOAuthLogin(social);
+    window.open(res.socialLoginUrl, '_blank');
+  };
   return (
     <button
-      // onClick={() =>
-      //   signIn('naver', {
-      //     callbackUrl: '/space',
-      //   })
-      // }
+      onClick={() => handleSocialLoginBtn('naver')}
       className="flex size-[52px] items-center justify-center rounded-full bg-[#03C75A] px-4 py-2 text-white transition-colors hover:bg-[#02B350]"
     >
       <div className="flex items-center">
@@ -27,3 +27,5 @@ export const NaverLoginButton = () => {
     </button>
   );
 };
+
+export default NaverLoginButton;

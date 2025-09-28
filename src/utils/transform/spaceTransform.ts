@@ -33,7 +33,7 @@ export async function transformFormToSubmitData({
   const noticeList: string[] = formData.notices.split('\n');
 
   const { imageList, popUpImageList, notices, ...rest } = formData;
-  console.log(imageList, popUpImageList);
+  console.log(imageList, popUpImageList, notices);
   return {
     ...rest,
     imageUrls,

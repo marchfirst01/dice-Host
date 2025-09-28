@@ -1,13 +1,14 @@
-// import { signIn } from 'next-auth/react';
+import { fetchOAuthLogin } from '@api/member';
 
-export const GoogleLoginButton = () => {
+const GoogleLoginButton = () => {
+  const handleSocialLoginBtn = async (social: string) => {
+    const res = await fetchOAuthLogin(social);
+    window.open(res.socialLoginUrl, '_blank');
+  };
+
   return (
     <button
-      // onClick={() =>
-      //   signIn('google', {
-      //     callbackUrl: '/space',
-      //   })
-      // }
+      onClick={() => handleSocialLoginBtn('google')}
       className="flex size-[52px] items-center justify-center rounded-full border border-gray-300 bg-white px-4 py-2 transition-colors hover:bg-gray-50"
     >
       <div className="flex items-center">
@@ -39,3 +40,5 @@ export const GoogleLoginButton = () => {
     </button>
   );
 };
+
+export default GoogleLoginButton;

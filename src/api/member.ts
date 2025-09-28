@@ -1,5 +1,5 @@
 import { PostAxiosInstance } from '@axios/axios.method';
-import { GuestPostAxiosInstance } from '@axios/guest.axios.method';
+import { GuestGetAxiosInstance, GuestPostAxiosInstance } from '@axios/guest.axios.method';
 import { MemberFormData } from '@type/member';
 import { LoginResponse } from '@type/member/memberResponse';
 
@@ -103,7 +103,7 @@ export const fetchPasswordReset = async (
   email: string,
 ): Promise<PasswordResetResponse> => {
   try {
-    const res = await GuestPostAxiosInstance<PasswordResetResponse>('/auth/password-reset', {
+    const res = await GuestPostAxiosInstance<PasswordResetResponse>('v1/auth/password-reset', {
       code,
       email,
     });
@@ -111,5 +111,15 @@ export const fetchPasswordReset = async (
   } catch (error) {
     console.log(error);
     throw new ValidateMemberError('해당 유저 정보를 찾을 수 없습니다.', 'NOT_FOUND');
+  }
+};
+
+export const fetchOAuthLogin = async (socialType: string) => {
+  try {
+    const res = await GuestGetAxiosInstance<{ socialLoginUrl: string }>(`/v1/oauth2/${socialType}`);
+    return res.data;
+  } catch (error) {
+    console.log(error);
+    throw new ValidateMemberError('소셜 로그인에 실패했습니다.', 'OAUTH_FAILED');
   }
 };

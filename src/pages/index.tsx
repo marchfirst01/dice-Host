@@ -1,9 +1,9 @@
 import { IMAGES } from '@assets/index';
 import onBoarding from '@assets/onBoarding.gif';
-// import tooltip from '@assets/tooltip.svg';
-// import { GoogleLoginButton } from '@components/socialLogin/googleLoginButton';
-// import KakaoLoginButton from '@components/socialLogin/kakaoLoginButton';
-// import { NaverLoginButton } from '@components/socialLogin/naverLoginButton';
+import tooltip from '@assets/tooltip.svg';
+import GoogleLoginButton from '@components/socialLogin/googleLoginButton';
+import KakaoLoginButton from '@components/socialLogin/kakaoLoginButton';
+import NaverLoginButton from '@components/socialLogin/naverLoginButton';
 import { getAccessToken } from '@utils/cookie';
 
 import { useEffect, useState } from 'react';
@@ -14,14 +14,58 @@ import { useRouter } from 'next/router';
 export default function Home() {
   const router = useRouter();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    setIsLoggedIn(getAccessToken() ? true : false);
-  }, []);
+    // 팝업에서 오는 메시지 듣기
+    const handleMessage = (event: MessageEvent) => {
+      if (event.data.type === 'SOCIAL_LOGIN_SUCCESS') {
+        console.log('로그인 성공 메시지 받음!');
 
-  return isLoggedIn ? (
-    router.push('/space')
-  ) : (
+        // 상태 업데이트
+        setIsLoggedIn(true);
+
+        // 즉시 페이지 이동
+        router.push('/space');
+      }
+    };
+
+    window.addEventListener('message', handleMessage);
+
+    // 기존 로그인 체크
+    const token = getAccessToken();
+    if (token) {
+      setIsLoggedIn(true);
+      router.push('/space');
+    } else {
+      setIsLoggedIn(false);
+      setIsLoading(false);
+    }
+
+    // 컴포넌트 언마운트 시 이벤트 리스너 제거
+    return () => {
+      window.removeEventListener('message', handleMessage);
+    };
+  }, [router]);
+
+  // 로딩 중이면 로딩 표시
+  if (isLoading) {
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        <div className="text-center">
+          <div className="mx-auto mb-4 size-12 animate-spin rounded-full border-b-2 border-blue-500"></div>
+          <p>로딩 중...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // 로그인된 상태면 아무것도 렌더링하지 않음 (리다이렉트 중)
+  if (isLoggedIn) {
+    return null;
+  }
+
+  return (
     <div className="flex min-h-screen flex-col items-center justify-center px-5 py-8">
       {/* 온보딩 이미지 섹션 */}
       <div className="mb-8 flex w-full max-w-sm flex-col items-center space-y-4">
@@ -42,13 +86,13 @@ export default function Home() {
 
       {/* 로그인 버튼 섹션 */}
       <div className="flex w-full max-w-[400px] flex-col items-center justify-center space-y-[11px] px-5 pb-5 pt-4">
-        {/* <Image src={tooltip} alt="tooltip" />
+        <Image src={tooltip} alt="tooltip" />
 
         <div className="flex w-full flex-row justify-center gap-3">
           <KakaoLoginButton />
           <GoogleLoginButton />
           <NaverLoginButton />
-        </div> */}
+        </div>
 
         <button
           onClick={() => router.push(`/member/login`)}
