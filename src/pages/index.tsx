@@ -1,9 +1,9 @@
 import { IMAGES } from '@assets/index';
 import onBoarding from '@assets/onBoarding.gif';
-// import tooltip from '@assets/tooltip.svg';
-// import { GoogleLoginButton } from '@components/socialLogin/googleLoginButton';
-// import KakaoLoginButton from '@components/socialLogin/kakaoLoginButton';
-// import { NaverLoginButton } from '@components/socialLogin/naverLoginButton';
+import tooltip from '@assets/tooltip.svg';
+import GoogleLoginButton from '@components/socialLogin/googleLoginButton';
+import KakaoLoginButton from '@components/socialLogin/kakaoLoginButton';
+import NaverLoginButton from '@components/socialLogin/naverLoginButton';
 import { getAccessToken } from '@utils/cookie';
 
 import { useEffect, useState } from 'react';
@@ -42,13 +42,13 @@ export default function Home() {
 
       {/* 로그인 버튼 섹션 */}
       <div className="flex w-full max-w-[400px] flex-col items-center justify-center space-y-[11px] px-5 pb-5 pt-4">
-        {/* <Image src={tooltip} alt="tooltip" />
+        <Image src={tooltip} alt="tooltip" />
 
         <div className="flex w-full flex-row justify-center gap-3">
           <KakaoLoginButton />
           <GoogleLoginButton />
           <NaverLoginButton />
-        </div> */}
+        </div>
 
         <button
           onClick={() => router.push(`/member/login`)}

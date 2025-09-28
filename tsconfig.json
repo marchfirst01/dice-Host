@@ -18,6 +18,7 @@
     "paths": {
       "@assets/*": ["src/assets/*"],
       "@axios/*": ["src/axios/*"],
+      "@api/*": ["src/api/*"],
       "@components/*": ["src/components/*"],
       "@screens/*": ["src/screens/*"],
       "@zustands/*": ["src/zustands/*"],

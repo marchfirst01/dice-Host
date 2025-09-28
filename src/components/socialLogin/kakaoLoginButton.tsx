@@ -1,13 +1,14 @@
-// import { signIn } from 'next-auth/react';
+import { fetchOAuthLogin } from '@api/member';
 
 const KakaoLoginButton = () => {
+  const handleSocialLoginBtn = async (social: string) => {
+    const res = await fetchOAuthLogin(social);
+    console.log(res);
+    window.open(res.socialLoginUrl, '_blank');
+  };
   return (
     <button
-      // onClick={() =>
-      //   signIn('kakao', {
-      //     callbackUrl: '/space',
-      //   })
-      // }
+      onClick={() => handleSocialLoginBtn('kakao')}
       className="flex size-[52px] items-center justify-center rounded-full bg-yellow px-4 py-2 text-black transition-colors"
     >
       <div className="flex items-center">
