@@ -91,7 +91,7 @@ export default function Home() {
         <div className="flex w-full flex-row justify-center gap-3">
           <KakaoLoginButton />
           <GoogleLoginButton />
-          <NaverLoginButton />
+          {/* <NaverLoginButton /> */}
         </div>
 
         <button
