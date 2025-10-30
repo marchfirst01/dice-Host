@@ -21,11 +21,7 @@ export default function Home() {
     const handleMessage = (event: MessageEvent) => {
       if (event.data.type === 'SOCIAL_LOGIN_SUCCESS') {
         console.log('로그인 성공 메시지 받음!');
-
-        // 상태 업데이트
         setIsLoggedIn(true);
-
-        // 즉시 페이지 이동
         router.push('/space');
       }
     };
@@ -42,7 +38,6 @@ export default function Home() {
       setIsLoading(false);
     }
 
-    // 컴포넌트 언마운트 시 이벤트 리스너 제거
     return () => {
       window.removeEventListener('message', handleMessage);
     };

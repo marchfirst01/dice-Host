@@ -13,6 +13,7 @@
     "@types/next-auth": "^3.13.0",
     "@yaireo/tagify": "^4.33.2",
     "axios": "^1.7.9",
+    "firebase": "^10.8.0",
     "kakao-js-sdk": "^1.2.3",
     "next": "^15.5.0",
     "next-auth": "^4.24.11",
