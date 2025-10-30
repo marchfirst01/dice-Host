@@ -5,11 +5,9 @@ import GoogleLoginButton from '@components/socialLogin/googleLoginButton';
 import KakaoLoginButton from '@components/socialLogin/kakaoLoginButton';
 import NaverLoginButton from '@components/socialLogin/naverLoginButton';
 import { getAccessToken } from '@utils/cookie';
-import { getMessagingInstance } from '@utils/settingFCM';
 
 import { useEffect, useState } from 'react';
 
-import { getToken } from 'firebase/messaging';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 
@@ -17,51 +15,6 @@ export default function Home() {
   const router = useRouter();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-
-  // 알림 권한 요청 및 토큰 가져오기
-  useEffect(() => {
-    async function setupNotifications() {
-      // 브라우저 환경 체크
-      if (typeof window === 'undefined') return;
-
-      const messaging = getMessagingInstance();
-      if (!messaging) {
-        console.log('이 브라우저는 알림을 지원하지 않습니다.');
-        return;
-      }
-
-      // 알림 권한 요청
-      const permission = await Notification.requestPermission();
-
-      if (permission === 'granted') {
-        console.log('알림 권한이 허용되었습니다.');
-
-        // FCM 토큰 가져오기
-        try {
-          const { getToken } = await import('firebase/messaging');
-          const currentToken = await getToken(messaging, {
-            vapidKey: process.env.NEXT_PUBLIC_FIREBASE_VAPID_KEY,
-          });
-
-          if (currentToken) {
-            console.log('토큰: ', currentToken);
-            // TODO: 서버로 토큰 전송
-            // await sendTokenToServer(currentToken);
-          } else {
-            console.log('토큰을 가져오지 못했습니다.');
-          }
-        } catch (err) {
-          console.error('토큰을 가져오는 중 에러 발생: ', err);
-        }
-      } else if (permission === 'denied') {
-        console.log('알림 권한이 거부되었습니다.');
-      } else {
-        console.log('사용자가 알림 권한을 결정하지 않았습니다.');
-      }
-    }
-
-    setupNotifications();
-  }, []);
 
   useEffect(() => {
     // 팝업에서 오는 메시지 듣기

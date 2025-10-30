@@ -23,6 +23,7 @@ export default function HostPage() {
     const res = await fetchLogout();
     if (res === 200) {
       clearTokens();
+      localStorage.removeItem('fcm_token');
       router.push('/');
     }
     // if (session) {
