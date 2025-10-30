@@ -11,12 +11,11 @@ import { useEffect, useState } from 'react';
 import { getToken, onMessage } from 'firebase/messaging';
 import type { AppProps } from 'next/app';
 import Image from 'next/image';
-import { Router, useRouter } from 'next/router';
+import { Router } from 'next/router';
 import Script from 'next/script';
 
 export default function App({ Component, pageProps: { ...pageProps } }: AppProps) {
   const queryClient = new QueryClient();
-  const router = useRouter();
 
   const [loading, setLoading] = useState(false);
   const [isKakaoMapScriptLoaded, setIsKakaoMapScriptLoaded] = useState(false);
@@ -122,6 +121,7 @@ export default function App({ Component, pageProps: { ...pageProps } }: AppProps
           icon: '/favicon.ico',
           data: payload.data,
         });
+        alert(notification.body);
         console.log('✅ 알림 표시 완료!');
       } else {
         console.log('❌ 알림 권한:', Notification.permission);

@@ -1,6 +1,6 @@
 // src/utils/settingFCM.ts
 import { getApps, initializeApp } from 'firebase/app';
-import { Messaging, getMessaging, onMessage } from 'firebase/messaging';
+import { Messaging, getMessaging } from 'firebase/messaging';
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
