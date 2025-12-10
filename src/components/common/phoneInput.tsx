@@ -32,7 +32,7 @@ export default function PhoneInputComponent({
       } else if (value.length <= 7) {
         phoneValue = value.slice(0, 3) + '-' + value.slice(3);
       } else {
-        phoneValue = value.slice(0, 3) + '-' + value.slice(3, 7) + '-' + value.slice(7, 11);
+        phoneValue = value.slice(0, 3) + '-' + value.slice(3, 7) + '-' + value.slice(7, 12);
       }
       onChange(phoneValue); // 수정된 value를 onChange로 전달
     };
