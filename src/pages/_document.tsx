@@ -12,7 +12,7 @@ export default function Document() {
               new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
               j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
               'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-              })(window,document,'script','dataLayer','GTM-SGTQG3WD');
+              })(window,document,'script','dataLayer','GTM-5GTQG3WD');
             `,
           }}
         />
@@ -21,7 +21,7 @@ export default function Document() {
         {/* Google Tag Manager (noscript) - <body> 바로 다음에 추가 */}
         <noscript>
           <iframe
-            src="https://www.googletagmanager.com/ns.html?id=GTM-SGTQG3WD"
+            src="https://www.googletagmanager.com/ns.html?id=GTM-5GTQG3WD"
             height="0"
             width="0"
             style={{ display: 'none', visibility: 'hidden' }}
